@@ -20,7 +20,7 @@ export default {
         let counter = ref(1);
         let isShowToast = ref(false);
         let toastMsg = ref('');
-        let duration = ref(0);
+        let duration = ref(3000);   
         // setTimeout(() => {
         //     isShowToast.value = true;
         //     toastMsg.value = '这里是toast内容';
@@ -28,7 +28,7 @@ export default {
         const doShowToastClickHandler = () => {
             isShowToast.value = true;
             toastMsg.value = '这里是toast内容';
-            duration.value = 1000;
+            duration.value = 5000;
         };
         // setInterval(() => {
         //     counter.value++;

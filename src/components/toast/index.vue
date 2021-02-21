@@ -1,5 +1,5 @@
 <template>
-    <div v-show="showToast">{{msg}}</div>
+    <div class="wd-toast" v-show="showToast">{{msg}}</div>
 </template>
 
 <script lang="ts">
@@ -8,7 +8,7 @@ enum POSITION {
     center,
     bottom
 }
-import {ref, watch} from 'vue';
+import {ref, watch, toRefs} from 'vue';
 export default {
     name: 'toast',
     props: {
@@ -23,14 +23,16 @@ export default {
         }
     },
     setup(props) {
-        console.log(props);
-        let showToast = ref(false);
-        watch(props.visible, () => {
-            showToast = ref(props.visible);
+        let {msg, visible, duration} = toRefs(props);
+        let showToast = ref(true);
+        watch(duration, () => {
+            setTimeout(() => {
+                showToast.value = false;
+            }, duration.value);
         });
-        setTimeout(() => {
-            showToast.value = false;
-        }, props.duration);
+        watch(visible, () => {
+            showToast.value = true;
+        });
         return {
             showToast
         }
