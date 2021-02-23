@@ -95,6 +95,5 @@ const config = {
 };
 
 module.exports = (env) => {
-    console.log(`当前执行${env.mode}模式`);
     return config;
 }
