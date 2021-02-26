@@ -1,6 +1,6 @@
 <template>
     <div>
-        <wd-toast 
+        <!-- <wd-toast 
             :visible="isShowToast"
             :msg="toastMsg"
             :duration="duration"
@@ -13,7 +13,8 @@
             type="circle"
             progress="50"
         />
-        <button @click="doShowToastClickHandler">show toast</button>
+        <button @click="doShowToastClickHandler">show toast</button> -->
+        <wd-button>普通按钮</wd-button>
     </div>
 </template>
 
@@ -21,11 +22,13 @@
 import {computed, ref} from 'vue';
 import WdToast from '../components/toast/index.vue';
 import WdProgress from '../components/progress/index.vue';
+import WdButton from '../components/button/button.vue';
 export default {
     name: 'App',
     components: {
         WdToast,
-        WdProgress
+        WdProgress,
+        WdButton
     },
     setup() {
         let counter = ref(1);
