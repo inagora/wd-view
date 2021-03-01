@@ -7,7 +7,7 @@ const { VueLoaderPlugin } = require('vue-loader');
 
 const config = {
     mode: 'production',
-    entry: './src/main.ts',
+    entry: './demo/main.ts',
     output: {
         filename: 'index.js',
         path: path.resolve(__dirname, 'dist')
@@ -78,9 +78,9 @@ const config = {
                     options: {
                         lessOptions: {
                             modifyVars: {
-                                'primary-color': '#4608e2',
-                                'link-color': '#4608e2',
-                                'border-radius-base': '20px',
+                                // 'primary-color': '#4608e2',
+                                // 'link-color': '#4608e2',
+                                // 'border-radius-base': '20px',
                             },
                             javascriptEnabled: true,
                         }
