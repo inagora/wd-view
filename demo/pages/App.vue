@@ -73,16 +73,10 @@
 import {computed, ref} from 'vue';
 import WdToast from '../../src/components/toast/index.vue';
 import WdProgress from '../../src/components/progress/index.vue';
-import WdButton from '../../src/components/button/button.vue';
-import WdLink from '../../src/components/link/link.vue';
+// import WdLink from '../../src/components/link/link.vue';
 export default {
     name: 'App',
-    components: {
-        WdToast,
-        WdProgress,
-        WdButton,
-        WdLink
-    },
+    components: {},
     setup() {
         let counter = ref(1);
         let isShowToast = ref(false);
