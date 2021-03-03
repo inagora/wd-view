@@ -13,7 +13,10 @@
         :type="nativeType"
         :disabled="disabled"
         @click="handleClick"
-        ><slot></slot></button>
+        >
+            <component :is="icon" />
+            <slot></slot>
+        </button>
 </template>
 
 <script lang="ts">
@@ -22,6 +25,8 @@ type ButtonTypes = PropType<'primary' | 'success' | 'warning' | 'danger' | 'info
 type ButtonSizes = PropType<'small' | 'large'>;
 type ButtonRoundShape = PropType<'none' | 'small' | 'large' | 'circle'>;
 type ButtonNativeType = PropType<'button' | 'submit' | 'reset'>;
+import * as IconList from '@ant-design/icons-vue';
+// import {FilterFilled} from '@ant-design/icons-vue';
 export default defineComponent({
     name: 'wd-button',
     props: {
@@ -42,11 +47,14 @@ export default defineComponent({
             default: 'small'
         },
         icon: {
-            type: Boolean,
+            type: String,
             default: ''
         },
         disabled: Boolean,
         loading: Boolean
+    },
+    components: {
+        ...IconList
     },
     emits: ['click'],
     setup(props, context) {

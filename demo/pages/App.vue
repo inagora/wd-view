@@ -16,11 +16,13 @@
         <button @click="doShowToastClickHandler">show toast</button> -->
         <fieldset>
             <legend>按钮</legend>
-            <wd-button >普通按钮</wd-button>
+            <wd-button 
+                icon="filter-filled">普通按钮</wd-button>
             <wd-button 
                 size="large" 
                 type="primary"
                 round-shape="none"
+                icon="home-outlined"
                 @click="clickHandler">主要按钮</wd-button>
             <wd-button 
                 size="small" 
