@@ -2,34 +2,66 @@
 @import '../../style/mixins/index';
 @import './mixin';
 
-@btn-prefix-cls: ~'@{wd-prefix}-link';
+// Input styles
+.@{wd-prefix}-input {
+  .reset-component();
+  .input();
+}
 
-@btn-ghost-color: @text-color;
-@btn-ghost-bg: transparent;
-@btn-ghost-border: @border-color-base;
+//== Style for input-group: input with label, with button or dropdown...
+.@{wd-prefix}-input-group {
+  .reset-component();
+  .input-group(~'@{wd-prefix}-input');
+  &-wrapper {
+    display: inline-block;
+    width: 100%;
+    text-align: start;
+    vertical-align: top; // https://github.com/ant-design/ant-design/issues/6403
+  }
+}
 
-// Button styles
-// -----------------------------
-.@{btn-prefix-cls} {
-  &-primary {
-    .link-primary();
+// Input with affix: prefix or suffix
+.@{wd-prefix}-input-affix-wrapper {
+  .reset-component();
+  .input-affix-wrapper(~'@{wd-prefix}-input');
+}
+
+.@{wd-prefix}-input-password-icon {
+  color: @text-color-secondary;
+  cursor: pointer;
+  transition: all 0.3s;
+
+  &:hover {
+    color: @input-icon-hover-color;
   }
-  &-success {
-    .link-success();
-  }
-  &-warning {
-    .link-warning();
-  }
-  &-danger {
-    .link-danger();
-  }
-  &-info {
-    .link-info();
-  }
-  &-underline {
-    .link-underline();
-  }
-  &-disabled {
-    .link-disabled();
+}
+
+.@{wd-prefix}-input-clear-icon {
+  .clear-icon();
+  vertical-align: 0;
+}
+
+.@{wd-prefix}-input-clear-icon-hidden {
+  visibility: hidden;
+}
+
+.@{wd-prefix}-input-textarea-clear-icon-hidden {
+  visibility: hidden;
+}
+
+.@{wd-prefix}-input-textarea-clear-icon {
+  .clear-icon();
+  position: absolute;
+  top: 0;
+  right: 0;
+  margin: 8px 8px 0 0;
+}
+
+.@{wd-prefix}-input-textarea {
+  &-show-count::after {
+    display: block;
+    color: @text-color-secondary;
+    text-align: right;
+    content: attr(data-count);
   }
 }

@@ -1,14 +1,25 @@
 <template>
-    <a 
-        class="wd-input"
+    <div
         :class="[
-            type ? 'wd-input-' + type : '',
-            disabled && 'wd-input-disabled',
-            underline && !disabled && 'wd-input-underline'
-        ]"
-        :href="disabled ? null : href"
-        @click="handleClick"
-        ><slot></slot></a>
+            type === 'textarea' ? 'wd-textarea' : 'wd-input__outer',
+        ]">
+        <template v-if="type !== 'textarea'">
+            <input 
+                class="wd-input"
+                v-bind="$attrs"
+                :type="type"
+                :disabled="disabled"
+                :readonly="readonly">
+        </template> 
+        <textarea 
+            v-else
+            class="textarea wd-input-textarea wd-textarea"
+            v-bind="$attrs"
+            :type="type"
+            :disabled="disabled"
+            :readonly="readonly"> 
+        </textarea>  
+    </div>
 </template>
 
 <script lang="ts">
@@ -21,27 +32,19 @@ export default defineComponent({
             type: String as ButtonTypes,
             default: 'default'
         },
-        href: {
+        size: {
             type: String,
             default: ''
         },
-        icon: {
+        resize: {
             type: Boolean,
             default: ''
         },
-        underline: Boolean,
-        disabled: Boolean
+        disabled: Boolean,
+        readonly: Boolean
     },
-    emits: ['click'],
     setup(props, {emit}) {
-        const handleClick = options => {
-            if(!props.disabled) {
-                emit('click', options);
-            }
-        };
-        return  {   
-            handleClick
-        };
+        
     }
 });
 </script>

@@ -68,6 +68,23 @@
                 href="https://www.baidu.com"
                 type="info">这是一个info链接</wd-link>
         </fieldset>
+        <fieldset>
+            <legend>input</legend>
+            <wd-input
+                type="text"
+                placeholder="请输入内容"></wd-input>
+            <wd-input
+                :disabled="true"
+                type="text"
+                placeholder="这是一个不可用输入框"></wd-input>
+            <wd-input
+                :readonly="true"
+                type="text"
+                placeholder="这是一个只读输入框"></wd-input>
+            <wd-input
+                type="textarea"
+                placeholder="这是一个文本框"></wd-input>
+        </fieldset>
     </div>
 </template>
 
@@ -113,7 +130,7 @@ export default {
 </script>
 
 <style lang="less" scoped>
-.wd-btn, .wd-link {
+.wd-btn, .wd-link, .wd-input__outer {
     margin-right: 10px;
     margin-bottom: 10px;
 }
