@@ -72,6 +72,7 @@
             <legend>input</legend>
             <wd-input
                 type="text"
+                size="large"
                 placeholder="请输入内容"></wd-input>
             <wd-input
                 :disabled="true"
@@ -80,7 +81,14 @@
             <wd-input
                 :readonly="true"
                 type="text"
+                size="small"
                 placeholder="这是一个只读输入框"></wd-input>
+            <wd-input
+                type="text"
+                maxlength="10"
+                show-word-limit
+                v-model="textData"
+                placeholder="限制内容长度的输入框"></wd-input>
             <wd-input
                 type="textarea"
                 placeholder="这是一个文本框"></wd-input>
@@ -117,13 +125,15 @@ export default {
         //     counter.value++;
         //     console.log(counter);
         // }, 1000);
+        const textData = ref('123');
         return {
             counter, 
             isShowToast,
             toastMsg,
             doShowToastClickHandler,
             duration,
-            clickHandler
+            clickHandler,
+            textData
         };
     }
 }

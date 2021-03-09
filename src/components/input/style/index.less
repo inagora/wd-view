@@ -20,6 +20,30 @@
   }
 }
 
+.@{wd-prefix}-input__outer {
+  position: relative;
+}
+
+.@{wd-prefix}-input__count {
+  height: 100%;
+  display: inline-flex;
+  align-items: center;
+  color: #909399;
+  font-size: 12px;
+  position: absolute;
+  right: 5px;
+  top: 0;
+  text-align: center;
+  transition: all .3s;
+}
+
+.@{wd-prefix}-input__count-inner {
+  background: #fff;
+  line-height: normal;
+  display: inline-block;
+  padding: 0 5px;
+}
+
 // Input with affix: prefix or suffix
 .@{wd-prefix}-input-affix-wrapper {
   .reset-component();
