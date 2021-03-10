@@ -88,7 +88,37 @@
                 maxlength="10"
                 show-word-limit
                 v-model="textData"
+                @input="handleInput"
+                @change="handleChange"
                 placeholder="限制内容长度的输入框"></wd-input>
+            <wd-input
+                type="text"
+                placeholder="带前置内容的输入框">
+                <template #prepend>https://</template>
+            </wd-input>
+            <wd-input
+                type="text"
+                placeholder="带后置内容的输入框">
+                <template #append>.com</template>
+            </wd-input>
+            <wd-input
+                type="text"
+                placeholder="带后置和后置内容的输入框">
+                <template #prepend>https://</template>
+                <template #append>.com</template>
+            </wd-input>
+            <wd-input
+                type="text"
+                prefix-icon="home-outlined"
+                suffix-icon="filter-filled"
+                placeholder="带后置和后置图标的输入框">
+            </wd-input>
+            <wd-input
+                type="text"
+                clearable
+                v-model="textData"
+                placeholder="带后置和后置图标的输入框">
+            </wd-input>
             <wd-input
                 type="textarea"
                 placeholder="这是一个文本框"></wd-input>
@@ -125,7 +155,14 @@ export default {
         //     counter.value++;
         //     console.log(counter);
         // }, 1000);
-        const textData = ref('123');
+        const textData = ref('');
+
+        const handleInput = val => {
+            console.log(val, '##');
+        }
+        const handleChange = val => {
+            console.log(val, '**');
+        }
         return {
             counter, 
             isShowToast,
@@ -133,7 +170,9 @@ export default {
             doShowToastClickHandler,
             duration,
             clickHandler,
-            textData
+            textData,
+            handleInput,
+            handleChange
         };
     }
 }
