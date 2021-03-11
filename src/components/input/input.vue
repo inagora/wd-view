@@ -1,7 +1,7 @@
 <template>
     <div
         :class="[
-            type === 'textarea' ? 'wd-textarea' : 'wd-input__outer',
+            'wd-input__outer',
             {
                 'wd-input-group': $slots.prepend || $slots.append,
                 'wd-input-affix-wrapper': $slots.prefix || prefixIcon || clearable || $slots.suffix || suffixIcon
@@ -53,18 +53,28 @@
         </template> 
         <textarea 
             v-else
-            class="textarea wd-input-textarea wd-textarea"
+            class="textarea wd-input wd-input-textarea"
             v-bind="$attrs"
-            :type="type"
+            ref="textarea"
             :disabled="disabled"
-            :readonly="readonly"> 
-        </textarea>  
+            :readonly="readonly"
+            :style="textareaStyle"
+            @input="handleInput"
+            @change="handleChange"> 
+        </textarea> 
+        <span v-if="isWordLimitVisible && type === 'textarea'" class="wd-input__count">
+            <span class="wd-input__count-inner">
+                {{textLength}}/{{upperLimit}}
+            </span>
+        </span> 
     </div>
 </template>
 
 <script lang="ts">
-import {defineComponent, PropType, reactive, computed, watch, ref} from 'vue';
+import {defineComponent, PropType, reactive, computed, watch, ref, nextTick, shallowRef, onMounted} from 'vue';
 import * as IconList from '@ant-design/icons-vue';
+import calcTextareaHeight from './calcTextareaHeight';
+import {isObject} from '@vue/shared';
 interface WdInputProps {
     type: string,
     size: string,
@@ -76,8 +86,13 @@ interface WdInputProps {
     prefixIcon: string,
     resize: boolean,
     readonly: boolean,
-    modelValue: string
+    modelValue: string,
+    autosize: any
 }
+type AutosizeProp = {
+    minRows?: number,
+    maxRows?: number,
+} | boolean;
 export default defineComponent({
     name: 'wd-input',
     inheritAttrs: false,
@@ -119,7 +134,11 @@ export default defineComponent({
         },
         disabled: Boolean,
         readonly: Boolean,
-        clearable: Boolean
+        clearable: Boolean,
+        autosize: {
+            type: [Boolean, Object] as PropType<AutosizeProp>,
+            default: false
+        }
     },
     emits: ['update:modelValue', 'input', 'change', 'clear'],
     setup(props: WdInputProps, ctx) {
@@ -128,6 +147,30 @@ export default defineComponent({
             large: 'lg',
             default: ''
         });
+        const input = ref(null);
+        const textarea = ref(null);
+        const inputOrTextarea = computed(() => input.value || textarea.value);
+        const _textareaCalcStyle = shallowRef({});
+        const textareaStyle = computed(() => ({
+            ..._textareaCalcStyle.value,
+            resize: props.resize
+        }));
+
+        const resizeTextarea = () => {
+            const { type, autosize } = props;
+            if(type !== 'textarea') return;
+            console.log(textarea);
+            if(autosize) {
+                const minRows = isObject(autosize) ? autosize.minRows : void 0
+                const maxRows = isObject(autosize) ? autosize.maxRows : void 0
+                _textareaCalcStyle.value = calcTextareaHeight(textarea.value, minRows, maxRows)
+            } else {
+                _textareaCalcStyle.value = {
+                    minHeight: calcTextareaHeight(textarea.value).minHeight,
+                }
+            }
+        }
+
         // 是否显示字符限制
         const isWordLimitVisible = computed(() => {
             return props.showWordLimit && 
@@ -145,20 +188,25 @@ export default defineComponent({
             return ctx.attrs.maxlength;
         });
         const setNativeInputValue = () => {
-            // const input 
+            const input = inputOrTextarea.value;
+            if(!input || input.value === nativeInputValue.value) return;
+            input.value === nativeInputValue.value;
         };
         const nativeInputValue = computed(() => (props.modelValue === null || props.modelValue === undefined) ? '' : String(props.modelValue));
         watch(() => props.modelValue, val => {
-            // console.log(val);
+            nextTick(() => {
+                setNativeInputValue();
+            });
         });
         watch(nativeInputValue, val => {
-            console.log(val);
+            setNativeInputValue();
         });
 
         const handleInput = event => {
             const { value } = event.target;
             ctx.emit('update:modelValue', value);
             ctx.emit('input', value);
+            nextTick(setNativeInputValue);
         }
         const handleChange = event => {
             ctx.emit('change', event.target.value);
@@ -166,8 +214,12 @@ export default defineComponent({
         const clear = () => {
             ctx.emit('update:modelValue', '');
             ctx.emit('change', '');
+            ctx.emit('input', '');
             ctx.emit('clear');
         }
+        onMounted(() => {
+            nextTick(resizeTextarea);
+        });
         return {
             sizeMap,
             isWordLimitVisible,
@@ -175,7 +227,11 @@ export default defineComponent({
             upperLimit,
             handleInput,
             handleChange,
-            clear
+            clear,
+            setNativeInputValue,
+            input,
+            textarea,
+            inputOrTextarea
         };
     }
 });

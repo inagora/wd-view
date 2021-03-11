@@ -117,10 +117,13 @@
                 type="text"
                 clearable
                 v-model="textData"
+                @change="clearChangeHandler"
                 placeholder="带后置和后置图标的输入框">
             </wd-input>
             <wd-input
                 type="textarea"
+                show-word-limit
+                maxlength="50"
                 placeholder="这是一个文本框"></wd-input>
         </fieldset>
     </div>
@@ -163,6 +166,9 @@ export default {
         const handleChange = val => {
             console.log(val, '**');
         }
+        const clearChangeHandler = val => {
+            console.log(val, '%%');
+        }
         return {
             counter, 
             isShowToast,
@@ -172,7 +178,8 @@ export default {
             clickHandler,
             textData,
             handleInput,
-            handleChange
+            handleChange,
+            clearChangeHandler
         };
     }
 }
