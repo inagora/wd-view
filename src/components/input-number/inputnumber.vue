@@ -73,7 +73,6 @@
 <script lang="ts">
 import {defineComponent, PropType, reactive, computed, watch, ref, nextTick, shallowRef, onMounted} from 'vue';
 import * as IconList from '@ant-design/icons-vue';
-import calcTextareaHeight from './calcTextareaHeight';
 import {isObject} from '@vue/shared';
 interface WdInputProps {
     type: string,
@@ -156,20 +155,6 @@ export default defineComponent({
             resize: props.resize
         }));
 
-        const resizeTextarea = () => {
-            const { type, autosize } = props;
-            if(type !== 'textarea') return;
-            if(autosize) {
-                const minRows = isObject(autosize) ? autosize.minRows : void 0
-                const maxRows = isObject(autosize) ? autosize.maxRows : void 0
-                _textareaCalcStyle.value = calcTextareaHeight(textarea.value, minRows, maxRows)
-            } else {
-                _textareaCalcStyle.value = {
-                    minHeight: calcTextareaHeight(textarea.value).minHeight,
-                }
-            }
-        }
-
         // 是否显示字符限制
         const isWordLimitVisible = computed(() => {
             return props.showWordLimit && 
@@ -216,7 +201,7 @@ export default defineComponent({
             ctx.emit('clear');
         }
         onMounted(() => {
-            nextTick(resizeTextarea);
+            
         });
         return {
             sizeMap,

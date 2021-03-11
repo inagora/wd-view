@@ -124,6 +124,7 @@
                 type="textarea"
                 show-word-limit
                 maxlength="50"
+                v-model="textData"
                 placeholder="这是一个文本框"></wd-input>
         </fieldset>
     </div>
