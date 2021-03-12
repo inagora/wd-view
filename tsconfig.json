@@ -1,16 +1,22 @@
 {
     "compilerOptions": {
-        // "esModuleInterop": true,
-        "incremental": true, // 增量编译
-        "allowJs": true,
-        "lib": [
-            "es6",
-            "dom",
-            "es2017"
-        ],
-        "types": []
+      "module": "ESNext",
+      "declaration": true,
+      "noImplicitAny": false,
+      "removeComments": true,
+      "moduleResolution": "node",
+      "esModuleInterop": true,
+      "jsx": "preserve",
+      "noLib": false,
+      "target": "es6",
+      "sourceMap": true,
+      "lib": [
+        "ESNext", "DOM"
+      ],
+      "allowSyntheticDefaultImports": true
     },
     "exclude": [
-        "node_modules"
+      "node_modules"
     ]
 }
+   

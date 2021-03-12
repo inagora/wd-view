@@ -1,97 +1,179 @@
 @import '../../style/themes/index';
 @import '../../style/mixins/index';
-@import './mixin';
+@import '../../input/style/mixin';
 
-// Input styles
-.@{wd-prefix}-input {
+@input-number-prefix-cls: ~'@{wd-prefix}-input-number';
+
+.@{input-number-prefix-cls} {
   .reset-component();
   .input();
-}
 
-//== Style for input-group: input with label, with button or dropdown...
-.@{wd-prefix}-input-group {
-  .reset-component();
-  .input-group(~'@{wd-prefix}-input');
-  &-wrapper {
-    display: inline-block;
-    width: 100%;
-    text-align: start;
-    vertical-align: top; // https://github.com/ant-design/ant-design/issues/6403
-  }
-}
-
-.@{wd-prefix}-input__outer {
-  position: relative;
-}
-
-.@{wd-prefix}-input__count {
-  height: 100%;
-  display: inline-flex;
-  align-items: center;
-  color: #909399;
-  font-size: 12px;
-  position: absolute;
-  right: 5px;
-  top: 0;
-  text-align: center;
-  transition: all .3s;
-}
-
-.@{wd-prefix}-input__count-inner {
-  background: #fff;
-  line-height: normal;
   display: inline-block;
-  padding: 0 5px;
-}
+  width: 90px;
+  margin: 0;
+  padding: 0;
+  border: @border-width-base @border-style-base @border-color-base;
+  border-radius: @border-radius-base;
 
-.@{wd-prefix}-textarea .@{wd-prefix}-input__count-inner {
-  position: absolute;
-  right: 0;
-  bottom: 5px;
-  background: none;
-}
-// Input with affix: prefix or suffix
-.@{wd-prefix}-input-affix-wrapper {
-  .reset-component();
-  .input-affix-wrapper(~'@{wd-prefix}-input');
-}
+  &-handler {
+    position: relative;
+    display: block;
+    width: 100%;
+    height: 50%;
+    overflow: hidden;
+    color: @text-color-secondary;
+    font-weight: bold;
+    line-height: 0;
+    text-align: center;
+    transition: all 0.1s linear;
+    &:active {
+      background: @input-number-handler-active-bg;
+    }
+    &:hover &-up-inner,
+    &:hover &-down-inner {
+      color: @input-number-handler-hover-bg;
+    }
+  }
 
-.@{wd-prefix}-input-password-icon {
-  color: @text-color-secondary;
-  cursor: pointer;
-  transition: all 0.3s;
+  &-handler-up-inner,
+  &-handler-down-inner {
+    .iconfont-mixin();
+
+    position: absolute;
+    right: 4px;
+    width: 12px;
+    height: 12px;
+    color: @text-color-secondary;
+    line-height: 12px;
+    transition: all 0.1s linear;
+    user-select: none;
+  }
 
   &:hover {
-    color: @input-icon-hover-color;
+    .hover(@input-number-hover-border-color);
   }
-}
 
-.@{wd-prefix}-input-clear-icon {
-  .clear-icon();
-  vertical-align: 0;
-}
+  &-focused {
+    .active();
+  }
 
-.@{wd-prefix}-input-clear-icon-hidden {
-  visibility: hidden;
-}
+  &-disabled {
+    .disabled();
+    .@{input-number-prefix-cls}-input {
+      cursor: not-allowed;
+    }
+    .@{input-number-prefix-cls}-handler-wrap {
+      display: none;
+    }
+  }
 
-.@{wd-prefix}-input-textarea-clear-icon-hidden {
-  visibility: hidden;
-}
+  &-input {
+    width: 100%;
+    height: @input-height-base - 2px;
+    padding: 0 @control-padding-horizontal - 1px;
+    text-align: left;
+    background-color: transparent;
+    border: 0;
+    border-radius: @border-radius-base;
+    outline: 0;
+    transition: all 0.3s linear;
+    -moz-appearance: textfield !important;
+    .placeholder();
 
-.@{wd-prefix}-input-textarea-clear-icon {
-  .clear-icon();
-  position: absolute;
-  top: 0;
-  right: 0;
-  margin: 8px 8px 0 0;
-}
+    &[type='number']::-webkit-inner-spin-button,
+    &[type='number']::-webkit-outer-spin-button {
+      margin: 0;
+      -webkit-appearance: none;
+    }
+  }
 
-.@{wd-prefix}-input-textarea {
-  &-show-count::after {
-    display: block;
-    color: @text-color-secondary;
-    text-align: right;
-    content: attr(data-count);
+  &-lg {
+    padding: 0;
+    font-size: @font-size-lg;
+
+    input {
+      height: @input-height-lg - 2px;
+    }
+  }
+
+  &-sm {
+    padding: 0;
+
+    input {
+      height: @input-height-sm - 2px;
+      padding: 0 @control-padding-horizontal-sm - 1px;
+    }
+  }
+
+  &-handler-wrap {
+    position: absolute;
+    top: 0;
+    right: 0;
+    width: 22px;
+    height: 100%;
+    background: @input-number-handler-bg;
+    border-left: @border-width-base @border-style-base @input-number-handler-border-color;
+    border-radius: 0 @border-radius-base @border-radius-base 0;
+    opacity: 0;
+    transition: opacity 0.24s linear 0.1s;
+
+    // Fix input number inside Menu makes icon too large
+    // We arise the selector priority by nest selector here
+    // https://github.com/ant-design/ant-design/issues/14367
+    .@{input-number-prefix-cls}-handler {
+      .@{input-number-prefix-cls}-handler-up-inner,
+      .@{input-number-prefix-cls}-handler-down-inner {
+        .iconfont-size-under-12px(7px);
+
+        min-width: auto;
+        margin-right: 0;
+      }
+    }
+  }
+
+  &-handler-wrap:hover &-handler {
+    height: 40%;
+  }
+
+  &:hover &-handler-wrap {
+    opacity: 1;
+  }
+
+  &-handler-up {
+    border-top-right-radius: @border-radius-base;
+    cursor: pointer;
+    &-inner {
+      top: 50%;
+      margin-top: -5px;
+      text-align: center;
+    }
+    &:hover {
+      height: 60% !important;
+    }
+  }
+
+  &-handler-down {
+    top: 0;
+    border-top: @border-width-base @border-style-base @border-color-base;
+    border-bottom-right-radius: @border-radius-base;
+    cursor: pointer;
+    &-inner {
+      top: 50%;
+      margin-top: -6px;
+      text-align: center;
+    }
+    &:hover {
+      height: 60% !important;
+    }
+  }
+
+  &-handler-up-disabled,
+  &-handler-down-disabled {
+    cursor: not-allowed;
+  }
+
+  &-handler-up-disabled:hover &-handler-up-inner,
+  &-handler-down-disabled:hover &-handler-down-inner {
+    color: @disabled-color;
   }
 }

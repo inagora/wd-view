@@ -127,6 +127,11 @@
                 v-model="textData"
                 placeholder="这是一个文本框"></wd-input>
         </fieldset>
+        <fieldset>
+            <legend>input-number</legend>
+            <wd-input-number
+                type="text"></wd-input-number>
+        </fieldset>
     </div>
 </template>
 
