@@ -4,6 +4,7 @@ import WdLink from '../src/components/link';
 import WdButton from '../src/components/button';
 import WdInput from '../src/components/input';
 import WdInputNumber from '../src/components/input-number';
+
 const app = createApp(App);
 app.use(WdLink);
 app.use(WdButton);

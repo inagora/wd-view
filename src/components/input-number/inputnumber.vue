@@ -7,15 +7,19 @@
                 'wd-input-affix-wrapper': $slots.prefix || prefixIcon || clearable || $slots.suffix || suffixIcon
             }
         ]">
-        <span class="wd-input-prefix" v-if="$slots.prefix || prefixIcon">
-            <component :is="prefixIcon" />
-        </span>
+        <div class="wd-input-number-handler-wrap">
+            <span
+                unselectable="unselectable"
+                class="wd-input-number-handler-up-inner"
+                onClick={preventDefault}
+            />
+            <span
+                unselectable="unselectable"
+                class="wd-input-number-handler-down-inner"
+                onClick={preventDefault}
+            />
+        </div>
         <wd-input 
-            :class="[
-                'wd-input',
-                'wd-input-' + sizeMap[size]
-            ]"
-            v-bind="$attrs"
             ref="input"
             type="text"
             :disabled="disabled"
