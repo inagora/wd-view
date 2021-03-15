@@ -12,7 +12,7 @@
   width: 90px;
   margin: 0;
   padding: 0;
-  // border: @border-width-base @border-style-base @border-color-base;
+  border: @border-width-base @border-style-base @border-color-base;
   border-radius: @border-radius-base;
 
   &-handler {
@@ -116,6 +116,7 @@
     border-radius: 0 @border-radius-base @border-radius-base 0;
     opacity: 0;
     transition: opacity 0.24s linear 0.1s;
+    z-index: 9;
 
     // Fix input number inside Menu makes icon too large
     // We arise the selector priority by nest selector here

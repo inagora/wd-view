@@ -130,6 +130,9 @@
         <fieldset>
             <legend>input-number</legend>
             <wd-input-number
+                v-model="inputNum"
+                max=20
+                min=0
                 type="text"></wd-input-number>
         </fieldset>
     </div>
@@ -147,7 +150,8 @@ export default {
         let counter = ref(1);
         let isShowToast = ref(false);
         let toastMsg = ref('');
-        let duration = ref(3000);   
+        let duration = ref(3000); 
+        let inputNum = ref(0);  
         // setTimeout(() => {
         //     isShowToast.value = true;
         //     toastMsg.value = '这里是toast内容';
@@ -185,7 +189,8 @@ export default {
             textData,
             handleInput,
             handleChange,
-            clearChangeHandler
+            clearChangeHandler,
+            inputNum
         };
     }
 }
