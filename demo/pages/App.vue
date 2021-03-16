@@ -133,6 +133,8 @@
                 v-model="inputNum"
                 max=20
                 min=0
+                @input="handleInputNumber"
+                @change="handleChangeNumber"
                 type="text"></wd-input-number>
         </fieldset>
     </div>
@@ -179,6 +181,12 @@ export default {
         const clearChangeHandler = val => {
             console.log(val, '%%');
         }
+        const handleInputNumber = val => {
+            console.log(val, ': input number');
+        }
+        const handleChangeNumber = val => {
+            console.log(val, ': change number');
+        }
         return {
             counter, 
             isShowToast,
@@ -190,7 +198,9 @@ export default {
             handleInput,
             handleChange,
             clearChangeHandler,
-            inputNum
+            inputNum,
+            handleInputNumber,
+            handleChangeNumber
         };
     }
 }

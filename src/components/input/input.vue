@@ -229,7 +229,8 @@ export default defineComponent({
             setNativeInputValue,
             input,
             textarea,
-            inputOrTextarea
+            inputOrTextarea,
+            textareaStyle
         };
     }
 });

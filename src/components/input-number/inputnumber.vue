@@ -10,15 +10,23 @@
         <div class="wd-input-number-handler-wrap">
             <span
                 unselectable="unselectable"
-                class="wd-input-number-handler wd-input-number-handler-up"
-                onClick={preventDefault}
+                :class="[
+                    'wd-input-number-handler', 
+                    'wd-input-number-handler-up',
+                    {'wd-input-number-disabled': maxDisabled}
+                ]"
+                @click="increase"
             >
                 <up-outlined />
             </span>
             <span
                 unselectable="unselectable"
-                class="wd-input-number-handler wd-input-number-handler-down"
-                onClick={preventDefault}
+                :class="[
+                    'wd-input-number-handler', 
+                    'wd-input-number-handler-down',
+                    {'wd-input-number-disabled': minDisabled}
+                ]"
+                @click="decrease"
             >
                 <down-outlined />
             </span>
@@ -27,8 +35,11 @@
             ref="input"
             type="text"
             :size="size"
-            :disabled="disabled"
+            :disabled="inputDisabled"
             :readonly="readonly"
+            :max="max"
+            :min="min"
+            style="border: none;"
             :model-value="displayValue"
             @input="handleInput"
             @change="handleChange"></wd-input>
@@ -39,7 +50,7 @@
 import {defineComponent, reactive, computed, watch, ref, nextTick, shallowRef, onMounted} from 'vue';
 import WdInput from '../input/input.vue';
 import * as IconList from '@ant-design/icons-vue';
-import {isObject} from '@vue/shared';
+import {toRawType} from '@vue/shared';
 import type { PropType } from 'vue';
 
 interface WdInputNumberProps {
@@ -65,8 +76,10 @@ export default defineComponent({
     },
     props: {
         modelValue: {
-            type: Number,
-            default: 0
+            required: true,
+            validator: val => {
+                return toRawType(val) === 'Number' || val === undefined
+            }
         },
         type: {
             type: String,
@@ -84,11 +97,11 @@ export default defineComponent({
         readonly: Boolean,
         max: {
             type: Number,
-            default: 0,
+            default: Infinity,
         },
         min: {
             type: Number,
-            default: 0
+            default: -Infinity
         },
         step: {
             type: [Number, String] as PropType<string|number>,
@@ -106,6 +119,19 @@ export default defineComponent({
         const data = reactive({
             currentValue: props.modelValue
         });
+
+        const maxDisabled = computed(() => {
+            console.log(data.currentValue);
+            return data.currentValue >= props.max;
+        });
+
+        const minDisabled = computed(() => {
+            return data.currentValue <= props.min;
+        });
+
+        const inputDisabled = computed(() => {
+            return props.disabled;
+        });
         const displayValue = computed(() => {
             return data.currentValue;
         });
@@ -115,8 +141,8 @@ export default defineComponent({
             ctx.emit('input', val);
             // nextTick(setNativeInputValue);
         }
-        const handleChange = event => {
-            ctx.emit('change', event.target.value);
+        const handleChange = val => {
+            ctx.emit('change', val);
         }
 
         const toPrecision = (num, pre?) => {
@@ -137,15 +163,26 @@ export default defineComponent({
             return precision;
         }
 
-        const increase = val => {
+        const increase = () => {
             if(props.disabled || props.readonly) return;
+            let val = input.value.input.value;
+            if(val === '' || val === undefined) val = props.min;
             val++;
+            setCurrentValue(val);
+        }
+
+        const decrease = () => {
+            if(props.disabled || props.readonly) return;
+            let val = input.value.input.value;
+            if(val === '' || val === undefined) val = props.min;
+            val--;
             setCurrentValue(val);
         }
 
         const setCurrentValue = val => {
             ctx.emit('update:modelValue', val);
             ctx.emit('input', val);
+            ctx.emit('change', val);
             data.currentValue = val;
         }
 
@@ -190,7 +227,12 @@ export default defineComponent({
             handleInput,
             handleChange,
             input,
-            displayValue
+            displayValue,
+            inputDisabled,
+            increase,
+            decrease,
+            maxDisabled,
+            minDisabled
         };
     }
 });
