@@ -137,6 +137,10 @@
                 @change="handleChangeNumber"
                 type="text"></wd-input-number>
         </fieldset>
+        <fieldset>
+            <legend>switch</legend>
+            <wd-switch />
+        </fieldset>
     </div>
 </template>
 

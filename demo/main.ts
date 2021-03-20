@@ -4,10 +4,12 @@ import WdLink from '../src/components/link';
 import WdButton from '../src/components/button';
 import WdInput from '../src/components/input';
 import WdInputNumber from '../src/components/input-number';
+import WdSwitch from '../src/components/switch';
 
 const app = createApp(App);
 app.use(WdLink);
 app.use(WdButton);
 app.use(WdInput);
 app.use(WdInputNumber);
+app.use(WdSwitch);
 app.mount('#app');
