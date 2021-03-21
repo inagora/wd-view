@@ -139,7 +139,8 @@
         </fieldset>
         <fieldset>
             <legend>switch</legend>
-            <wd-switch />
+            <wd-switch 
+                v-model="isSwitchChecked"/>
         </fieldset>
     </div>
 </template>
@@ -158,6 +159,7 @@ export default {
         let toastMsg = ref('');
         let duration = ref(3000); 
         let inputNum = ref(0);  
+        let isSwitchChecked = ref(true);
         // setTimeout(() => {
         //     isShowToast.value = true;
         //     toastMsg.value = '这里是toast内容';
@@ -204,7 +206,8 @@ export default {
             clearChangeHandler,
             inputNum,
             handleInputNumber,
-            handleChangeNumber
+            handleChangeNumber,
+            isSwitchChecked
         };
     }
 }
