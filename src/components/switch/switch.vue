@@ -1,10 +1,17 @@
 <template>
     <button 
         class="wd-switch"
-        :class="{
-            'wd-switch-checked': checked
-        }"
-        :aria-checked="checked">
+        :class="[
+            {
+                'wd-switch-checked': checked,
+                'wd-switch-disabled': disabled,
+                'wd-switch-sm': size,
+            },
+            'wd-switch-loading'
+        ]"
+        :aria-checked="checked"
+        @click.prevent="handleChange">
+        <LoadingOutlined loading class="wd-switch-loading-icon"/>
         <span class="wd-switch-inner"></span>   
     </button>
 </template>
@@ -33,7 +40,7 @@ export default defineComponent({
         },
         size: {
             type: String as SwitchSizes,
-            default: 'small'
+            default: ''
         },
         disabled: Boolean,
         loading: Boolean
@@ -41,25 +48,27 @@ export default defineComponent({
     components: {
         ...IconList
     },
-    emits: ['click'],
-    setup(props: WdSwitchProps, context) {
-        const handleClick = options => {
-            context.emit('click', options);
-        };
+    emits: ['update:modelValue', 'change'],
+    setup(props: WdSwitchProps, {emit}) {
         const sizeMap = reactive({
-            small: 'sm',
-            large: 'lg'
+            small: 'sm'
         });
         const checked = computed((): ModelValueType => {
             return props.modelValue;
         });
+        const handleChange = () => {
+            if(props.disabled) return;
+            const val = !props.modelValue;
+            emit('update:modelValue', val);
+            emit('change', val);
+        }
         onMounted(() => {
             console.log(props);
         });
         return  {
-            handleClick,
             sizeMap,
-            checked
+            checked,
+            handleChange
         };
     }
 });

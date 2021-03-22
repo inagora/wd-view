@@ -140,6 +140,11 @@
         <fieldset>
             <legend>switch</legend>
             <wd-switch 
+                v-model="isSwitchChecked"
+                @change="handleSwitchChange"/>
+            <wd-switch 
+                disabled
+                size="large"
                 v-model="isSwitchChecked"/>
         </fieldset>
     </div>
@@ -193,6 +198,9 @@ export default {
         const handleChangeNumber = val => {
             console.log(val, ': change number');
         }
+        const handleSwitchChange = val => {
+            console.log(val, ': switch value');
+        }
         return {
             counter, 
             isShowToast,
@@ -207,7 +215,8 @@ export default {
             inputNum,
             handleInputNumber,
             handleChangeNumber,
-            isSwitchChecked
+            isSwitchChecked,
+            handleSwitchChange
         };
     }
 }

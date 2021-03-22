@@ -87,7 +87,7 @@
     box-shadow: none;
   }
 
-  &-small {
+  &-sm {
     min-width: 28px;
     height: @switch-sm-height;
     line-height: @switch-sm-height - 2px;
@@ -109,24 +109,24 @@
     }
   }
 
-  &-small &-loading-icon {
+  &-sm &-loading-icon {
     width: @switch-sm-height - 4px;
     height: @switch-sm-height - 4px;
   }
 
-  &-small&-checked {
+  &-sm&-checked {
     .@{switch-prefix-cls}-inner {
       margin-right: 18px;
       margin-left: 3px;
     }
   }
 
-  &-small&-checked &-loading-icon {
+  &-sm&-checked &-loading-icon {
     left: 100%;
     margin-left: @switch-sm-checked-margin-left;
   }
 
-  &-small&-loading &-loading-icon {
+  &-sm&-loading &-loading-icon {
     font-weight: bold;
     // animation: AntSwitchSmallLoadingCircle 1s infinite linear;
     transform: scale(0.66667);
