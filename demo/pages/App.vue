@@ -163,6 +163,23 @@
                 复选框不可用
             </wd-checkbox>
         </fieldset>
+        <fieldset>
+            <legend>checkbox-group</legend>
+            <wd-checkbox-group 
+                :checked="isCheckboxChecked"
+                @change="handleCheckboxChange">
+                <wd-checkbox 
+                    :checked="isCheckboxChecked"
+                    @change="handleCheckboxChange">
+                    item1
+                </wd-checkbox>
+                <wd-checkbox 
+                    :checked="isCheckboxChecked"
+                    @change="handleCheckboxChange">
+                    item2
+                </wd-checkbox>
+            </wd-checkbox-group>
+        </fieldset>
     </div>
 </template>
 
