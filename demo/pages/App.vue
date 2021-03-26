@@ -141,11 +141,27 @@
             <legend>switch</legend>
             <wd-switch 
                 v-model="isSwitchChecked"
+                :loading="isSwitchLoading"
                 @change="handleSwitchChange"/>
             <wd-switch 
                 disabled
                 size="large"
+                :loading="true"
                 v-model="isSwitchChecked"/>
+        </fieldset>
+        <fieldset>
+            <legend>checkbox</legend>
+            <wd-checkbox 
+                :checked="isCheckboxChecked"
+                @change="handleCheckboxChange">
+                复选框
+            </wd-checkbox>
+            <wd-checkbox 
+                :checked="isCheckboxChecked"
+                :disabled="true"
+                @change="handleCheckboxChange">
+                复选框不可用
+            </wd-checkbox>
         </fieldset>
     </div>
 </template>
@@ -165,6 +181,8 @@ export default {
         let duration = ref(3000); 
         let inputNum = ref(0);  
         let isSwitchChecked = ref(true);
+        let isSwitchLoading = ref(false);
+        let isCheckboxChecked = ref(true);
         // setTimeout(() => {
         //     isShowToast.value = true;
         //     toastMsg.value = '这里是toast内容';
@@ -199,7 +217,12 @@ export default {
             console.log(val, ': change number');
         }
         const handleSwitchChange = val => {
-            console.log(val, ': switch value');
+            setTimeout(() => {
+                isSwitchLoading.value = !isSwitchLoading.value;
+            }, 3000);
+        }
+        const handleCheckboxChange = val => {
+            console.log(val);
         }
         return {
             counter, 
@@ -216,7 +239,10 @@ export default {
             handleInputNumber,
             handleChangeNumber,
             isSwitchChecked,
-            handleSwitchChange
+            handleSwitchChange,
+            isSwitchLoading,
+            handleCheckboxChange,
+            isCheckboxChecked
         };
     }
 }

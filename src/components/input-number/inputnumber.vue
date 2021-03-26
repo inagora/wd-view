@@ -17,7 +17,7 @@
                 ]"
                 @click="increase"
             >
-                <up-outlined />
+                <up-outlined class="wd-input-number-handler-up-inner" />
             </span>
             <span
                 unselectable="unselectable"
@@ -28,7 +28,7 @@
                 ]"
                 @click="decrease"
             >
-                <down-outlined />
+                <down-outlined class="wd-input-number-handler-down-inner" />
             </span>
         </div>
         <wd-input 
@@ -40,6 +40,8 @@
             :max="max"
             :min="min"
             style="border: none;"
+            @keydown.up.prevent="increase"
+            @keydown.down.prevent="decrease"
             :model-value="displayValue"
             @input="handleInput"
             @change="handleChange"></wd-input>
@@ -49,7 +51,7 @@
 <script lang="ts">
 import {defineComponent, reactive, computed, watch, ref, nextTick, shallowRef, onMounted} from 'vue';
 import WdInput from '../input/input.vue';
-import * as IconList from '@ant-design/icons-vue';
+import {DownOutlined, UpOutlined} from '@ant-design/icons-vue';
 import {toRawType} from '@vue/shared';
 import type { PropType } from 'vue';
 
@@ -67,11 +69,13 @@ interface WdInputNumberProps {
 }
 
 type StepType = Number | String;
+
 export default defineComponent({
     name: 'wd-input-number',
     inheritAttrs: false,
     components: {
-        ...IconList,
+        DownOutlined,
+        UpOutlined,
         WdInput
     },
     props: {

@@ -6,12 +6,12 @@
                 'wd-switch-checked': checked,
                 'wd-switch-disabled': disabled,
                 'wd-switch-sm': size,
-            },
-            'wd-switch-loading'
+                'wd-switch-loading': loading
+            }
         ]"
         :aria-checked="checked"
         @click.prevent="handleChange">
-        <LoadingOutlined loading class="wd-switch-loading-icon"/>
+        <LoadingOutlined class="wd-switch-loading-icon"/>
         <span class="wd-switch-inner"></span>   
     </button>
 </template>
@@ -74,6 +74,6 @@ export default defineComponent({
 });
 </script>
 
-<style lang="less" scoped>
+<style lang="less">
 @import url(./style/index);
 </style>
