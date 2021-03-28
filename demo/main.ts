@@ -7,6 +7,8 @@ import WdInputNumber from '../src/components/input-number';
 import WdSwitch from '../src/components/switch';
 import WdCheckbox from '../src/components/checkbox';
 import WdCheckboxGroup from '../src/components/checkbox';
+import WdRadio from '../src/components/radio';
+
 
 const app = createApp(App);
 app.use(WdLink);
@@ -16,4 +18,5 @@ app.use(WdInputNumber);
 app.use(WdSwitch);
 app.use(WdCheckbox);
 app.use(WdCheckboxGroup);
+app.use(WdRadio);
 app.mount('#app');

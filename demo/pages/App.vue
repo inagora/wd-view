@@ -181,6 +181,15 @@
                 </wd-checkbox> -->
             </wd-checkbox-group>
         </fieldset>
+        <fieldset>
+            <legend>radio</legend>
+            <wd-radio 
+                v-model="isCheckboxChecked"
+                :checked="isCheckboxChecked"
+                @change="handleCheckboxChange">
+                单选框
+            </wd-radio>
+        </fieldset>
     </div>
 </template>
 
