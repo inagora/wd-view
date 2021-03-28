@@ -1,42 +1,74 @@
 <template>
     <div class="wd-checkbox-group">
-        <slot></slot>
+        <wd-checkbox 
+            v-for="(option, index) in getOptions"
+            :key="index">
+            <slot></slot>
+        </wd-checkbox>
     </div>
 </template>
 
 <script lang="ts">
-import {defineComponent, ref, watch} from 'vue';
+import WdCheckbox from './checkbox.vue';
+import {defineComponent, ref, watch, toRef, PropType, computed} from 'vue';
 
+type optionType = {
+    label: string,
+    value: boolean
+}
 interface WdCheckboxProps {
     disabled: boolean,
-    checked: boolean,
-    options: Array<string>
+    modelValue: Array<string>,
+    options: Array<string> | Array<optionType>
 }
+
+type optionsType = Array<string> | Array<optionType>;
 export default defineComponent({
     name: 'wd-checkbox-group',
     inheritAttrs: false,
+    components: {
+        WdCheckbox
+    },
     props: {
-        checked: {
+        modelValue: {
             required: true,
-            default: false,
-            type: Boolean
+            type: [String, Object]
+        },
+        options: {
+            required: true,
+            type: Array as PropType<optionsType>
         },
         disabled: Boolean,
     },
     emits: ['update:modelValue', 'change'],
     setup(props: WdCheckboxProps, ctx) {
         const isChecked = ref(false);
+        const checkboxOptions = toRef(props, 'options');
+        const getOptions = computed(() => {
+            return (checkboxOptions.value as (string | object)[]).map(option => {
+                if(typeof option === 'string') {
+                    return {
+                        label: option,
+                        value: option
+                    }
+                }
+                let label = (option as optionType).label;
+                return {...option, label};
+            });
+        })
+        console.log(getOptions);
         const handleInputChange = () => {
             isChecked.value = !isChecked.value;
             ctx.emit('change', isChecked.value);
+            ctx.emit('update:modelValue', isChecked.value);
         }
-        watch(() => props.checked, val => {
+        watch(() => props.modelValue, val => {
             console.log(val, '#');
-            isChecked.value = val;
         });
         return {
             isChecked,
-            handleInputChange
+            handleInputChange,
+            getOptions
         };
     }
 });

@@ -166,9 +166,10 @@
         <fieldset>
             <legend>checkbox-group</legend>
             <wd-checkbox-group 
-                :checked="isCheckboxChecked"
-                @change="handleCheckboxChange">
-                <wd-checkbox 
+                @change="handleCheckboxChange"
+                v-model="checkboxGroupValue"
+                :options="checkboxGroupOptions">
+                <!-- <wd-checkbox 
                     :checked="isCheckboxChecked"
                     @change="handleCheckboxChange">
                     item1
@@ -177,7 +178,7 @@
                     :checked="isCheckboxChecked"
                     @change="handleCheckboxChange">
                     item2
-                </wd-checkbox>
+                </wd-checkbox> -->
             </wd-checkbox-group>
         </fieldset>
     </div>
@@ -200,6 +201,9 @@ export default {
         let isSwitchChecked = ref(true);
         let isSwitchLoading = ref(false);
         let isCheckboxChecked = ref(true);
+        let checkboxGroupOptions = ref([]);
+        checkboxGroupOptions.value = ['a', 'b'];
+        let checkboxGroupValue = ref([]);
         // setTimeout(() => {
         //     isShowToast.value = true;
         //     toastMsg.value = '这里是toast内容';
@@ -259,7 +263,9 @@ export default {
             handleSwitchChange,
             isSwitchLoading,
             handleCheckboxChange,
-            isCheckboxChecked
+            isCheckboxChecked,
+            checkboxGroupOptions,
+            checkboxGroupValue
         };
     }
 }
