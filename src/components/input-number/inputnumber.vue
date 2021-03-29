@@ -13,7 +13,7 @@
                 :class="[
                     'wd-input-number-handler', 
                     'wd-input-number-handler-up',
-                    {'wd-input-number-disabled': maxDisabled}
+                    {'wd-input-number-handler-up-disabled': maxDisabled}
                 ]"
                 @click="increase"
             >
@@ -24,7 +24,7 @@
                 :class="[
                     'wd-input-number-handler', 
                     'wd-input-number-handler-down',
-                    {'wd-input-number-disabled': minDisabled}
+                    {'wd-input-number-handler-down-disabled': minDisabled}
                 ]"
                 @click="decrease"
             >

@@ -19,7 +19,7 @@
 <script lang="ts">
 import {defineComponent, reactive, PropType, computed, onMounted} from 'vue';
 type SwitchSizes = PropType<'small' | 'large'>;
-import * as IconList from '@ant-design/icons-vue';
+import {LoadingOutlined} from '@ant-design/icons-vue';
 
 type ModelValueType = boolean | string | number;
 
@@ -46,7 +46,7 @@ export default defineComponent({
         loading: Boolean
     },
     components: {
-        ...IconList
+        LoadingOutlined
     },
     emits: ['update:modelValue', 'change'],
     setup(props: WdSwitchProps, {emit}) {

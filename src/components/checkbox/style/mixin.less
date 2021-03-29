@@ -30,9 +30,11 @@
       border: 1px solid @checkbox-color;
       border-radius: @border-radius-sm;
       visibility: hidden;
-      animation: antCheckboxEffect 0.36s ease-in-out;
+      animation: wdCheckboxEffect 0.36s ease-in-out;
       animation-fill-mode: backwards;
       content: '';
+      width: @checkbox-size;
+      height: @checkbox-size;
     }
 
     &:hover::after,
