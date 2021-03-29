@@ -1,5 +1,5 @@
 <template>
-    <button 
+    <div 
         class="wd-switch"
         :class="[
             {
@@ -12,8 +12,8 @@
         :aria-checked="checked"
         @click.prevent="handleChange">
         <LoadingOutlined class="wd-switch-loading-icon"/>
-        <span class="wd-switch-inner"></span>   
-    </button>
+        <!-- <span class="wd-switch-inner"></span>    -->
+    </div>
 </template>
 
 <script lang="ts">

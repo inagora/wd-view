@@ -41,7 +41,7 @@ export default defineComponent({
         },
         disabled: Boolean,
         modelValue: {
-            type: [Boolean, String, Number]
+            type: [Boolean, String, Number],
         },
         name: String
     },
