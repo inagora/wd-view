@@ -10,6 +10,7 @@
             <input 
                 ref="input"
                 class="wd-checkbox-input"
+                :name="name"
                 :disabled="disabled"
                 :checked="isChecked"
                 @change="handleInputChange"
@@ -25,7 +26,9 @@ import {defineComponent, ref, watch} from 'vue';
 
 interface WdCheckboxProps {
     disabled: boolean,
-    checked: boolean
+    checked: boolean,
+    modelValue: boolean | string | number,
+    name: string
 }
 export default defineComponent({
     name: 'wd-checkbox',
@@ -37,13 +40,18 @@ export default defineComponent({
             type: Boolean
         },
         disabled: Boolean,
+        modelValue: {
+            type: [Boolean, String, Number]
+        },
+        name: String
     },
     emits: ['update:modelValue', 'change'],
     setup(props: WdCheckboxProps, ctx) {
-        const isChecked = ref(false);
+        const isChecked = ref(props.modelValue || props.checked);
         const handleInputChange = () => {
             isChecked.value = !isChecked.value;
             ctx.emit('change', isChecked.value);
+            ctx.emit('update:modelValue', isChecked.value);
         }
         watch(() => props.checked, val => {
             console.log(val, '#');

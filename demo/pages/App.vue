@@ -157,6 +157,12 @@
                 复选框
             </wd-checkbox>
             <wd-checkbox 
+                :checked="checkboxDefaultCheck"
+                v-model="checkboxDefaultCheck"
+                @change="handleCheckboxChange">
+                复选框默认选中
+            </wd-checkbox>
+            <wd-checkbox 
                 :checked="isCheckboxChecked"
                 :disabled="true"
                 @change="handleCheckboxChange">
@@ -168,6 +174,7 @@
             <wd-checkbox-group 
                 @change="handleCheckboxChange"
                 v-model="checkboxGroupValue"
+                :default-value="['a']"
                 :options="checkboxGroupOptions">
                 <!-- <wd-checkbox 
                     :checked="isCheckboxChecked"
@@ -184,13 +191,13 @@
         <fieldset>
             <legend>radio</legend>
             <wd-radio 
-                v-model="isCheckboxChecked"
-                :checked="isCheckboxChecked"
+                v-model="isRadioChecked"
+                :checked="isRadioChecked"
                 name="color"
-                @change="handleCheckboxChange">
+                @change="handleRadioChange">
                 红色
             </wd-radio>
-            <wd-radio 
+            <!-- <wd-radio 
                 v-model="isCheckboxChecked"
                 :checked="isCheckboxChecked"
                 name="color"
@@ -203,7 +210,7 @@
                 name="color"
                 @change="handleCheckboxChange">
                 绿色
-            </wd-radio>
+            </wd-radio> -->
         </fieldset>
     </div>
 </template>
@@ -224,10 +231,12 @@ export default {
         let inputNum = ref(0);  
         let isSwitchChecked = ref(true);
         let isSwitchLoading = ref(false);
-        let isCheckboxChecked = ref(true);
+        let isCheckboxChecked = ref(false);
         let checkboxGroupOptions = ref([]);
         checkboxGroupOptions.value = ['a', 'b'];
         let checkboxGroupValue = ref([]);
+        let checkboxDefaultCheck = ref(true);
+        let isRadioChecked = ref(false);
         // setTimeout(() => {
         //     isShowToast.value = true;
         //     toastMsg.value = '这里是toast内容';
@@ -269,6 +278,9 @@ export default {
         const handleCheckboxChange = val => {
             console.log(val);
         }
+        const handleRadioChange = val => {
+
+        }
         return {
             counter, 
             isShowToast,
@@ -289,7 +301,10 @@ export default {
             handleCheckboxChange,
             isCheckboxChecked,
             checkboxGroupOptions,
-            checkboxGroupValue
+            checkboxGroupValue,
+            checkboxDefaultCheck,
+            isRadioChecked,
+            handleRadioChange
         };
     }
 }

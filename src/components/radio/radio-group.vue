@@ -1,35 +1,33 @@
 <template>
     <div class="wd-checkbox-group">
-        <wd-checkbox 
+        <wd-radio 
             v-for="(option, index) in getOptions"
-            :checked="defaultValue.indexOf(option.value) > -1"
             :key="index">
-            {{option.label}}
-        </wd-checkbox>
+            <slot></slot>
+        </wd-radio>
     </div>
 </template>
 
 <script lang="ts">
-import WdCheckbox from './checkbox.vue';
+import WdRadio from './radio.vue';
 import {defineComponent, ref, watch, toRef, PropType, computed} from 'vue';
 
 type optionType = {
     label: string,
     value: boolean
 }
-interface WdCheckboxProps {
+interface WdRadioProps {
     disabled: boolean,
     modelValue: Array<string>,
-    options: Array<string> | Array<optionType>,
-    defaultValue: Array<string>
+    options: Array<string> | Array<optionType>
 }
 
 type optionsType = Array<string> | Array<optionType>;
 export default defineComponent({
-    name: 'wd-checkbox-group',
+    name: 'wd-radio-group',
     inheritAttrs: false,
     components: {
-        WdCheckbox
+        WdRadio
     },
     props: {
         modelValue: {
@@ -41,10 +39,9 @@ export default defineComponent({
             type: Array as PropType<optionsType>
         },
         disabled: Boolean,
-        defaultValue: Array
     },
     emits: ['update:modelValue', 'change'],
-    setup(props: WdCheckboxProps, ctx) {
+    setup(props: WdRadioProps, ctx) {
         const isChecked = ref(false);
         const checkboxOptions = toRef(props, 'options');
         const getOptions = computed(() => {
@@ -59,6 +56,7 @@ export default defineComponent({
                 return {...option, label};
             });
         })
+        console.log(getOptions);
         const handleInputChange = () => {
             isChecked.value = !isChecked.value;
             ctx.emit('change', isChecked.value);
