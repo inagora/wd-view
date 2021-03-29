@@ -186,8 +186,23 @@
             <wd-radio 
                 v-model="isCheckboxChecked"
                 :checked="isCheckboxChecked"
+                name="color"
                 @change="handleCheckboxChange">
-                单选框
+                红色
+            </wd-radio>
+            <wd-radio 
+                v-model="isCheckboxChecked"
+                :checked="isCheckboxChecked"
+                name="color"
+                @change="handleCheckboxChange">
+                黄色
+            </wd-radio>
+            <wd-radio 
+                v-model="isCheckboxChecked"
+                :checked="isCheckboxChecked"
+                name="color"
+                @change="handleCheckboxChange">
+                绿色
             </wd-radio>
         </fieldset>
     </div>

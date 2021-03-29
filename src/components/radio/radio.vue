@@ -10,6 +10,7 @@
             <input 
                 ref="input"
                 class="wd-radio-input"
+                :name="name"
                 :disabled="disabled"
                 :checked="isChecked"
                 @change="handleInputChange"
@@ -26,7 +27,8 @@ import {defineComponent, ref, watch} from 'vue';
 interface WdRadioProps {
     disabled: boolean,
     checked: boolean,
-    modelValue: boolean | string | number
+    modelValue: boolean | string | number,
+    name: string
 }
 export default defineComponent({
     name: 'wd-radio',
@@ -42,6 +44,7 @@ export default defineComponent({
             type: Boolean
         },
         disabled: Boolean,
+        name: String
     },
     emits: ['update:modelValue', 'change'],
     setup(props: WdRadioProps, ctx) {
