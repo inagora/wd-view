@@ -212,6 +212,15 @@
                 绿色
             </wd-radio> -->
         </fieldset>
+        <fieldset>
+            <legend>dropdown</legend>
+            <wd-dropdown>
+                <a class="wd-dropdown-link wd-dropdown-trigger" @click.prevent>
+                    Hover me
+                    <DownOutlined />
+                </a>
+            </wd-dropdown>
+        </fieldset>
     </div>
 </template>
 
@@ -219,10 +228,13 @@
 import {computed, ref} from 'vue';
 import WdToast from '../../src/components/toast/index.vue';
 import WdProgress from '../../src/components/progress/index.vue';
+import DownOutlined from '@ant-design/icons-vue';
 // import WdLink from '../../src/components/link/link.vue';
 export default {
     name: 'App',
-    components: {},
+    components: {
+        DownOutlined
+    },
     setup() {
         let counter = ref(1);
         let isShowToast = ref(false);
