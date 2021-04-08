@@ -14,7 +14,7 @@
             progress="50"
         />
         <button @click="doShowToastClickHandler">show toast</button> -->
-        <fieldset>
+        <!-- <fieldset>
             <legend>按钮</legend>
             <wd-button 
                 icon="filter-filled">普通按钮</wd-button>
@@ -176,16 +176,6 @@
                 v-model="checkboxGroupValue"
                 :default-value="['a']"
                 :options="checkboxGroupOptions">
-                <!-- <wd-checkbox 
-                    :checked="isCheckboxChecked"
-                    @change="handleCheckboxChange">
-                    item1
-                </wd-checkbox>
-                <wd-checkbox 
-                    :checked="isCheckboxChecked"
-                    @change="handleCheckboxChange">
-                    item2
-                </wd-checkbox> -->
             </wd-checkbox-group>
         </fieldset>
         <fieldset>
@@ -197,28 +187,11 @@
                 @change="handleRadioChange">
                 红色
             </wd-radio>
-            <!-- <wd-radio 
-                v-model="isCheckboxChecked"
-                :checked="isCheckboxChecked"
-                name="color"
-                @change="handleCheckboxChange">
-                黄色
-            </wd-radio>
-            <wd-radio 
-                v-model="isCheckboxChecked"
-                :checked="isCheckboxChecked"
-                name="color"
-                @change="handleCheckboxChange">
-                绿色
-            </wd-radio> -->
-        </fieldset>
+        </fieldset> -->
         <fieldset>
             <legend>dropdown</legend>
             <wd-dropdown>
-                <a class="wd-dropdown-link wd-dropdown-trigger" @click.prevent>
-                    Hover me
-                    <DownOutlined />
-                </a>
+                
             </wd-dropdown>
         </fieldset>
     </div>
@@ -228,13 +201,9 @@
 import {computed, ref} from 'vue';
 import WdToast from '../../src/components/toast/index.vue';
 import WdProgress from '../../src/components/progress/index.vue';
-import DownOutlined from '@ant-design/icons-vue';
 // import WdLink from '../../src/components/link/link.vue';
 export default {
     name: 'App',
-    components: {
-        DownOutlined
-    },
     setup() {
         let counter = ref(1);
         let isShowToast = ref(false);
