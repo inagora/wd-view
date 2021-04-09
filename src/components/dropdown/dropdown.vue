@@ -1,5 +1,5 @@
 <template>
-    <trigger class="wd-dropdown-trigger">
+    <trigger>
         <a class="wd-dropdown-link">
             Hover me
             <DownOutlined />
