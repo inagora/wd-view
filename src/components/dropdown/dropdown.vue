@@ -25,18 +25,24 @@ import {defineComponent} from 'vue';
 import './style/index';
 import Trigger from '../trigger/trigger.vue';
 import {DownOutlined} from '@ant-design/icons-vue';
+interface WdDropdownProps {
+    disabled: boolean,
+    visible: boolean,
+    trigger: Array<string>
+}
 export default defineComponent({
     name: 'wd-dropdown',
     props: {
-        
+        disabled: Boolean,
+        visible: Boolean,
+        trigger: Array
     },
     components: {
         Trigger,
         DownOutlined
     },
     emits: ['click'],
-    setup(props, context) {
-        
+    setup(props: WdDropdownProps, context) {
         return  {
             
         };
