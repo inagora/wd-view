@@ -190,8 +190,38 @@
         </fieldset> -->
         <fieldset>
             <legend>dropdown</legend>
-            <wd-dropdown>
-                
+            <wd-dropdown
+                :visible="false"
+                trigger="hover"
+                @visibleChange="visibleChangeHandler">
+                <!-- <a class="wd-dropdown- link">
+                    下拉菜单
+                    <DownOutlined />
+                </a> -->
+                <!-- <template name="menu">
+                    <wd-menu>
+                        <wd-menu-item>
+                            <a href="javascript:;">1st menu item</a>
+                        </wd-menu-item>
+                        <wd-menu-item>
+                            <a href="javascript:;">1st menu item</a>
+                        </wd-menu-item>
+                        <wd-menu-item>
+                            <a href="javascript:;">1st menu item</a>
+                        </wd-menu-item>
+                    </wd-menu>
+                </template> -->
+                <!-- <ul role="menu">
+                    <li role="menuitem" class="wd-dropdown-menu-item">
+                        <a href="javascript:;">1st menu item</a>
+                    </li>
+                    <li role="menuitem" class="wd-dropdown-menu-item">
+                        <a href="javascript:;">2nd menu item</a>
+                    </li>
+                    <li role="menuitem" class="wd-dropdown-menu-item">
+                        <a href="javascript:;">3rd menu item</a>
+                    </li>
+                </ul> -->
             </wd-dropdown>
         </fieldset>
     </div>
@@ -262,6 +292,9 @@ export default {
         const handleRadioChange = val => {
 
         }
+        const visibleChangeHandler = val => {
+            console.log(val);
+        }
         return {
             counter, 
             isShowToast,
@@ -285,7 +318,8 @@ export default {
             checkboxGroupValue,
             checkboxDefaultCheck,
             isRadioChecked,
-            handleRadioChange
+            handleRadioChange,
+            visibleChangeHandler
         };
     }
 }
