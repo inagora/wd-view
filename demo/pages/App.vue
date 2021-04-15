@@ -194,34 +194,23 @@
                 :visible="false"
                 trigger="hover"
                 @visibleChange="visibleChangeHandler">
-                <!-- <a class="wd-dropdown- link">
+                <a class="wd-dropdown-link">
                     下拉菜单
-                    <DownOutlined />
-                </a> -->
-                <!-- <template name="menu">
-                    <wd-menu>
-                        <wd-menu-item>
+                    <down-outlined></down-outlined>
+                </a>
+                <template #dropdown>
+                    <wd-dropdown-menu>
+                        <wd-dropdown-menu-item>
                             <a href="javascript:;">1st menu item</a>
-                        </wd-menu-item>
-                        <wd-menu-item>
+                        </wd-dropdown-menu-item>
+                        <wd-dropdown-menu-item>
                             <a href="javascript:;">1st menu item</a>
-                        </wd-menu-item>
-                        <wd-menu-item>
+                        </wd-dropdown-menu-item>
+                        <wd-dropdown-menu-item>
                             <a href="javascript:;">1st menu item</a>
-                        </wd-menu-item>
-                    </wd-menu>
-                </template> -->
-                <!-- <ul role="menu">
-                    <li role="menuitem" class="wd-dropdown-menu-item">
-                        <a href="javascript:;">1st menu item</a>
-                    </li>
-                    <li role="menuitem" class="wd-dropdown-menu-item">
-                        <a href="javascript:;">2nd menu item</a>
-                    </li>
-                    <li role="menuitem" class="wd-dropdown-menu-item">
-                        <a href="javascript:;">3rd menu item</a>
-                    </li>
-                </ul> -->
+                        </wd-dropdown-menu-item>
+                    </wd-dropdown-menu>
+                </template>
             </wd-dropdown>
         </fieldset>
     </div>
@@ -231,9 +220,13 @@
 import {computed, ref} from 'vue';
 import WdToast from '../../src/components/toast/index.vue';
 import WdProgress from '../../src/components/progress/index.vue';
+import {DownOutlined} from '@ant-design/icons-vue';
 // import WdLink from '../../src/components/link/link.vue';
 export default {
     name: 'App',
+    components: {
+        DownOutlined
+    },
     setup() {
         let counter = ref(1);
         let isShowToast = ref(false);

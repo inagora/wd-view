@@ -2,31 +2,9 @@
     <div
         ref="dropdown"
         class="wd-dropdown-trigger">
-        <!-- <div :class="['wd-dropdown', visibleValue ? 'wd-dropdown-show' : '']"> -->
-            <!-- <menu></menu> -->
-            <!-- <component :is="menu">
-                <slot></slot>
-            </component> -->
-            <!-- <component :is="menu"/>
-            <slot class="wd-dropdown-content wd-dropdown-menu"></slot> -->
-            
-        <!-- </div> -->
-        <a class="wd-dropdown-link">
-            Hover me
-            <DownOutlined />
-        </a>
+        <slot></slot>
         <div :class="['wd-dropdown', visibleValue ? 'wd-dropdown-show' : '']">
-            <ul role="menu" class="wd-dropdown-content wd-dropdown-menu-light wd-dropdown-menu-root wd-dropdown-menu wd-dropdown-menu-vertical">
-                <li role="menuitem" class="wd-dropdown-menu-item">
-                    <a href="javascript:;">1st menu item</a>
-                </li>
-                <li role="menuitem" class="wd-dropdown-menu-item">
-                    <a href="javascript:;">2nd menu item</a>
-                </li>
-                <li role="menuitem" class="wd-dropdown-menu-item">
-                    <a href="javascript:;">3rd menu item</a>
-                </li>
-            </ul>
+            <slot name="dropdown"></slot>
         </div>
     </div>
 </template> 
@@ -34,8 +12,6 @@
 <script lang="ts">
 import {defineComponent, watch, ref, toRefs, computed, onMounted, nextTick} from 'vue';
 import './style/index';
-import {DownOutlined} from '@ant-design/icons-vue';
-import Menu from './dropdown-menu.vue';
 interface WdDropdownProps {
     disabled: boolean,
     visible: boolean,
@@ -53,10 +29,6 @@ export default defineComponent({
             type: String,
             default: 'hover'
         } 
-    },
-    components: {
-        DownOutlined,
-        Menu
     },
     emits: ['visibleChange'],
     setup(props: WdDropdownProps, context) {

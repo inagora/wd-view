@@ -1,13 +1,13 @@
 <template>
-    <div>
+    <li class="wd-dropdown-menu-item">
         <slot></slot>
-    </div>
+    </li>
 </template> 
 
 <script lang="ts">
 import {defineComponent} from 'vue';
 export default defineComponent({
-    name: 'menuItem',
+    name: 'WdDropdownMenuItem',
     setup() {
         const menuItem = 'menuItem';
         return {
