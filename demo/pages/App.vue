@@ -203,6 +203,31 @@
                         <wd-dropdown-menu-item>
                             <a href="https://www.baidu.com">百度</a>
                         </wd-dropdown-menu-item>
+                        <wd-dropdown-menu-item disabled>
+                            <a href="https://www.baidu.com">百度</a>
+                        </wd-dropdown-menu-item>
+                        <wd-dropdown-menu-item>
+                            <a href="javascript:;">1st menu item</a>
+                        </wd-dropdown-menu-item>
+                    </wd-dropdown-menu>
+                </template>
+            </wd-dropdown>
+            <!-- <wd-dropdown
+                :visible="false"
+                trigger="hover"
+                @visibleChange="visibleChangeHandler">
+                <wd-button 
+                    type="primary"
+                    round-shape="none"
+                    @click="clickHandler">
+                    主要按钮
+                    <down-outlined></down-outlined>
+                </wd-button>
+                <template #dropdown>
+                    <wd-dropdown-menu>
+                        <wd-dropdown-menu-item>
+                            <a href="https://www.baidu.com">百度</a>
+                        </wd-dropdown-menu-item>
                         <wd-dropdown-menu-item>
                             <a href="javascript:;">1st menu item</a>
                         </wd-dropdown-menu-item>
@@ -211,7 +236,7 @@
                         </wd-dropdown-menu-item>
                     </wd-dropdown-menu>
                 </template>
-            </wd-dropdown>
+            </wd-dropdown> -->
         </fieldset>
     </div>
 </template>

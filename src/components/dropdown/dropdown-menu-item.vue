@@ -1,5 +1,10 @@
 <template>
-    <li class="wd-dropdown-menu-item">
+    <li 
+        :class="[
+            'wd-dropdown-menu-item',
+            disabled ? 'wd-dropdown-menu-item-disabled' : ''
+        ]"
+    >
         <slot></slot>
     </li>
 </template> 
@@ -8,6 +13,9 @@
 import {defineComponent} from 'vue';
 export default defineComponent({
     name: 'WdDropdownMenuItem',
+    props: {
+        disabled: Boolean
+    },
     setup() {
         const menuItem = 'menuItem';
         return {

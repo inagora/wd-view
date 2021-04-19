@@ -2,6 +2,7 @@
 @import '../../style/mixins/index';
 
 @dropdown-prefix-cls: ~'@{wd-prefix}-dropdown';
+@dropdown-menu-item-disabled-color: #bbb;
 
 .@{dropdown-prefix-cls} {
   .reset-component();
@@ -139,11 +140,24 @@
       }
 
       &-disabled {
-        color: @disabled-color;
+        color: @dropdown-menu-item-disabled-color;
         cursor: not-allowed;
 
+        > a {
+          display: block;
+          margin: -@dropdown-vertical-padding -@control-padding-horizontal;
+          padding: @dropdown-vertical-padding @control-padding-horizontal;
+          color: @dropdown-menu-item-disabled-color;
+          transition: all 0.3s;
+          cursor: not-allowed;
+          &:hover {
+            color: @dropdown-menu-item-disabled-color;
+            cursor: not-allowed;
+          }
+        }
+
         &:hover {
-          color: @disabled-color;
+          color: @dropdown-menu-item-disabled-color;
           background-color: @component-background;
           cursor: not-allowed;
         }
