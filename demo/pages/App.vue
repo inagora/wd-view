@@ -201,7 +201,7 @@
                 <template #dropdown>
                     <wd-dropdown-menu>
                         <wd-dropdown-menu-item>
-                            <a href="javascript:;">1st menu item</a>
+                            <a href="https://www.baidu.com">百度</a>
                         </wd-dropdown-menu-item>
                         <wd-dropdown-menu-item>
                             <a href="javascript:;">1st menu item</a>
