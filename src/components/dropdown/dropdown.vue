@@ -30,7 +30,7 @@ export default defineComponent({
             default: 'hover'
         } 
     },
-    emits: ['visibleChange'],
+    emits: ['visibleChange'], // onchange
     setup(props: WdDropdownProps, context) {
         let {visible} = toRefs(props);
         let visibleValue = ref(visible.value);
@@ -66,6 +66,9 @@ export default defineComponent({
         onMounted(() => {
             console.log(dropdown);
         });
+        // todo 事件解绑
+        // todo menu append body
+        // todo 点击空白处收起menu
         return  {
             visibleValue,
             clickHandler,
