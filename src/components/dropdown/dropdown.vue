@@ -13,6 +13,7 @@
 <script lang="ts">
 import {defineComponent, watch, ref, toRefs, computed, onMounted, nextTick, onUnmounted} from 'vue';
 import './style/index';
+import WdPopper from '../popper/index';
 interface WdDropdownProps {
     disabled: boolean,
     visible: boolean,
@@ -30,6 +31,9 @@ export default defineComponent({
             type: String,
             default: 'hover'
         } 
+    },
+    components: {
+        WdPopper
     },
     emits: ['visibleChange'], // onchange
     setup(props: WdDropdownProps, context) {
