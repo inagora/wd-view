@@ -1,6 +1,7 @@
 <template>
     <div
         ref="dropdown"
+        tabindex="0"
         class="wd-dropdown-trigger">
         <slot></slot>
         <div :class="['wd-dropdown', visibleValue ? 'wd-dropdown-show' : '']">
@@ -10,7 +11,7 @@
 </template> 
 
 <script lang="ts">
-import {defineComponent, watch, ref, toRefs, computed, onMounted, nextTick} from 'vue';
+import {defineComponent, watch, ref, toRefs, computed, onMounted, nextTick, onUnmounted} from 'vue';
 import './style/index';
 interface WdDropdownProps {
     disabled: boolean,
@@ -61,14 +62,15 @@ export default defineComponent({
             if(props.disabled) return;
             nextTick(() => {
                 dropdown.value.addEventListener('click', clickHandler, false);
+                dropdown.value.addEventListener('blur', hideMenu, false);
             });
         } 
-        onMounted(() => {
-            console.log(dropdown);
+        onUnmounted(() => {
+            dropdown.value.removeEventListener('mouseenter', showMenu);
+            dropdown.value.removeEventListener('mouseleave', hideMenu);
+            dropdown.value.removeEventListener('click', clickHandler);
+            dropdown.value.removeEventListener('blur', hideMenu);
         });
-        // todo 事件解绑
-        // todo menu append body
-        // todo 点击空白处收起menu
         return  {
             visibleValue,
             clickHandler,
