@@ -238,6 +238,10 @@
                 </template>
             </wd-dropdown> -->
         </fieldset>
+        <fieldset>
+            <legend>datepicker</legend>
+            <wd-date-picker></wd-date-picker>
+        </fieldset>
     </div>
 </template>
 
