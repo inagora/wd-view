@@ -240,7 +240,8 @@
         </fieldset>
         <fieldset>
             <legend>datepicker</legend>
-            <wd-date-picker></wd-date-picker>
+            <wd-date-picker
+                type="range"></wd-date-picker>
         </fieldset>
     </div>
 </template>
