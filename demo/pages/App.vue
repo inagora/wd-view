@@ -241,7 +241,16 @@
         <fieldset>
             <legend>datepicker</legend>
             <wd-date-picker
-                type="range"></wd-date-picker>
+                type="date"
+                :clearable="false"
+                :disabled="false"
+                default-value="2021-02-02 02:02:02"
+                format="YYYY/MM/DD HH:mm:ss"
+                value-format="YYYY-MM-DD HH-mm-ss"
+                size="small"
+                placeholder="请选择日期"
+                v-model="datepickerValue"
+                @change="datepickerChange"></wd-date-picker>
         </fieldset>
     </div>
 </template>
@@ -271,6 +280,7 @@ export default {
         let checkboxGroupValue = ref([]);
         let checkboxDefaultCheck = ref(true);
         let isRadioChecked = ref(false);
+        let datepickerValue = ref('2021-02-02 02:02:02');
         // setTimeout(() => {
         //     isShowToast.value = true;
         //     toastMsg.value = '这里是toast内容';
@@ -318,6 +328,9 @@ export default {
         const visibleChangeHandler = val => {
             console.log(val);
         }
+        const datepickerChange = val => {
+            console.log(val);
+        }
         return {
             counter, 
             isShowToast,
@@ -342,7 +355,9 @@ export default {
             checkboxDefaultCheck,
             isRadioChecked,
             handleRadioChange,
-            visibleChangeHandler
+            visibleChangeHandler,
+            datepickerValue,
+            datepickerChange
         };
     }
 }
