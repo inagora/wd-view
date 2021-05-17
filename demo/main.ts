@@ -10,6 +10,7 @@ import WdCheckboxGroup from '../src/components/checkbox';
 import WdRadio from '../src/components/radio';
 import WdDropdown from '../src/components/dropdown';
 import WdDatePicker from '../src/components/date-picker';
+import WdLayout from '../src/components/layout';
 
 
 const app = createApp(App);
@@ -23,4 +24,5 @@ app.use(WdCheckboxGroup);
 app.use(WdRadio);
 app.use(WdDropdown);
 app.use(WdDatePicker);
+app.use(WdLayout);
 app.mount('#app');

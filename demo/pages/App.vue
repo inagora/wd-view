@@ -264,6 +264,25 @@
                 separator="|"
                 @change="datepickerChange"></wd-date-picker>
         </fieldset>
+        <fieldset>
+            <legend>layout</legend>
+            <wd-layout>
+                <wd-layout-header>
+                    这里是header
+                </wd-layout-header>
+                <wd-layout>
+                    <wd-layout-content>
+                        content
+                    </wd-layout-content> 
+                    <wd-layout-sider>
+                        menu1
+                    </wd-layout-sider>       
+                </wd-layout>
+                <wd-layout-footer>
+                    @footer
+                </wd-layout-footer>
+            </wd-layout>
+        </fieldset>
     </div>
 </template>
 
