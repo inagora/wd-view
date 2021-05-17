@@ -7,6 +7,7 @@
         :format="format"
         :value-format="valueFormat"
         :size="size"
+        :separator="separator"
         :default-value="_defaultValue"
         v-model="modelValue"
         @change="change"/>
@@ -18,12 +19,13 @@ interface WdPickerProps {
     type: string,
     clearable: boolean,
     disabled: boolean,
-    defaultValue: string, // 日期类型或者string类型
+    defaultValue: any, // 日期类型或者string类型
     format: string, // 显示格式化： YYYY-MM-DD HH:mm:ss
     valueFormat: string, // 值的格式化
     size: string, // large/small
     modelValue: Date | string,
-    placeholder: string
+    placeholder: any,
+    separator: string // range 的分隔符
 }
 const pickerTypes = {
     date: 'ADatePicker',
@@ -44,12 +46,11 @@ export default defineComponent({
         },
         clearable: Boolean,
         disabled: Boolean,
-        defaultValue: {
-            type: String
-        },
+        defaultValue: Object,
         format: String,
         size: String,
-        placeholder: String
+        placeholder: Object,
+        separator: String
     },
     emits: ['update:modelValue', 'change'],
     setup(props: WdPickerProps, {emit}) {
@@ -62,6 +63,10 @@ export default defineComponent({
         // 默认日期
         let _defaultValue = ref('');
         if(props.defaultValue) _defaultValue.value = props.defaultValue;
+        // rang类型需要设置数组
+        if(props.type === 'range' && !(props.defaultValue instanceof Array)) {
+            console.warn('rangepicker need Array form defaultValue');
+        }
         return  {   
             pickerType,
             change,

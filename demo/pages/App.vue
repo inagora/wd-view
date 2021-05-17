@@ -251,6 +251,18 @@
                 placeholder="请选择日期"
                 v-model="datepickerValue"
                 @change="datepickerChange"></wd-date-picker>
+            <wd-date-picker
+                type="range"
+                :clearable="true"
+                :disabled="false"
+                :default-value="['2021-02-02 02:02:02', '2021-02-03 02:02:02']"
+                format="YYYY/MM/DD HH:mm:ss"
+                value-format="YYYY-MM-DD HH-mm-ss"
+                size="small"
+                :placeholder="['请选择开始日期', '请选择结束日期']"
+                v-model="datepickerValue"
+                separator="|"
+                @change="datepickerChange"></wd-date-picker>
         </fieldset>
     </div>
 </template>
