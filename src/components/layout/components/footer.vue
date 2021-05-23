@@ -1,7 +1,7 @@
 <template>
-    <div class="wd-layout-footer">
+    <footer class="wd-layout-footer">
         <slot></slot>
-    </div>
+    </footer>
 </template>
 
 <script lang="ts">

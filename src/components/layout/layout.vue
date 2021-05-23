@@ -10,14 +10,15 @@ import './style/index';
 export default defineComponent({
     name: 'wd-layout',
     props: {
-        
+        hasSider: Boolean
     },
-    emits: ['update:modelValue', 'input', 'change', 'clear'],
     setup(props, ctx) {
-        let hasSider = ref(false);
-        return {
-            hasSider
-        };
+        // let hasSider = ref(false);
+        // let slots = ctx.slots;
+        // console.log(slots.name);
+        // return {
+        //     hasSider
+        // };
     }
 });
 </script>

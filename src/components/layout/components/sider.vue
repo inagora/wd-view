@@ -1,7 +1,9 @@
 <template>
-    <div class="wd-layout-sider">
-        <slot></slot>
-    </div>
+    <aside class="wd-layout-sider">
+        <div class="wd-layout-sider-children">
+            <slot></slot>
+        </div>
+    </aside>
 </template>
 
 <script lang="ts">

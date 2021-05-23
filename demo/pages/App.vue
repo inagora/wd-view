@@ -270,13 +270,13 @@
                 <wd-layout-header>
                     这里是header
                 </wd-layout-header>
-                <wd-layout>
+                <wd-layout has-sider="true">
+                    <wd-layout-sider>
+                        <wd-button type="link">menu1</wd-button>
+                    </wd-layout-sider> 
                     <wd-layout-content>
                         content
-                    </wd-layout-content> 
-                    <wd-layout-sider>
-                        menu1
-                    </wd-layout-sider>       
+                    </wd-layout-content>       
                 </wd-layout>
                 <wd-layout-footer>
                     @footer

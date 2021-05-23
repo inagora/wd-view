@@ -1,7 +1,7 @@
 <template>
-    <div class="wd-layout-header">
+    <header class="wd-layout-header">
         <slot></slot>
-    </div>
+    </header>
 </template>
 
 <script lang="ts">
