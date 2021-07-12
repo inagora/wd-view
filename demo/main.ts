@@ -11,6 +11,7 @@ import WdRadio from '../src/components/radio';
 import WdDropdown from '../src/components/dropdown';
 import WdDatePicker from '../src/components/date-picker';
 import WdLayout from '../src/components/layout';
+import WdSelect from '../src/components/select';
 
 
 const app = createApp(App);
@@ -25,4 +26,5 @@ app.use(WdRadio);
 app.use(WdDropdown);
 app.use(WdDatePicker);
 app.use(WdLayout);
+app.use(WdSelect);
 app.mount('#app');

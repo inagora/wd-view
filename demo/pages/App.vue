@@ -188,8 +188,8 @@
                 红色
             </wd-radio>
         </fieldset> -->
-        <fieldset>
-            <legend>dropdown</legend>
+        <!-- <fieldset> -->
+            <!-- <legend>dropdown</legend>
             <wd-dropdown
                 :visible="false"
                 trigger="hover"
@@ -211,7 +211,7 @@
                         </wd-dropdown-menu-item>
                     </wd-dropdown-menu>
                 </template>
-            </wd-dropdown>
+            </wd-dropdown> -->
             <!-- <wd-dropdown
                 :visible="false"
                 trigger="hover"
@@ -237,8 +237,8 @@
                     </wd-dropdown-menu>
                 </template>
             </wd-dropdown> -->
-        </fieldset>
-        <fieldset>
+        <!-- </fieldset> -->
+        <!-- <fieldset>
             <legend>datepicker</legend>
             <wd-date-picker
                 type="date"
@@ -282,6 +282,10 @@
                     @footer
                 </wd-layout-footer>
             </wd-layout>
+        </fieldset> -->
+        <fieldset>
+            <legend>select</legend>
+            <wd-select></wd-select>
         </fieldset>
     </div>
 </template>
