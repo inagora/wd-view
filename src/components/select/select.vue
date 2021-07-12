@@ -1,5 +1,5 @@
 <template>
-    <div tabindex="0" class="wd-select wd-select-enabled wd-select-sm" style="width: 120px;">
+    <div class="wd-select wd-select-enabled wd-select-sm" style="width: 120px;">
         <div role="combobox" class="wd-select-selection wd-select-selection--single">
             <div class="wd-select-selection__rendered">
                 <div title="Lucy" class="wd-select-selection-selected-value" style="display: block; opacity: 1;"></div>
@@ -19,8 +19,42 @@ import './style/index';
 export default defineComponent({
     name: 'wd-select',
     props: {
-
+        modelValue: [Array, String, Number, Boolean, Object],
+        autocomplete: {
+            type: String,
+            default: 'off',
+        },
+        automaticDropdown: Boolean,
+        disabled: Boolean,
+        clearable: Boolean,
+        filterable: Boolean,
+        allowCreate: Boolean, // 是否允许用户自己创建选项
+        loading: Boolean, // 远程加载
+        remote: Boolean, // 是否是远程加载
+        loadingText: String,
+        noMatchText: String,
+        noDataText: String,
+        remoteMethod: Function,
+        multiple: Boolean, // 是否多选
+        multipleLimit: {
+            type: Number,
+            default: 0,
+        },
+        placeholder: {
+            type: String,
+        },
+        defaultFirstOption: Boolean,
+        reserveKeyword: Boolean,
+        popperAppendToBody: {
+            type: Boolean,
+            default: true,
+        },
+        clearIcon: {
+            type: String,
+            default: 'el-icon-circle-close',
+        },
     },
+    emits: ['update:modelValue', 'change', 'remove-tag', 'clear', 'visible-change', 'focus', 'blur'],
     setup(props) {
         return {
             
