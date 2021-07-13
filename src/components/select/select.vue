@@ -27,7 +27,7 @@
             ref="selectSelector"
             class="wd-select-selector"
             style="width: 120px;">
-            <div role="combobox" class="wd-select-selection wd-select-selection--single">
+            <div role="combobox" class="wd-select-selection wd-select-selection--multiple">
                 <div v-if="modelValue">
                     {{modelValue}}
                 </div>
