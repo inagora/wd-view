@@ -285,7 +285,8 @@
         </fieldset> -->
         <fieldset>
             <legend>select</legend>
-            <wd-select></wd-select>
+            <wd-select 
+                size="small"></wd-select>
         </fieldset>
     </div>
 </template>
