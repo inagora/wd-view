@@ -2,47 +2,49 @@
     <div 
         class="wd-select wd-select-single"
         :class="[disabled ? 'wd-select-disabled' : 'wd-select-enabled', 'wd-select-' + sizeMap[size]]">
-        <div 
-            v-if="multiple"
-            @click="clickHandler"
-            tabindex="0"
-            ref="selectSelector"
-            class="wd-select-selector"
-            style="width: 120px;">
-            <div role="combobox" class="wd-select-selection wd-select-selection--single">
-                <div v-if="modelValue">
-                    {{modelValue}}
+        <wd-popper>
+            <div 
+                v-if="multiple"
+                @click="clickHandler"
+                tabindex="0"
+                ref="selectSelector"
+                class="wd-select-selector"
+                style="width: 120px;">
+                <div role="combobox" class="wd-select-selection wd-select-selection--single">
+                    <div v-if="modelValue">
+                        {{modelValue}}
+                    </div>
+                    <span unselectable="on" class="wd-select-arrow" style="user-select: none;">
+                        <i aria-label="图标: down" class="anticon anticon-down wd-select-arrow-icon">
+                            <svg viewBox="64 64 896 896" data-icon="down" width="1em" height="1em" fill="currentColor" aria-hidden="true" focusable="false" class=""><path d="M884 256h-75c-5.1 0-9.9 2.5-12.9 6.6L512 654.2 227.9 262.6c-3-4.1-7.8-6.6-12.9-6.6h-75c-6.5 0-10.3 7.4-6.5 12.7l352.6 486.1c12.8 17.6 39 17.6 51.7 0l352.6-486.1c3.9-5.3.1-12.7-6.4-12.7z"></path></svg>
+                        </i>
+                    </span>
                 </div>
-                <span unselectable="on" class="wd-select-arrow" style="user-select: none;">
-                    <i aria-label="图标: down" class="anticon anticon-down wd-select-arrow-icon">
-                        <svg viewBox="64 64 896 896" data-icon="down" width="1em" height="1em" fill="currentColor" aria-hidden="true" focusable="false" class=""><path d="M884 256h-75c-5.1 0-9.9 2.5-12.9 6.6L512 654.2 227.9 262.6c-3-4.1-7.8-6.6-12.9-6.6h-75c-6.5 0-10.3 7.4-6.5 12.7l352.6 486.1c12.8 17.6 39 17.6 51.7 0l352.6-486.1c3.9-5.3.1-12.7-6.4-12.7z"></path></svg>
-                    </i>
-                </span>
             </div>
-        </div>
-        <div 
-            v-else
-            @click="clickHandler"
-            tabindex="1"
-            ref="selectSelector"
-            class="wd-select-selector"
-            style="width: 120px;">
-            <div role="combobox" class="wd-select-selection wd-select-selection--multiple">
-                <div v-if="modelValue">
-                    {{modelValue}}
+            <div 
+                v-else
+                @click="clickHandler"
+                tabindex="1"
+                ref="selectSelector"
+                class="wd-select-selector"
+                style="width: 120px;">
+                <div role="combobox" class="wd-select-selection wd-select-selection--multiple">
+                    <div v-if="modelValue">
+                        {{modelValue}}
+                    </div>
+                    <span unselectable="on" class="wd-select-arrow" style="user-select: none;">
+                        <i aria-label="图标: down" class="anticon anticon-down wd-select-arrow-icon">
+                            <svg viewBox="64 64 896 896" data-icon="down" width="1em" height="1em" fill="currentColor" aria-hidden="true" focusable="false" class=""><path d="M884 256h-75c-5.1 0-9.9 2.5-12.9 6.6L512 654.2 227.9 262.6c-3-4.1-7.8-6.6-12.9-6.6h-75c-6.5 0-10.3 7.4-6.5 12.7l352.6 486.1c12.8 17.6 39 17.6 51.7 0l352.6-486.1c3.9-5.3.1-12.7-6.4-12.7z"></path></svg>
+                        </i>
+                    </span>
                 </div>
-                <span unselectable="on" class="wd-select-arrow" style="user-select: none;">
-                    <i aria-label="图标: down" class="anticon anticon-down wd-select-arrow-icon">
-                        <svg viewBox="64 64 896 896" data-icon="down" width="1em" height="1em" fill="currentColor" aria-hidden="true" focusable="false" class=""><path d="M884 256h-75c-5.1 0-9.9 2.5-12.9 6.6L512 654.2 227.9 262.6c-3-4.1-7.8-6.6-12.9-6.6h-75c-6.5 0-10.3 7.4-6.5 12.7l352.6 486.1c12.8 17.6 39 17.6 51.7 0l352.6-486.1c3.9-5.3.1-12.7-6.4-12.7z"></path></svg>
-                    </i>
-                </span>
             </div>
-        </div>
-        <div :class="['wd-select-dropdown wd-select-dropdown--single wd-select-dropdown-placement-bottomLeft', optionsShow ? '' : 'wd-select-dropdown-hidden']">
-            <div class="wd-select-dropdown-content">
-                <div class="wd-select-item" v-for="item in 20" :key="item">{{item}}</div>
+            <div :class="['wd-select-dropdown wd-select-dropdown--single wd-select-dropdown-placement-bottomLeft', optionsShow ? '' : 'wd-select-dropdown-hidden']">
+                <div class="wd-select-dropdown-content">
+                    <div class="wd-select-item" v-for="item in 20" :key="item">{{item}}</div>
+                </div>
             </div>
-        </div>
+        </wd-popper>
     </div>
 </template> 
 
@@ -56,8 +58,12 @@
  * 4、cascade模式 // 7.31前完成
  */
 import {defineComponent, reactive, ref, toRefs, nextTick} from 'vue';
+import WdPopper from '../popper';
 export default defineComponent({
     name: 'wd-select',
+    components: {
+        WdPopper  
+    },
     props: {
         modelValue: [Array, String, Number, Boolean, Object],
         autocomplete: {
