@@ -8,7 +8,7 @@ export default function renderArrow(showArrow: boolean) {
       'div',
       {
         ref: 'arrowRef',
-        class: 'el-popper__arrow',
+        class: 'wd-popper__arrow',
         'data-popper-arrow': '',
       },
       null,

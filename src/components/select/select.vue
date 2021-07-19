@@ -2,7 +2,10 @@
     <div 
         class="wd-select wd-select-single"
         :class="[disabled ? 'wd-select-disabled' : 'wd-select-enabled', 'wd-select-' + sizeMap[size]]">
-        <wd-popper>
+        <wd-popper
+            ref="popper"
+            trigger="click"
+      >
             <template #trigger>
                 <div class="select-trigger">
                     <div 
@@ -10,8 +13,7 @@
                         @click="clickHandler"
                         tabindex="0"
                         ref="selectSelector"
-                        class="wd-select-selector"
-                        style="width: 120px;">
+                        class="wd-select-selector">
                         <div role="combobox" class="wd-select-selection wd-select-selection--single">
                             <div v-if="modelValue">
                                 {{modelValue}}
@@ -29,7 +31,7 @@
                         tabindex="1"
                         ref="selectSelector"
                         class="wd-select-selector"
-                        style="width: 120px;">
+                        style="width: 120px">
                         <div role="combobox" class="wd-select-selection wd-select-selection--multiple">
                             <div v-if="modelValue">
                                 {{modelValue}}
@@ -43,11 +45,13 @@
                     </div>
                 </div>
             </template>
-            <div :class="['wd-select-dropdown wd-select-dropdown--single wd-select-dropdown-placement-bottomLeft', optionsShow ? '' : 'wd-select-dropdown-hidden']">
-                <div class="wd-select-dropdown-content">
-                    <div class="wd-select-item" v-for="item in 20" :key="item">{{item}}</div>
+            <template #default>
+                <div :class="['wd-select-dropdown wd-select-dropdown--single wd-select-dropdown-placement-bottomLeft', optionsShow ? '' : 'wd-select-dropdown-hidden']">
+                    <div class="wd-select-dropdown-content">
+                        <div class="wd-select-item" v-for="item in 20" :key="item">{{item}}</div>
+                    </div>
                 </div>
-            </div>
+            </template>
         </wd-popper>
     </div>
 </template> 
@@ -140,6 +144,14 @@ export default defineComponent({
     }
 });
 </script>
-<style lang="less" scoped>
+<style lang="less">
 @import url(./style/index);
+// .wd-popper {
+//     display: block !important;
+//     z-index: 2008;
+//     position: absolute;
+//     inset: 0 auto auto 0;
+//     margin: 0;
+//     transform: translate3d(72px, 105px, 0);
+// }
 </style>
