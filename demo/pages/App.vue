@@ -286,7 +286,11 @@
         <fieldset>
             <legend>select</legend>
             <wd-select 
-                size="small"></wd-select>
+                size="small">
+                <wd-option label="百度" value="baidu">hhh</wd-option>    
+                <wd-option label="谷歌" value="google">hhh</wd-option>    
+                <wd-option label="必应" value="bing">hhh</wd-option>    
+            </wd-select>
         </fieldset>
     </div>
 </template>

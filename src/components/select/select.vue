@@ -5,7 +5,7 @@
         <wd-popper
             ref="popper"
             trigger="click"
-      >
+        >
             <template #trigger>
                 <div class="select-trigger">
                     <div 
@@ -48,7 +48,7 @@
             <template #default>
                 <div :class="['wd-select-dropdown wd-select-dropdown--single wd-select-dropdown-placement-bottomLeft', optionsShow ? '' : 'wd-select-dropdown-hidden']">
                     <div class="wd-select-dropdown-content">
-                        <div class="wd-select-item" v-for="item in 20" :key="item">{{item}}</div>
+                        <slot></slot>
                     </div>
                 </div>
             </template>
@@ -60,10 +60,13 @@
 /**
  * todo
  * 1、options组件 // 7.18前完成
- * 2、下拉项的选择 // 7.18前完成
- * 2、multiple模式 // 7.25前完成
- * 3、value为tag的形式 // 7.25前完成
- * 4、cascade模式 // 7.31前完成
+ * 2、下拉选项append到body上 // 7.18前完成
+ * 3、multiple模式 // 7.25前完成
+ * 4、value为tag的形式 // 7.25前完成
+ * 5、cascade模式 // 7.31前完成
+ * 
+ * z-index 的深度区分，统一规范
+ * option的优化：每一个item可以增加z-index
  */
 import {defineComponent, reactive, ref, toRefs, nextTick} from 'vue';
 // import WdPopper from '../popper/index';
@@ -146,12 +149,7 @@ export default defineComponent({
 </script>
 <style lang="less">
 @import url(./style/index);
-// .wd-popper {
-//     display: block !important;
-//     z-index: 2008;
-//     position: absolute;
-//     inset: 0 auto auto 0;
-//     margin: 0;
-//     transform: translate3d(72px, 105px, 0);
-// }
+.wd-popper {
+    transform: translate3d(12px, 100px, 0) !important;
+}
 </style>
