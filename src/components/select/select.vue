@@ -33,8 +33,8 @@
                         class="wd-select-selector"
                         style="width: 120px">
                         <div role="combobox" class="wd-select-selection wd-select-selection--multiple">
-                            <div v-if="modelValue">
-                                {{modelValue}}
+                            <div v-if="selectedValue">
+                                {{selectedValue}}
                             </div>
                             <span unselectable="on" class="wd-select-arrow" style="user-select: none;">
                                 <i aria-label="图标: down" class="anticon anticon-down wd-select-arrow-icon">
@@ -120,12 +120,17 @@ export default defineComponent({
             default: ''
         });
         const selectSelector = ref(null);
-        nextTick(() => {
-            // 失去焦点隐藏选项
-            selectSelector.value.addEventListener('blur', () => {
-                optionsShow.value = false;
-            }, false);
-        });
+        // nextTick(() => {
+        //     // 失去焦点隐藏选项
+        //     selectSelector.value.addEventListener('blur', () => {
+        //         optionsShow.value = false;
+        //     }, false);
+        // });
+
+        let selectedValue = ref(props.modelValue);
+        selectedValue.value = 'aaa';
+        let {slots} = context;
+        console.log(slots.default());
         
         let {visibleValue} = toRefs(props);
         let optionsShow = ref(visibleValue.value);
@@ -137,12 +142,18 @@ export default defineComponent({
         const visibleChange = () => {
             context.emit('visibleChange', visibleValue.value);
         }
+        // 
+        const optionClickHandler = () => {
+            console.log(111);
+        }
         return {
             sizeMap,
             clickHandler,
             optionsShow,
             selectSelector,
-            visibleChange
+            visibleChange,
+            selectedValue,
+            optionClickHandler
         }
     }
 });
