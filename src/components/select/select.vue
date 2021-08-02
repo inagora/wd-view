@@ -15,22 +15,22 @@
                         tabindex="0"
                         ref="selectSelector"
                         class="wd-select-selector"
-                        style="width: 100px;">
+                        style="width: 200px;">
                         <div role="combobox" class="wd-select-selection wd-select-selection--multiple">
-                            <div 
-                                v-if="selectedArray.length > 0"
-                                class="wd-select-selection-overflow">
+                            <template 
+                                v-if="selectedArray.length > 0">
                                 <div 
                                     v-for="(selected, index) in selectedArray" 
                                     :key="index"
-                                    class="wd-select-selection-overflow-item">
+                                    class="wd-select-selection-item">
                                     <span class="wd-select-selection-item">
                                         <span class="wd-select-selection-item-content">
                                             {{selected.label}}
                                         </span>
+                                        <span class="wd-select-selection-item-remove" unselectable="on" aria-hidden="true" style="user-select: none;"><span role="img" aria-label="close" class="anticon anticon-close"><svg focusable="false" class="" data-icon="close" width="1em" height="1em" fill="currentColor" aria-hidden="true" viewBox="64 64 896 896"><path d="M563.8 512l262.5-312.9c4.4-5.2.7-13.1-6.1-13.1h-79.8c-4.7 0-9.2 2.1-12.3 5.7L511.6 449.8 295.1 191.7c-3-3.6-7.5-5.7-12.3-5.7H203c-6.8 0-10.5 7.9-6.1 13.1L459.4 512 196.9 824.9A7.95 7.95 0 00203 838h79.8c4.7 0 9.2-2.1 12.3-5.7l216.5-258.1 216.5 258.1c3 3.6 7.5 5.7 12.3 5.7h79.8c6.8 0 10.5-7.9 6.1-13.1L563.8 512z"></path></svg></span></span>
                                     </span>
                                 </div>
-                            </div>
+                            </template>
                             <div v-else class="wd-select-selection-placeholder">
                                 {{placeholder}}
                             </div>
@@ -168,6 +168,7 @@ export default defineComponent({
         // 设置选择的值
         const setSelectedValue = (val) => {
             let options = slots.default();
+            console.log(options);
             if(isMultiple.value) { // 多选
                 let selectedOption = options.filter(item => {
                     return item.props.value === val;
@@ -179,10 +180,11 @@ export default defineComponent({
                 })[0];
                 selectedValue.value = selectedOption.props;
             }
-            console.log(selectedArray.value);
             emit('update:modelValue', val);
             emit('change', val);
         }
+        provide('multiple', isMultiple.value);
+        // vue3中没有$on，所以用provide方法将父组件的方法传给子组件，子组件直接调用
         provide('optionClickHandler', optionClickHandler);
         return {
             sizeMap,
