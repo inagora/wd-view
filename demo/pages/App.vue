@@ -286,6 +286,19 @@
         <fieldset>
             <legend>select</legend>
             <wd-select 
+                multiple
+                v-model="selectedValue"
+                @change="selectedChangeHandler"
+                placeholder="请选择搜索引擎"
+                size="small">
+                <wd-option label="百度" value="baidu">hhh</wd-option>    
+                <wd-option label="谷歌" value="google">hhh</wd-option>    
+                <wd-option label="必应" value="bing">hhh</wd-option>    
+            </wd-select>
+            <wd-select 
+                v-model="selectedValue"
+                @change="selectedChangeHandler"
+                placeholder="请选择搜索引擎"
                 size="small">
                 <wd-option label="百度" value="baidu">hhh</wd-option>    
                 <wd-option label="谷歌" value="google">hhh</wd-option>    
@@ -371,6 +384,10 @@ export default {
         const datepickerChange = val => {
             console.log(val);
         }
+        const selectedValue = ref('');
+        const selectedChangeHandler = val => {
+            console.log(val);
+        }
         return {
             counter, 
             isShowToast,
@@ -397,7 +414,9 @@ export default {
             handleRadioChange,
             visibleChangeHandler,
             datepickerValue,
-            datepickerChange
+            datepickerChange,
+            selectedChangeHandler,
+            selectedValue
         };
     }
 }

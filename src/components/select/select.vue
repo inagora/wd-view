@@ -1,7 +1,8 @@
 <template>
     <div 
-        class="wd-select wd-select-single"
-        :class="[disabled ? 'wd-select-disabled' : 'wd-select-enabled', 'wd-select-' + sizeMap[size]]">
+        ref="selectWrapper"
+        class="wd-select"
+        :class="[disabled ? 'wd-select-disabled' : 'wd-select-enabled', 'wd-select-' + sizeMap[size], multiple ? ' wd-select-multiple' : ' wd-select-single']">
         <wd-popper
             ref="popper"
             trigger="click"
@@ -13,10 +14,25 @@
                         @click="clickHandler"
                         tabindex="0"
                         ref="selectSelector"
-                        class="wd-select-selector">
-                        <div role="combobox" class="wd-select-selection wd-select-selection--single">
-                            <div v-if="modelValue">
-                                {{modelValue}}
+                        class="wd-select-selector"
+                        style="width: 100px;">
+                        <div role="combobox" class="wd-select-selection wd-select-selection--multiple">
+                            <div 
+                                v-if="selectedArray.length > 0"
+                                class="wd-select-selection-overflow">
+                                <div 
+                                    v-for="(selected, index) in selectedArray" 
+                                    :key="index"
+                                    class="wd-select-selection-overflow-item">
+                                    <span class="wd-select-selection-item">
+                                        <span class="wd-select-selection-item-content">
+                                            {{selected.label}}
+                                        </span>
+                                    </span>
+                                </div>
+                            </div>
+                            <div v-else class="wd-select-selection-placeholder">
+                                {{placeholder}}
                             </div>
                             <span unselectable="on" class="wd-select-arrow" style="user-select: none;">
                                 <i aria-label="图标: down" class="anticon anticon-down wd-select-arrow-icon">
@@ -30,11 +46,13 @@
                         @click="clickHandler"
                         tabindex="1"
                         ref="selectSelector"
-                        class="wd-select-selector"
-                        style="width: 120px">
-                        <div role="combobox" class="wd-select-selection wd-select-selection--multiple">
+                        class="wd-select-selector">
+                        <div role="combobox" class="wd-select-selection wd-select-selection--single">
                             <div v-if="selectedValue">
-                                {{selectedValue}}
+                                {{selectedValue.label}}
+                            </div>
+                            <div v-else class="wd-select-selection-placeholder">
+                                {{placeholder}}
                             </div>
                             <span unselectable="on" class="wd-select-arrow" style="user-select: none;">
                                 <i aria-label="图标: down" class="anticon anticon-down wd-select-arrow-icon">
@@ -68,7 +86,7 @@
  * z-index 的深度区分，统一规范
  * option的优化：每一个item可以增加z-index
  */
-import {defineComponent, reactive, ref, toRefs, nextTick} from 'vue';
+import {defineComponent, reactive, ref, toRefs, nextTick, provide} from 'vue';
 // import WdPopper from '../popper/index';
 export default defineComponent({
     name: 'wd-select',
@@ -119,7 +137,10 @@ export default defineComponent({
             large: 'lg',
             default: ''
         });
+        const {slots, emit} = context;
         const selectSelector = ref(null);
+        const selectWrapper = ref<HTMLElement | null>(null);
+        const isMultiple = ref(props.multiple);
         // nextTick(() => {
         //     // 失去焦点隐藏选项
         //     selectSelector.value.addEventListener('blur', () => {
@@ -128,9 +149,7 @@ export default defineComponent({
         // });
 
         let selectedValue = ref(props.modelValue);
-        selectedValue.value = 'aaa';
-        let {slots} = context;
-        console.log(slots.default());
+        let selectedArray = ref([]);
         
         let {visibleValue} = toRefs(props);
         let optionsShow = ref(visibleValue.value);
@@ -143,17 +162,38 @@ export default defineComponent({
             context.emit('visibleChange', visibleValue.value);
         }
         // 
-        const optionClickHandler = () => {
-            console.log(111);
+        const optionClickHandler = (value) => {
+            setSelectedValue(value);
         }
+        // 设置选择的值
+        const setSelectedValue = (val) => {
+            let options = slots.default();
+            if(isMultiple.value) { // 多选
+                let selectedOption = options.filter(item => {
+                    return item.props.value === val;
+                })[0];
+                selectedArray.value.push(selectedOption.props);
+            } else {
+                let selectedOption = options.filter(item => {
+                    return item.props.value === val;
+                })[0];
+                selectedValue.value = selectedOption.props;
+            }
+            console.log(selectedArray.value);
+            emit('update:modelValue', val);
+            emit('change', val);
+        }
+        provide('optionClickHandler', optionClickHandler);
         return {
             sizeMap,
             clickHandler,
             optionsShow,
             selectSelector,
+            selectWrapper,
             visibleChange,
             selectedValue,
-            optionClickHandler
+            optionClickHandler,
+            selectedArray
         }
     }
 });

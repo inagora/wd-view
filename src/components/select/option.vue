@@ -10,7 +10,7 @@
 </template> 
 
 <script lang="ts">
-import {defineComponent, toRefs, ref} from 'vue';
+import {defineComponent, toRefs, ref, inject} from 'vue';
 export default defineComponent({
     name: 'WdOption',
     props: {
@@ -30,7 +30,8 @@ export default defineComponent({
         let {active, selected} = toRefs(props);
         let isItemActived = ref(active.value);
         let isItemSelected = ref(selected.value);
-        let {emit} = context;
+        const select = inject('selectWrapper');
+        const optionClickHandler = inject('optionClickHandler');
         const mouseoverHandler = () => {
             isItemActived.value = true;
         }   
@@ -40,14 +41,16 @@ export default defineComponent({
         // 选项点击
         const clickHandler = () => {
             isItemSelected.value = true;
-            console.log(222);
-            emit('optionSelected', '111');
+            // @ts-ignore
+            optionClickHandler(props.value);
         }
         return {
             mouseoverHandler,
             mouseleaveHandler,
             clickHandler,
-            isItemActived
+            isItemActived,
+            select,
+            optionClickHandler
         }
     }
 });
