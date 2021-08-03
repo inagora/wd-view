@@ -66,6 +66,29 @@
   display: inline-block;
   cursor: pointer;
 
+  &-options {
+    margin: 0;
+    padding: 0;
+    color: rgba(0, 0, 0, 0.85);
+    font-variant: tabular-nums;
+    line-height: 1.5715;
+    list-style: none;
+    font-feature-settings: 'tnum';
+    top: 0;
+    left: 0;
+    max-height: 150px;
+    overflow-y: scroll;
+    z-index: 1050;
+    box-sizing: border-box;
+    padding: 4px 0;
+    font-size: 14px;
+    font-variant: initial;
+    background-color: #fff;
+    border-radius: 2px;
+    outline: none;
+    box-shadow: 0 2px 8px rgb(0 0 0 / 15%);
+  }
+
   &:not(.@{select-prefix-cls}-disabled):hover &-selector {
     .hover();
   }
@@ -238,7 +261,7 @@
   &-item {
     .item();
 
-    width: 120px;
+    min-width: 120px;
     cursor: pointer;
     transition: background 0.3s ease;
 

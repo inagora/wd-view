@@ -1,5 +1,6 @@
 <template>
     <div 
+        tabindex="3"
         class="wd-select-item wd-select-item-option"
         :class="{'wd-select-item-option-selected': isItemSelected, 'wd-select-item-option-active': isItemActived}"
         @mouseover="mouseoverHandler"
@@ -13,7 +14,7 @@
 </template> 
 
 <script lang="ts">
-import {defineComponent, toRefs, ref, inject} from 'vue';
+import {defineComponent, toRefs, ref, inject, watch} from 'vue';
 export default defineComponent({
     name: 'WdOption',
     props: {
@@ -26,16 +27,21 @@ export default defineComponent({
         active: {
             type: Boolean,
             default: false
-        }
+        },
+        tabindex: Number
     },
     emits: ['optionSelected'],
     setup(props, context) {
-        let {active, selected} = toRefs(props);
+        let {active, selected, value} = toRefs(props);
         let isItemActived = ref(active.value);
         let isItemSelected = ref(selected.value);
         const select = inject('selectWrapper');
-        const optionClickHandler = inject('optionClickHandler');
+        const optionClickHandler: any = inject('optionClickHandler');
+        const removeItem: any = inject('removeItem'); // 删除的元素
+        const selectedItem: any = inject('selectedItem'); // 选择的元素
         let multiple = inject('multiple');
+
+        // methods
         const mouseoverHandler = () => {
             isItemActived.value = true;
         }   
@@ -47,12 +53,27 @@ export default defineComponent({
             if(multiple) {
                 isItemSelected.value = !isItemSelected.value;
             } else {
-                console.log(222);
                 isItemSelected.value = true;
             }
-            // @ts-ignore
-            optionClickHandler(props.value);
+            optionClickHandler({
+                value: value.value,
+                selected: isItemSelected.value
+            });
         }
+
+        // watch 
+         watch(removeItem, () => {
+            if(removeItem.value.value === value.value) {
+                isItemSelected.value = false;
+            }
+        });
+        watch(selectedItem, () => {
+            if(selectedItem.value.value === value.value) {
+                isItemSelected.value = true;
+            } else {
+                isItemSelected.value = false;
+            }
+        });
         return {
             mouseoverHandler,
             mouseleaveHandler,
