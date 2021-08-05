@@ -1,4 +1,5 @@
 const path = require('path');
+const webpack = require('webpack');
 const { CleanWebpackPlugin } = require('clean-webpack-plugin');
 const HtmlWebpackPlugin = require('html-webpack-plugin');
 const CopyWebpackPlugin = require('copy-webpack-plugin');
@@ -29,7 +30,8 @@ const config = {
         new MiniCssExtractPlugin({
             filename: './index.css'
         }),
-        new VueLoaderPlugin()
+        new VueLoaderPlugin(),
+        new webpack.ContextReplacementPlugin(/moment[/\\]locale$/, /zh-cn/),
     ],
     module: {
         rules: [
@@ -43,9 +45,10 @@ const config = {
                         presets: ['@babel/preset-env'],
                         plugins: [
                             ['import', {
-                                "libraryName": "antd",
-                                "style": true,   // or 'css'
-                            }, 'antd']
+                                "libraryName": "ant-design-vue", 
+                                "libraryDirectory": "es", 
+                                "style": "css"
+                            }]
                         ]
                     }
                 }],
@@ -91,7 +94,7 @@ const config = {
     },
     resolve: {
         extensions: ['.js', '.ts']
-    },
+    }
 };
 
 module.exports = (env) => {
