@@ -287,6 +287,21 @@
             <legend>select</legend>
             <wd-select 
                 multiple
+                multiple-limit="2"
+                v-model="selectedValue"
+                @change="selectedChangeHandler"
+                placeholder="请选择搜索引擎"
+                size="small">
+                <wd-option label="百度" value="baidu">hhh</wd-option>    
+                <wd-option label="百度知道" value="baiduzhidao">hhh</wd-option>    
+                <wd-option label="谷歌" value="google">hhh</wd-option>    
+                <wd-option label="谷歌2" value="google2">hhh</wd-option>    
+                <wd-option label="谷歌3" value="google3">hhh</wd-option>    
+                <wd-option label="必应" value="bing">hhh</wd-option>    
+                <wd-option label="必2应" value="bing2">hhh</wd-option>    
+                <wd-option label="3必应" value="bing3">hhh</wd-option>    
+            </wd-select>
+            <!-- <wd-select 
                 v-model="selectedValue"
                 @change="selectedChangeHandler"
                 placeholder="请选择搜索引擎"
@@ -294,16 +309,7 @@
                 <wd-option label="百度" value="baidu">hhh</wd-option>    
                 <wd-option label="谷歌" value="google">hhh</wd-option>    
                 <wd-option label="必应" value="bing">hhh</wd-option>    
-            </wd-select>
-            <wd-select 
-                v-model="selectedValue"
-                @change="selectedChangeHandler"
-                placeholder="请选择搜索引擎"
-                size="small">
-                <wd-option label="百度" value="baidu">hhh</wd-option>    
-                <wd-option label="谷歌" value="google">hhh</wd-option>    
-                <wd-option label="必应" value="bing">hhh</wd-option>    
-            </wd-select>
+            </wd-select> -->
         </fieldset>
     </div>
 </template>
