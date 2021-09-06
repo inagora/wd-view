@@ -311,6 +311,41 @@
                 <wd-option label="必应" value="bing">hhh</wd-option>    
             </wd-select> -->
         </fieldset>
+        <fieldset>
+            <legend>form</legend>
+            <wd-form label-width="100px"> 
+                <wd-form-item label="姓名：">
+                    <wd-input 
+                        type="text"
+                        size="small"
+                        v-model="textData"
+                        placeholder="请输入姓名"></wd-input>
+                </wd-form-item> 
+                <wd-form-item label="性别：" label-align="left">
+                    <wd-select 
+                        v-model="selectedValue"
+                        @change="selectedChangeHandler"
+                        placeholder="请选择搜索引擎"
+                        size="small">
+                        <wd-option label="男" value="male"></wd-option>    
+                        <wd-option label="女" value="female"></wd-option>   
+                    </wd-select>
+                </wd-form-item>
+                <wd-form-item label="出生日期：">
+                    <wd-date-picker
+                        type="date"
+                        :clearable="false"
+                        :disabled="false"
+                        default-value="2021-02-02 02:02:02"
+                        format="YYYY/MM/DD HH:mm:ss"
+                        value-format="YYYY-MM-DD HH-mm-ss"
+                        size="small"
+                        placeholder="请选择日期"
+                        v-model="datepickerValue"
+                        @change="datepickerChange"></wd-date-picker>
+                </wd-form-item> 
+            </wd-form>
+        </fieldset>
     </div>
 </template>
 

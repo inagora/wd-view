@@ -12,6 +12,7 @@ import WdDropdown from '../src/components/dropdown';
 import WdDatePicker from '../src/components/date-picker';
 import WdLayout from '../src/components/layout';
 import WdSelect from '../src/components/select';
+import WdForm from '../src/components/form';
 
 
 const app = createApp(App);
@@ -27,4 +28,5 @@ app.use(WdDropdown);
 app.use(WdDatePicker);
 app.use(WdLayout);
 app.use(WdSelect);
+app.use(WdForm);
 app.mount('#app');
