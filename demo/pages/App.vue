@@ -283,11 +283,11 @@
                 </wd-layout-footer>
             </wd-layout>
         </fieldset> -->
-        <fieldset>
-            <legend>select</legend>
-            <wd-select 
+        <!-- <fieldset>
+            <legend>select</legend> -->
+            <!-- <wd-select 
                 multiple
-                multiple-limit="2"
+                :multiple-limit="2"
                 v-model="selectedValue"
                 @change="selectedChangeHandler"
                 placeholder="请选择搜索引擎"
@@ -300,7 +300,7 @@
                 <wd-option label="必应" value="bing">hhh</wd-option>    
                 <wd-option label="必2应" value="bing2">hhh</wd-option>    
                 <wd-option label="3必应" value="bing3">hhh</wd-option>    
-            </wd-select>
+            </wd-select> -->
             <!-- <wd-select 
                 v-model="selectedValue"
                 @change="selectedChangeHandler"
@@ -310,28 +310,60 @@
                 <wd-option label="谷歌" value="google">hhh</wd-option>    
                 <wd-option label="必应" value="bing">hhh</wd-option>    
             </wd-select> -->
-        </fieldset>
+        <!-- </fieldset> -->
         <fieldset>
             <legend>form</legend>
-            <wd-form label-width="100px"> 
+            <wd-form label-width="100px" label-align="right" size="small" disabled> 
                 <wd-form-item label="姓名：">
                     <wd-input 
+                        size="large"
                         type="text"
-                        size="small"
                         v-model="textData"
                         placeholder="请输入姓名"></wd-input>
                 </wd-form-item> 
-                <wd-form-item label="性别：" label-align="left">
+                <wd-form-item label="性别：">
+                    <wd-radio 
+                        v-model="isRadioChecked"
+                        :checked="isMale"
+                        name="color"
+                        @change="handleRadioChange">
+                        男
+                    </wd-radio>
+                    <wd-radio 
+                        v-model="isRadioChecked"
+                        :checked="isFemale"
+                        name="color"
+                        @change="handleRadioChange">
+                        女
+                    </wd-radio>
+                </wd-form-item>
+                <wd-form-item label="婚姻状况：">
+                    <wd-checkbox 
+                        :checked="isCheckboxChecked"
+                        @change="handleCheckboxChange">
+                        已婚
+                    </wd-checkbox>
+                </wd-form-item>
+                <wd-form-item label="年龄：">
+                    <wd-input-number
+                        v-model="inputNum"
+                        max=20
+                        min=0
+                        @input="handleInputNumber"
+                        @change="handleChangeNumber"
+                        type="text"></wd-input-number>
+                </wd-form-item>
+                <wd-form-item label="学历：">
                     <wd-select 
                         v-model="selectedValue"
                         @change="selectedChangeHandler"
-                        placeholder="请选择搜索引擎"
-                        size="small">
-                        <wd-option label="男" value="male"></wd-option>    
-                        <wd-option label="女" value="female"></wd-option>   
+                        placeholder="请选择学历">
+                        <wd-option label="研究生" value="baidu">hhh</wd-option>    
+                        <wd-option label="本科" value="google">hhh</wd-option>    
+                        <wd-option label="专科" value="bing">hhh</wd-option>    
                     </wd-select>
                 </wd-form-item>
-                <wd-form-item label="出生日期：">
+                <wd-form-item label="毕业日期：">
                     <wd-date-picker
                         type="date"
                         :clearable="false"
@@ -343,7 +375,15 @@
                         placeholder="请选择日期"
                         v-model="datepickerValue"
                         @change="datepickerChange"></wd-date-picker>
-                </wd-form-item> 
+                </wd-form-item>
+                <wd-form-item>
+                    <wd-button 
+                        size="small" 
+                        type="danger">重置</wd-button>
+                    <wd-button 
+                        size="small" 
+                        type="success">提交</wd-button>
+                </wd-form-item>
             </wd-form>
         </fieldset>
     </div>
@@ -374,6 +414,8 @@ export default {
         let checkboxGroupValue = ref([]);
         let checkboxDefaultCheck = ref(true);
         let isRadioChecked = ref(false);
+        let isMale = ref(false);
+        let isFemale = ref(false);
         let datepickerValue = ref('2021-02-02 02:02:02');
         // setTimeout(() => {
         //     isShowToast.value = true;
@@ -457,7 +499,9 @@ export default {
             datepickerValue,
             datepickerChange,
             selectedChangeHandler,
-            selectedValue
+            selectedValue,
+            isMale,
+            isFemale
         };
     }
 }

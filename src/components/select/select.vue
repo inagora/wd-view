@@ -2,7 +2,7 @@
     <div 
         ref="selectWrapper"
         class="wd-select"
-        :class="[disabled ? 'wd-select-disabled' : 'wd-select-enabled', 'wd-select-' + sizeMap[size], multiple ? ' wd-select-multiple' : ' wd-select-single', optionsShow ? 'wd-select-show-search' : '']">
+        :class="[selectDisabled ? 'wd-select-disabled' : 'wd-select-enabled', 'wd-select-' + inputSize, multiple ? ' wd-select-multiple' : ' wd-select-single', optionsShow ? 'wd-select-show-search' : '']">
         <wd-popper
             ref="popper"
             style="width: 150px;"
@@ -107,8 +107,9 @@
  * （6）、筛选
  * （7）、多选限制
  */
-import {defineComponent, reactive, ref, toRefs, nextTick, provide, watch} from 'vue';
+import {defineComponent, reactive, ref, toRefs, nextTick, provide, watch, inject} from 'vue';
 import lodashDebounce from 'lodash/debounce';
+import {wdFormKey, wdFormItemKey, WdFormProps, WdFormItemProps} from '../form/props';
 type optionType = {
     value: any,
     selected: boolean
@@ -146,7 +147,6 @@ export default defineComponent({
             type: String,
             default: 'a-icon-circle-close',
         },
-        size: String,
         visibleValue: {
             type: Boolean,
             default: false
@@ -154,6 +154,10 @@ export default defineComponent({
         valueType: { // 选项是否是标签
             type: Boolean,
             default: false
+        },
+        size: {
+            type: String,
+            default: 'small'
         }
     },
     emits: ['update:modelValue', 'change', 'remove-tag', 'clear', 'visibleChange', 'focus', 'blur'],
@@ -163,6 +167,10 @@ export default defineComponent({
             large: 'lg',
             default: ''
         });
+        const wdForm = inject(wdFormKey, {} as WdFormProps);
+        const wdFormItem = inject(wdFormItemKey, {} as WdFormItemProps);
+        let inputSize = sizeMap[props.size] || sizeMap[wdFormItem.size] || sizeMap[wdForm.size];
+        let selectDisabled = props.disabled || wdFormItem.disabled || wdForm.disabled;
         const {slots, emit} = context;
         const selectSelector = ref(null);
         const selectWrapper = ref<HTMLElement | null>(null);
@@ -297,7 +305,9 @@ export default defineComponent({
             handleSearchInputKeydown,
             searchInput,
             popperVisible,
-            debouncedOnInputChange
+            debouncedOnInputChange,
+            inputSize,
+            selectDisabled
         }
     }
 });

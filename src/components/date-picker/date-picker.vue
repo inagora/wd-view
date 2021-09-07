@@ -3,10 +3,10 @@
         :is="pickerType"
         :placeholder="placeholder"
         :allow-clear="clearable"
-        :disabled="disabled"
+        :disabled="pickDisabled"
         :format="format"
         :value-format="valueFormat"
-        :size="size"
+        :size="inputSize"
         :separator="separator"
         :default-value="_defaultValue"
         v-model="modelValue"
@@ -14,7 +14,8 @@
 </template>
 
 <script lang="ts">
-import {defineComponent, PropType, ref} from 'vue';
+import {defineComponent, PropType, ref, inject} from 'vue';
+import {wdFormKey, wdFormItemKey, WdFormProps, WdFormItemProps} from '../form/props';
 interface WdPickerProps {
     type: string,
     clearable: boolean,
@@ -50,7 +51,8 @@ export default defineComponent({
         format: String,
         size: String,
         placeholder: Object,
-        separator: String
+        separator: String,
+        valueFormat: String
     },
     emits: ['update:modelValue', 'change'],
     setup(props: WdPickerProps, {emit}) {
@@ -60,6 +62,10 @@ export default defineComponent({
             emit('update:modelValue', val);
             emit('change', val);
         }
+        const wdForm = inject(wdFormKey, {} as WdFormProps);
+        const wdFormItem = inject(wdFormItemKey, {} as WdFormItemProps);
+        let inputSize = props.size || wdFormItem.size || wdForm.size;
+        let pickDisabled = props.disabled || wdFormItem.disabled || wdForm.disabled;
         // 默认日期
         let _defaultValue = ref('');
         if(props.defaultValue) _defaultValue.value = props.defaultValue;
@@ -70,7 +76,9 @@ export default defineComponent({
         return  {   
             pickerType,
             change,
-            _defaultValue
+            _defaultValue,
+            inputSize,
+            pickDisabled
         };
     }
 });

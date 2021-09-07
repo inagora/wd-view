@@ -4,14 +4,14 @@
             'wd-radio',
             {
                 'wd-radio-checked': isChecked,
-                'wd-radio-disabled': disabled
+                'wd-radio-disabled': inputDisabled
             }
         ]">
             <input 
                 ref="input"
                 class="wd-radio-input"
                 :name="name"
-                :disabled="disabled"
+                :disabled="inputDisabled"
                 :checked="isChecked"
                 @change="handleInputChange"
                 type="radio">
@@ -22,12 +22,13 @@
 </template>
 
 <script lang="ts">
-import {defineComponent, ref, watch} from 'vue';
+import {defineComponent, ref, watch, inject} from 'vue';
+import {wdFormKey, wdFormItemKey, WdFormProps, WdFormItemProps} from '../form/props';
 
 interface WdRadioProps {
     disabled: boolean,
     checked: boolean,
-    modelValue: boolean | string | number,
+    modelValue: boolean,
     name: string
 }
 export default defineComponent({
@@ -35,7 +36,7 @@ export default defineComponent({
     inheritAttrs: false,
     props: {
         modelValue: {
-            type: [Boolean, String, Number],
+            type: Boolean,
             default: ''
         },
         checked: {
@@ -54,12 +55,16 @@ export default defineComponent({
             ctx.emit('change', isChecked.value);
             ctx.emit('update:modelValue', isChecked.value);
         }
+        const wdForm = inject(wdFormKey, {} as WdFormProps);
+        const wdFormItem = inject(wdFormItemKey, {} as WdFormItemProps);
+        let radioDisabled = props.disabled || wdFormItem.disabled || wdForm.disabled;
         watch(() => props.checked, val => {
             isChecked.value = val;
         });
         return {
             isChecked,
-            handleInputChange
+            handleInputChange,
+            radioDisabled
         };
     }
 });

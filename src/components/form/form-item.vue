@@ -10,8 +10,8 @@
 </template> 
 
 <script lang="ts">
-import {computed, defineComponent, inject, reactive} from 'vue';
-import {WdFormProps} from './props';
+import {computed, defineComponent, inject, provide, reactive, toRefs} from 'vue';
+import {wdFormItemKey, WdFormProps, wdFormKey} from './props';
 export default defineComponent({
     name: 'wd-form-item',
     props: {
@@ -19,7 +19,7 @@ export default defineComponent({
         labelWidth: String,
     },
     setup(props) {
-        let wdForm = inject('wdForm', {} as WdFormProps);
+        let wdForm = inject(wdFormKey, {} as WdFormProps);
         let labelStyle = computed(() => {
             let labelWidth = props.labelWidth || wdForm.labelWidth;
             let labelAlign = wdForm.labelAlign;
@@ -28,6 +28,8 @@ export default defineComponent({
                 align: labelAlign
             }
         });
+        
+        provide(wdFormItemKey, reactive({...toRefs(props)}));
         return {
             labelStyle,
             wdForm

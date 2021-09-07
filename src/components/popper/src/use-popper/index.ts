@@ -39,8 +39,8 @@ export default function(
 
   const popperId = `wd-popper-${generateId()}`
   let popperInstance: Nullable<PopperInstance> = null
-  let showTimer: Nullable<TimeoutHandle> = null
-  let hideTimer: Nullable<TimeoutHandle> = null
+  let showTimer: number // Nullable<TimeoutHandle> = null
+  let hideTimer: number // Nullable<TimeoutHandle> = null
   let triggerFocused = false
 
   const isManualMode = () => props.manualMode || props.trigger === 'manual'
@@ -73,6 +73,7 @@ export default function(
   })
 
   function _show() {
+    console.log(111);
     if (props.autoClose > 0) {
       hideTimer = window.setTimeout(() => {
         _hide()
@@ -82,6 +83,7 @@ export default function(
   }
 
   function _hide() {
+    console.log(222);
     visibility.value = false
   }
 

@@ -7,7 +7,25 @@
 </template> 
 
 <script lang="ts">
+/**
+ * 1、form以及foritem组件以及基本属性
+ * 2、各个组件的整合
+ * 3、子组件基本属性
+ * 
+ * todo
+ * 1、子组件属性
+ * 2、表单验证
+ * 
+ * seperator
+ * offset 
+ * layout: label的align属性
+ * 
+ * 原生表单回车触发提交问题
+ * 
+ * 每一个item增加错误message
+ */
 import {defineComponent, provide, reactive, toRefs} from 'vue';
+import {wdFormKey} from './props';
 export default defineComponent({
     name: 'wd-form',
     props: {
@@ -23,16 +41,10 @@ export default defineComponent({
         disabled: Boolean
     },
     setup(props, context) {
-        const sizeMap = reactive({
-            small: 'sm',
-            large: 'lg',
-            default: ''
-        });
-
-        provide('wdForm', reactive({...toRefs(props)}));
+        provide(wdFormKey, reactive({...toRefs(props)}));
 
         return {
-            sizeMap
+            
         }
     }
 });

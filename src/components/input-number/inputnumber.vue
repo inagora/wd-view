@@ -34,7 +34,7 @@
         <wd-input 
             ref="input"
             type="text"
-            :size="size"
+            :size="inputSize"
             :disabled="inputDisabled"
             :readonly="readonly"
             :max="max"
@@ -49,11 +49,12 @@
 </template>
 
 <script lang="ts">
-import {defineComponent, reactive, computed, watch, ref, nextTick, shallowRef, onMounted} from 'vue';
+import {defineComponent, reactive, computed, watch, ref, nextTick, shallowRef, onMounted, inject} from 'vue';
 import WdInput from '../input/input.vue';
 import {DownOutlined, UpOutlined} from '@ant-design/icons-vue';
 import {toRawType} from '@vue/shared';
 import type { PropType } from 'vue';
+import {wdFormKey, wdFormItemKey, WdFormProps, WdFormItemProps} from '../form/props';
 
 interface WdInputNumberProps {
     type: string,
@@ -80,10 +81,7 @@ export default defineComponent({
     },
     props: {
         modelValue: {
-            required: true,
-            validator: val => {
-                return toRawType(val) === 'Number' || val === undefined
-            }
+            required: true
         },
         type: {
             type: String,
@@ -117,8 +115,11 @@ export default defineComponent({
         }
     },
     emits: ['update:modelValue', 'input', 'change', 'clear'],
-    setup(props: WdInputNumberProps, ctx) {
+    setup(props, ctx) {
         const input = ref(null);
+        const wdForm = inject(wdFormKey, {} as WdFormProps);
+        const wdFormItem = inject(wdFormItemKey, {} as WdFormItemProps);
+        let inputSize = props.size || wdFormItem.size || wdForm.size;
 
         const data = reactive({
             currentValue: props.modelValue
@@ -134,7 +135,7 @@ export default defineComponent({
         });
 
         const inputDisabled = computed(() => {
-            return props.disabled;
+            return props.disabled || wdFormItem.disabled || wdForm.disabled;
         });
         const displayValue = computed(() => {
             return data.currentValue;
@@ -236,7 +237,8 @@ export default defineComponent({
             increase,
             decrease,
             maxDisabled,
-            minDisabled
+            minDisabled,
+            inputSize
         };
     }
 });

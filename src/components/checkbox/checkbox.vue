@@ -4,14 +4,14 @@
             'wd-checkbox',
             {
                 'wd-checkbox-checked': isChecked,
-                'wd-checkbox-disabled': disabled
+                'wd-checkbox-disabled': checkDisabled
             }
         ]">
             <input 
                 ref="input"
                 class="wd-checkbox-input"
                 :name="name"
-                :disabled="disabled"
+                :disabled="checkDisabled"
                 :checked="isChecked"
                 @change="handleInputChange"
                 type="checkbox">
@@ -22,7 +22,8 @@
 </template>
 
 <script lang="ts">
-import {defineComponent, ref, watch} from 'vue';
+import {defineComponent, ref, watch, inject} from 'vue';
+import {wdFormKey, wdFormItemKey, WdFormProps, WdFormItemProps} from '../form/props';
 
 interface WdCheckboxProps {
     disabled: boolean,
@@ -46,8 +47,11 @@ export default defineComponent({
         name: String
     },
     emits: ['update:modelValue', 'change'],
-    setup(props: WdCheckboxProps, ctx) {
+    setup(props, ctx) {
         const isChecked = ref(props.modelValue || props.checked);
+        const wdForm = inject(wdFormKey, {} as WdFormProps);
+        const wdFormItem = inject(wdFormItemKey, {} as WdFormItemProps);
+        let checkDisabled = props.disabled || wdFormItem.disabled || wdForm.disabled;
         const handleInputChange = () => {
             isChecked.value = !isChecked.value;
             ctx.emit('change', isChecked.value);
@@ -59,7 +63,8 @@ export default defineComponent({
         });
         return {
             isChecked,
-            handleInputChange
+            handleInputChange,
+            checkDisabled
         };
     }
 });

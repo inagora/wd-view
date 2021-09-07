@@ -22,12 +22,12 @@
             <input 
                 :class="[
                     'wd-input',
-                    'wd-input-' + sizeMap[size]
+                    'wd-input-' + inputSize
                 ]"
                 v-bind="$attrs"
                 :type="type"
                 ref="input"
-                :disabled="disabled"
+                :disabled="inputDisabled"
                 :readonly="readonly"
                 @input="handleInput"
                 @change="handleChange">
@@ -56,7 +56,7 @@
             class="textarea wd-input wd-input-textarea"
             v-bind="$attrs"
             ref="textarea"
-            :disabled="disabled"
+            :disabled="inputDisabled"
             :readonly="readonly"
             :style="textareaStyle"
             @input="handleInput"
@@ -71,10 +71,11 @@
 </template>
 
 <script lang="ts">
-import {defineComponent, PropType, reactive, computed, watch, ref, nextTick, shallowRef, onMounted} from 'vue';
+import {defineComponent, PropType, reactive, computed, watch, ref, nextTick, shallowRef, onMounted, inject} from 'vue';
 import * as IconList from '@ant-design/icons-vue';
 import calcTextareaHeight from './calcTextareaHeight';
 import {isObject} from '@vue/shared';
+import {wdFormKey, wdFormItemKey, WdFormProps, WdFormItemProps} from '../form/props';
 interface WdInputProps {
     type: string,
     size: string,
@@ -147,6 +148,10 @@ export default defineComponent({
             large: 'lg',
             default: ''
         });
+        const wdForm = inject(wdFormKey, {} as WdFormProps);
+        const wdFormItem = inject(wdFormItemKey, {} as WdFormItemProps);
+        let inputSize = sizeMap[props.size] || sizeMap[wdFormItem.size] || sizeMap[wdForm.size];
+        let inputDisabled = props.disabled || wdFormItem.disabled || wdForm.disabled;
         const input = ref(null);
         const textarea = ref(null);
         const inputOrTextarea = computed(() => input.value || textarea.value);
@@ -219,6 +224,7 @@ export default defineComponent({
             nextTick(resizeTextarea);
         });
         return {
+            inputSize,
             sizeMap,
             isWordLimitVisible,
             textLength,
@@ -230,7 +236,8 @@ export default defineComponent({
             input,
             textarea,
             inputOrTextarea,
-            textareaStyle
+            textareaStyle,
+            inputDisabled
         };
     }
 });
