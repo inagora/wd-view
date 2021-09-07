@@ -21,6 +21,12 @@ const config = {
         compress: true,
         overlay: true
     },
+    cache: {
+        type: 'filesystem',
+        buildDependencies: {
+            config: [__filename]
+        }
+    },
     watchOptions: {
         ignored: /node_modules/
     },
