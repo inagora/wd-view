@@ -53,9 +53,9 @@ const config = {
                         plugins: [
                             '@babel/plugin-transform-runtime',
                             ['import', {
-                                "libraryName": "antd",
-                                "style": true,   // or 'css'
-                            }, 'antd']
+                                "libraryName": "ant-design-vue",
+                                "style": 'css',   // or 'css'
+                            }, 'ant-design-vue']
                         ]
                     }
                 }],

@@ -6,9 +6,11 @@
         :disabled="pickDisabled"
         :format="format"
         :value-format="valueFormat"
+        :show-time="true"
         :size="inputSize"
         :separator="separator"
         :default-value="_defaultValue"
+        :locale="dateLocale"
         v-model="modelValue"
         @change="change"/>
 </template>
@@ -16,6 +18,7 @@
 <script lang="ts">
 import {defineComponent, PropType, ref, inject} from 'vue';
 import {wdFormKey, wdFormItemKey, WdFormProps, WdFormItemProps} from '../form/props';
+import locale from 'ant-design-vue/es/date-picker/locale/zh_CN';
 interface WdPickerProps {
     type: string,
     clearable: boolean,
@@ -26,6 +29,7 @@ interface WdPickerProps {
     size: string, // large/small
     modelValue: Date | string,
     placeholder: any,
+    showTime: boolean, // 是否显示时间
     separator: string // range 的分隔符
 }
 const pickerTypes = {
@@ -52,10 +56,15 @@ export default defineComponent({
         size: String,
         placeholder: Object,
         separator: String,
-        valueFormat: String
+        valueFormat: String,
+        showTime: {
+            type: Boolean,
+            default: false
+        }
     },
     emits: ['update:modelValue', 'change'],
     setup(props: WdPickerProps, {emit}) {
+        const dateLocale = ref(locale);
         let pickerType = ref('date');
         pickerType = pickerTypes[props.type];
         const change = (val) => {
@@ -78,12 +87,9 @@ export default defineComponent({
             change,
             _defaultValue,
             inputSize,
-            pickDisabled
+            pickDisabled,
+            dateLocale
         };
     }
 });
 </script>
-
-<style lang="less" scoped>
-@import url(./style/index);
-</style>

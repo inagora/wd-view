@@ -29,8 +29,8 @@ const babelConfig = {
       'babel-plugin-import',
       {
         libraryName: 'ant-design-vue',
-        libraryDirectory: '', // default: lib
-        style: true,
+        libraryDirectory: 'es', // default: lib
+        style: 'css',
       },
     ],
     ['@vue/babel-plugin-jsx', { mergeProps: false }],
@@ -118,14 +118,14 @@ module.exports = {
       },
     ],
   },
-  resolve: {
-    alias: {
-      'ant-design-vue/es': path.join(__dirname, './components'),
-      'ant-design-vue': path.join(__dirname, './components'),
-      vue$: 'vue/dist/vue.esm-bundler.js',
-    },
-    extensions: ['.js', '.jsx', '.ts', '.tsx', '.vue', '.md'],
-  },
+  // resolve: {
+  //   alias: {
+  //     'ant-design-vue/es': path.join(__dirname, './components'),
+  //     'ant-design-vue': path.join(__dirname, './components'),
+  //     vue$: 'vue/dist/vue.esm-bundler.js',
+  //   },
+  //   extensions: ['.js', '.jsx', '.ts', '.tsx', '.vue', '.md'],
+  // },
   devServer: {
     historyApiFallback: {
       rewrites: [{ from: /./, to: '/index.html' }],
