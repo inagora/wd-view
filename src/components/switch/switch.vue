@@ -12,7 +12,6 @@
         :aria-checked="checked"
         @click.prevent="handleChange">
         <LoadingOutlined class="wd-switch-loading-icon"/>
-        <!-- <span class="wd-switch-inner"></span>    -->
     </div>
 </template>
 

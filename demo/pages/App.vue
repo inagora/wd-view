@@ -313,10 +313,9 @@
         <!-- </fieldset> -->
         <fieldset>
             <legend>form</legend>
-            <wd-form label-width="100px" label-align="right" size="small" disabled> 
+            <wd-form label-width="100px" label-align="right" size="small"> 
                 <wd-form-item label="姓名：">
                     <wd-input 
-                        size="large"
                         type="text"
                         v-model="textData"
                         placeholder="请输入姓名"></wd-input>
@@ -390,12 +389,10 @@
 </template>
 
 <script lang="ts">
-import {computed, ref} from 'vue';
-import WdToast from '../../src/components/toast/index.vue';
-import WdProgress from '../../src/components/progress/index.vue';
+import {ref, defineComponent} from 'vue';
 import {DownOutlined} from '@ant-design/icons-vue';
 // import WdLink from '../../src/components/link/link.vue';
-export default {
+export default defineComponent({
     name: 'App',
     components: {
         DownOutlined
@@ -504,7 +501,7 @@ export default {
             isFemale
         };
     }
-}
+})
 </script>
 
 <style lang="less" scoped>

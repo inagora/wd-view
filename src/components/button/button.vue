@@ -26,7 +26,6 @@ type ButtonSizes = PropType<'small' | 'large'>;
 type ButtonRoundShape = PropType<'none' | 'small' | 'large' | 'circle'>;
 type ButtonNativeType = PropType<'button' | 'submit' | 'reset'>;
 import * as IconList from '@ant-design/icons-vue';
-// import {FilterFilled} from '@ant-design/icons-vue';
 export default defineComponent({
     name: 'wd-button',
     props: {
