@@ -312,12 +312,12 @@
             </wd-select> -->
         <!-- </fieldset> -->
         <fieldset>
-            <legend>form</legend>
-            <wd-form label-width="100px" label-align="right" size="small"> 
-                <wd-form-item label="姓名：">
+            <legend>form: {{userInfo.name}}</legend>
+            <wd-form label-width="100px" label-align="right" size="small" :model="userInfo" :validate-on-rule-change="true" :rules="formRules"> 
+                <wd-form-item label="姓名：" required prop="name">
                     <wd-input 
                         type="text"
-                        v-model="textData"
+                        v-model="userInfo.name"
                         placeholder="请输入姓名"></wd-input>
                 </wd-form-item> 
                 <wd-form-item label="性别：">
@@ -353,14 +353,14 @@
                         type="text"></wd-input-number>
                 </wd-form-item>
                 <wd-form-item label="学历：">
-                    <wd-select 
+                    <!-- <wd-select 
                         v-model="selectedValue"
                         @change="selectedChangeHandler"
                         placeholder="请选择学历">
                         <wd-option label="研究生" value="baidu">hhh</wd-option>    
                         <wd-option label="本科" value="google">hhh</wd-option>    
                         <wd-option label="专科" value="bing">hhh</wd-option>    
-                    </wd-select>
+                    </wd-select> -->
                 </wd-form-item>
                 <wd-form-item label="毕业日期：">
                     <wd-date-picker
@@ -389,7 +389,7 @@
 </template>
 
 <script lang="ts">
-import {ref, defineComponent} from 'vue';
+import {ref, defineComponent, reactive} from 'vue';
 import {DownOutlined} from '@ant-design/icons-vue';
 // import WdLink from '../../src/components/link/link.vue';
 export default defineComponent({
@@ -414,6 +414,10 @@ export default defineComponent({
         let isMale = ref(false);
         let isFemale = ref(false);
         let datepickerValue = ref('2021-02-02 02:02:02');
+        let userInfo = reactive({});
+        let formRules = {
+            name: { required: true, message: '请选择活动区域', trigger: 'change' }
+        }
         // setTimeout(() => {
         //     isShowToast.value = true;
         //     toastMsg.value = '这里是toast内容';
@@ -498,7 +502,9 @@ export default defineComponent({
             selectedChangeHandler,
             selectedValue,
             isMale,
-            isFemale
+            isFemale,
+            userInfo,
+            formRules
         };
     }
 })

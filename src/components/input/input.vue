@@ -75,7 +75,7 @@ import {defineComponent, PropType, reactive, computed, watch, ref, nextTick, sha
 import * as IconList from '@ant-design/icons-vue';
 import calcTextareaHeight from './calcTextareaHeight';
 import {isObject} from '@vue/shared';
-import {wdFormKey, wdFormItemKey, WdFormProps, WdFormItemProps} from '../form/props';
+import {wdFormKey, wdFormItemKey, WdFormProps, WdFormItemProps, WdFormItemContext} from '../form/props';
 interface WdInputProps {
     type: string,
     size: string,
@@ -149,7 +149,7 @@ export default defineComponent({
             default: ''
         });
         const wdForm = inject(wdFormKey, {} as WdFormProps);
-        const wdFormItem = inject(wdFormItemKey, {} as WdFormItemProps);
+        const wdFormItem = inject(wdFormItemKey, {} as WdFormItemContext);
         let inputSize = sizeMap[props.size] || sizeMap[wdFormItem.size] || sizeMap[wdForm.size];
         let inputDisabled = props.disabled || wdFormItem.disabled || wdForm.disabled;
         const input = ref(null);
@@ -201,6 +201,7 @@ export default defineComponent({
             nextTick(() => {
                 setNativeInputValue();
             });
+            wdFormItem.formItemMitt?.emit('wd.form.change', [val])
         });
         watch(nativeInputValue, val => {
             setNativeInputValue();
