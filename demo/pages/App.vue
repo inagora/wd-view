@@ -322,7 +322,7 @@
                 :validate-on-rule-change="true" 
                 :rules="formRules" 
                 :show-message="true"
-                label-position="left"> 
+                label-position="top"> 
                 <wd-form-item label="姓名" prop="name">
                     <wd-input 
                         type="text"
