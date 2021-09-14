@@ -6,7 +6,7 @@
         }}</label>
     </div>
     
-    <div class="wd-form-item-control wd-form-item-explain wd-form-item-explain-error">
+    <div :class="['wd-form-item-control', 'wd-form-item-explain wd-form-item-explain-error']">
         <slot></slot>
         <transition name="wd-zoom-in-top">
             <slot 
@@ -98,7 +98,6 @@ export default defineComponent({
     watch(
       () => props.validateStatus,
       (val) => {
-        console.log(val);
         validateState.value = val;
       }
     );

@@ -23,7 +23,7 @@
 
 <script lang="ts">
 import {defineComponent, ref, watch, inject} from 'vue';
-import {wdFormKey, wdFormItemKey, WdFormProps, WdFormItemProps} from '../form/props';
+import {wdFormKey, wdFormItemKey, WdFormProps, WdFormItemProps, WdFormItemContext} from '../form/props';
 
 interface WdRadioProps {
     disabled: boolean,
@@ -50,13 +50,14 @@ export default defineComponent({
     emits: ['update:modelValue', 'change'],
     setup(props: WdRadioProps, ctx) {
         const isChecked = ref(false);
+        const wdForm = inject(wdFormKey, {} as WdFormProps);
+        const wdFormItem = inject(wdFormItemKey, {} as WdFormItemContext);
         const handleInputChange = () => {
             isChecked.value = !isChecked.value;
             ctx.emit('change', isChecked.value);
             ctx.emit('update:modelValue', isChecked.value);
+            wdFormItem.formItemMitt?.emit("wd.form.change", [isChecked.value]);
         }
-        const wdForm = inject(wdFormKey, {} as WdFormProps);
-        const wdFormItem = inject(wdFormItemKey, {} as WdFormItemProps);
         let radioDisabled = props.disabled || wdFormItem.disabled || wdForm.disabled;
         watch(() => props.checked, val => {
             isChecked.value = val;

@@ -23,7 +23,7 @@
 
 <script lang="ts">
 import {defineComponent, ref, watch, inject} from 'vue';
-import {wdFormKey, wdFormItemKey, WdFormProps, WdFormItemProps} from '../form/props';
+import {wdFormKey, wdFormItemKey, WdFormProps, WdFormItemProps, WdFormItemContext} from '../form/props';
 
 interface WdCheckboxProps {
     disabled: boolean,
@@ -50,7 +50,7 @@ export default defineComponent({
     setup(props, ctx) {
         const isChecked = ref(props.modelValue || props.checked);
         const wdForm = inject(wdFormKey, {} as WdFormProps);
-        const wdFormItem = inject(wdFormItemKey, {} as WdFormItemProps);
+        const wdFormItem = inject(wdFormItemKey, {} as WdFormItemContext);
         let checkDisabled = props.disabled || wdFormItem.disabled || wdForm.disabled;
         const handleInputChange = () => {
             isChecked.value = !isChecked.value;
@@ -58,8 +58,8 @@ export default defineComponent({
             ctx.emit('update:modelValue', isChecked.value);
         }
         watch(() => props.checked, val => {
-            console.log(val, '#');
             isChecked.value = val;
+            wdFormItem.formItemMitt?.emit("wd.form.change", [val]);
         });
         return {
             isChecked,

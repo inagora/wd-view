@@ -54,7 +54,7 @@ import WdInput from '../input/input.vue';
 import {DownOutlined, UpOutlined} from '@ant-design/icons-vue';
 import {toRawType} from '@vue/shared';
 import type { PropType } from 'vue';
-import {wdFormKey, wdFormItemKey, WdFormProps, WdFormItemProps} from '../form/props';
+import {wdFormKey, wdFormItemKey, WdFormProps, WdFormItemProps, WdFormItemContext} from '../form/props';
 
 interface WdInputNumberProps {
     type: string,
@@ -118,7 +118,7 @@ export default defineComponent({
     setup(props, ctx) {
         const input = ref(null);
         const wdForm = inject(wdFormKey, {} as WdFormProps);
-        const wdFormItem = inject(wdFormItemKey, {} as WdFormItemProps);
+        const wdFormItem = inject(wdFormItemKey, {} as WdFormItemContext);
         let inputSize = props.size || wdFormItem.size || wdForm.size;
 
         const data = reactive({
@@ -126,7 +126,6 @@ export default defineComponent({
         });
 
         const maxDisabled = computed(() => {
-            console.log(data.currentValue);
             return data.currentValue >= props.max;
         });
 
@@ -145,9 +144,11 @@ export default defineComponent({
             ctx.emit('update:modelValue', val);
             ctx.emit('input', val);
             // nextTick(setNativeInputValue);
+            wdFormItem.formItemMitt?.emit("wd.form.change", [val]);
         }
         const handleChange = val => {
             ctx.emit('change', val);
+            wdFormItem.formItemMitt?.emit("wd.form.change", [val]);
         }
 
         const toPrecision = (num, pre?) => {

@@ -329,55 +329,50 @@
                         v-model="userInfo.name"
                         placeholder="请输入姓名"></wd-input>
                 </wd-form-item> 
-                <wd-form-item label="年龄" prop="age">
-                    <wd-input 
-                        type="text"
-                        v-model="userInfo.age"
-                        placeholder="请输入姓名"></wd-input>
-                </wd-form-item> 
-                <wd-form-item label="性别">
+                <!-- <wd-form-item label="性别" prop="gender">
                     <wd-radio 
-                        v-model="isRadioChecked"
+                        v-model="userInfo.gender"
                         :checked="isMale"
                         name="color"
                         @change="handleRadioChange">
                         男
                     </wd-radio>
                     <wd-radio 
-                        v-model="isRadioChecked"
+                        v-model="userInfo.gender"
                         :checked="isFemale"
                         name="color"
                         @change="handleRadioChange">
                         女
                     </wd-radio>
-                </wd-form-item>
-                <wd-form-item label="婚姻状况">
+                </wd-form-item> -->
+                <wd-form-item label="婚姻状况" prop="isMerried">
                     <wd-checkbox 
-                        :checked="isCheckboxChecked"
+                        v-model="userInfo.isMerried"
+                        :checked="userInfo.isMerried"
                         @change="handleCheckboxChange">
                         已婚
                     </wd-checkbox>
                 </wd-form-item>
-                <wd-form-item label="年龄">
+                <wd-form-item label="年龄" prop="age">
                     <wd-input-number
-                        v-model="inputNum"
+                        v-model="userInfo.age"
                         max=20
                         min=0
                         @input="handleInputNumber"
                         @change="handleChangeNumber"
                         type="text"></wd-input-number>
                 </wd-form-item>
-                <wd-form-item label="学历">
-                    <!-- <wd-select 
+                <!-- <wd-form-item label="学历">
+                    <wd-select 
                         v-model="selectedValue"
                         @change="selectedChangeHandler"
                         placeholder="请选择学历">
                         <wd-option label="研究生" value="baidu">hhh</wd-option>    
                         <wd-option label="本科" value="google">hhh</wd-option>    
                         <wd-option label="专科" value="bing">hhh</wd-option>    
-                    </wd-select> -->
-                </wd-form-item>
-                <wd-form-item label="毕业日期">
+                    </wd-select>
+                </wd-form-item> -->
+                <wd-form-item label="毕业日期" prop="date">
                     <wd-date-picker
                         type="date"
                         :clearable="false"
@@ -387,7 +382,7 @@
                         value-format="YYYY-MM-DD HH-mm-ss"
                         size="small"
                         placeholder="请选择日期"
-                        v-model="datepickerValue"
+                        v-model="userInfo.date"
                         @change="datepickerChange"></wd-date-picker>
                 </wd-form-item>
                 <wd-form-item>
@@ -408,6 +403,7 @@
 import {ref, defineComponent, reactive, onMounted} from 'vue';
 import {DownOutlined} from '@ant-design/icons-vue';
 // import WdLink from '../../src/components/link/link.vue';
+import moment from 'moment';
 export default defineComponent({
     name: 'App',
     components: {
@@ -430,7 +426,12 @@ export default defineComponent({
         let isMale = ref(false);
         let isFemale = ref(false);
         let datepickerValue = ref('2021-02-02 02:02:02');
-        let userInfo = reactive({});
+        let userInfo = reactive({
+            name: '',
+            age: '',
+            isMerried: '',
+            date: datepickerValue.value
+        });
         let userInfoForm = <any>ref();
         
         // userInfoForm._rowValue.validate(valid => {
@@ -443,9 +444,21 @@ export default defineComponent({
                 return Promise.resolve('成年');
             }
         }
+        const checkDate = (rule, value) => {
+            if(value > moment(new Date).format('YYYY-MM-DD HH-mm-ss')) {
+                return Promise.reject('');
+            } else {
+                return Promise.resolve('');
+            }
+        }
         let formRules = {
             name: { required: true, message: '请填写姓名', trigger: 'change' },
-            age: {message: '年龄不能小于18', trigger: 'change', validator: checkAge}
+            age: {message: '年龄不能小于18', trigger: 'change', validator: checkAge, required: true},
+            date: [
+                {message: '日期不能为空', trigger: 'change', required: true},
+                {message: '所选日期不能大于当前日期', trigger: 'change', validator: checkDate},
+            ],
+            isMerried: {message: '请选择婚姻状况', trigger: 'change', required: true}
         }
         
         // setTimeout(() => {
@@ -496,7 +509,7 @@ export default defineComponent({
             console.log(val);
         }
         const datepickerChange = val => {
-            console.log(val);
+            // console.log(val);
         }
         const selectedValue = ref('');
         const selectedChangeHandler = val => {
@@ -504,7 +517,7 @@ export default defineComponent({
         }
         const regHandler = () => {
             userInfoForm.value.validate(isValid => {
-                console.log('isValid: ', isValid);
+                if(isValid) alert('提交成功');
             });
         }
         onMounted(() => {

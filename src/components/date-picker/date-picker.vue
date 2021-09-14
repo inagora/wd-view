@@ -17,7 +17,7 @@
 
 <script lang="ts">
 import {defineComponent, PropType, ref, inject} from 'vue';
-import {wdFormKey, wdFormItemKey, WdFormProps, WdFormItemProps} from '../form/props';
+import {wdFormKey, wdFormItemKey, WdFormProps, WdFormItemProps, WdFormItemContext} from '../form/props';
 import locale from 'ant-design-vue/es/date-picker/locale/zh_CN';
 interface WdPickerProps {
     type: string,
@@ -65,14 +65,16 @@ export default defineComponent({
     emits: ['update:modelValue', 'change'],
     setup(props: WdPickerProps, {emit}) {
         const dateLocale = ref(locale);
+        const wdForm = inject(wdFormKey, {} as WdFormProps);
+        const wdFormItem = inject(wdFormItemKey, {} as WdFormItemContext);
         let pickerType = ref('date');
         pickerType = pickerTypes[props.type];
         const change = (val) => {
             emit('update:modelValue', val);
             emit('change', val);
+            wdFormItem.formItemMitt?.emit("wd.form.change", [val]);
         }
-        const wdForm = inject(wdFormKey, {} as WdFormProps);
-        const wdFormItem = inject(wdFormItemKey, {} as WdFormItemProps);
+        
         let inputSize = props.size || wdFormItem.size || wdForm.size;
         let pickDisabled = props.disabled || wdFormItem.disabled || wdForm.disabled;
         // 默认日期

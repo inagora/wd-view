@@ -26,7 +26,7 @@
  * 
  * validate 怎么通过父组件调用，
  * 子组件的validate实现
- * ref获取到的组件必须要在mounted中使用
+ * ref获取到的组件要在mounted中使用
  * 各种状态的样式
  * 是否显示冒号
  * label的位置
