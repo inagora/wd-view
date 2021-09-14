@@ -313,14 +313,29 @@
         <!-- </fieldset> -->
         <fieldset>
             <legend>form: {{userInfo.name}}</legend>
-            <wd-form label-width="100px" label-align="right" size="small" :model="userInfo" :validate-on-rule-change="true" :rules="formRules"> 
-                <wd-form-item label="姓名：" required prop="name">
+            <wd-form 
+                ref="userInfoForm" 
+                label-width="100px" 
+                label-align="right" 
+                size="small" 
+                :model="userInfo" 
+                :validate-on-rule-change="true" 
+                :rules="formRules" 
+                :show-message="true"
+                label-position="left"> 
+                <wd-form-item label="姓名" prop="name">
                     <wd-input 
                         type="text"
                         v-model="userInfo.name"
                         placeholder="请输入姓名"></wd-input>
                 </wd-form-item> 
-                <wd-form-item label="性别：">
+                <wd-form-item label="年龄" prop="age">
+                    <wd-input 
+                        type="text"
+                        v-model="userInfo.age"
+                        placeholder="请输入姓名"></wd-input>
+                </wd-form-item> 
+                <wd-form-item label="性别">
                     <wd-radio 
                         v-model="isRadioChecked"
                         :checked="isMale"
@@ -336,14 +351,14 @@
                         女
                     </wd-radio>
                 </wd-form-item>
-                <wd-form-item label="婚姻状况：">
+                <wd-form-item label="婚姻状况">
                     <wd-checkbox 
                         :checked="isCheckboxChecked"
                         @change="handleCheckboxChange">
                         已婚
                     </wd-checkbox>
                 </wd-form-item>
-                <wd-form-item label="年龄：">
+                <wd-form-item label="年龄">
                     <wd-input-number
                         v-model="inputNum"
                         max=20
@@ -352,7 +367,7 @@
                         @change="handleChangeNumber"
                         type="text"></wd-input-number>
                 </wd-form-item>
-                <wd-form-item label="学历：">
+                <wd-form-item label="学历">
                     <!-- <wd-select 
                         v-model="selectedValue"
                         @change="selectedChangeHandler"
@@ -362,7 +377,7 @@
                         <wd-option label="专科" value="bing">hhh</wd-option>    
                     </wd-select> -->
                 </wd-form-item>
-                <wd-form-item label="毕业日期：">
+                <wd-form-item label="毕业日期">
                     <wd-date-picker
                         type="date"
                         :clearable="false"
@@ -381,7 +396,8 @@
                         type="danger">重置</wd-button>
                     <wd-button 
                         size="small" 
-                        type="success">提交</wd-button>
+                        type="success"
+                        @click="regHandler">提交</wd-button>
                 </wd-form-item>
             </wd-form>
         </fieldset>
@@ -389,7 +405,7 @@
 </template>
 
 <script lang="ts">
-import {ref, defineComponent, reactive} from 'vue';
+import {ref, defineComponent, reactive, onMounted} from 'vue';
 import {DownOutlined} from '@ant-design/icons-vue';
 // import WdLink from '../../src/components/link/link.vue';
 export default defineComponent({
@@ -415,9 +431,23 @@ export default defineComponent({
         let isFemale = ref(false);
         let datepickerValue = ref('2021-02-02 02:02:02');
         let userInfo = reactive({});
-        let formRules = {
-            name: { required: true, message: '请选择活动区域', trigger: 'change' }
+        let userInfoForm = <any>ref();
+        
+        // userInfoForm._rowValue.validate(valid => {
+        //     console.log(valid);
+        // });
+        const checkAge = (rule, value) => {
+            if(value < 18) {
+                return Promise.reject('未成年');
+            } else {
+                return Promise.resolve('成年');
+            }
         }
+        let formRules = {
+            name: { required: true, message: '请填写姓名', trigger: 'change' },
+            age: {message: '年龄不能小于18', trigger: 'change', validator: checkAge}
+        }
+        
         // setTimeout(() => {
         //     isShowToast.value = true;
         //     toastMsg.value = '这里是toast内容';
@@ -472,6 +502,14 @@ export default defineComponent({
         const selectedChangeHandler = val => {
             console.log(val);
         }
+        const regHandler = () => {
+            userInfoForm.value.validate(isValid => {
+                console.log('isValid: ', isValid);
+            });
+        }
+        onMounted(() => {
+            
+        });
         return {
             counter, 
             isShowToast,
@@ -504,7 +542,9 @@ export default defineComponent({
             isMale,
             isFemale,
             userInfo,
-            formRules
+            formRules,
+            userInfoForm,
+            regHandler
         };
     }
 })

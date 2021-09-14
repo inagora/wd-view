@@ -24,6 +24,13 @@
  * 
  * 每一个item增加错误message
  * 
+ * validate 怎么通过父组件调用，
+ * 子组件的validate实现
+ * ref获取到的组件必须要在mounted中使用
+ * 各种状态的样式
+ * 是否显示冒号
+ * label的位置
+ * 按钮的位置
  * 
  * mitt、async-validator
  */
@@ -43,6 +50,10 @@ export default defineComponent({
         },
         labelAlign: String,
         labelWidth: String,
+        labelPosition: {
+            type: String,
+            default: 'left'
+        }, // top、left
         inline: Boolean,
         inlineMessage: String,
         showMessage: Boolean,
@@ -50,13 +61,18 @@ export default defineComponent({
         disabled: Boolean,
         model: Object,
         rules: Object,
-        validateOnRuleChange: Boolean
+        validateOnRuleChange: Boolean,
+        colon: { // 是否显示冒号
+            type: Boolean,
+            default: true
+        }
     },
     emits: ['validate'],
     setup(props, {emit}) {
         const formMitt = mitt()
         const fields: FormItemCtx[] = []
 
+        // 监测rules的变化
         watch(
             () => props.rules,
             () => {
@@ -83,6 +99,7 @@ export default defineComponent({
             }
         })
 
+        // form的验证，比如点击提交按钮时验证
         const validate = (callback: Callback) => {
             console.log('form validate');
             if (!props.model) {
@@ -95,17 +112,16 @@ export default defineComponent({
             let promise: Promise<boolean> | undefined
             if (typeof callback !== 'function') {
                 promise = new Promise((resolve, reject) => {
-                callback = function(valid, invalidFields) {
-                    if (valid) {
-                        resolve(true)
-                    } else {
-                        reject(invalidFields)
+                    callback = function(valid, invalidFields) {
+                        if (valid) {
+                            resolve(true)
+                        } else {
+                            reject(invalidFields)
+                        }
                     }
-                }
                 })
             }
 
-            console.log(fields);
             if (fields.length === 0) {
                 callback(true)
             }
@@ -126,26 +142,20 @@ export default defineComponent({
             return promise
         }
 
-        const validateField = (props: string|string[], cb: ValidateFieldCallback) => {
-            props = [].concat(props)
-            const fds = fields.filter(field => props.indexOf(field.prop) !== -1)
-            if (!fields.length) {
-                console.warn('[Element Warn]please pass correct props!')
-                return
-            }
+        // const validateField = (props: string|string[], cb: ValidateFieldCallback) => {
+        //     props = [].concat(props)
+        //     const fds = fields.filter(field => props.indexOf(field.prop) !== -1)
+        //     if (!fields.length) {
+        //         console.warn('[Element Warn]please pass correct props!')
+        //         return
+        //     }
 
-            fds.forEach(field => {
-                field.validate('', cb)
-            })
-        }
+        //     fds.forEach(field => {
+        //         field.validate('', cb)
+        //     })
+        // }
 
-        provide(wdFormKey, reactive({...toRefs(props), formMitt, validateField, emit}));
-
-        onMounted(() => {
-            // validate(isValidate => {
-            //     console.log(isValidate);
-            // });
-        })
+        provide(wdFormKey, reactive({...toRefs(props), formMitt, emit}));
 
         return {
             validate

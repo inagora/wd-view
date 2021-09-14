@@ -48,7 +48,8 @@ export interface WdFormContext {
     statusIcon?: boolean
     hideRequiredAsterisk?: boolean
     disabled?: boolean,
-    labelAlign: string
+    labelAlign: string,
+    colon: boolean
   }
   
   export interface WdFormItemContext {
