@@ -311,7 +311,7 @@
                 <wd-option label="必应" value="bing">hhh</wd-option>    
             </wd-select> -->
         <!-- </fieldset> -->
-        <fieldset>
+        <!-- <fieldset>
             <legend>form: {{userInfo.name}}</legend>
             <wd-form 
                 ref="userInfoForm" 
@@ -328,7 +328,7 @@
                         type="text"
                         v-model="userInfo.name"
                         placeholder="请输入姓名"></wd-input>
-                </wd-form-item> 
+                </wd-form-item>  -->
                 <!-- <wd-form-item label="性别" prop="gender">
                     <wd-radio 
                         v-model="userInfo.gender"
@@ -345,7 +345,7 @@
                         女
                     </wd-radio>
                 </wd-form-item> -->
-                <wd-form-item label="婚姻状况" prop="isMerried">
+                <!-- <wd-form-item label="婚姻状况" prop="isMerried">
                     <wd-checkbox 
                         v-model="userInfo.isMerried"
                         :checked="userInfo.isMerried"
@@ -361,7 +361,7 @@
                         @input="handleInputNumber"
                         @change="handleChangeNumber"
                         type="text"></wd-input-number>
-                </wd-form-item>
+                </wd-form-item> -->
                 <!-- <wd-form-item label="学历">
                     <wd-select 
                         v-model="selectedValue"
@@ -372,7 +372,7 @@
                         <wd-option label="专科" value="bing">hhh</wd-option>    
                     </wd-select>
                 </wd-form-item> -->
-                <wd-form-item label="毕业日期" prop="date">
+                <!-- <wd-form-item label="毕业日期" prop="date">
                     <wd-date-picker
                         type="date"
                         :clearable="false"
@@ -395,7 +395,11 @@
                         @click="regHandler">提交</wd-button>
                 </wd-form-item>
             </wd-form>
-        </fieldset>
+        </fieldset> -->
+        <wd-table
+            :columns="tableColumns"
+            :data-source="dataList"
+            size="small"></wd-table>
     </div>
 </template>
 
@@ -479,6 +483,32 @@ export default defineComponent({
         // }, 1000);
         const textData = ref('');
 
+        // table数据
+        const tableColumns = [
+            {
+                title: 'ID',
+                dataIndex: 'id',
+                key: 'id'
+            },
+            {
+                title: '商品名',
+                dataIndex: 'goods_name',
+                key: 'goods_name'
+            },
+            {
+                title: '价格',
+                dataIndex: 'price',
+                key: 'price'
+            },
+            {
+                title: '生产日期',
+                dataIndex: 'ctime',
+                key: 'ctime'
+            }
+        ]
+
+        const dataList = [];
+
         const handleInput = val => {
             console.log(val, '##');
         }
@@ -557,7 +587,9 @@ export default defineComponent({
             userInfo,
             formRules,
             userInfoForm,
-            regHandler
+            regHandler,
+            dataList,
+            tableColumns
         };
     }
 })
