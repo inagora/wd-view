@@ -399,7 +399,8 @@
         <wd-table
             :columns="tableColumns"
             :data-source="dataList"
-            size="small"></wd-table>
+            size="small"
+            bordered></wd-table>
     </div>
 </template>
 
@@ -493,7 +494,8 @@ export default defineComponent({
             {
                 title: '商品名',
                 dataIndex: 'goods_name',
-                key: 'goods_name'
+                key: 'goods_name',
+                ellipsis: true
             },
             {
                 title: '价格',
@@ -507,7 +509,32 @@ export default defineComponent({
             }
         ]
 
-        const dataList = [];
+        const dataList = [
+            {
+                id: '1',
+                goods_name: 'sk1',
+                price: '188',
+                ctime: '2021-09-26'
+            },
+            {
+                id: '2',
+                goods_name: 'Santen 参天制药 Beautyeye隐形眼镜用眼药水 12mlSanten 参天制药 Beautyeye隐形眼镜用眼药水 12mlSanten 参天制药 Beautyeye隐形眼镜用眼药水 12ml',
+                price: '1688',
+                ctime: '2021-09-26'
+            },
+            {
+                id: '3',
+                goods_name: 'sk3',
+                price: '1288',
+                ctime: '2021-09-26'
+            },
+            {
+                id: '4',
+                goods_name: 'sk4',
+                price: '1180',
+                ctime: '2021-09-26'
+            }
+        ];
 
         const handleInput = val => {
             console.log(val, '##');

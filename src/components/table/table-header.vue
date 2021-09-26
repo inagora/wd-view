@@ -4,11 +4,17 @@
             border="0"
             cellpadding="0"
             cellspacing="0">
+            <colgroup>
+                <col
+                    v-for="column in store.columns"
+                    :key="column.dataIndex || column.key"
+                    width="100px">
+            </colgroup>
             <thead class="wd-table-thead">
                 <tr>
                     <th 
                         class="wd-table-row-cell-break-word" 
-                        v-for="column in columns"
+                        v-for="column in store.columns"
                         :key="column.dataIndex || column.key">
                         <div class="wd-table-header-column">
                             <span class="wd-table-column-title">{{column.title}}</span>
@@ -20,11 +26,12 @@
     </div>
 </template>
 <script lang="ts">
-import { defineComponent } from 'vue'
+import { defineComponent, PropType} from 'vue';
+import {StoreProps} from './table-type';
 export default defineComponent({
     name: 'table-header',
     props: {
-        columns: Object
+        store: Object as PropType<StoreProps>
     },
     setup() {
         return {
