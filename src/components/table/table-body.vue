@@ -28,7 +28,7 @@
                                     <div class="wd-table-selection">
                                         <wd-checkbox 
                                             :checked="row.isSelected"
-                                            @change="selectChangeHandler"></wd-checkbox>
+                                            @change="selectChangeHandler($event, index)"></wd-checkbox>
                                     </div>
                                 </span>
                             </div>
@@ -43,19 +43,20 @@
     </div>
 </template>
 <script lang="ts">
-import { defineComponent, PropType } from 'vue';
+import { defineComponent, PropType, toRefs, reactive } from 'vue';
 import {StoreProps} from './table-type';
 export default defineComponent({
     name: 'table-body',
     props: {
         store: Object as PropType<StoreProps>
     },
-    setup() {
-        const selectChangeHandler = val => {
-
+    setup(props) {
+        const selectChangeHandler = (val, index) => {
+            const store: any = toRefs(reactive(props.store));
+            store.dataSource.value[index].isSelected = val;
         }
         return {
-            
+            selectChangeHandler
         }
     }
 })

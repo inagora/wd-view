@@ -22,6 +22,7 @@
                                 <span class="wd-table-column-title">
                                     <div class="wd-table-selection">
                                         <wd-checkbox
+                                            :checked="isSelectedAll"
                                             @change="selectAllChangeHandler"></wd-checkbox>
                                     </div>
                                 </span>
@@ -53,9 +54,13 @@ export default defineComponent({
                 data.isSelected = val;
             });
         }
+        
         watch(store.dataSource, (val) => {
-            console.log(val);
+            isSelectedAll.value = checkSelectedAll(val);
         });
+        const checkSelectedAll = data => {
+            return !data.some(item => !item.isSelected); // 全选
+        }
         return {
             isSelectedAll,
             selectAllChangeHandler
