@@ -3,6 +3,7 @@
         <div class="wd-table-content">
             <!-- table header -->
             <table-header
+                v-if="showHeader"
                 :store="store"></table-header>
             <!-- table body -->
             <table-body
@@ -48,6 +49,10 @@ export default defineComponent({
         bordered: {
             type: Boolean,
             default: false
+        },
+        showHeader: {
+            type: Boolean,
+            default: true
         }
     },
     setup(props, {emit}) {

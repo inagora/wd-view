@@ -399,6 +399,7 @@
         <wd-table
             :columns="tableColumns"
             :data-source="dataList"
+            :show-header="true"
             size="small"
             bordered></wd-table>
     </div>
@@ -486,6 +487,12 @@ export default defineComponent({
 
         // table数据
         const tableColumns = [
+            {
+                title: '',
+                dataIndex: '',
+                key: '',
+                type: 'checkbox'
+            },
             {
                 title: 'ID',
                 dataIndex: 'id',

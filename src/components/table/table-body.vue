@@ -8,8 +8,7 @@
             <colgroup>
                 <col
                     v-for="column in store.columns"
-                    :key="column.dataIndex || column.key"
-                    width="100px">
+                    :key="column.dataIndex || column.key">
             </colgroup>
             <tbody class="wd-table-tbody">
                 <tr 
@@ -18,11 +17,25 @@
                     :key="index"
                 >
                     <td
-                        :class="[column.ellipsis ? 'wd-table-row-cell-ellipsis' : 'wd-table-row-cell-break-word']" 
+                        :class="[column.ellipsis ? 'wd-table-row-cell-ellipsis' : 'wd-table-row-cell-break-word', column.type === 'checkbox' ? 'wd-table-selection-column' : '']" 
                         v-for="column in store.columns"
                         :key="column.dataIndex || column.key"
                         :title="column.ellipsis ? row[column.dataIndex] : ''">
-                        {{row[column.dataIndex]}}
+                        <template
+                            v-if="column.type === 'checkbox'">
+                            <div class="wd-table-header-column">
+                                <span class="wd-table-column-title">
+                                    <div class="wd-table-selection">
+                                        <wd-checkbox 
+                                            :checked="row.isSelected"
+                                            @change="selectChangeHandler"></wd-checkbox>
+                                    </div>
+                                </span>
+                            </div>
+                        </template>
+                        <span v-else>
+                            {{row[column.dataIndex]}}
+                        </span>
                     </td>
                 </tr>
             </tbody>
@@ -38,6 +51,9 @@ export default defineComponent({
         store: Object as PropType<StoreProps>
     },
     setup() {
+        const selectChangeHandler = val => {
+
+        }
         return {
             
         }
