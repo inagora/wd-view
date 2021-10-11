@@ -525,10 +525,10 @@ export default defineComponent({
             }
         ]
 
-        let dataList: any = reactive([]);
+        let dataList: any = ref([]);
 
         for (let i = 0; i < 15; i++) {
-            dataList.push({
+            dataList.value.push({
                 id: '' + (4 + i),
                 goods_name: 'sk4',
                 price: '1180',
@@ -588,9 +588,9 @@ export default defineComponent({
         }
         const setTableData = page => {
             // dataList = dataList.substr(page * 15, 15);
-            dataList = reactive([]);
+            dataList.value.length = 0;
             for (let i = page * 15; i < (page + 1) * 15; i++) {
-                dataList.push({
+                dataList.value.push({
                     id: '' + (4 + i),
                     goods_name: 'sk4',
                     price: '1180',
