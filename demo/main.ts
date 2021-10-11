@@ -14,6 +14,7 @@ import WdLayout from '../src/components/layout';
 import WdSelect from '../src/components/select';
 import WdForm from '../src/components/form';
 import WdTable from '../src/components/table';
+import WdPagination from '../src/components/pagination';
 
 
 const app = createApp(App);
@@ -31,4 +32,5 @@ app.use(WdLayout);
 app.use(WdSelect);
 app.use(WdForm);
 app.use(WdTable);
+app.use(WdPagination);
 app.mount('#app');

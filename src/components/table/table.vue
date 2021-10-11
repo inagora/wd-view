@@ -22,7 +22,7 @@ import { StoreProps } from './table-type';
 /**
  * 1、table基本功能：数据展示
  *     (1) bordered
- *     (2) header、body显示
+ *     (2) header、body显示; header固定
  *     (3) 列的显示：折行、省略; 省略情况下增加title属性
  * 2、操作
  * 3、分页
@@ -61,10 +61,6 @@ export default defineComponent({
         store.dataSource = reactive(props.dataSource);
         store.bordered = props.bordered;
         let tableLayoutFixed = ref(true);
-        // const _columns = props.columns;
-        // _columns.some(column as PropType<Column> => {
-        //     return column.ellipsis;
-        // });
         return {
             store,
             tableLayoutFixed

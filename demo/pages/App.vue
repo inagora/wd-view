@@ -402,6 +402,14 @@
             :show-header="true"
             size="small"
             bordered></wd-table>
+        <wd-pagination
+            :page-size="20"
+            :page-count="3"
+            :total="100"
+            :current-page="1"
+            @current-change="pageChangeHandler"
+            @prev-click="prevClickChangeHandler"
+            @next-click="nextClickChangeHandler"></wd-pagination>
     </div>
 </template>
 
@@ -502,7 +510,8 @@ export default defineComponent({
                 title: '商品名',
                 dataIndex: 'goods_name',
                 key: 'goods_name',
-                ellipsis: true
+                ellipsis: true,
+                fix: 'left'
             },
             {
                 title: '价格',
@@ -516,32 +525,16 @@ export default defineComponent({
             }
         ]
 
-        const dataList = [
-            {
-                id: '1',
-                goods_name: 'sk1',
-                price: '188',
-                ctime: '2021-09-26'
-            },
-            {
-                id: '2',
-                goods_name: 'Santen 参天制药 Beautyeye隐形眼镜用眼药水 12mlSanten 参天制药 Beautyeye隐形眼镜用眼药水 12mlSanten 参天制药 Beautyeye隐形眼镜用眼药水 12ml',
-                price: '1688',
-                ctime: '2021-09-26'
-            },
-            {
-                id: '3',
-                goods_name: 'sk3',
-                price: '1288',
-                ctime: '2021-09-26'
-            },
-            {
-                id: '4',
+        let dataList: any = reactive([]);
+
+        for (let i = 0; i < 15; i++) {
+            dataList.push({
+                id: '' + (4 + i),
                 goods_name: 'sk4',
                 price: '1180',
                 ctime: '2021-09-26'
-            }
-        ];
+            });
+        }
 
         const handleInput = val => {
             console.log(val, '##');
@@ -584,6 +577,27 @@ export default defineComponent({
                 if(isValid) alert('提交成功');
             });
         }
+        const pageChangeHandler = (page) => {
+            setTableData(page);
+        }
+        const prevClickChangeHandler = page => {
+            setTableData(page);
+        }
+        const nextClickChangeHandler = page => {
+            setTableData(page);
+        }
+        const setTableData = page => {
+            // dataList = dataList.substr(page * 15, 15);
+            dataList = reactive([]);
+            for (let i = page * 15; i < (page + 1) * 15; i++) {
+                dataList.push({
+                    id: '' + (4 + i),
+                    goods_name: 'sk4',
+                    price: '1180',
+                    ctime: '2021-09-26'
+                });
+            }
+        }
         onMounted(() => {
             
         });
@@ -623,7 +637,10 @@ export default defineComponent({
             userInfoForm,
             regHandler,
             dataList,
-            tableColumns
+            tableColumns,
+            pageChangeHandler,
+            prevClickChangeHandler,
+            nextClickChangeHandler
         };
     }
 })
