@@ -10,6 +10,16 @@
                 :store="store"
                 :data-source="dataSource"></table-body>
         </div>
+        <wd-pagination
+            class="wd-table-pagination"
+            :page-size="20"
+            :page-count="20"
+            :pager-count="5"
+            :total="100"
+            :current-page="15"
+            @current-change="pageChangeHandler"
+            @prev-click="prevClickChangeHandler"
+            @next-click="nextClickChangeHandler"></wd-pagination>
     </div>
 </template> 
 
@@ -55,15 +65,21 @@ export default defineComponent({
             default: true
         }
     },
+    emits: ['change'],
     setup(props, {emit}) {
         const store = {} as StoreProps;
         store.columns = reactive(props.columns);
         store.dataSource = reactive(props.dataSource);
         store.bordered = props.bordered;
         let tableLayoutFixed = ref(true);
+
+        const pageChangeHandler = page => {
+            emit('change', page);
+        }
         return {
             store,
-            tableLayoutFixed
+            tableLayoutFixed,
+            pageChangeHandler
         }
     }
 });

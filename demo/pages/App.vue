@@ -401,15 +401,8 @@
             :data-source="dataList"
             :show-header="true"
             size="small"
-            bordered></wd-table>
-        <wd-pagination
-            :page-size="20"
-            :page-count="3"
-            :total="100"
-            :current-page="1"
-            @current-change="pageChangeHandler"
-            @prev-click="prevClickChangeHandler"
-            @next-click="nextClickChangeHandler"></wd-pagination>
+            bordered
+            @change="pageChangeHandler"></wd-table>
     </div>
 </template>
 
