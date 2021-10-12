@@ -1,14 +1,20 @@
 <template>
-    <div class="wd-table" :class="['wd-table-' + size, store.bordered ? 'wd-table-bordered' : '', tableLayoutFixed ? 'wd-table-layout-fixed' : '']">
+    <div 
+        class="wd-table" 
+        :class="['wd-table-' + size, store.bordered ? 'wd-table-bordered' : '', tableLayoutFixed ? 'wd-table-layout-fixed' : '']">
         <div class="wd-table-content">
             <!-- table header -->
             <table-header
                 v-if="showHeader"
-                :store="store"></table-header>
+                :store="store"
+                @select-change="selectChangeHandler"></table-header>
             <!-- table body -->
             <table-body
                 :store="store"
-                :data-source="dataSource"></table-body>
+                :data-source="dataSource"
+                @select-change="selectChangeHandler"
+                @cell-click="cellClickHandler"
+                @row-click="rowClickHandler"></table-body>
         </div>
         <wd-pagination
             class="wd-table-pagination"
@@ -65,21 +71,48 @@ export default defineComponent({
             default: true
         }
     },
-    emits: ['change'],
+    emits: ['page-change', 'select-change', 'cell-click', 'row-click'],
     setup(props, {emit}) {
         const store = {} as StoreProps;
         store.columns = reactive(props.columns);
         store.dataSource = reactive(props.dataSource);
         store.bordered = props.bordered;
+        let dataSource: any = store.dataSource;
         let tableLayoutFixed = ref(true);
 
+        // 页码变化
         const pageChangeHandler = page => {
-            emit('change', page);
+            emit('page-change', page);
+        }
+        // select-change
+        const selectChangeHandler = () => {
+            emit('select-change', dataSource.filter(item => item.isSelected).map(item => {
+                delete item.isSelected; // 删除内部属性
+                return item;
+            }));
+        }
+        // 获取选中的项
+        const getSelectedRows = () => {
+            return dataSource.filter(item => item.isSelected).map(item => {
+                delete item.isSelected; // 删除内部属性
+                return item;
+            });
+        }
+        // 行点击
+        const cellClickHandler = ({rowIndex, dataIndex, value}) => {
+            emit('cell-click', {rowIndex, dataIndex, value});
+        }
+        const rowClickHandler = (row) => {
+            emit('row-click', row);
         }
         return {
             store,
             tableLayoutFixed,
-            pageChangeHandler
+            pageChangeHandler,
+            selectChangeHandler,
+            getSelectedRows,
+            cellClickHandler,
+            rowClickHandler
         }
     }
 });

@@ -45,7 +45,8 @@ export default defineComponent({
     props: {
         store: Object as PropType<StoreProps>
     },
-    setup(props) {
+    emits: ['select-change'],
+    setup(props, {emit}) {
         let isSelectedAll = ref(false);
         let {store} = props;
         const selectAllChangeHandler = (val) => {
@@ -53,6 +54,7 @@ export default defineComponent({
             dataSource.forEach(data => {
                 data.isSelected = val;
             });
+            emit('select-change');
         }
         
         watch(store.dataSource, (val) => {

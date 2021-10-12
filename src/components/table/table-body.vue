@@ -15,12 +15,14 @@
                     class="wd-table-row"
                     v-for="(row, index) in store.dataSource"
                     :key="index"
+                    @click="rowClickHandler(row)"
                 >
                     <td
                         :class="[column.ellipsis ? 'wd-table-row-cell-ellipsis' : 'wd-table-row-cell-break-word', column.type === 'checkbox' ? 'wd-table-selection-column' : '']" 
                         v-for="column in store.columns"
                         :key="column.dataIndex || column.key"
-                        :title="column.ellipsis ? row[column.dataIndex] : ''">
+                        :title="column.ellipsis ? row[column.dataIndex] : ''"
+                        @click="cellClickHandler(index, column.dataIndex, row[column.dataIndex])">
                         <template
                             v-if="column.type === 'checkbox'">
                             <div class="wd-table-header-column">
@@ -50,13 +52,23 @@ export default defineComponent({
     props: {
         store: Object as PropType<StoreProps>
     },
-    setup(props) {
+    emits: ['select-change', 'cell-click', 'row-click'],
+    setup(props, {emit}) {
         const selectChangeHandler = (val, index) => {
             const store: any = toRefs(reactive(props.store));
             store.dataSource.value[index].isSelected = val;
+            emit('select-change');
+        }
+        const cellClickHandler = (rowIndex, dataIndex, value) => {
+            emit('cell-click', {rowIndex, dataIndex, value});
+        }
+        const rowClickHandler = (row) => {
+            emit('row-click', {...row});
         }
         return {
-            selectChangeHandler
+            selectChangeHandler,
+            cellClickHandler,
+            rowClickHandler
         }
     }
 })

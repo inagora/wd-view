@@ -396,13 +396,18 @@
                 </wd-form-item>
             </wd-form>
         </fieldset> -->
+        <wd-button @click="getTableRows" type="primary">获取选择项</wd-button>
         <wd-table
+            ref="wdTable"
             :columns="tableColumns"
             :data-source="dataList"
             :show-header="true"
             size="small"
             bordered
-            @change="pageChangeHandler"></wd-table>
+            @page-change="pageChangeHandler"
+            @select-change="tableSelectChangeHandler"
+            @cell-click="cellClickHandler"
+            @row-click="rowClickHandler"></wd-table>
     </div>
 </template>
 
@@ -440,6 +445,9 @@ export default defineComponent({
             date: datepickerValue.value
         });
         let userInfoForm = <any>ref();
+
+        // 获取table引用
+        let wdTable = ref(null);
         
         // userInfoForm._rowValue.validate(valid => {
         //     console.log(valid);
@@ -591,6 +599,18 @@ export default defineComponent({
                 });
             }
         }
+        const tableSelectChangeHandler = selectedRows => {
+            console.log(selectedRows);
+        }
+        const getTableRows = () => {
+            console.log(wdTable.value.getSelectedRows());
+        }
+        const cellClickHandler = ({rowIndex, dataIndex, value}) => {
+            console.log(dataIndex, value);
+        }
+        const rowClickHandler = (row) => {
+            console.log(row);
+        }
         onMounted(() => {
             
         });
@@ -633,7 +653,12 @@ export default defineComponent({
             tableColumns,
             pageChangeHandler,
             prevClickChangeHandler,
-            nextClickChangeHandler
+            nextClickChangeHandler,
+            tableSelectChangeHandler,
+            wdTable,
+            getTableRows,
+            cellClickHandler,
+            rowClickHandler
         };
     }
 })
