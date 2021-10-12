@@ -79,6 +79,11 @@
 </template> 
 
 <script lang="ts">
+/**
+ * pagesize选择
+ * user-select去掉
+ * 事件方法命名方式
+ */
 import {defineComponent, reactive, ref, computed, watchEffect, watch} from 'vue';
 import {LeftOutlined, RightOutlined, DoubleLeftOutlined, DoubleRightOutlined} from '@ant-design/icons-vue';
 interface PropsType {

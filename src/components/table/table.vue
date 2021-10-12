@@ -46,6 +46,11 @@ import { StoreProps } from './table-type';
  * 5、列的选择
  * 6、表头操作
  * ...
+ * 
+ * tr自定义class
+ * 自定义单元格
+ * 行号
+ * cell-click返回row的数据
  */
 export default defineComponent({
   components: { TableHeader, TableBody },
@@ -87,7 +92,7 @@ export default defineComponent({
         // select-change
         const selectChangeHandler = () => {
             emit('select-change', dataSource.filter(item => item.isSelected).map(item => {
-                delete item.isSelected; // 删除内部属性
+                // delete item.isSelected; // 删除内部属性
                 return item;
             }));
         }

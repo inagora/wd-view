@@ -406,8 +406,8 @@
             bordered
             @page-change="pageChangeHandler"
             @select-change="tableSelectChangeHandler"
-            @cell-click="cellClickHandler"
-            @row-click="rowClickHandler"></wd-table>
+            @cellClick="cellClickHandler"
+            @rowClick="rowClickHandler"></wd-table>
     </div>
 </template>
 
