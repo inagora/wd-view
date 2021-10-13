@@ -49,8 +49,7 @@ import { StoreProps } from './table-type';
  * 
  * tr自定义class
  * 自定义单元格
- * 行号
- * cell-click返回row的数据
+ * 行号 done
  */
 export default defineComponent({
   components: { TableHeader, TableBody },
@@ -92,20 +91,22 @@ export default defineComponent({
         // select-change
         const selectChangeHandler = () => {
             emit('select-change', dataSource.filter(item => item.isSelected).map(item => {
-                // delete item.isSelected; // 删除内部属性
-                return item;
+                const selectedRow = {...item};
+                delete selectedRow.isSelected;
+                return selectedRow;
             }));
         }
         // 获取选中的项
         const getSelectedRows = () => {
             return dataSource.filter(item => item.isSelected).map(item => {
-                delete item.isSelected; // 删除内部属性
-                return item;
+                const selectedRow = {...item};
+                delete selectedRow.isSelected;
+                return selectedRow;
             });
         }
         // 行点击
-        const cellClickHandler = ({rowIndex, dataIndex, value}) => {
-            emit('cell-click', {rowIndex, dataIndex, value});
+        const cellClickHandler = ({row, rowIndex, dataIndex, value}) => {
+            emit('cell-click', {row, rowIndex, dataIndex, value});
         }
         const rowClickHandler = (row) => {
             emit('row-click', row);

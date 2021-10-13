@@ -15,7 +15,7 @@
                         class="wd-table-row-cell-break-word" 
                         v-for="column in store.columns"
                         :key="column.dataIndex || column.key"
-                        :class="[column.type === 'checkbox' ? 'wd-table-selection-column' : '']">
+                        :class="[column.type === 'checkbox' || column.type === 'index' ? 'wd-table-selection-column' : '']">
                         <template
                             v-if="column.type === 'checkbox'">
                             <div class="wd-table-header-column">

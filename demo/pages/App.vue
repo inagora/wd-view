@@ -503,6 +503,12 @@ export default defineComponent({
                 type: 'checkbox'
             },
             {
+                type: 'index',
+                index: (index) => {
+                    return index * 2;
+                }
+            },
+            {
                 title: 'ID',
                 dataIndex: 'id',
                 key: 'id'
