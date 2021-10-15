@@ -36,7 +36,10 @@ const config = {
             title: 'Hot Module Replacement',
             template: 'index.html'
         }),
-        new IgnorePlugin(/^\.\/locale$/, /moment$/),
+        new IgnorePlugin({
+            resourceRegExp: /^\.\/locale$/, 
+            contextRegExp: /moment$/
+        }),
         new HotModuleReplacementPlugin(),
         new VueLoaderPlugin()
     ],
