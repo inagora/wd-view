@@ -525,7 +525,10 @@ export default defineComponent({
                 title: '价格',
                 dataIndex: 'price',
                 key: 'price',
-                fixed: 'left'
+                fixed: 'left',
+                render(column, row) {
+                    return `<span style="color: red;">${row[column.dataIndex]}</span>`;
+                }
             },
             {
                 title: '生产日期',

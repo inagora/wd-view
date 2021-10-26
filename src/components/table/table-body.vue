@@ -45,6 +45,12 @@
                                 </div>
                             </span>
                         </template>
+                        <template
+                            v-else-if="column.render">
+                            <span class="wd-table-column-title">
+                                <div class="wd-table-selection" v-html="renderColumn(column, row)"></div>
+                            </span>
+                        </template>
                         <span v-else>
                             {{row[column.dataIndex]}}
                         </span>
@@ -84,6 +90,12 @@ export default defineComponent({
             }
             return index;
         }
+        // 自定义列样式
+        const renderColumn = (column, row) => {
+            if(column.render && column.render instanceof Function) {
+                return column.render(column, row);
+            }
+        }
         const filterColumnStyle = (column, index) => {
             if(column.fixed === 'left') {
                 return {position: column.fixed ? 'sticky' : '', left: index * column.width + 'px', zIndex: 1000 - index, backgroundColor: '#ffffff'};
@@ -99,7 +111,8 @@ export default defineComponent({
             rowClickHandler,
             rowNum,
             dataSource,
-            filterColumnStyle
+            filterColumnStyle,
+            renderColumn
         }
     }
 })
