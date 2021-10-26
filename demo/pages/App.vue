@@ -404,6 +404,7 @@
             :show-header="true"
             size="small"
             bordered
+            :sticky="true"
             @page-change="pageChangeHandler"
             @select-change="tableSelectChangeHandler"
             @cellClick="cellClickHandler"
@@ -496,18 +497,18 @@ export default defineComponent({
 
         // table数据
         const tableColumns = [
-            {
-                title: '',
-                dataIndex: '',
-                key: '',
-                type: 'checkbox'
-            },
-            {
-                type: 'index',
-                index: (index) => {
-                    return index * 2;
-                }
-            },
+            // {
+            //     title: '',
+            //     dataIndex: '',
+            //     key: '',
+            //     type: 'checkbox'
+            // },
+            // {
+            //     type: 'index',
+            //     index: (index) => {
+            //         return index * 2;
+            //     }
+            // },
             {
                 title: 'ID',
                 dataIndex: 'id',
@@ -518,28 +519,41 @@ export default defineComponent({
                 dataIndex: 'goods_name',
                 key: 'goods_name',
                 ellipsis: true,
-                fix: 'left'
+                fixed: 'left'
             },
             {
                 title: '价格',
                 dataIndex: 'price',
-                key: 'price'
+                key: 'price',
+                fixed: 'left'
             },
             {
                 title: '生产日期',
                 dataIndex: 'ctime',
                 key: 'ctime'
+            },
+            {
+                title: '产地',
+                dataIndex: 'location',
+                key: 'location'
+            },
+            {
+                title: '更新时间',
+                dataIndex: 'update_time',
+                key: 'update_time'
             }
         ]
 
         let dataList: any = ref([]);
 
-        for (let i = 0; i < 15; i++) {
+        for (let i = 0; i < 60; i++) {
             dataList.value.push({
                 id: '' + (4 + i),
                 goods_name: 'sk4',
                 price: '1180',
-                ctime: '2021-09-26'
+                ctime: '2021-09-26',
+                update_time: '2021-09-26',
+                location: '中国'
             });
         }
 
@@ -596,12 +610,14 @@ export default defineComponent({
         const setTableData = page => {
             // dataList = dataList.substr(page * 15, 15);
             dataList.value.length = 0;
-            for (let i = page * 15; i < (page + 1) * 15; i++) {
+            for (let i = page * 60; i < (page + 1) * 15; i++) {
                 dataList.value.push({
                     id: '' + (4 + i),
                     goods_name: 'sk4',
                     price: '1180',
-                    ctime: '2021-09-26'
+                    ctime: '2021-09-26',
+                    update_time: '2021-09-26',
+                    location: '中国'
                 });
             }
         }

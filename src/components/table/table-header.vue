@@ -1,5 +1,5 @@
 <template>
-    <div class="wd-table-header">
+    <div :class="['wd-table-header', fixed ? 'wd-table-fixed-header' : '']">
         <table
             border="0"
             cellpadding="0"
@@ -7,14 +7,16 @@
             <colgroup>
                 <col
                     v-for="column in store.columns"
+                    :width="column.width + 'px'"
                     :key="column.dataIndex || column.key">
             </colgroup>
             <thead class="wd-table-thead">
                 <tr>
                     <th 
                         class="wd-table-row-cell-break-word" 
-                        v-for="column in store.columns"
+                        v-for="(column, index) in store.columns"
                         :key="column.dataIndex || column.key"
+                        :style="filterColumnStyle(column, index)"
                         :class="[column.type === 'checkbox' || column.type === 'index' ? 'wd-table-selection-column' : '']">
                         <template
                             v-if="column.type === 'checkbox'">
@@ -43,7 +45,10 @@ import {StoreProps} from './table-type';
 export default defineComponent({
     name: 'table-header',
     props: {
-        store: Object as PropType<StoreProps>
+        store: Object as PropType<StoreProps>,
+        fixed: {
+            type: Boolean
+        }
     },
     emits: ['select-change'],
     setup(props, {emit}) {
@@ -56,6 +61,16 @@ export default defineComponent({
             });
             emit('select-change');
         }
+
+        const filterColumnStyle = (column, index) => {
+            if(column.fixed === 'left') {
+                return {position: column.fixed ? 'sticky' : '', left: index * column.width + 'px', zIndex: 1000 - index, backgroundColor: '#ffffff'};
+            } else if(column.fixed === 'right') {
+                return {position: column.fixed ? 'sticky' : '', right: index * column.width + 'px', zIndex: 1000 - index, backgroundColor: '#ffffff'};
+            } else {
+                return {};
+            }
+        }
         
         watch(store.dataSource, (val) => {
             isSelectedAll.value = checkSelectedAll(val);
@@ -65,7 +80,8 @@ export default defineComponent({
         }
         return {
             isSelectedAll,
-            selectAllChangeHandler
+            selectAllChangeHandler,
+            filterColumnStyle
         }
     }
 })

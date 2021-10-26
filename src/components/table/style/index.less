@@ -17,6 +17,7 @@
   position: relative;
   clear: both;
   background: @table-bg;
+  overflow: auto;
 
   &-body {
     transition: opacity 0.3s;
@@ -344,7 +345,6 @@
   }
 
   &-header {
-    overflow: hidden;
     background: @table-header-bg;
   }
 
@@ -702,6 +702,11 @@
   &-fixed-header &-fixed-left &-body-outer &-fixed,
   &-fixed-header &-fixed-right &-body-outer &-fixed {
     border-radius: 0;
+  }
+
+  &-fixed-header {
+    top: 0;
+    position: sticky;
   }
 
   &-fixed-left {

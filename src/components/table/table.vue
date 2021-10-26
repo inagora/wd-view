@@ -7,6 +7,7 @@
             <table-header
                 v-if="showHeader"
                 :store="store"
+                :fixed="sticky"
                 @select-change="selectChangeHandler"></table-header>
             <!-- table body -->
             <table-body
@@ -73,16 +74,38 @@ export default defineComponent({
         showHeader: {
             type: Boolean,
             default: true
+        },
+        sticky: {
+            type: Boolean,
+            default: false
         }
     },
     emits: ['page-change', 'select-change', 'cell-click', 'row-click'],
     setup(props, {emit}) {
         const store = {} as StoreProps;
-        store.columns = reactive(props.columns);
+        store.originColumns = reactive(props.columns);
         store.dataSource = reactive(props.dataSource);
         store.bordered = props.bordered;
         let dataSource: any = store.dataSource;
         let tableLayoutFixed = ref(true);
+
+        let leftFixedColumns = ref([]);
+        let rightFixedColumns = ref([]);
+        let normalColumns = ref([]);
+
+        store.originColumns.forEach(column => {
+            if(!column.width) {
+                column.width = 150;
+            }
+            if(column.fixed === 'left') {
+                leftFixedColumns.value.push(column);
+            } else if(column.fixed === 'right') {
+                rightFixedColumns.value.push(column);
+            } else {
+                normalColumns.value.push(column);
+            }
+        });
+        store.columns = [].concat(leftFixedColumns.value).concat(normalColumns.value).concat(rightFixedColumns.value);
 
         // 页码变化
         const pageChangeHandler = page => {
@@ -118,7 +141,8 @@ export default defineComponent({
             selectChangeHandler,
             getSelectedRows,
             cellClickHandler,
-            rowClickHandler
+            rowClickHandler,
+            leftFixedColumns
         }
     }
 });

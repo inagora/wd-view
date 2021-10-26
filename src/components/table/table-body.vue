@@ -8,6 +8,7 @@
             <colgroup>
                 <col
                     v-for="column in store.columns"
+                    :width="column.width + 'px'"
                     :key="column.dataIndex || column.key">
             </colgroup>
             <tbody class="wd-table-tbody">
@@ -19,7 +20,8 @@
                 >
                     <td
                         :class="[column.ellipsis ? 'wd-table-row-cell-ellipsis' : 'wd-table-row-cell-break-word', column.type === 'checkbox' || column.type === 'index' ? 'wd-table-selection-column' : '']" 
-                        v-for="column in store.columns"
+                        v-for="(column, index) in store.columns"
+                        :style="filterColumnStyle(column, index)"
                         :key="column.dataIndex || column.key"
                         :title="column.ellipsis ? row[column.dataIndex] : ''"
                         @click="cellClickHandler(column.type, row, index, column.dataIndex, row[column.dataIndex])">
@@ -82,12 +84,22 @@ export default defineComponent({
             }
             return index;
         }
+        const filterColumnStyle = (column, index) => {
+            if(column.fixed === 'left') {
+                return {position: column.fixed ? 'sticky' : '', left: index * column.width + 'px', zIndex: 1000 - index, backgroundColor: '#ffffff'};
+            } else if(column.fixed === 'right') {
+                return {position: column.fixed ? 'sticky' : '', right: index * column.width + 'px', zIndex: 1000 - index, backgroundColor: '#ffffff'};
+            } else {
+                return {};
+            }
+        }
         return {
             selectChangeHandler,
             cellClickHandler,
             rowClickHandler,
             rowNum,
-            dataSource
+            dataSource,
+            filterColumnStyle
         }
     }
 })
