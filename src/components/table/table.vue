@@ -105,6 +105,13 @@ export default defineComponent({
                 normalColumns.value.push(column);
             }
         });
+        // 处理最后左边固定的最后一个和右边固定的最后一个
+        if(leftFixedColumns.value.length > 0) {
+            leftFixedColumns.value[leftFixedColumns.value.length - 1].leftLast = true;
+        }
+        if(rightFixedColumns.value.length > 0) {
+            rightFixedColumns.value[0].rightFirst = true;
+        }
         store.columns = [].concat(leftFixedColumns.value).concat(normalColumns.value).concat(rightFixedColumns.value);
 
         // 页码变化

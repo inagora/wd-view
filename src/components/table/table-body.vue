@@ -19,7 +19,11 @@
                     @click="rowClickHandler(row)"
                 >
                     <td
-                        :class="[column.ellipsis ? 'wd-table-row-cell-ellipsis' : 'wd-table-row-cell-break-word', column.type === 'checkbox' || column.type === 'index' ? 'wd-table-selection-column' : '']" 
+                        :class="[
+                            column.ellipsis ? 'wd-table-row-cell-ellipsis' : 'wd-table-row-cell-break-word', 
+                            column.type === 'checkbox' || column.type === 'index' ? 'wd-table-selection-column' : '',
+                            column.leftLast ? 'wd-table-fixed-left-last' : ''
+                        ]" 
                         v-for="(column, index) in store.columns"
                         :style="filterColumnStyle(column, index)"
                         :key="column.dataIndex || column.key"
