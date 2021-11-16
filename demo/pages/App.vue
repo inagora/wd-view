@@ -1,5 +1,5 @@
 <template>
-    <div>
+    <div class="container">
         <!-- <wd-toast 
             :visible="isShowToast"
             :msg="toastMsg"
@@ -396,7 +396,7 @@
                 </wd-form-item>
             </wd-form>
         </fieldset> -->
-        <wd-button @click="getTableRows" type="primary">获取选择项</wd-button>
+        <!-- <wd-button @click="getTableRows" type="primary">获取选择项</wd-button>
         <wd-table
             ref="wdTable"
             :columns="tableColumns"
@@ -408,19 +408,60 @@
             @page-change="pageChangeHandler"
             @select-change="tableSelectChangeHandler"
             @cellClick="cellClickHandler"
-            @rowClick="rowClickHandler"></wd-table>
+            @rowClick="rowClickHandler"></wd-table> -->
+            <wd-layout>
+                <wd-layout-header>
+                    WD-VIEW
+                </wd-layout-header>
+                <wd-layout has-sider="true">
+                    <wd-layout-sider>
+                        <div class="menu-item">
+                            <wd-button type="link" @click="changeContent('button')">按钮组件</wd-button>
+                        </div>
+                        <div class="menu-item">
+                            <wd-button type="link">input组件</wd-button>
+                        </div>
+                        <div class="menu-item">
+                            <wd-button type="link">input-number组件</wd-button>
+                        </div>
+                        <div class="menu-item">
+                            <wd-button type="link">Switch</wd-button>
+                        </div>
+                        <div class="menu-item">
+                            <wd-button type="link">CheckBox</wd-button>
+                        </div>
+                        <div class="menu-item">
+                            <wd-button type="link" @click="changeContent('form')">Form</wd-button>
+                        </div>
+                        <div class="menu-item">
+                            <wd-button type="link" @click="changeContent('table')">Table</wd-button>
+                        </div>
+                    </wd-layout-sider> 
+                    <wd-layout-content>
+                        <component :is="componentType"></component>
+                    </wd-layout-content>       
+                </wd-layout>
+                <!-- <wd-layout-footer>
+                    @footer
+                </wd-layout-footer> -->
+            </wd-layout>
     </div>
 </template>
 
 <script lang="ts">
 import {ref, defineComponent, reactive, onMounted} from 'vue';
 import {DownOutlined} from '@ant-design/icons-vue';
-// import WdLink from '../../src/components/link/link.vue';
+import Button from './Button.vue';
+import Form from './Form.vue';
+import Table from './Table.vue';
 import moment from 'moment';
 export default defineComponent({
     name: 'App',
     components: {
-        DownOutlined
+        DownOutlined,
+        Button,
+        Form,
+        Table
     },
     setup() {
         let counter = ref(1);
@@ -636,6 +677,10 @@ export default defineComponent({
         const rowClickHandler = (row) => {
             console.log(row);
         }
+        let componentType = ref('');
+        const changeContent = (type) => {
+            componentType.value = type;
+        }
         onMounted(() => {
             
         });
@@ -683,13 +728,24 @@ export default defineComponent({
             wdTable,
             getTableRows,
             cellClickHandler,
-            rowClickHandler
+            rowClickHandler,
+            componentType,
+            changeContent
         };
     }
 })
 </script>
 
-<style lang="less" scoped>
+<style lang="less">
+#app {
+    height: 100%;
+}
+.container {
+    height: 100%;
+}
+.wd-layout {
+    height: 100%;
+}
 .wd-btn, .wd-link, .wd-input__outer {
     margin-right: 10px;
     margin-bottom: 10px;
@@ -697,6 +753,17 @@ export default defineComponent({
 fieldset {
     border-style: dotted;
     margin-top: 20px;
+}
+.wd-layout-header {
+    color: #ffffff;
+}
+.wd-layout-sider-children {
+    display: flex;
+    flex-direction: column;
+}
+.menu-item {
+    min-width: 100px;
+    height: 40px;
 }
 </style>
 
