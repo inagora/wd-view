@@ -438,7 +438,8 @@
                         </div>
                     </wd-layout-sider> 
                     <wd-layout-content>
-                        <component :is="componentType"></component>
+                        <!-- <component :is="componentType"></component> -->
+                        <wd-menu />
                     </wd-layout-content>       
                 </wd-layout>
                 <!-- <wd-layout-footer>
