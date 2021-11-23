@@ -415,7 +415,7 @@
                 </wd-layout-header>
                 <wd-layout has-sider="true">
                     <wd-layout-sider>
-                        <div class="menu-item">
+                        <!-- <div class="menu-item">
                             <wd-button type="link" @click="changeContent('button')">按钮组件</wd-button>
                         </div>
                         <div class="menu-item">
@@ -435,11 +435,13 @@
                         </div>
                         <div class="menu-item">
                             <wd-button type="link" @click="changeContent('table')">Table</wd-button>
-                        </div>
+                        </div> -->
+                        <wd-menu 
+                            :menu-list="menuList"
+                            @click="menuClickHandler"/>
                     </wd-layout-sider> 
                     <wd-layout-content>
-                        <!-- <component :is="componentType"></component> -->
-                        <wd-menu />
+                        <component :is="componentType"></component>
                     </wd-layout-content>       
                 </wd-layout>
                 <!-- <wd-layout-footer>
@@ -448,7 +450,6 @@
             </wd-layout>
     </div>
 </template>
-
 <script lang="ts">
 import {ref, defineComponent, reactive, onMounted} from 'vue';
 import {DownOutlined} from '@ant-design/icons-vue';
@@ -488,6 +489,66 @@ export default defineComponent({
             date: datepickerValue.value
         });
         let userInfoForm = <any>ref();
+        let componentType = ref('');
+        let menuList = ref([]);
+        menuList.value = [
+            {
+                text: '表单组件',
+                icon: '',
+                submenu: [
+                    {
+                        text: '按钮',
+                        type: 'button',
+                        submenu: [
+                            {
+                                text: '子菜单11',
+                            },
+                            {
+                                text: '子菜单12',
+                            }
+                        ]
+                    },
+                    {
+                        text: '子菜单1',
+                        type: 'button',
+                        submenu: [
+                            {
+                                text: '子菜单11',
+                            },
+                            {
+                                text: '子菜单12',
+                            }
+                        ]
+                    },
+                    {
+                        text: '子菜单2',
+                        submenu: [
+                            {
+                                text: '子菜单21',
+                            }
+                        ]
+                    }
+                ]
+            },
+            {
+                text: '导航2',
+                icon: '',
+                submenu: [
+                    {
+                        text: '子菜单1',
+                        submenu: [
+                            {
+                                text: '子菜单11',
+                            }
+                        ]
+                    }
+                ]
+            }
+        ];
+        const menuClickHandler = params => {
+            console.log(params);
+            componentType.value = params.type;
+        }
 
         // 获取table引用
         let wdTable = ref(null);
@@ -678,7 +739,7 @@ export default defineComponent({
         const rowClickHandler = (row) => {
             console.log(row);
         }
-        let componentType = ref('');
+        
         const changeContent = (type) => {
             componentType.value = type;
         }
@@ -731,7 +792,9 @@ export default defineComponent({
             cellClickHandler,
             rowClickHandler,
             componentType,
-            changeContent
+            changeContent,
+            menuList,
+            menuClickHandler
         };
     }
 })
