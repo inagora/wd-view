@@ -15,7 +15,7 @@
         @click="handleClick"
         >
             <component :is="icon" />
-            <slot></slot>
+            <slot name="default"></slot>
         </button>
 </template>
 

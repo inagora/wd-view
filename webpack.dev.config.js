@@ -23,6 +23,7 @@ const config = {
     },
     cache: {
         type: 'filesystem',
+        name: 'wdviewcache',
         buildDependencies: {
             config: [__filename]
         }

@@ -8,10 +8,13 @@ const { VueLoaderPlugin } = require('vue-loader');
 
 const config = {
     mode: 'production',
-    entry: './demo/main.ts',
+    entry: './src/index.ts',
     output: {
         filename: 'index.js',
-        path: path.resolve(__dirname, 'dist')
+        path: path.resolve(__dirname, 'dist'),
+        libraryTarget: 'umd',
+        library: 'wdView',
+        libraryExport: 'default'
     },
     plugins: [
         new CleanWebpackPlugin(),

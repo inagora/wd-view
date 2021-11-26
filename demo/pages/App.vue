@@ -450,8 +450,9 @@
             </wd-layout>
     </div>
 </template>
+
 <script lang="ts">
-import {ref, defineComponent, reactive, onMounted} from 'vue';
+import {ref, defineComponent, reactive, onMounted, toRefs} from 'vue';
 import {DownOutlined} from '@ant-design/icons-vue';
 import Button from './Button.vue';
 import Form from './Form.vue';
@@ -466,6 +467,18 @@ export default defineComponent({
         Table
     },
     setup() {
+        let user = {
+            name: 'niu',
+            age: 18
+        }
+        // console.log('orignalUser', user);
+        // console.log('refUser', ref(user));
+        // console.log('reactiveUser', reactive(user));
+        // console.log('toRefsUser', toRefs(user));
+
+        let { name } = reactive(user);
+        console.log(name, user);
+
         let counter = ref(1);
         let isShowToast = ref(false);
         let toastMsg = ref('');
@@ -510,7 +523,7 @@ export default defineComponent({
                     },
                     {
                         text: '子菜单1',
-                        type: 'button',
+                        type: 'form',
                         submenu: [
                             {
                                 text: '子菜单11',
@@ -535,7 +548,8 @@ export default defineComponent({
                 icon: '',
                 submenu: [
                     {
-                        text: '子菜单1',
+                        text: 'table',
+                        type: 'table',
                         submenu: [
                             {
                                 text: '子菜单11',
