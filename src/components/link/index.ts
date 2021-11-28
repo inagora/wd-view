@@ -1,3 +1,4 @@
+// @ts-nocheck
 import { App } from 'vue';
 import Link from './link.vue';
 

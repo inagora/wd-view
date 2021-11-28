@@ -22,14 +22,14 @@ const config = {
             title: 'Hot Module Replacement',
             template: 'index.html'
         }),
-        new CopyWebpackPlugin({
-            patterns: [
-                {
-                    from: 'src/assets',
-                    to: 'assets'
-                },
-            ]
-        }),
+        // new CopyWebpackPlugin({
+        //     patterns: [
+        //         {
+        //             from: 'src/assets',
+        //             to: 'assets'
+        //         },
+        //     ]
+        // }),
         new MiniCssExtractPlugin({
             filename: './index.css'
         }),
@@ -97,6 +97,9 @@ const config = {
     },
     resolve: {
         extensions: ['.js', '.ts']
+    },
+    externals: {
+        'vue': 'vue'
     }
 };
 
