@@ -1,3 +1,4 @@
+// @ts-nocheck
 import {App} from 'vue';
 import WdSelect from './select.vue';
 import WdPopper from '../popper/src/index.vue';
@@ -9,6 +10,4 @@ const install = (app: App) => {
     app.component(WdOption.name, WdOption);
 };
 
-export default {
-    install
-};
+export default install;

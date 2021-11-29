@@ -1,3 +1,4 @@
+// @ts-nocheck
 import { App } from 'vue';
 import Layout from './layout.vue';
 import LayoutHeader from './components/header.vue';
@@ -13,6 +14,4 @@ const install = (app: App) => {
     app.component(LayoutFooter.name, LayoutFooter);
 }
 
-export default {
-    install
-};
+export default install;

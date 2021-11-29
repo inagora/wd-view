@@ -1,3 +1,4 @@
+// @ts-nocheck
 import {App} from 'vue';
 import WdTable from './table.vue';
 import WdCheckbox from '../checkbox/index';
@@ -8,6 +9,4 @@ const install = (app: App) => {
     app.component((WdPagination as any).name, WdPagination);
 };
 
-export default {
-    install
-};
+export default install;

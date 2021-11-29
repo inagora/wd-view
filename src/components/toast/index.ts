@@ -1,9 +1,9 @@
 // @ts-nocheck
 import { App } from 'vue';
-import Radio from './radio.vue';
+import WdToast from './toast.vue';
 
 const install = (app: App) => {
-    app.component(Radio.name, Radio);
+    app.component(WdToast.name, WdToast);
 } 
 
 export default install;

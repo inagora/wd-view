@@ -1,3 +1,4 @@
+// @ts-nocheck
 import { App } from 'vue';
 import 'ant-design-vue/lib/date-picker/style';
 import 'ant-design-vue/lib/time-picker/style';
@@ -17,6 +18,4 @@ const install = (app: App) => {
     app.component(ATimePicker.name, ATimePicker);
 }
 
-export default {
-    install
-};
+export default install;

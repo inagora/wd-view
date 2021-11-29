@@ -1,3 +1,4 @@
+// @ts-nocheck
 import {App} from 'vue';
 import Dropdown from './dropdown.vue';
 import DropdownMenu from './dropdown-menu.vue';
@@ -9,6 +10,4 @@ const install = (app: App) => {
     app.component(DropdownMenuItem.name, DropdownMenuItem);
 };
 
-export default {
-    install
-};
+export default install;

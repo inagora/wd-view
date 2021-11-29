@@ -1,9 +1,9 @@
 // @ts-nocheck
 import { App } from 'vue';
-import Radio from './radio.vue';
+import WdProgress from './pregress.vue';
 
 const install = (app: App) => {
-    app.component(Radio.name, Radio);
-} 
+    app.component(WdProgress.name, WdProgress);
+}
 
 export default install;
