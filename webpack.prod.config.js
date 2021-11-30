@@ -8,10 +8,13 @@ const { VueLoaderPlugin } = require('vue-loader');
 
 const config = {
     mode: 'production',
-    entry: './demo/main.ts',
+    entry: './src/index.ts',
     output: {
         filename: 'index.js',
-        path: path.resolve(__dirname, 'dist')
+        path: path.resolve(__dirname, 'dist'),
+        libraryTarget: 'umd',
+        library: 'wdView',
+        libraryExport: 'default'
     },
     plugins: [
         new CleanWebpackPlugin(),
@@ -19,14 +22,14 @@ const config = {
             title: 'Hot Module Replacement',
             template: 'index.html'
         }),
-        new CopyWebpackPlugin({
-            patterns: [
-                {
-                    from: 'src/assets',
-                    to: 'assets'
-                },
-            ]
-        }),
+        // new CopyWebpackPlugin({
+        //     patterns: [
+        //         {
+        //             from: 'src/assets',
+        //             to: 'assets'
+        //         },
+        //     ]
+        // }),
         new MiniCssExtractPlugin({
             filename: './index.css'
         }),
@@ -94,6 +97,9 @@ const config = {
     },
     resolve: {
         extensions: ['.js', '.ts']
+    },
+    externals: {
+        'vue': 'vue'
     }
 };
 

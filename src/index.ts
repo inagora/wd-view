@@ -1,3 +1,4 @@
+// import type { App } from 'vue';
 import WdLink from '../src/components/link';
 import WdButton from '../src/components/button';
 import WdInput from '../src/components/input';
@@ -11,7 +12,16 @@ import WdDatePicker from '../src/components/date-picker';
 import WdLayout from '../src/components/layout';
 import WdSelect from '../src/components/select';
 
-export {
+// const components = [
+//     WdButton
+// ];
+// const install = (app: App): void => {
+//     components.forEach(component => {
+//         console.log(component);
+//         app.component((component as any).name, component)
+//     })
+// }
+export default {
     WdLink,
     WdButton,
     WdInput,

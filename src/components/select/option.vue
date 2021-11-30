@@ -1,5 +1,6 @@
 <template>
-    <div 
+    <div
+        v-show="isItemVisible" 
         tabindex="3"
         class="wd-select-item wd-select-item-option"
         :class="{'wd-select-item-option-selected': isItemSelected, 'wd-select-item-option-active': isItemActived}"
@@ -35,11 +36,15 @@ export default defineComponent({
         let {active, selected, value} = toRefs(props);
         let isItemActived = ref(active.value);
         let isItemSelected = ref(selected.value);
-        const select = inject('selectWrapper');
         const optionClickHandler: any = inject('optionClickHandler');
         const removeItem: any = inject('removeItem'); // 删除的元素
         const selectedItem: any = inject('selectedItem'); // 选择的元素
         let multiple = inject('multiple');
+        let selectedArray: any = inject('selectedArray');
+        let currentCount = selectedArray.length;
+        let limitCount: number = inject('limitCount');
+        let isItemVisible = ref(true);
+        let searchKey: any = inject('searchKey');
 
         // methods
         const mouseoverHandler = () => {
@@ -50,7 +55,9 @@ export default defineComponent({
         }
         // 选项点击
         const clickHandler = () => {
+            console.log(isItemSelected.value);
             if(multiple) {
+                if(!isItemSelected.value && currentCount >= limitCount) return; // 选中时才判断限制，取消选中不用判断
                 isItemSelected.value = !isItemSelected.value;
             } else {
                 isItemSelected.value = true;
@@ -61,8 +68,17 @@ export default defineComponent({
             });
         }
 
+        // 
+        const updateOptions = () => {
+            if(props.label.indexOf(searchKey.value) > -1) {
+                isItemVisible.value = true;
+            } else {
+                isItemVisible.value = false;
+            }
+        }
+
         // watch 
-         watch(removeItem, () => {
+        watch(removeItem, () => {
             if(removeItem.value.value === value.value) {
                 isItemSelected.value = false;
             }
@@ -74,14 +90,20 @@ export default defineComponent({
                 isItemSelected.value = false;
             }
         });
+        watch(selectedArray, () => {
+            currentCount = selectedArray.length;
+        });
+        watch(searchKey, () => {
+            updateOptions();
+        });
         return {
             mouseoverHandler,
             mouseleaveHandler,
             clickHandler,
             isItemActived,
-            select,
             optionClickHandler,
-            isItemSelected
+            isItemSelected,
+            isItemVisible
         }
     }
 });

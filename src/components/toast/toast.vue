@@ -16,7 +16,7 @@ enum POSITION {
 }
 import {ref, watch, toRefs} from 'vue';
 export default {
-    name: 'toast',
+    name: 'wd-toast',
     props: {
         msg: String,
         visible: {

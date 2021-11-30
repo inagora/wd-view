@@ -44,7 +44,7 @@ export default defineComponent({
         defaultValue: Array
     },
     emits: ['update:modelValue', 'change'],
-    setup(props: WdCheckboxProps, ctx) {
+    setup(props, ctx) {
         const isChecked = ref(false);
         const checkboxOptions = toRef(props, 'options');
         const getOptions = computed(() => {

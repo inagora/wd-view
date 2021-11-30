@@ -3,18 +3,22 @@
         :is="pickerType"
         :placeholder="placeholder"
         :allow-clear="clearable"
-        :disabled="disabled"
+        :disabled="pickDisabled"
         :format="format"
         :value-format="valueFormat"
-        :size="size"
+        :show-time="true"
+        :size="inputSize"
         :separator="separator"
         :default-value="_defaultValue"
+        :locale="dateLocale"
         v-model="modelValue"
         @change="change"/>
 </template>
 
 <script lang="ts">
-import {defineComponent, PropType, ref} from 'vue';
+import {defineComponent, PropType, ref, inject} from 'vue';
+import {wdFormKey, wdFormItemKey, WdFormProps, WdFormItemProps, WdFormItemContext} from '../form/props';
+import locale from 'ant-design-vue/es/date-picker/locale/zh_CN';
 interface WdPickerProps {
     type: string,
     clearable: boolean,
@@ -25,6 +29,7 @@ interface WdPickerProps {
     size: string, // large/small
     modelValue: Date | string,
     placeholder: any,
+    showTime: boolean, // 是否显示时间
     separator: string // range 的分隔符
 }
 const pickerTypes = {
@@ -50,16 +55,28 @@ export default defineComponent({
         format: String,
         size: String,
         placeholder: Object,
-        separator: String
+        separator: String,
+        valueFormat: String,
+        showTime: {
+            type: Boolean,
+            default: false
+        }
     },
     emits: ['update:modelValue', 'change'],
     setup(props: WdPickerProps, {emit}) {
+        const dateLocale = ref(locale);
+        const wdForm = inject(wdFormKey, {} as WdFormProps);
+        const wdFormItem = inject(wdFormItemKey, {} as WdFormItemContext);
         let pickerType = ref('date');
         pickerType = pickerTypes[props.type];
         const change = (val) => {
             emit('update:modelValue', val);
             emit('change', val);
+            wdFormItem.formItemMitt?.emit("wd.form.change", [val]);
         }
+        
+        let inputSize = props.size || wdFormItem.size || wdForm.size;
+        let pickDisabled = props.disabled || wdFormItem.disabled || wdForm.disabled;
         // 默认日期
         let _defaultValue = ref('');
         if(props.defaultValue) _defaultValue.value = props.defaultValue;
@@ -70,12 +87,11 @@ export default defineComponent({
         return  {   
             pickerType,
             change,
-            _defaultValue
+            _defaultValue,
+            inputSize,
+            pickDisabled,
+            dateLocale
         };
     }
 });
 </script>
-
-<style lang="less" scoped>
-@import url(./style/index);
-</style>
