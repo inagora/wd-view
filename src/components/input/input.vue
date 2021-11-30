@@ -103,7 +103,7 @@ import {
   onMounted,
   inject,
 } from "vue";
-import * as IconList from "@ant-design/icons-vue";
+// import * as IconList from "@ant-design/icons-vue";
 import calcTextareaHeight from "./calcTextareaHeight";
 import { isObject } from "@vue/shared";
 import {
@@ -136,9 +136,9 @@ type AutosizeProp =
 export default defineComponent({
   name: "wd-input",
   inheritAttrs: false,
-  components: {
-    ...IconList,
-  },
+  // components: {
+  //   ...IconList,
+  // },
   props: {
     modelValue: {
       type: String,

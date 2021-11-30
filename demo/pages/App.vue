@@ -410,9 +410,9 @@
             @cellClick="cellClickHandler"
             @rowClick="rowClickHandler"></wd-table> -->
             <wd-layout>
-                <wd-layout-header>
+                <!-- <wd-layout-header>
                     WD-VIEW
-                </wd-layout-header>
+                </wd-layout-header> -->
                 <wd-layout has-sider="true">
                     <wd-layout-sider>
                         <!-- <div class="menu-item">
@@ -436,11 +436,41 @@
                         <div class="menu-item">
                             <wd-button type="link" @click="changeContent('table')">Table</wd-button>
                         </div> -->
+                        <div class="logo">
+                          <img src="https://s1.wandougongzhu.cn/s/ed/logo2x_b9a58d.png">
+                        </div>
                         <wd-menu 
                             :menu-list="menuList"
+                            theme="dark"
                             @click="menuClickHandler"/>
                     </wd-layout-sider> 
                     <wd-layout-content>
+                        <div class="header">
+                          <span>hi~，牛利杰</span>
+                          <img src="https://s4.wandougongzhu.cn/s/d8/_09d8fbe8-fbe1-4294-b9cd-9ad8d75f7b9a_25178a.png" alt="">
+                          <wd-dropdown
+                            :visible="false"
+                            trigger="hover"
+                            @visibleChange="visibleChangeHandler">
+                            <a class="wd-dropdown-link">
+                                设置
+                                <down-outlined></down-outlined>
+                            </a>
+                            <template #dropdown>
+                                <wd-dropdown-menu>
+                                    <wd-dropdown-menu-item>
+                                        <a href="https://www.baidu.com">百度</a>
+                                    </wd-dropdown-menu-item>
+                                    <wd-dropdown-menu-item disabled>
+                                        <a href="https://www.baidu.com">百度</a>
+                                    </wd-dropdown-menu-item>
+                                    <wd-dropdown-menu-item>
+                                        <a href="javascript:;">1st menu item</a>
+                                    </wd-dropdown-menu-item>
+                                </wd-dropdown-menu>
+                            </template>
+                          </wd-dropdown>
+                        </div>
                         <component :is="componentType"></component>
                     </wd-layout-content>       
                 </wd-layout>
@@ -454,8 +484,17 @@
 import {ref, defineComponent, reactive, onMounted, toRefs} from 'vue';
 import {DownOutlined} from '@ant-design/icons-vue';
 import Button from './Button.vue';
+import Checkbox from './Checkbox.vue';
 import Form from './Form.vue';
+import Input from './Input.vue';
+import InputNumber from './Inputnumber.vue';
 import Table from './Table.vue';
+import Link from './Link.vue';
+import Radio from './Radio.vue';
+import Switch from './Switch.vue';
+import Select from './Select.vue';
+import Datepicker from './Datepicker.vue';
+import Dropdown from './Dropdown.vue';
 import moment from 'moment';
 export default defineComponent({
     name: 'App',
@@ -463,7 +502,16 @@ export default defineComponent({
         DownOutlined,
         Button,
         Form,
-        Table
+        Table,
+        Checkbox,
+        Datepicker,
+        Dropdown,
+        Input,
+        InputNumber,
+        Link,
+        Radio,
+        Switch,
+        Select
     },
     setup() {
         let user = {
@@ -509,52 +557,77 @@ export default defineComponent({
                 icon: '',
                 submenu: [
                     {
-                        text: '按钮',
-                        type: 'button',
-                        submenu: [
-                            {
-                                text: '子菜单11',
-                            },
-                            {
-                                text: '子菜单12',
-                            }
-                        ]
+                        text: 'Button',
+                        type: 'button'
                     },
                     {
-                        text: '子菜单1',
-                        type: 'form',
-                        submenu: [
-                            {
-                                text: '子菜单11',
-                            },
-                            {
-                                text: '子菜单12',
-                            }
-                        ]
+                        text: 'Checkbox',
+                        type: 'checkbox'
                     },
                     {
-                        text: '子菜单2',
-                        submenu: [
-                            {
-                                text: '子菜单21',
-                            }
-                        ]
-                    }
+                        text: 'DatePicker',
+                        type: 'datepicker'
+                    },
+                    {
+                        text: 'Dropdown',
+                        type: 'dropdown'
+                    },
+                    {
+                        text: 'Input',
+                        type: 'input'
+                    },
+                    {
+                        text: 'InputNumber',
+                        type: 'input-number'
+                    },
+                    {
+                        text: 'Link',
+                        type: 'link'
+                    },
+                    {
+                        text: 'Radio',
+                        type: 'radio'
+                    },
+                    {
+                        text: 'Select',
+                        type: 'select'
+                    },
+                    {
+                        text: 'Switch',
+                        type: 'switch'
+                    },
+                    {
+                        text: 'Form',
+                        type: 'form'
+                    },
                 ]
             },
             {
-                text: '导航2',
+                text: '列表组件',
                 icon: '',
                 submenu: [
                     {
-                        text: 'table',
-                        type: 'table',
-                        submenu: [
-                            {
-                                text: '子菜单11',
-                            }
-                        ]
-                    }
+                        text: 'Table',
+                        type: 'table'
+                    },
+                    {
+                        text: 'Pagination',
+                        type: 'pagination'
+                    },
+                ]
+            },
+            {
+                text: '其他组件',
+                icon: '',
+                submenu: [
+                    {
+                        text: 'Layout',
+                        type: 'layout'
+                    },
+                    {
+                        text: 'Menu',
+                        type: 'menu'
+                    },
                 ]
             }
         ];
@@ -841,6 +914,33 @@ fieldset {
 .menu-item {
     min-width: 100px;
     height: 40px;
+}
+.logo {
+  width: 100%;
+  height: 64px;
+  display: flex;
+  align-items: center;
+}
+.logo img {
+  height: 50px;
+  margin-left: 12px;
+}
+.header {
+  width: 100%;
+  position: relative;
+  height: 64px;
+  padding: 0;
+  background: #fff;
+  box-shadow: 0 1px 4px rgb(0 21 41 / 8%);
+  display: flex;
+  align-items: center;
+  justify-content: end;
+}
+.header img {
+  width: 30px;
+  height: 30px;
+  border-radius: 50%;
+  margin: 0 10px;
 }
 </style>
 

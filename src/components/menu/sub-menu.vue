@@ -39,12 +39,14 @@ export default defineComponent({
     emits: ['click'], // onchange
     setup(props, context) {
         const menuList = props.subMenuList;
-        const submenuClickHandler = (index) => {
-            menuList.forEach(menu => {
-                menu.selected = false;
+        const submenuClickHandler = (currentIndex) => {
+            menuList.forEach((menu, index) => {
+                if(index !== currentIndex) {
+                  menu.selected = false;
+                }
             });
-            menuList[index].selected = true;
-            context.emit('click', {...menuList[index]});
+            menuList[currentIndex].selected = !menuList[currentIndex].selected;
+            context.emit('click', {...menuList[currentIndex]});
         }
         const emitClick = params => {
             context.emit('click', {...params});

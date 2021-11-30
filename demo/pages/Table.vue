@@ -1,18 +1,28 @@
 <template>
     <div class="container">
-        <wd-button @click="getTableRows" type="primary">获取选择项</wd-button>
-        <wd-table
-            ref="wdTable"
-            :columns="tableColumns"
-            :data-source="dataList"
-            :show-header="true"
-            size="small"
-            bordered
-            :sticky="true"
-            @page-change="pageChangeHandler"
-            @select-change="tableSelectChangeHandler"
-            @cellClick="cellClickHandler"
-            @rowClick="rowClickHandler"></wd-table>
+      <div class="component-box">
+          <div class="component-box-top">
+            <wd-button @click="getTableRows" type="primary">获取选择项</wd-button>
+            <wd-table
+                ref="wdTable"
+                :columns="tableColumns"
+                :data-source="dataList"
+                :show-header="true"
+                size="small"
+                bordered
+                :sticky="true"
+                @page-change="pageChangeHandler"
+                @select-change="tableSelectChangeHandler"
+                @cellClick="cellClickHandler"
+                @rowClick="rowClickHandler"></wd-table>
+          </div>
+          <div class="component-box-bottom">
+            <div class="component-title">列表组件</div>
+            <div class="component-desc">
+              该组件主要是显示一个列表，并且在列表底部可以显示分页；
+            </div>
+          </div>
+        </div>
     </div>
 </template>
 
@@ -154,6 +164,9 @@ export default defineComponent({
 </script>
 
 <style lang="less">
+.component-box {
+  width: 1000px !important;
+}
 </style>
 
 

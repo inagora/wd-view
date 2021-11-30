@@ -68,11 +68,13 @@ export default defineComponent({
         });
 
         // menu的点击，显示子menu
-        const menuClickHandler = (index) => {
-            _menuList.forEach(menu => {
-                menu.selected = false;
+        const menuClickHandler = (currentIndex) => {
+            _menuList.forEach((menu, index) => {
+                if(index !== currentIndex) {
+                  menu.selected = false;
+                }
             });
-            _menuList[index].selected = true;
+            _menuList[currentIndex].selected = !_menuList[currentIndex].selected;
         }
 
         const emitClick = params => {

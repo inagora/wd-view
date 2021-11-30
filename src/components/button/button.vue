@@ -25,7 +25,7 @@ type ButtonTypes = PropType<'primary' | 'success' | 'warning' | 'danger' | 'info
 type ButtonSizes = PropType<'small' | 'large'>;
 type ButtonRoundShape = PropType<'none' | 'small' | 'large' | 'circle'>;
 type ButtonNativeType = PropType<'button' | 'submit' | 'reset'>;
-import * as IconList from '@ant-design/icons-vue';
+// import * as IconList from '@ant-design/icons-vue';
 export default defineComponent({
     name: 'wd-button',
     props: {
@@ -52,9 +52,9 @@ export default defineComponent({
         disabled: Boolean,
         loading: Boolean
     },
-    components: {
-        ...IconList
-    },
+    // components: {
+    //     ...IconList
+    // },
     emits: ['click'],
     setup(props, context) {
         const handleClick = options => {
