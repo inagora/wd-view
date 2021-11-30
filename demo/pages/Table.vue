@@ -2,7 +2,8 @@
     <div class="container">
       <div class="component-box">
           <div class="component-box-top">
-            <wd-button @click="getTableRows" type="primary">获取选择项</wd-button>
+            <wd-form></wd-form>
+            <!-- <wd-button @click="getTableRows" type="primary">获取选择项</wd-button> -->
             <wd-table
                 ref="wdTable"
                 :columns="tableColumns"
@@ -28,8 +29,12 @@
 
 <script lang="ts">
 import {ref, defineComponent, reactive, onMounted} from 'vue';
+import WdForm from './Form.vue';
 export default defineComponent({
     name: 'Table',
+    components: {
+      WdForm
+    },
     setup() {
 
         // 获取table引用
@@ -91,7 +96,7 @@ export default defineComponent({
 
         let dataList: any = ref([]);
 
-        for (let i = 0; i < 60; i++) {
+        for (let i = 0; i < 15; i++) {
             dataList.value.push({
                 id: '' + (4 + i),
                 goods_name: 'sk4',
@@ -162,8 +167,7 @@ export default defineComponent({
     }
 })
 </script>
-
-<style lang="less">
+<style lang="less" scoped>
 .component-box {
   width: 1000px !important;
 }

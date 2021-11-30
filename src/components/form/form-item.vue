@@ -1,12 +1,12 @@
 <template>
-  <div :class="['wd-form-item', labelPosition === 'top' ? 'wd-form-item-top' : '', ...classes]">
+  <div :class="['wd-form-item', labelPosition === 'top' ? 'wd-form-item-top' : '', inline ? 'wd-form-item-inline' : '', ...classes]">
     <div :class="['wd-form-item-label', isRequired ? 'wd-form-item-required' : '']" :style="labelStyle">
         <label v-if="label">{{
             label + (colon ? '：' : '')
         }}</label>
     </div>
     
-    <div :class="['wd-form-item-control', 'wd-form-item-explain wd-form-item-explain-error']">
+    <div :class="['wd-form-item-control-wrapper', 'wd-form-item-explain wd-form-item-explain-error']">
         <slot></slot>
         <transition name="wd-zoom-in-top">
             <slot 
@@ -64,6 +64,7 @@ export default defineComponent({
     const validateDisabled = ref(false);
     const colon = wdForm.colon;
     const labelPosition = wdForm.labelPosition;
+    const inline = wdForm.inline;
     let labelStyle = computed(() => {
       let labelWidth = props.labelWidth || wdForm.labelWidth;
       let labelAlign = wdForm.labelAlign;
@@ -236,7 +237,7 @@ export default defineComponent({
     };
 
     const showErrmsg = computed(() => {
-        return validateState.value === 'error' && props.showMessage && wdForm.showMessage
+        return validateState.value && validateState.value === 'error' && props.showMessage && wdForm.showMessage
     });
 
     // 设置错误提示class
@@ -248,7 +249,7 @@ export default defineComponent({
             validateState.value === 'warning' ? 'has-warning': '',
             validateState.value === 'error' ? 'has-error': '',
             validateState.value === 'validating' ? 'is-validating': '',
-            showErrmsg ? 'wd-form-item-with-help' : ''
+            // showErrmsg ? 'wd-form-item-with-help' : ''
         ];
     })
     
@@ -281,7 +282,8 @@ export default defineComponent({
       showErrmsg,
       colon,
       labelPosition,
-      isRequired
+      isRequired,
+      inline
     };
   },
 });

@@ -27,9 +27,17 @@ import {defineComponent, ref} from 'vue';
 export default defineComponent({
     name: 'inputnumber',
     setup() {
-        
+        const inputNum = ref(0);
+        const handleInputNumber = () => {
+
+        }
+        const handleChangeNumber = () => {
+
+        }
         return {
-          
+          inputNum,
+          handleInputNumber,
+          handleChangeNumber
         }
     }
 })

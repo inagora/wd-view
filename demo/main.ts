@@ -17,7 +17,6 @@ import WdTable from '../src/components/table';
 import WdPagination from '../src/components/pagination';
 import WdMenu from '../src/components/menu';
 
-
 const app = createApp(App);
 app.use(WdLink);
 app.use(WdButton);
@@ -35,4 +34,5 @@ app.use(WdForm);
 app.use(WdTable);
 app.use(WdPagination);
 app.use(WdMenu);
+// app.component(IconList);
 app.mount('#app');

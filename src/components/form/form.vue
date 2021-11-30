@@ -1,40 +1,13 @@
 <template>
     <div>
-        <form class="wd-form wd-form-horizontal">
+        <form :class="['wd-form', inline ? 'wd-form-inline' : '']">
             <slot></slot>
         </form>
     </div>
 </template> 
 
 <script lang="ts">
-/**
- * 1、form以及foritem组件以及基本属性
- * 2、各个组件的整合
- * 3、子组件基本属性
- * 
- * todo
- * 1、子组件属性
- * 2、表单验证
- * 
- * seperator
- * offset 
- * layout: label的align属性
- * 
- * 原生表单回车触发提交问题
- * 
- * 每一个item增加错误message
- * 
- * validate 怎么通过父组件调用，
- * 子组件的validate实现
- * ref获取到的组件要在mounted中使用
- * 各种状态的样式
- * 是否显示冒号
- * label的位置
- * 按钮的位置
- * 
- * mitt、async-validator
- * 
- */
+
 import {defineComponent, onMounted, provide, reactive, toRefs, watch} from 'vue';
 import {wdFormKey, wdFormEvents, WdFormItemContext as FormItemCtx, ValidateFieldCallback} from './props';
 import FieldErrorList from 'async-validator';

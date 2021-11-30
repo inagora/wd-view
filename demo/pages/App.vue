@@ -482,7 +482,7 @@
 </template>
 <script lang="ts">
 import {ref, defineComponent, reactive, onMounted, toRefs} from 'vue';
-import {DownOutlined} from '@ant-design/icons-vue';
+import * as IconList from '@ant-design/icons-vue';
 import Button from './Button.vue';
 import Checkbox from './Checkbox.vue';
 import Form from './Form.vue';
@@ -499,7 +499,7 @@ import moment from 'moment';
 export default defineComponent({
     name: 'App',
     components: {
-        DownOutlined,
+        ...IconList,
         Button,
         Form,
         Table,
@@ -555,6 +555,7 @@ export default defineComponent({
             {
                 text: '表单组件',
                 icon: '',
+                open: true,
                 submenu: [
                     {
                         text: 'Button',
@@ -627,6 +628,25 @@ export default defineComponent({
                     {
                         text: 'Menu',
                         type: 'menu'
+                    },
+                    {
+                        text: '其他',
+                        type: 'other',
+                        open: true,
+                        submenu: [
+                            {
+                                text: 'Layout',
+                                type: 'layout'
+                            },
+                            {
+                                text: 'Menu',
+                                type: 'menu'
+                            },
+                            {
+                                text: '其他',
+                                type: 'other'
+                            },
+                        ]
                     },
                 ]
             }

@@ -93,7 +93,7 @@
             </div>
           </div>
         </div>
-        <!-- <div class="component-box">
+        <div class="component-box">
           <div class="component-box-top">
             <wd-input
                 type="textarea"
@@ -109,7 +109,7 @@
               方法基本一致；
             </div>
           </div>
-        </div> -->
+        </div>
     </div>
 </template>
 
@@ -118,9 +118,21 @@ import {defineComponent, ref} from 'vue';
 export default defineComponent({
     name: 'input',
     setup() {
-        
+        const handleChange = () => {
+
+        }
+        const handleInput = () => {
+
+        }
+        const clearChangeHandler = () => {
+
+        }
+        const textData = ref('');
         return {
-          
+          handleChange,
+          handleInput,
+          clearChangeHandler,
+          textData
         }
     }
 })

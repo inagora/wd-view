@@ -50,13 +50,13 @@ export default defineComponent({
     }
 })
 </script>
-<style lang="less">
+
+<style lang="less" scoped>
 .component-box {
   width: 500px;
   min-height: 150px;
   border: 1px solid #f0f0f0;
   background: #ffffff;
-  display: inline-block;
   margin-right: 10px;
 }
 .component-box-top {
@@ -64,6 +64,7 @@ export default defineComponent({
   height: 80%;
   border-bottom: 1px solid #f0f0f0;
   padding: 10px 20px;
+  display: flex !important;
 }
 .component-box-bottom {
   position: relative;
@@ -82,6 +83,9 @@ export default defineComponent({
 }
 .component-desc {
   padding: 20px 10px 10px 10px;
+}
+.wd-select {
+  margin-right: 10px !important;
 }
 </style>
 
