@@ -4,6 +4,7 @@ const { CleanWebpackPlugin } = require('clean-webpack-plugin');
 const HtmlWebpackPlugin = require('html-webpack-plugin');
 const CopyWebpackPlugin = require('copy-webpack-plugin');
 const MiniCssExtractPlugin = require('mini-css-extract-plugin');
+const CssMinimizerPlugin = require('css-minimizer-webpack-plugin');
 const { VueLoaderPlugin } = require('vue-loader');
 
 const config = {
@@ -38,24 +39,24 @@ const config = {
     ],
     module: {
         rules: [
-            {
-                test: /\.js$/,
-                exclude: /node_modules/,
-                use: [{
-                    loader: 'babel-loader',
-                    options: {
-                        cacheDirectory: true,
-                        presets: ['@babel/preset-env'],
-                        plugins: [
-                            ['import', {
-                                "libraryName": "ant-design-vue", 
-                                "libraryDirectory": "es", 
-                                "style": "css"
-                            }]
-                        ]
-                    }
-                }],
-            },
+            // {
+            //     test: /\.js$/,
+            //     exclude: /node_modules/,
+            //     use: [{
+            //         loader: 'babel-loader',
+            //         options: {
+            //             cacheDirectory: true,
+            //             presets: ['@babel/preset-env'],
+            //             plugins: [
+            //                 ['import', {
+            //                     "libraryName": "ant-design-vue", 
+            //                     "libraryDirectory": "es", 
+            //                     "style": "css"
+            //                 }]
+            //             ]
+            //         }
+            //     }],
+            // },
             {
                 test: /\.ts$/,
                 exclude: /node_modules/,
@@ -98,8 +99,13 @@ const config = {
     resolve: {
         extensions: ['.js', '.ts']
     },
+    optimization: {
+      minimizer: [`...`, new CssMinimizerPlugin()],
+      minimize: true
+    },
     externals: {
-        'vue': 'vue'
+        'vue': 'vue',
+        'ant-design-vue': 'ant-design-vue'
     }
 };
 

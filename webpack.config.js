@@ -3,6 +3,7 @@ const VueLoaderPlugin = require('vue-loader/dist/plugin').default;
 const WebpackBar = require('webpackbar');
 const path = require('path');
 const MiniCssExtractPlugin = require('mini-css-extract-plugin');
+const CssMinimizerPlugin = require('css-minimizer-webpack-plugin');
 
 const babelConfig = {
   cacheDirectory: true,
@@ -25,14 +26,14 @@ const babelConfig = {
     '@babel/preset-typescript',
   ],
   plugins: [
-    [
-      'babel-plugin-import',
-      {
-        libraryName: 'ant-design-vue',
-        libraryDirectory: 'es', // default: lib
-        style: 'css',
-      },
-    ],
+    // [
+    //   'babel-plugin-import',
+    //   {
+    //     libraryName: 'ant-design-vue',
+    //     libraryDirectory: 'es', // default: lib
+    //     style: 'css',
+    //   },
+    // ],
     ['@vue/babel-plugin-jsx', { mergeProps: false }],
     '@babel/plugin-proposal-optional-chaining',
     '@babel/plugin-transform-object-assign',
@@ -88,20 +89,21 @@ module.exports = {
       {
         test: /\.less$/,
         use: [
-          { loader: 'style-loader' },
-          {
-            loader: 'css-loader',
-            options: { sourceMap: true },
-          },
-          {
-            loader: 'less-loader',
-            options: {
-              lessOptions: {
-                sourceMap: true,
-                javascriptEnabled: true,
-              },
-            },
-          },
+          // { loader: 'style-loader' },
+          // {
+          //   loader: 'css-loader',
+          //   options: { sourceMap: true },
+          // },
+          // {
+          //   loader: 'less-loader',
+          //   options: {
+          //     lessOptions: {
+          //       sourceMap: true,
+          //       javascriptEnabled: true,
+          //     },
+          //   },
+          // },
+          MiniCssExtractPlugin.loader, 'css-loader', 'less-loader'
         ],
       },
       {
@@ -126,6 +128,12 @@ module.exports = {
   //   },
   //   extensions: ['.js', '.jsx', '.ts', '.tsx', '.vue', '.md'],
   // },
+  optimization: {
+    minimizer: [
+      new CssMinimizerPlugin()
+    ],
+    minimize: true
+  },
   devServer: {
     historyApiFallback: {
       rewrites: [{ from: /./, to: '/index.html' }],
