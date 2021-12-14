@@ -6,7 +6,7 @@ import LayoutSider from './components/sider.vue';
 import LayoutContent from './components/content.vue';
 import LayoutFooter from './components/footer.vue';
 
-const install = (app: App) => {
+Layout.install = (app: App) => {
     app.component(Layout.name, Layout);
     app.component(LayoutHeader.name, LayoutHeader);
     app.component(LayoutSider.name, LayoutSider);
@@ -14,4 +14,4 @@ const install = (app: App) => {
     app.component(LayoutFooter.name, LayoutFooter);
 }
 
-export default install;
+export default Layout;

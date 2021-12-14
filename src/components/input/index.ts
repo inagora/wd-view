@@ -2,8 +2,8 @@
 import { App } from 'vue';
 import Input from './input.vue';
 
-const install = (app: App) => {
+Input.install = (app: App) => {
     app.component(Input.name, Input);
 }
 
-export default install;
+export default Input;

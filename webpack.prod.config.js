@@ -14,8 +14,7 @@ const config = {
         filename: 'index.js',
         path: path.resolve(__dirname, 'dist'),
         libraryTarget: 'umd',
-        library: 'wdView',
-        libraryExport: 'default'
+        library: 'WdView'
     },
     plugins: [
         new CleanWebpackPlugin(),
@@ -100,11 +99,11 @@ const config = {
         extensions: ['.js', '.ts']
     },
     optimization: {
-      minimizer: [`...`, new CssMinimizerPlugin()],
+      minimizer: ['...', new CssMinimizerPlugin()],
       minimize: true
     },
     externals: {
-        'vue': 'vue',
+        'vue': 'Vue',
         'ant-design-vue': 'ant-design-vue'
     }
 };

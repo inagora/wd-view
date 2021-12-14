@@ -7,7 +7,7 @@ import DatePicker from './date-picker.vue';
 // // import AWeekPicker from 'ant-design-vue/lib/date-picker/WeekPicker';
 // import ATimePicker from 'ant-design-vue/lib/time-picker';
 // import {DatePicker as ADatePicker, TimePicker as ATimePicker} from 'ant-design-vue';
-const install = (app: App) => {
+DatePicker.install = (app: App) => {
     // console.log(AWeekPicker);
     app.component(DatePicker.name, DatePicker);
     // app.component(ADatePicker.name, ADatePicker);
@@ -18,4 +18,4 @@ const install = (app: App) => {
     // app.component(ATimePicker.name, ATimePicker);
 }
 
-export default install;
+export default DatePicker;

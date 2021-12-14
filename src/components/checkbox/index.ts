@@ -3,9 +3,9 @@ import { App } from 'vue';
 import Checkbox from './checkbox.vue';
 import CheckboxGroup from './checkbox-group.vue';
 
-const install = (app: App) => {
+Checkbox.install = (app: App) => {
     app.component(Checkbox.name, Checkbox);
     app.component(CheckboxGroup.name, CheckboxGroup);
 } 
 
-export default install;
+export default Checkbox;
