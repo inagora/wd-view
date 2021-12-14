@@ -75,13 +75,13 @@
                 <right-outlined />
             </a>
         </li>
-        <li class="wd-pagination-options">
+        <!-- <li class="wd-pagination-options">
             <wd-select size="default">
                 <wd-option label="研究生" value="baidu">hhh</wd-option>    
                 <wd-option label="本科" value="google">hhh</wd-option>    
                 <wd-option label="专科" value="bing">hhh</wd-option> 
             </wd-select>
-        </li>
+        </li> -->
     </ul>
 </template> 
 

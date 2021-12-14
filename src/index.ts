@@ -13,6 +13,8 @@ import WdLayout from '../src/components/layout';
 import WdSelect from '../src/components/select';
 import WdTable from '../src/components/table';
 import WdForm from '../src/components/form';
+import WdPagination from './components/pagination';
+import WdFormItem from './components/form-item';
 
 const components = [
     WdButton,
@@ -28,7 +30,9 @@ const components = [
     WdLayout,
     WdSelect,
     WdTable,
-    WdForm
+    WdForm,
+    WdFormItem,
+    WdPagination
 ];
 const install = (app: App): void => {
     components.forEach(component => {
@@ -51,7 +55,9 @@ export {
   WdLayout,
   WdSelect,
   WdTable,
-  WdForm
+  WdForm,
+  WdFormItem,
+  WdPagination
 }
 export default {
     WdLink,
@@ -68,5 +74,7 @@ export default {
     WdLayout,
     WdSelect,
     WdTable,
-    WdForm
+    WdForm,
+    WdFormItem,
+    WdPagination
 }

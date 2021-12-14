@@ -19,11 +19,11 @@
         </div>
         <wd-pagination
             class="wd-table-pagination"
-            :page-size="20"
-            :page-count="20"
-            :pager-count="5"
-            :total="100"
-            :current-page="15"
+            :page-size="pageSize"
+            :page-count="pageCount"
+            :pager-count="pagerCount"
+            :total="total"
+            :current-page="currentPage"
             @current-change="pageChangeHandler"
             @prev-click="prevClickChangeHandler"
             @next-click="nextClickChangeHandler"></wd-pagination>
@@ -78,9 +78,20 @@ export default defineComponent({
         sticky: {
             type: Boolean,
             default: false
+        },
+        pageSize: [Number, String],
+        pageCount: {
+          type: [Number, String],
+          default: 1
+        },
+        pagerCount: [Number, String],
+        total: [Number, String],
+        currentPage: {
+          type: [Number, String],
+          default: 1
         }
     },
-    emits: ['page-change', 'select-change', 'cell-click', 'row-click'],
+    emits: ['current-change', 'select-change', 'cell-click', 'row-click', 'next-click', 'prev-click'],
     setup(props, {emit}) {
         const store = {} as StoreProps;
         store.originColumns = reactive(props.columns);
@@ -116,7 +127,13 @@ export default defineComponent({
 
         // 页码变化
         const pageChangeHandler = page => {
-            emit('page-change', page);
+            emit('current-change', page);
+        }
+        const nextClickChangeHandler = page => {
+          emit('next-click', page);
+        }
+        const prevClickChangeHandler = page => {
+          emit('prev-click', page);
         }
         // select-change
         const selectChangeHandler = () => {
@@ -145,6 +162,8 @@ export default defineComponent({
             store,
             tableLayoutFixed,
             pageChangeHandler,
+            nextClickChangeHandler,
+            prevClickChangeHandler,
             selectChangeHandler,
             getSelectedRows,
             cellClickHandler,

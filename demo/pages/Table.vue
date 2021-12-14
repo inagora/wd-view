@@ -12,7 +12,11 @@
                 size="small"
                 bordered
                 :sticky="true"
-                @page-change="pageChangeHandler"
+                page-count="3"
+                current-page="1"
+                @current-change="pageChangeHandler"
+                @prev-click="prevClickChangeHandler"
+                @next-click="nextClickChangeHandler"
                 @select-change="tableSelectChangeHandler"
                 @cellClick="cellClickHandler"
                 @rowClick="rowClickHandler"></wd-table>
@@ -96,25 +100,27 @@ export default defineComponent({
 
         let dataList: any = ref([]);
 
-        for (let i = 0; i < 15; i++) {
-            dataList.value.push({
-                id: '' + (4 + i),
-                goods_name: 'sk4',
-                price: '1180',
-                ctime: '2021-09-26',
-                update_time: '2021-09-26',
-                location: '中国'
-            });
-        }
-
+        setTimeout(() => {
+          for (let i = 0; i < 15; i++) {
+              dataList.value.push({
+                  id: '' + (4 + i),
+                  goods_name: 'sk4',
+                  price: '1180',
+                  ctime: '2021-09-26',
+                  update_time: '2021-09-26',
+                  location: '中国'
+              });
+          }
+        }, 2000);
         const pageChangeHandler = (page) => {
-            setTableData(page);
+            // setTableData(page);
+            console.log('11111');
         }
         const prevClickChangeHandler = page => {
-            setTableData(page);
+            console.log(page);
         }
         const nextClickChangeHandler = page => {
-            setTableData(page);
+            console.log(page);
         }
         const setTableData = page => {
             // dataList = dataList.substr(page * 15, 15);
@@ -167,7 +173,7 @@ export default defineComponent({
     }
 })
 </script>
-<style lang="less" scoped>
+<style lang="less">
 .component-box {
   width: 1000px !important;
 }
