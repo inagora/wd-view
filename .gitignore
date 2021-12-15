@@ -90,6 +90,7 @@ typings/
 
 # vuepress build output
 .vuepress/dist
+.temp
 
 # Serverless directories
 .serverless/
