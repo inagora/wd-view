@@ -1,3 +1,4 @@
+// @ts-nocheck
 import type { App } from 'vue';
 import WdLink from '../src/components/link';
 import WdButton from '../src/components/button';
@@ -15,6 +16,10 @@ import WdTable from '../src/components/table';
 import WdForm from '../src/components/form';
 import WdPagination from './components/pagination';
 import WdFormItem from './components/form-item';
+import WdLayoutHeader from './components/layout/components/header.vue';
+import WdLayoutFooter from './components/layout/components/footer.vue';
+import WdLayoutSider from './components/layout/components/sider.vue';
+import WdLayoutContent from './components/layout/components/content.vue';
 
 const components = [
     WdButton,
@@ -32,7 +37,11 @@ const components = [
     WdTable,
     WdForm,
     WdFormItem,
-    WdPagination
+    WdPagination,
+    WdLayoutContent,
+    WdLayoutFooter,
+    WdLayoutSider,
+    WdLayoutHeader
 ];
 const install = (app: App): void => {
     components.forEach(component => {
@@ -57,7 +66,11 @@ export {
   WdTable,
   WdForm,
   WdFormItem,
-  WdPagination
+  WdPagination,
+  WdLayoutContent,
+  WdLayoutFooter,
+  WdLayoutSider,
+  WdLayoutHeader
 }
 export default {
     WdLink,
@@ -76,5 +89,9 @@ export default {
     WdTable,
     WdForm,
     WdFormItem,
-    WdPagination
+    WdPagination,
+    WdLayoutContent,
+    WdLayoutFooter,
+    WdLayoutSider,
+    WdLayoutHeader
 }
