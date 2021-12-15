@@ -40,6 +40,7 @@
     </div>
 </template>
 <script lang="ts">
+// @ts-nocheck
 import { defineComponent, PropType, reactive, ref, watch} from 'vue';
 import {StoreProps} from './table-type';
 export default defineComponent({

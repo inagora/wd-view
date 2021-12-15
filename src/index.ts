@@ -20,6 +20,7 @@ import WdLayoutHeader from './components/layout/components/header.vue';
 import WdLayoutFooter from './components/layout/components/footer.vue';
 import WdLayoutSider from './components/layout/components/sider.vue';
 import WdLayoutContent from './components/layout/components/content.vue';
+import WdMenu from './components/menu';
 
 const components = [
     WdButton,
@@ -41,7 +42,8 @@ const components = [
     WdLayoutContent,
     WdLayoutFooter,
     WdLayoutSider,
-    WdLayoutHeader
+    WdLayoutHeader,
+    WdMenu
 ];
 const install = (app: App): void => {
     components.forEach(component => {
@@ -70,7 +72,8 @@ export {
   WdLayoutContent,
   WdLayoutFooter,
   WdLayoutSider,
-  WdLayoutHeader
+  WdLayoutHeader,
+  WdMenu
 }
 export default {
     WdLink,
@@ -93,5 +96,6 @@ export default {
     WdLayoutContent,
     WdLayoutFooter,
     WdLayoutSider,
-    WdLayoutHeader
+    WdLayoutHeader,
+    WdMenu
 }
