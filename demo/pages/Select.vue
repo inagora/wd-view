@@ -1,54 +1,53 @@
 <template>
-    <div class="container">
-        <div class="component-box">
-          <div class="component-box-top">
-            <wd-select 
-                multiple
-                :multiple-limit="2"
-                v-model="selectedValue"
-                @change="selectedChangeHandler"
-                placeholder="请选择搜索引擎"
-                size="small">
-                <wd-option label="百度" value="baidu">hhh</wd-option>    
-                <wd-option label="百度知道" value="baiduzhidao">hhh</wd-option>    
-                <wd-option label="谷歌" value="google">hhh</wd-option>    
-                <wd-option label="谷歌2" value="google2">hhh</wd-option>    
-                <wd-option label="谷歌3" value="google3">hhh</wd-option>    
-                <wd-option label="必应" value="bing">hhh</wd-option>    
-                <wd-option label="必2应" value="bing2">hhh</wd-option>    
-                <wd-option label="3必应" value="bing3">hhh</wd-option>    
-            </wd-select>
-            <wd-select 
-                v-model="selectedValue"
-                @change="selectedChangeHandler"
-                placeholder="请选择搜索引擎"
-                size="small">
-                <wd-option label="百度" value="baidu">hhh</wd-option>    
-                <wd-option label="谷歌" value="google">hhh</wd-option>    
-                <wd-option label="必应" value="bing">hhh</wd-option>    
-            </wd-select>
-          </div>
-          <div class="component-box-bottom">
-            <div class="component-title">下拉框</div>
-            <div class="component-desc">
-              下拉选择组件分为单选和多选，可以通过multiple设置，并且可以显示多选的长度；
-            </div>
-          </div>
+  <div class="container">
+    <div class="component-box">
+      <div class="component-box-top">
+        <wd-select
+          multiple
+          :multiple-limit="2"
+          v-model="selectedValue"
+          @change="selectedChangeHandler"
+          placeholder="请选择搜索引擎"
+          size="small"
+        >
+          <wd-option label="百度" value="baidu">hhh</wd-option>
+          <wd-option label="百度知道" value="baiduzhidao">hhh</wd-option>
+          <wd-option label="谷歌" value="google">hhh</wd-option>
+          <wd-option label="谷歌2" value="google2">hhh</wd-option>
+          <wd-option label="谷歌3" value="google3">hhh</wd-option>
+          <wd-option label="必应" value="bing">hhh</wd-option>
+          <wd-option label="必2应" value="bing2">hhh</wd-option>
+          <wd-option label="3必应" value="bing3">hhh</wd-option>
+        </wd-select>
+        <wd-select
+          v-model="selectedValue"
+          @change="selectedChangeHandler"
+          placeholder="请选择搜索引擎"
+          size="small"
+        >
+          <wd-option label="百度" value="baidu">hhh</wd-option>
+          <wd-option label="谷歌" value="google">hhh</wd-option>
+          <wd-option label="必应" value="bing">hhh</wd-option>
+        </wd-select>
+      </div>
+      <div class="component-box-bottom">
+        <div class="component-title">下拉框</div>
+        <div class="component-desc">
+          下拉选择组件分为单选和多选，可以通过multiple设置，并且可以显示多选的长度；
         </div>
+      </div>
     </div>
+  </div>
 </template>
 
 <script lang="ts">
-import {defineComponent, ref} from 'vue';
+import { defineComponent, ref } from "vue";
 export default defineComponent({
-    name: 'Select',
-    setup() {
-        
-        return {
-          
-        }
-    }
-})
+  name: "Select",
+  setup() {
+    return {};
+  },
+});
 </script>
 
 <style lang="less" scoped>
@@ -88,5 +87,3 @@ export default defineComponent({
   margin-right: 10px !important;
 }
 </style>
-
-

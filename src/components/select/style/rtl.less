@@ -1,8 +1,8 @@
-@import '../../style/themes/index';
-@import '../../style/mixins/index';
-@import '../../input/style/mixin';
+@import "../../style/themes/index";
+@import "../../style/mixins/index";
+@import "../../input/style/mixin";
 
-@select-prefix-cls: ~'@{wd-prefix}-select';
+@select-prefix-cls: ~"@{wd-prefix}-select";
 
 .@{select-prefix-cls} {
   &-rtl {
@@ -143,7 +143,8 @@
   }
 
   &.@{select-prefix-cls}-show-arrow .@{select-prefix-cls}-selection-item,
-  &.@{select-prefix-cls}-show-arrow .@{select-prefix-cls}-selection-placeholder {
+  &.@{select-prefix-cls}-show-arrow
+    .@{select-prefix-cls}-selection-placeholder {
     .@{select-prefix-cls}-rtl& {
       padding-right: 0;
       padding-left: @selection-item-padding;
@@ -177,7 +178,8 @@
       }
 
       &.@{select-prefix-cls}-show-arrow .@{select-prefix-cls}-selection-item,
-      &.@{select-prefix-cls}-show-arrow .@{select-prefix-cls}-selection-placeholder {
+      &.@{select-prefix-cls}-show-arrow
+        .@{select-prefix-cls}-selection-placeholder {
         .@{select-prefix-cls}-rtl& {
           padding-right: 0;
           padding-left: @font-size-base * 1.5;

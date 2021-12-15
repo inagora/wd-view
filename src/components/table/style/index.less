@@ -1,7 +1,7 @@
-@import '../../style/themes/index';
-@import '../../style/mixins/index';
+@import "../../style/themes/index";
+@import "../../style/mixins/index";
 
-@table-prefix-cls: ~'@{wd-prefix}-table';
+@table-prefix-cls: ~"@{wd-prefix}-table";
 @table-header-icon-color: #bfbfbf;
 @table-header-sort-active-bg: darken(@table-header-bg, 3%);
 @table-header-filter-active-bg: darken(@table-header-sort-active-bg, 5%);
@@ -51,7 +51,7 @@
     border-bottom: @border-width-base @border-style-base @border-color-split;
     transition: background 0.3s ease;
 
-    &[colspan]:not([colspan='1']) {
+    &[colspan]:not([colspan="1"]) {
       text-align: center;
     }
 
@@ -197,7 +197,7 @@
           left: 0;
           background: transparent;
           transition: all 0.3s;
-          content: '';
+          content: "";
         }
         &:hover::before {
           background: rgba(0, 0, 0, 0.04);
@@ -235,7 +235,8 @@
   &-tbody > tr {
     &.@{table-prefix-cls}-row-hover,
     &:hover {
-      &:not(.@{table-prefix-cls}-expanded-row):not(.@{table-prefix-cls}-row-selected) > td {
+      &:not(.@{table-prefix-cls}-expanded-row):not(.@{table-prefix-cls}-row-selected)
+        > td {
         background: @table-row-hover-bg;
       }
     }
@@ -272,7 +273,7 @@
       width: 100%;
       height: 1px;
       background: @table-footer-bg;
-      content: '';
+      content: "";
     }
   }
 
@@ -447,7 +448,7 @@
     .@{wd-prefix}-dropdown-menu {
       // https://github.com/ant-design/ant-design/issues/4916
       // https://github.com/ant-design/ant-design/issues/19542
-      max-height: ~'calc(100vh - 130px)';
+      max-height: ~"calc(100vh - 130px)";
       overflow-x: hidden;
       border: 0;
       border-radius: @border-radius-base @border-radius-base 0 0;
@@ -566,17 +567,17 @@
     }
 
     &-expanded::after {
-      content: '-';
+      content: "-";
     }
 
     &-collapsed::after {
-      content: '+';
+      content: "+";
     }
 
     &-spaced {
       visibility: hidden;
       &::after {
-        content: '.';
+        content: ".";
       }
     }
 
@@ -604,7 +605,8 @@
     }
 
     td > .@{table-prefix-cls}-wrapper {
-      margin: -@table-padding-vertical -@table-padding-horizontal -@table-padding-vertical - 1px;
+      margin: -@table-padding-vertical -@table-padding-horizontal -@table-padding-vertical -
+        1px;
     }
   }
 
@@ -737,7 +739,7 @@
       bottom: -1px;
       width: 30px;
       transform: translate(100%);
-      transition: box-shadow .3s;
+      transition: box-shadow 0.3s;
       content: "";
       pointer-events: none;
     }
@@ -791,7 +793,9 @@
     }
   }
 
-  &-row[class*='@{table-prefix-cls}-row-level-0'] .@{table-prefix-cls}-selection-column > span {
+  &-row[class*="@{table-prefix-cls}-row-level-0"]
+    .@{table-prefix-cls}-selection-column
+    > span {
     display: inline-block;
   }
 }
@@ -813,4 +817,4 @@
   }
 }
 
-@import './size';
+@import "./size";

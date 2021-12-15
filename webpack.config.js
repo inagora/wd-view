@@ -1,29 +1,29 @@
-const HtmlWebpackPlugin = require('html-webpack-plugin');
-const VueLoaderPlugin = require('vue-loader/dist/plugin').default;
-const WebpackBar = require('webpackbar');
-const path = require('path');
-const MiniCssExtractPlugin = require('mini-css-extract-plugin');
-const CssMinimizerPlugin = require('css-minimizer-webpack-plugin');
+const HtmlWebpackPlugin = require("html-webpack-plugin");
+const VueLoaderPlugin = require("vue-loader/dist/plugin").default;
+const WebpackBar = require("webpackbar");
+const path = require("path");
+const MiniCssExtractPlugin = require("mini-css-extract-plugin");
+const CssMinimizerPlugin = require("css-minimizer-webpack-plugin");
 
 const babelConfig = {
   cacheDirectory: true,
   presets: [
     [
-      '@babel/preset-env',
+      "@babel/preset-env",
       {
         targets: {
           browsers: [
-            'last 2 versions',
-            'Firefox ESR',
-            '> 1%',
-            'ie >= 11',
-            'iOS >= 8',
-            'Android >= 4',
+            "last 2 versions",
+            "Firefox ESR",
+            "> 1%",
+            "ie >= 11",
+            "iOS >= 8",
+            "Android >= 4",
           ],
         },
       },
     ],
-    '@babel/preset-typescript',
+    "@babel/preset-typescript",
   ],
   plugins: [
     // [
@@ -34,56 +34,56 @@ const babelConfig = {
     //     style: 'css',
     //   },
     // ],
-    ['@vue/babel-plugin-jsx', { mergeProps: false }],
-    '@babel/plugin-proposal-optional-chaining',
-    '@babel/plugin-transform-object-assign',
-    '@babel/plugin-proposal-object-rest-spread',
-    '@babel/plugin-proposal-export-default-from',
-    '@babel/plugin-proposal-export-namespace-from',
-    '@babel/plugin-proposal-class-properties',
+    ["@vue/babel-plugin-jsx", { mergeProps: false }],
+    "@babel/plugin-proposal-optional-chaining",
+    "@babel/plugin-transform-object-assign",
+    "@babel/plugin-proposal-object-rest-spread",
+    "@babel/plugin-proposal-export-default-from",
+    "@babel/plugin-proposal-export-namespace-from",
+    "@babel/plugin-proposal-class-properties",
   ],
 };
 
 module.exports = {
-  mode: 'development',
+  mode: "development",
   entry: {
-    app: './demo/main.ts',
+    app: "./demo/main.ts",
   },
   module: {
     rules: [
       {
         test: /\.(vue|md)$/,
-        loader: 'vue-loader',
+        loader: "vue-loader",
         exclude: /\.(en-US.md|zh-CN.md)$/,
       },
       {
         test: /\.(en-US.md|zh-CN.md)$/,
-        use: [{ loader: 'vue-loader' }, { loader: './loader.js' }],
+        use: [{ loader: "vue-loader" }, { loader: "./loader.js" }],
       },
       {
         test: /\.tsx?$/,
         use: [
           {
-            loader: 'babel-loader',
+            loader: "babel-loader",
             options: babelConfig,
           },
           {
-            loader: 'ts-loader',
+            loader: "ts-loader",
           },
         ],
         exclude: /node_modules/,
       },
       {
         test: /\.(js|jsx)$/,
-        loader: 'babel-loader',
+        loader: "babel-loader",
         exclude: /pickr.*js/,
         options: babelConfig,
       },
       {
         test: /\.(png|jpg|gif|svg)$/,
-        loader: 'file-loader',
+        loader: "file-loader",
         options: {
-          name: '[name].[ext]?[hash]',
+          name: "[name].[ext]?[hash]",
         },
       },
       {
@@ -103,7 +103,9 @@ module.exports = {
           //     },
           //   },
           // },
-          MiniCssExtractPlugin.loader, 'css-loader', 'less-loader'
+          MiniCssExtractPlugin.loader,
+          "css-loader",
+          "less-loader",
         ],
       },
       {
@@ -115,7 +117,7 @@ module.exports = {
               hmr: true,
             },
           },
-          'css-loader',
+          "css-loader",
         ],
       },
     ],
@@ -129,27 +131,25 @@ module.exports = {
   //   extensions: ['.js', '.jsx', '.ts', '.tsx', '.vue', '.md'],
   // },
   optimization: {
-    minimizer: [
-      new CssMinimizerPlugin()
-    ],
-    minimize: true
+    minimizer: [new CssMinimizerPlugin()],
+    minimize: true,
   },
   devServer: {
     historyApiFallback: {
-      rewrites: [{ from: /./, to: '/index.html' }],
+      rewrites: [{ from: /./, to: "/index.html" }],
     },
     disableHostCheck: true,
     hot: true,
     open: true,
   },
-  devtool: 'cheap-module-eval-source-map',
+  devtool: "cheap-module-eval-source-map",
   plugins: [
     new MiniCssExtractPlugin({
-      filename: '[name].css',
+      filename: "[name].css",
     }),
     new HtmlWebpackPlugin({
-      template: 'examples/index.html',
-      filename: 'index.html',
+      template: "examples/index.html",
+      filename: "index.html",
       inject: true,
     }),
     new VueLoaderPlugin(),

@@ -1,7 +1,7 @@
-@import '../../style/mixins/index';
+@import "../../style/mixins/index";
 
-.wdCheckboxFn(@checkbox-prefix-cls: ~'@{wd-prefix}-checkbox') {
-  @checkbox-inner-prefix-cls: ~'@{checkbox-prefix-cls}-inner';
+.wdCheckboxFn(@checkbox-prefix-cls: ~"@{wd-prefix}-checkbox") {
+  @checkbox-inner-prefix-cls: ~"@{checkbox-prefix-cls}-inner";
   // 一般状态
   .@{checkbox-prefix-cls} {
     .reset-component();
@@ -32,7 +32,7 @@
       visibility: hidden;
       animation: wdCheckboxEffect 0.36s ease-in-out;
       animation-fill-mode: backwards;
-      content: '';
+      content: "";
       width: @checkbox-size;
       height: @checkbox-size;
     }
@@ -73,7 +73,7 @@
         transform: rotate(45deg) scale(0) translate(-50%, -50%);
         opacity: 0;
         transition: all 0.1s @ease-in-back, opacity 0.1s;
-        content: ' ';
+        content: " ";
       }
     }
 
@@ -101,7 +101,7 @@
     transform: rotate(45deg) scale(1) translate(-50%, -50%);
     opacity: 1;
     transition: all 0.2s @ease-out-back 0.1s;
-    content: ' ';
+    content: " ";
   }
 
   .@{checkbox-prefix-cls}-checked {
@@ -200,7 +200,7 @@
       border: 0;
       transform: translate(-50%, -50%) scale(1);
       opacity: 1;
-      content: ' ';
+      content: " ";
     }
 
     &.@{checkbox-prefix-cls}-disabled .@{checkbox-inner-prefix-cls}::after {

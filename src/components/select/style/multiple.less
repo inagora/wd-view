@@ -1,4 +1,4 @@
-@import './index';
+@import "./index";
 
 @select-multiple-item-border-width: 1px;
 
@@ -40,7 +40,7 @@
         width: 0;
         margin: @select-multiple-item-spacing-half 0;
         line-height: @select-multiple-item-height;
-        content: '\a0';
+        content: "\a0";
       }
     }
 
@@ -69,7 +69,8 @@
       margin-right: @input-padding-vertical-base;
       margin-bottom: @select-multiple-item-spacing-half;
       padding: 0 (@padding-xs / 2) 0 @padding-xs;
-      line-height: @select-multiple-item-height - @select-multiple-item-border-width * 2;
+      line-height: @select-multiple-item-height -
+        @select-multiple-item-border-width * 2;
       background: @select-selection-item-bg;
       border: 1px solid @select-selection-item-border-color;
       border-radius: @border-radius-base;
@@ -160,9 +161,10 @@
     // ==                          Size                          ==
     // ============================================================
     .select-size(@suffix, @input-height) {
-      @merged-cls: ~'@{select-prefix-cls}-@{suffix}';
+      @merged-cls: ~"@{select-prefix-cls}-@{suffix}";
       &.@{merged-cls} {
-        @select-selection-height: @input-height - @input-padding-vertical-base * 2;
+        @select-selection-height: @input-height - @input-padding-vertical-base *
+          2;
         @select-height-without-border: @input-height - @border-width-base * 2;
 
         .@{select-prefix-cls}-selector::after {
@@ -187,8 +189,8 @@
       }
     }
 
-    .select-size('lg', @input-height-lg);
-    .select-size('sm', @input-height-sm);
+    .select-size("lg", @input-height-lg);
+    .select-size("sm", @input-height-sm);
 
     // Size small need additional set padding
     &.@{select-prefix-cls}-sm {

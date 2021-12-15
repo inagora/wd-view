@@ -34,12 +34,12 @@
   &:focus {
     & when (@theme = dark) {
       .button-color(
-        @color; ~`colorPalette('@{background}', 7) `; ~`colorPalette('@{background}', 7) `
+        @color; ~`colorPalette("@{background}", 7) `; ~`colorPalette("@{background}", 7) `
       );
     }
     & when not (@theme = dark) {
       .button-color(
-        @color; ~`colorPalette('@{background}', 5) `; ~`colorPalette('@{background}', 5) `
+        @color; ~`colorPalette("@{background}", 5) `; ~`colorPalette("@{background}", 5) `
       );
     }
   }
@@ -48,12 +48,12 @@
   &.active {
     & when (@theme = dark) {
       .button-color(
-        @color; ~`colorPalette('@{background}', 5) `; ~`colorPalette('@{background}', 5) `
+        @color; ~`colorPalette("@{background}", 5) `; ~`colorPalette("@{background}", 5) `
       );
     }
     & when not (@theme = dark) {
       .button-color(
-        @color; ~`colorPalette('@{background}', 7) `; ~`colorPalette('@{background}', 7) `
+        @color; ~`colorPalette("@{background}", 7) `; ~`colorPalette("@{background}", 7) `
       );
     }
   }
@@ -71,8 +71,8 @@
     }
     & when not (@theme = dark) {
       .button-color(
-        ~`colorPalette('@{btn-primary-bg}', 5) `; @background;
-          ~`colorPalette('@{btn-primary-bg}', 5) `
+        ~`colorPalette("@{btn-primary-bg}", 5) `; @background;
+          ~`colorPalette("@{btn-primary-bg}", 5) `
       );
     }
   }
@@ -83,8 +83,8 @@
     }
     & when not (@theme = dark) {
       .button-color(
-        ~`colorPalette('@{btn-primary-bg}', 7) `; @background;
-          ~`colorPalette('@{btn-primary-bg}', 7) `
+        ~`colorPalette("@{btn-primary-bg}", 7) `; @background;
+          ~`colorPalette("@{btn-primary-bg}", 7) `
       );
     }
   }
@@ -97,21 +97,21 @@
   &:focus {
     & when (@border = transparent) {
       & when (@theme = dark) {
-        .button-color(~`colorPalette('@{color}', 7) `; transparent; transparent);
+        .button-color(~`colorPalette("@{color}", 7) `; transparent; transparent);
       }
       & when not (@theme = dark) {
-        .button-color(~`colorPalette('@{color}', 5) `; transparent; transparent);
+        .button-color(~`colorPalette("@{color}", 5) `; transparent; transparent);
       }
     }
     & when not(@border = transparent) {
       & when (@theme = dark) {
         .button-color(
-          ~`colorPalette('@{color}', 7) `; transparent; ~`colorPalette('@{color}', 7) `
+          ~`colorPalette("@{color}", 7) `; transparent; ~`colorPalette("@{color}", 7) `
         );
       }
       & when not (@theme = dark) {
         .button-color(
-          ~`colorPalette('@{color}', 5) `; transparent; ~`colorPalette('@{color}', 5) `
+          ~`colorPalette("@{color}", 5) `; transparent; ~`colorPalette("@{color}", 5) `
         );
       }
     }
@@ -120,21 +120,21 @@
   &.active {
     & when (@border = transparent) {
       & when (@theme = dark) {
-        .button-color(~`colorPalette('@{color}', 5) `; transparent; transparent);
+        .button-color(~`colorPalette("@{color}", 5) `; transparent; transparent);
       }
       & when not (@theme = dark) {
-        .button-color(~`colorPalette('@{color}', 7) `; transparent; transparent);
+        .button-color(~`colorPalette("@{color}", 7) `; transparent; transparent);
       }
     }
     & when not(@border = transparent) {
       & when (@theme = dark) {
         .button-color(
-          ~`colorPalette('@{color}', 5) `; transparent; ~`colorPalette('@{color}', 5) `
+          ~`colorPalette("@{color}", 5) `; transparent; ~`colorPalette("@{color}", 5) `
         );
       }
       & when not (@theme = dark) {
         .button-color(
-          ~`colorPalette('@{color}', 7) `; transparent; ~`colorPalette('@{color}', 7) `
+          ~`colorPalette("@{color}", 7) `; transparent; ~`colorPalette("@{color}", 7) `
         );
       }
     }
@@ -156,7 +156,7 @@
       bottom: 0;
       left: 0;
       background: transparent;
-      content: '';
+      content: "";
     }
   }
 }
@@ -279,7 +279,7 @@
 }
 .btn-success() {
   .button-variant-primary(@btn-success-color, @btn-success-bg);
-} 
+}
 .btn-info() {
   .button-variant-primary(@white; @btn-info-bg);
 }
@@ -335,7 +335,7 @@
   border-radius: @btn-circle-size-circle;
 }
 // square button: the content only contains icon
-.btn-square(@btnClassName: btn) { 
+.btn-square(@btnClassName: btn) {
   .square(@btn-square-size);
   .button-size(@btn-square-size; 0; @font-size-base + 2px; @btn-border-radius-base);
   &.@{btnClassName}-lg {
@@ -376,7 +376,8 @@
   & + & {
     margin-left: -1px;
   }
-  .@{btnClassName}-primary + .@{btnClassName}:not(.@{btnClassName}-primary):not([disabled]) {
+  .@{btnClassName}-primary
+    + .@{btnClassName}:not(.@{btnClassName}-primary):not([disabled]) {
     border-left-color: transparent;
   }
   .@{btnClassName} {

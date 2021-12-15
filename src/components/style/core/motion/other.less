@@ -4,8 +4,8 @@
   }
 }
 
-[ant-click-animating='true'],
-[ant-click-animating-without-extra-node='true'] {
+[ant-click-animating="true"],
+[ant-click-animating-without-extra-node="true"] {
   position: relative;
 }
 
@@ -13,7 +13,7 @@ html {
   --antd-wave-shadow-color: @primary-color;
 }
 
-[ant-click-animating-without-extra-node='true']::after,
+[ant-click-animating-without-extra-node="true"]::after,
 .ant-click-animating-node {
   position: absolute;
   top: 0;
@@ -27,7 +27,7 @@ html {
   opacity: 0.2;
   animation: fadeEffect 2s @ease-out-circ, waveEffect 0.4s @ease-out-circ;
   animation-fill-mode: forwards;
-  content: '';
+  content: "";
   pointer-events: none;
 }
 

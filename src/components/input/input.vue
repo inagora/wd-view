@@ -269,7 +269,7 @@ export default defineComponent({
       wdFormItem.formItemMitt?.emit("wd.form.change", [event.target.value]);
     };
     const handleBlur = (event) => {
-    //   wdFormItem.formItemMitt?.emit("wd.form.blur", [event.target.value]);
+      //   wdFormItem.formItemMitt?.emit("wd.form.blur", [event.target.value]);
     };
     const clear = () => {
       ctx.emit("update:modelValue", "");
@@ -294,7 +294,7 @@ export default defineComponent({
       inputOrTextarea,
       textareaStyle,
       inputDisabled,
-      handleBlur
+      handleBlur,
     };
   },
 });

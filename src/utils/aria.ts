@@ -1,33 +1,36 @@
 export const EVENT_CODE = {
-  tab: 'Tab',
-  enter: 'Enter',
-  space: 'Space',
-  left: 'ArrowLeft', // 37
-  up: 'ArrowUp', // 38
-  right: 'ArrowRight', // 39
-  down: 'ArrowDown', // 40
-  esc: 'Escape',
-  delete: 'Delete',
-  backspace: 'Backspace',
-}
+  tab: "Tab",
+  enter: "Enter",
+  space: "Space",
+  left: "ArrowLeft", // 37
+  up: "ArrowUp", // 38
+  right: "ArrowRight", // 39
+  down: "ArrowDown", // 40
+  esc: "Escape",
+  delete: "Delete",
+  backspace: "Backspace",
+};
 
-const FOCUSABLE_ELEMENT_SELECTORS =`a[href],button:not([disabled]),button:not([hidden]),:not([tabindex="-1"]),input:not([disabled]),input:not([type="hidden"]),select:not([disabled]),textarea:not([disabled])`
+const FOCUSABLE_ELEMENT_SELECTORS = `a[href],button:not([disabled]),button:not([hidden]),:not([tabindex="-1"]),input:not([disabled]),input:not([type="hidden"]),select:not([disabled]),textarea:not([disabled])`;
 
 /**
  * Determine if the testing element is visible on screen no matter if its on the viewport or not
  */
 export const isVisible = (element: HTMLElement) => {
-  if (process.env.NODE_ENV === 'test') return true
-  const computed = getComputedStyle(element)
+  if (process.env.NODE_ENV === "test") return true;
+  const computed = getComputedStyle(element);
   // element.offsetParent won't work on fix positioned
   // WARNING: potential issue here, going to need some expert advices on this issue
-  return computed.position === 'fixed' ? false : element.offsetParent !== null
-}
+  return computed.position === "fixed" ? false : element.offsetParent !== null;
+};
 
-export const obtainAllFocusableElements = (element: HTMLElement): HTMLElement[] => {
-  return Array.from(element.querySelectorAll(FOCUSABLE_ELEMENT_SELECTORS)).filter(isFocusable)
-    .filter(isVisible) as HTMLElement[]
-}
+export const obtainAllFocusableElements = (
+  element: HTMLElement
+): HTMLElement[] => {
+  return Array.from(element.querySelectorAll(FOCUSABLE_ELEMENT_SELECTORS))
+    .filter(isFocusable)
+    .filter(isVisible) as HTMLElement[];
+};
 
 /**
  * @desc Determine if target element is focusable
@@ -37,33 +40,39 @@ export const obtainAllFocusableElements = (element: HTMLElement): HTMLElement[] 
 export const isFocusable = (element: HTMLElement): boolean => {
   if (
     element.tabIndex > 0 ||
-    (element.tabIndex === 0 && element.getAttribute('tabIndex') !== null)
+    (element.tabIndex === 0 && element.getAttribute("tabIndex") !== null)
   ) {
-    return true
+    return true;
   }
   // HTMLButtonElement has disabled
   if ((element as HTMLButtonElement).disabled) {
-    return false
+    return false;
   }
 
   switch (element.nodeName) {
-    case 'A': {
+    case "A": {
       // casting current element to Specific HTMLElement in order to be more type precise
-      return !!(element as HTMLAnchorElement).href && (element as HTMLAnchorElement).rel !== 'ignore'
+      return (
+        !!(element as HTMLAnchorElement).href &&
+        (element as HTMLAnchorElement).rel !== "ignore"
+      );
     }
-    case 'INPUT':{
-      return !((element as HTMLInputElement).type === 'hidden' || (element as HTMLInputElement).type === 'file')
+    case "INPUT": {
+      return !(
+        (element as HTMLInputElement).type === "hidden" ||
+        (element as HTMLInputElement).type === "file"
+      );
     }
-    case 'BUTTON':
-    case 'SELECT':
-    case 'TEXTAREA': {
-      return true
+    case "BUTTON":
+    case "SELECT":
+    case "TEXTAREA": {
+      return true;
     }
     default: {
-      return false
+      return false;
     }
   }
-}
+};
 
 /**
  * @desc Set Attempt to set focus on the current node.
@@ -74,15 +83,14 @@ export const isFocusable = (element: HTMLElement): boolean => {
  */
 export const attemptFocus = (element: HTMLElement): boolean => {
   if (!isFocusable(element)) {
-    return false
+    return false;
   }
-  Utils.IgnoreUtilFocusChanges = true
+  Utils.IgnoreUtilFocusChanges = true;
   // Remove the old try catch block since there will be no error to be thrown
-  element.focus?.()
-  Utils.IgnoreUtilFocusChanges = false
-  return document.activeElement === element
-}
-
+  element.focus?.();
+  Utils.IgnoreUtilFocusChanges = false;
+  return document.activeElement === element;
+};
 
 /**
  * Trigger an event
@@ -91,22 +99,26 @@ export const attemptFocus = (element: HTMLElement): boolean => {
  * @param  {String} name
  * @param  {*} opts
  */
-export const triggerEvent = function(elm: HTMLElement, name: string, ...opts: Array<boolean>): HTMLElement {
-  let eventName: string
+export const triggerEvent = function (
+  elm: HTMLElement,
+  name: string,
+  ...opts: Array<boolean>
+): HTMLElement {
+  let eventName: string;
 
-  if (name.includes('mouse') || name.includes('click')) {
-    eventName = 'MouseEvents'
-  } else if (name.includes('key')) {
-    eventName = 'KeyboardEvent'
+  if (name.includes("mouse") || name.includes("click")) {
+    eventName = "MouseEvents";
+  } else if (name.includes("key")) {
+    eventName = "KeyboardEvent";
   } else {
-    eventName = 'HTMLEvents'
+    eventName = "HTMLEvents";
   }
-  const evt = document.createEvent(eventName)
+  const evt = document.createEvent(eventName);
 
-  evt.initEvent(name, ...opts)
-  elm.dispatchEvent(evt)
-  return elm
-}
+  evt.initEvent(name, ...opts);
+  elm.dispatchEvent(evt);
+  return elm;
+};
 
 const Utils = {
   IgnoreUtilFocusChanges: false,
@@ -118,17 +130,14 @@ const Utils = {
    * @returns {Boolean}
    *  true if a focusable element is found and focus is set.
    */
-  focusFirstDescendant: function(element: HTMLElement): boolean {
+  focusFirstDescendant: function (element: HTMLElement): boolean {
     for (let i = 0; i < element.childNodes.length; i++) {
-      const child = element.childNodes[i] as HTMLElement
-      if (
-        attemptFocus(child) ||
-        this.focusFirstDescendant(child)
-      ) {
-        return true
+      const child = element.childNodes[i] as HTMLElement;
+      if (attemptFocus(child) || this.focusFirstDescendant(child)) {
+        return true;
       }
     }
-    return false
+    return false;
   },
   /**
    * @desc Find the last descendant node that is focusable.
@@ -137,18 +146,15 @@ const Utils = {
    * @returns {Boolean}
    *  true if a focusable element is found and focus is set.
    */
-  focusLastDescendant: function(element: HTMLElement): boolean {
+  focusLastDescendant: function (element: HTMLElement): boolean {
     for (let i = element.childNodes.length - 1; i >= 0; i--) {
-      const child = element.childNodes[i] as HTMLElement
-      if (
-        attemptFocus(child) ||
-        this.focusLastDescendant(child)
-      ) {
-        return true
+      const child = element.childNodes[i] as HTMLElement;
+      if (attemptFocus(child) || this.focusLastDescendant(child)) {
+        return true;
       }
     }
-    return false
+    return false;
   },
-}
+};
 
-export default Utils
+export default Utils;

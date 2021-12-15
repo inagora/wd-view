@@ -1,124 +1,141 @@
-import type { Ref } from 'vue'
-import { getCurrentInstance } from 'vue'
+import type { Ref } from "vue";
+import { getCurrentInstance } from "vue";
 
-import { camelize, capitalize, extend, hasOwn, hyphenate, isArray, isObject, isString, looseEqual, toRawType } from '@vue/shared'
+import {
+  camelize,
+  capitalize,
+  extend,
+  hasOwn,
+  hyphenate,
+  isArray,
+  isObject,
+  isString,
+  looseEqual,
+  toRawType,
+} from "@vue/shared";
 
-import isServer from './isServer'
-import type { AnyFunction } from './types'
-import { warn } from './error'
+import isServer from "./isServer";
+import type { AnyFunction } from "./types";
+import { warn } from "./error";
 
-export const SCOPE = 'Util'
+export const SCOPE = "Util";
 
-export type PartialCSSStyleDeclaration = Partial<Pick<CSSStyleDeclaration, 'transform' | 'transition' | 'animation'>>
+export type PartialCSSStyleDeclaration = Partial<
+  Pick<CSSStyleDeclaration, "transform" | "transition" | "animation">
+>;
 
 declare type Nullable<T> = T | null;
 declare type Indexable<T> = {
-  [key: string]: T
-}
+  [key: string]: T;
+};
 
-declare type Hash<T> = Indexable<T>
+declare type Hash<T> = Indexable<T>;
 declare type TimeoutHandle = ReturnType<typeof global.setTimeout>;
 
 export function toObject<T>(arr: Array<T>): Record<string, T> {
-  const res = {}
+  const res = {};
   for (let i = 0; i < arr.length; i++) {
     if (arr[i]) {
-      extend(res, arr[i])
+      extend(res, arr[i]);
     }
   }
-  return res
+  return res;
 }
 
-export const getValueByPath = (obj: any, paths = ''): unknown => {
-  let ret: unknown = obj
-  paths.split('.').map(path => {
-    ret = ret?.[path]
-  })
-  return ret
-}
+export const getValueByPath = (obj: any, paths = ""): unknown => {
+  let ret: unknown = obj;
+  paths.split(".").map((path) => {
+    ret = ret?.[path];
+  });
+  return ret;
+};
 
-export function getPropByPath(obj: any, path: string, strict: boolean): {
-  o: unknown
-  k: string
-  v: Nullable<unknown>
+export function getPropByPath(
+  obj: any,
+  path: string,
+  strict: boolean
+): {
+  o: unknown;
+  k: string;
+  v: Nullable<unknown>;
 } {
-  let tempObj = obj
-  path = path.replace(/\[(\w+)\]/g, '.$1')
-  path = path.replace(/^\./, '')
+  let tempObj = obj;
+  path = path.replace(/\[(\w+)\]/g, ".$1");
+  path = path.replace(/^\./, "");
 
-  const keyArr = path.split('.')
-  let i = 0
+  const keyArr = path.split(".");
+  let i = 0;
   for (i; i < keyArr.length - 1; i++) {
-    if (!tempObj && !strict) break
-    const key = keyArr[i]
+    if (!tempObj && !strict) break;
+    const key = keyArr[i];
 
     if (key in tempObj) {
-      tempObj = tempObj[key]
+      tempObj = tempObj[key];
     } else {
       if (strict) {
-        throw new Error('please transfer a valid prop path to form item!')
+        throw new Error("please transfer a valid prop path to form item!");
       }
-      break
+      break;
     }
   }
   return {
     o: tempObj,
     k: keyArr[i],
     v: tempObj?.[keyArr[i]],
-  }
+  };
 }
 
 /**
  * Generate random number in range [0, 1000]
  * Maybe replace with [uuid](https://www.npmjs.com/package/uuid)
  */
-export const generateId = (): number => Math.floor(Math.random() * 10000)
+export const generateId = (): number => Math.floor(Math.random() * 10000);
 
 // use isEqual instead
 // export const valueEquals
 
-export const escapeRegexpString = (value = ''): string =>
-  String(value).replace(/[|\\{}()[\]^$+*?.]/g, '\\$&')
+export const escapeRegexpString = (value = ""): string =>
+  String(value).replace(/[|\\{}()[\]^$+*?.]/g, "\\$&");
 
 // Use native Array.find, Array.findIndex instead
 
 // coerce truthy value to array
-export const coerceTruthyValueToArray = arr => {
+export const coerceTruthyValueToArray = (arr) => {
   if (!arr && arr !== 0) {
-    return []
+    return [];
   }
-  return Array.isArray(arr) ? arr : [arr]
-}
+  return Array.isArray(arr) ? arr : [arr];
+};
 
 export const isIE = function (): boolean {
-  return !isServer && !isNaN(Number(document.DOCUMENT_NODE))
-}
+  return !isServer && !isNaN(Number(document.DOCUMENT_NODE));
+};
 
 export const isEdge = function (): boolean {
-  return !isServer && navigator.userAgent.indexOf('Edge') > -1
-}
+  return !isServer && navigator.userAgent.indexOf("Edge") > -1;
+};
 
 export const isFirefox = function (): boolean {
-  return !isServer && !!window.navigator.userAgent.match(/firefox/i)
-}
+  return !isServer && !!window.navigator.userAgent.match(/firefox/i);
+};
 
 export const autoprefixer = function (
-  style: PartialCSSStyleDeclaration,
+  style: PartialCSSStyleDeclaration
 ): PartialCSSStyleDeclaration {
-  const rules = ['transform', 'transition', 'animation']
-  const prefixes = ['ms-', 'webkit-']
-  rules.forEach(rule => {
-    const value = style[rule]
+  const rules = ["transform", "transition", "animation"];
+  const prefixes = ["ms-", "webkit-"];
+  rules.forEach((rule) => {
+    const value = style[rule];
     if (rule && value) {
-      prefixes.forEach(prefix => {
-        style[prefix + rule] = value
-      })
+      prefixes.forEach((prefix) => {
+        style[prefix + rule] = value;
+      });
     }
-  })
-  return style
-}
+  });
+  return style;
+};
 
-export const kebabCase = hyphenate
+export const kebabCase = hyphenate;
 
 // reexport from lodash & vue shared
 export {
@@ -132,90 +149,92 @@ export {
   camelize,
   looseEqual,
   extend,
-}
+};
 
-export const isBool = (val: unknown) => typeof val === 'boolean'
-export const isNumber = (val: unknown) => typeof val === 'number'
-export const isHTMLElement = (val: unknown) => toRawType(val).startsWith('HTML')
+export const isBool = (val: unknown) => typeof val === "boolean";
+export const isNumber = (val: unknown) => typeof val === "number";
+export const isHTMLElement = (val: unknown) =>
+  toRawType(val).startsWith("HTML");
 
-export function rafThrottle<T extends AnyFunction<any>>(fn: T): AnyFunction<void> {
-  let locked = false
+export function rafThrottle<T extends AnyFunction<any>>(
+  fn: T
+): AnyFunction<void> {
+  let locked = false;
   return function (...args: any[]) {
-    if (locked) return
-    locked = true
+    if (locked) return;
+    locked = true;
     window.requestAnimationFrame(() => {
-      fn.apply(this, args)
-      locked = false
-    })
-  }
+      fn.apply(this, args);
+      locked = false;
+    });
+  };
 }
 
 export const clearTimer = (timer: Ref<TimeoutHandle>) => {
-  clearTimeout(timer.value)
-  timer.value = null
-}
+  clearTimeout(timer.value);
+  timer.value = null;
+};
 
 /**
  * Generating a random int in range (0, max - 1)
  * @param max {number}
  */
 export function getRandomInt(max: number) {
-  return Math.floor(Math.random() * Math.floor(max))
+  return Math.floor(Math.random() * Math.floor(max));
 }
 
 export function entries<T>(obj: Hash<T>): [string, T][] {
-  return Object
-    .keys(obj)
-    .map((key: string) => ([key, obj[key]]))
+  return Object.keys(obj).map((key: string) => [key, obj[key]]);
 }
 
 export function isUndefined(val: any): val is undefined {
-  return val === void 0
+  return val === void 0;
 }
 
-export { isVNode } from 'vue'
+export { isVNode } from "vue";
 
 export function useGlobalConfig() {
-  const vm: any = getCurrentInstance()
-  if ('$ELEMENT' in vm.proxy) {
-    return vm.proxy.$ELEMENT
+  const vm: any = getCurrentInstance();
+  if ("$ELEMENT" in vm.proxy) {
+    return vm.proxy.$ELEMENT;
   }
-  return {}
+  return {};
 }
 
 export const arrayFindIndex = function <T = any>(
   arr: Array<T>,
-  pred: (args: T) => boolean,
+  pred: (args: T) => boolean
 ): number {
-  return arr.findIndex(pred)
-}
+  return arr.findIndex(pred);
+};
 
 export const arrayFind = function <T = any>(
   arr: Array<T>,
-  pred: (args: T) => boolean,
+  pred: (args: T) => boolean
 ): any {
-  return arr.find(pred)
-}
+  return arr.find(pred);
+};
 
 export function isEmpty(val: unknown) {
   if (
-    !val && val !== 0 ||
-    isArray(val) && !val.length ||
-    isObject(val) && !Object.keys(val).length
-  ) return true
+    (!val && val !== 0) ||
+    (isArray(val) && !val.length) ||
+    (isObject(val) && !Object.keys(val).length)
+  )
+    return true;
 
-  return false
+  return false;
 }
 
 export function arrayFlat(arr: unknown[]) {
   return arr.reduce((acm: unknown[], item) => {
-    const val = Array.isArray(item) ? arrayFlat(item) : item
-    return acm.concat(val)
-  }, [])
+    const val = Array.isArray(item) ? arrayFlat(item) : item;
+    return acm.concat(val);
+  }, []);
 }
 
 export function deduplicate<T>(arr: T[]) {
-  return Array.from(new Set(arr))
+  return Array.from(new Set(arr));
 }
 
 /**
@@ -223,59 +242,63 @@ export function deduplicate<T>(arr: T[]) {
  * @param ref Refed value
  */
 export function $<T>(ref: Ref<T>) {
-  return ref.value
+  return ref.value;
 }
 
 export function addUnit(value: string | number) {
   if (isString(value)) {
-    return value
+    return value;
   } else if (isNumber(value)) {
-    return value + 'px'
+    return value + "px";
   }
-  if (process.env.NODE_ENV === 'development') {
-    warn(SCOPE, 'binding value must be a string or number')
+  if (process.env.NODE_ENV === "development") {
+    warn(SCOPE, "binding value must be a string or number");
   }
-  return ''
+  return "";
 }
 
 let jses = {};
 export function loadJs(url) {
-	if(jses[url])
-		return jses[url];
-	else {
-		let p = new Promise(resolve=>{
-			let head = document.getElementsByTagName('head')[0] || document.documentElement,
-				script = document.createElement('script') as any;
-			script.src = url;
-			script.onload = script.onreadystatechange = function() {
-				if (!this.readyState || this.readyState == "loaded" || this.readyState == "complete") {
-					script.onload = script.onreadystatechange = null;
-					head.removeChild(script);
-					resolve('');
-				}
-			};
-			head.insertBefore(script, head.firstChild);
-		});
-		jses[url] = p;
-		return p;
-	}
+  if (jses[url]) return jses[url];
+  else {
+    let p = new Promise((resolve) => {
+      let head =
+          document.getElementsByTagName("head")[0] || document.documentElement,
+        script = document.createElement("script") as any;
+      script.src = url;
+      script.onload = script.onreadystatechange = function () {
+        if (
+          !this.readyState ||
+          this.readyState == "loaded" ||
+          this.readyState == "complete"
+        ) {
+          script.onload = script.onreadystatechange = null;
+          head.removeChild(script);
+          resolve("");
+        }
+      };
+      head.insertBefore(script, head.firstChild);
+    });
+    jses[url] = p;
+    return p;
+  }
 }
 let csses = {};
-export function loadCss(url){
-	if(csses[url])
-		return csses[url];
-	else {
-		let p = new Promise(resolve=>{
-			let css = document.createElement( "link" );
-			css.rel = "stylesheet";
-			css.href = url;
-			document.head.insertBefore(
-				css,
-				document.head.childNodes[ document.head.childNodes.length - 1 ].nextSibling
-			);
-			resolve('');
-		});
-		csses[url] = p;
-		return p;
-	}
+export function loadCss(url) {
+  if (csses[url]) return csses[url];
+  else {
+    let p = new Promise((resolve) => {
+      let css = document.createElement("link");
+      css.rel = "stylesheet";
+      css.href = url;
+      document.head.insertBefore(
+        css,
+        document.head.childNodes[document.head.childNodes.length - 1]
+          .nextSibling
+      );
+      resolve("");
+    });
+    csses[url] = p;
+    return p;
+  }
 }

@@ -1,44 +1,44 @@
 <template>
-    <div class="container">
-        <div class="component-box">
-          <div class="component-box-top">
-            <wd-switch 
-                v-model="isSwitchChecked"
-                :loading="isSwitchLoading"
-                @change="handleSwitchChange"/>
-            <wd-switch 
-                disabled
-                size="large"
-                :loading="true"
-                v-model="isSwitchChecked"/>
-          </div>
-          <div class="component-box-bottom">
-            <div class="component-title">开关组件</div>
-            <div class="component-desc">
-              开关组件可以控制一个状态，当异步切换状态的时候可以显示loading状态；
-            </div>
-          </div>
+  <div class="container">
+    <div class="component-box">
+      <div class="component-box-top">
+        <wd-switch
+          v-model="isSwitchChecked"
+          :loading="isSwitchLoading"
+          @change="handleSwitchChange"
+        />
+        <wd-switch
+          disabled
+          size="large"
+          :loading="true"
+          v-model="isSwitchChecked"
+        />
+      </div>
+      <div class="component-box-bottom">
+        <div class="component-title">开关组件</div>
+        <div class="component-desc">
+          开关组件可以控制一个状态，当异步切换状态的时候可以显示loading状态；
         </div>
+      </div>
     </div>
+  </div>
 </template>
 
 <script lang="ts">
-import {defineComponent, ref} from 'vue';
+import { defineComponent, ref } from "vue";
 export default defineComponent({
-    name: 'Switch',
-    setup() {
-        let isSwitchChecked = ref(false);
-        let isSwitchLoading = ref(false);
-        const handleSwitchChange = () => {
-
-        }
-        return {
-          isSwitchChecked,
-          isSwitchLoading,
-          handleSwitchChange
-        }
-    }
-})
+  name: "Switch",
+  setup() {
+    let isSwitchChecked = ref(false);
+    let isSwitchLoading = ref(false);
+    const handleSwitchChange = () => {};
+    return {
+      isSwitchChecked,
+      isSwitchLoading,
+      handleSwitchChange,
+    };
+  },
+});
 </script>
 <style lang="less">
 .component-box {
@@ -74,5 +74,3 @@ export default defineComponent({
   padding: 20px 10px 10px 10px;
 }
 </style>
-
-

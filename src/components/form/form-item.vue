@@ -1,23 +1,34 @@
 <template>
-  <div :class="['wd-form-item', labelPosition === 'top' ? 'wd-form-item-top' : '', inline ? 'wd-form-item-inline' : '', ...classes]">
-    <div :class="['wd-form-item-label', isRequired ? 'wd-form-item-required' : '']" :style="labelStyle">
-        <label v-if="label">{{
-            label + (colon ? '：' : '')
-        }}</label>
+  <div
+    :class="[
+      'wd-form-item',
+      labelPosition === 'top' ? 'wd-form-item-top' : '',
+      inline ? 'wd-form-item-inline' : '',
+      ...classes,
+    ]"
+  >
+    <div
+      :class="['wd-form-item-label', isRequired ? 'wd-form-item-required' : '']"
+      :style="labelStyle"
+    >
+      <label v-if="label">{{ label + (colon ? "：" : "") }}</label>
     </div>
-    
-    <div :class="['wd-form-item-control-wrapper', 'wd-form-item-explain wd-form-item-explain-error']">
-        <slot></slot>
-        <transition name="wd-zoom-in-top">
-            <slot 
-                name="error"
-                v-if="showErrmsg">
-                <div role="alert">{{validateMessage}}</div>
-            </slot>
-        </transition>
+
+    <div
+      :class="[
+        'wd-form-item-control-wrapper',
+        'wd-form-item-explain wd-form-item-explain-error',
+      ]"
+    >
+      <slot></slot>
+      <transition name="wd-zoom-in-top">
+        <slot name="error" v-if="showErrmsg">
+          <div role="alert">{{ validateMessage }}</div>
+        </slot>
+      </transition>
     </div>
   </div>
-</template> 
+</template>
 <script lang="ts">
 declare type Nullable<T> = T | null;
 import {
@@ -53,14 +64,14 @@ export default defineComponent({
     error: String,
     validateStatus: String,
     showMessage: {
-        type: Boolean,
-        default: true
-    }
+      type: Boolean,
+      default: true,
+    },
   },
   setup(props) {
     let wdForm = inject(wdFormKey, {} as WdFormContext);
-    const validateState = ref('');
-    const validateMessage = ref('');
+    const validateState = ref("");
+    const validateMessage = ref("");
     const validateDisabled = ref(false);
     const colon = wdForm.colon;
     const labelPosition = wdForm.labelPosition;
@@ -162,7 +173,8 @@ export default defineComponent({
     const getRules = () => {
       const formRules = wdForm.rules;
       const selfRules = props.rules;
-      const requiredRule = props.required !== undefined ? { required: !!props.required } : [];
+      const requiredRule =
+        props.required !== undefined ? { required: !!props.required } : [];
       const prop = getPropByPath(formRules, props.prop || "", false);
       const normalizedRule = formRules
         ? prop.o[props.prop || ""] || prop.v
@@ -237,22 +249,27 @@ export default defineComponent({
     };
 
     const showErrmsg = computed(() => {
-        return validateState.value && validateState.value === 'error' && props.showMessage && wdForm.showMessage
+      return (
+        validateState.value &&
+        validateState.value === "error" &&
+        props.showMessage &&
+        wdForm.showMessage
+      );
     });
 
     // 设置错误提示class
     validateState.value = props.validateStatus;
     const classes = computed(() => {
-        return [
-            validateState.value ? 'has-feedback' : '',
-            validateState.value === 'success' ? 'has-success': '',
-            validateState.value === 'warning' ? 'has-warning': '',
-            validateState.value === 'error' ? 'has-error': '',
-            validateState.value === 'validating' ? 'is-validating': '',
-            // showErrmsg ? 'wd-form-item-with-help' : ''
-        ];
-    })
-    
+      return [
+        validateState.value ? "has-feedback" : "",
+        validateState.value === "success" ? "has-success" : "",
+        validateState.value === "warning" ? "has-warning" : "",
+        validateState.value === "error" ? "has-error" : "",
+        validateState.value === "validating" ? "is-validating" : "",
+        // showErrmsg ? 'wd-form-item-with-help' : ''
+      ];
+    });
+
     const wdFormItem = reactive({
       ...toRefs(props),
       validateState,
@@ -283,7 +300,7 @@ export default defineComponent({
       colon,
       labelPosition,
       isRequired,
-      inline
+      inline,
     };
   },
 });

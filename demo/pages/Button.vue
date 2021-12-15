@@ -1,103 +1,82 @@
 <template>
-    <div class="container">
-        <div class="component-box">
-          <div class="component-box-top">
-            <wd-button 
-                size="large"
-                icon="filter-filled">普通按钮</wd-button>
-            <wd-button 
-                size="large" 
-                type="primary"
-                round-shape="none"
-                icon="home-outlined"
-                @click="clickHandler">主要按钮</wd-button>
-            <wd-button 
-                size="large" 
-                type="danger">危险按钮</wd-button>
-            <wd-button 
-                size="large" 
-                type="success">成功按钮</wd-button>
-            <wd-button 
-                size="large" 
-                type="dashed">dashed按钮</wd-button>    
-            <wd-button 
-                size="large" 
-                type="info">info按钮</wd-button>
-            <wd-button 
-                size="large" 
-                type="text">text按钮</wd-button>
-            <wd-button 
-                size="large" 
-                disabled="true"
-                type="primary">按钮不可用</wd-button>
-          </div>
-          <div class="component-box-bottom">
-            <div class="component-title">不同样式按钮</div>
-            <div class="component-desc">
-              通过设置type属性，可以设置按钮的不同样式：primary | danger | success | dashed | info | 
-              text
-            </div>
-          </div>
+  <div class="container">
+    <div class="component-box">
+      <div class="component-box-top">
+        <wd-button size="large" icon="filter-filled">普通按钮</wd-button>
+        <wd-button
+          size="large"
+          type="primary"
+          round-shape="none"
+          icon="home-outlined"
+          @click="clickHandler"
+          >主要按钮</wd-button
+        >
+        <wd-button size="large" type="danger">危险按钮</wd-button>
+        <wd-button size="large" type="success">成功按钮</wd-button>
+        <wd-button size="large" type="dashed">dashed按钮</wd-button>
+        <wd-button size="large" type="info">info按钮</wd-button>
+        <wd-button size="large" type="text">text按钮</wd-button>
+        <wd-button size="large" disabled="true" type="primary"
+          >按钮不可用</wd-button
+        >
+      </div>
+      <div class="component-box-bottom">
+        <div class="component-title">不同样式按钮</div>
+        <div class="component-desc">
+          通过设置type属性，可以设置按钮的不同样式：primary | danger | success |
+          dashed | info | text
         </div>
-        <div class="component-box">
-          <div class="component-box-top">
-            <wd-button 
-                size="large"
-                icon="filter-filled">普通按钮</wd-button>
-            <wd-button 
-                size="large" 
-                type="primary"
-                round-shape="none"
-                icon="home-outlined"
-                @click="clickHandler">主要按钮</wd-button>
-            <wd-button 
-                size="small" 
-                type="danger">危险按钮</wd-button>
-            <wd-button 
-                size="large" 
-                type="success">成功按钮</wd-button>
-            <wd-button 
-                size="small" 
-                type="dashed">dashed按钮</wd-button>    
-            <wd-button 
-                size="large" 
-                type="info">info按钮</wd-button>
-            <wd-button 
-                size="small" 
-                type="text">text按钮</wd-button>
-            <wd-button 
-                size="large" 
-                disabled="true"
-                type="primary">按钮不可用</wd-button>
-          </div>
-          <div class="component-box-bottom">
-            <div class="component-title">不同尺寸按钮</div>
-            <div class="component-desc">
-              通过设置size属性，可以设置按钮的大小：small | default | large
-            </div>
-          </div>
+      </div>
+    </div>
+    <div class="component-box">
+      <div class="component-box-top">
+        <wd-button size="large" icon="filter-filled">普通按钮</wd-button>
+        <wd-button
+          size="large"
+          type="primary"
+          round-shape="none"
+          icon="home-outlined"
+          @click="clickHandler"
+          >主要按钮</wd-button
+        >
+        <wd-button size="small" type="danger">危险按钮</wd-button>
+        <wd-button size="large" type="success">成功按钮</wd-button>
+        <wd-button size="small" type="dashed">dashed按钮</wd-button>
+        <wd-button size="large" type="info">info按钮</wd-button>
+        <wd-button size="small" type="text">text按钮</wd-button>
+        <wd-button size="large" disabled="true" type="primary"
+          >按钮不可用</wd-button
+        >
+      </div>
+      <div class="component-box-bottom">
+        <div class="component-title">不同尺寸按钮</div>
+        <div class="component-desc">
+          通过设置size属性，可以设置按钮的大小：small | default | large
         </div>
-        <div class="component-box">
-          <div class="component-box-top">
-            <wd-button 
-                size="large" 
-                type="primary"
-                round-shape="none"
-                icon="home-outlined"
-                @click="clickHandler">主要按钮</wd-button>
-            <wd-button 
-                size="small" 
-                round-shape="circle"
-                type="primary">C</wd-button>
-          </div>
-          <div class="component-box-bottom">
-            <div class="component-title">不同样式按钮</div>
-            <div class="component-desc">
-              通过设置round-shape属性，可以设置按钮的形状：circle | none
-            </div>
-          </div>
+      </div>
+    </div>
+    <div class="component-box">
+      <div class="component-box-top">
+        <wd-button
+          size="large"
+          type="primary"
+          round-shape="none"
+          icon="home-outlined"
+          @click="clickHandler"
+          >主要按钮</wd-button
+        >
+        <wd-button size="small" round-shape="circle" type="primary"
+          >C</wd-button
+        >
+      </div>
+      <div class="component-box-bottom">
+        <div class="component-title">不同样式按钮</div>
+        <div class="component-desc">
+          通过设置round-shape属性，可以设置按钮的形状：circle | none
         </div>
-        <!-- <fieldset>
+      </div>
+    </div>
+    <!-- <fieldset>
             <legend>按钮</legend>
             <wd-button 
                 icon="filter-filled">普通按钮</wd-button>
@@ -131,7 +110,7 @@
                 round-shape="circle"
                 type="primary">C</wd-button>
         </fieldset> -->
-        <!-- <fieldset>
+    <!-- <fieldset>
             <legend>link</legend>
             <wd-link
                 :underline="true"
@@ -151,17 +130,15 @@
                 href="https://www.baidu.com"
                 type="info">这是一个info链接</wd-link>
         </fieldset> -->
-    </div>
+  </div>
 </template>
 
 <script lang="ts">
-import {defineComponent} from 'vue';
+import { defineComponent } from "vue";
 export default defineComponent({
-    name: 'Button',
-    setup() {
-        
-    }
-})
+  name: "Button",
+  setup() {},
+});
 </script>
 <style lang="less" scoped>
 .wd-btn {
@@ -201,5 +178,3 @@ export default defineComponent({
   padding: 20px 10px 10px 10px;
 }
 </style>
-
-

@@ -1,4 +1,4 @@
-@import '../color/colors';
+@import "../color/colors";
 
 @theme: default;
 
@@ -20,18 +20,24 @@
 @black: #000;
 // @info-color: #909399;
 
-@primary-1: color(~`colorPalette('@{primary-color}', 1) `); // replace tint(@primary-color, 90%)
-@primary-2: color(~`colorPalette('@{primary-color}', 2) `); // replace tint(@primary-color, 80%)
-@primary-3: color(~`colorPalette('@{primary-color}', 3) `); // unused
-@primary-4: color(~`colorPalette('@{primary-color}', 4) `); // unused
+@primary-1: color(
+  ~`colorPalette("@{primary-color}", 1) `
+); // replace tint(@primary-color, 90%)
+@primary-2: color(
+  ~`colorPalette("@{primary-color}", 2) `
+); // replace tint(@primary-color, 80%)
+@primary-3: color(~`colorPalette("@{primary-color}", 3) `); // unused
+@primary-4: color(~`colorPalette("@{primary-color}", 4) `); // unused
 @primary-5: color(
-  ~`colorPalette('@{primary-color}', 5) `
+  ~`colorPalette("@{primary-color}", 5) `
 ); // color used to control the text color in many active and hover states, replace tint(@primary-color, 20%)
 @primary-6: @primary-color; // color used to control the text color of active buttons, don't use, use @primary-color
-@primary-7: color(~`colorPalette('@{primary-color}', 7) `); // replace shade(@primary-color, 5%)
-@primary-8: color(~`colorPalette('@{primary-color}', 8) `); // unused
-@primary-9: color(~`colorPalette('@{primary-color}', 9) `); // unused
-@primary-10: color(~`colorPalette('@{primary-color}', 10) `); // unused
+@primary-7: color(
+  ~`colorPalette("@{primary-color}", 7) `
+); // replace shade(@primary-color, 5%)
+@primary-8: color(~`colorPalette("@{primary-color}", 8) `); // unused
+@primary-9: color(~`colorPalette("@{primary-color}", 9) `); // unused
+@primary-10: color(~`colorPalette("@{primary-color}", 10) `); // unused
 
 // Base Scaffolding Variables
 // ---
@@ -43,10 +49,11 @@
 // Popover background color
 @popover-background: @component-background;
 @popover-customize-border-color: @border-color-split;
-@font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, 'Helvetica Neue', Arial,
-  'Noto Sans', sans-serif, 'Apple Color Emoji', 'Segoe UI Emoji', 'Segoe UI Symbol',
-  'Noto Color Emoji';
-@code-family: 'SFMono-Regular', Consolas, 'Liberation Mono', Menlo, Courier, monospace;
+@font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto,
+  "Helvetica Neue", Arial, "Noto Sans", sans-serif, "Apple Color Emoji",
+  "Segoe UI Emoji", "Segoe UI Symbol", "Noto Color Emoji";
+@code-family: "SFMono-Regular", Consolas, "Liberation Mono", Menlo, Courier,
+  monospace;
 @text-color: fade(@black, 85%);
 @text-color-secondary: fade(@black, 45%);
 @text-color-inverse: @white;
@@ -57,7 +64,7 @@
 @text-color-secondary-dark: fade(@white, 65%);
 @text-selection-bg: @primary-color;
 @font-variant-base: tabular-nums;
-@font-feature-settings-base: 'tnum';
+@font-feature-settings-base: "tnum";
 @font-size-base: 14px;
 @font-size-lg: @font-size-base + 2px;
 @font-size-sm: 12px;
@@ -103,8 +110,8 @@
 
 // LINK
 @link-color: @primary-color;
-@link-hover-color: color(~`colorPalette('@{link-color}', 5) `);
-@link-active-color: color(~`colorPalette('@{link-color}', 7) `);
+@link-hover-color: color(~`colorPalette("@{link-color}", 5) `);
+@link-active-color: color(~`colorPalette("@{link-color}", 7) `);
 @link-decoration: none;
 @link-hover-decoration: none;
 @link-focus-decoration: none;
@@ -138,7 +145,11 @@
 @outline-width: 2px;
 @outline-color: @primary-color;
 
-@background-color-light: hsv(0, 0, 98%); // background of header and selected item
+@background-color-light: hsv(
+  0,
+  0,
+  98%
+); // background of header and selected item
 @background-color-base: hsv(0, 0, 96%); // Default grey background color
 
 // Disabled states
@@ -174,8 +185,8 @@
 @btn-default-border: @border-color-base;
 
 @btn-danger-color: #fff;
-@btn-danger-bg: color(~`colorPalette('@{error-color}', 5) `);
-@btn-danger-border: color(~`colorPalette('@{error-color}', 5) `);
+@btn-danger-bg: color(~`colorPalette("@{error-color}", 5) `);
+@btn-danger-border: color(~`colorPalette("@{error-color}", 5) `);
 
 @btn-disable-color: @disabled-color;
 @btn-disable-bg: @disabled-bg;
@@ -416,7 +427,8 @@
 @select-selection-item-bg: @background-color-base;
 @select-selection-item-border-color: @border-color-split;
 @select-single-item-height-lg: 40px;
-@select-multiple-item-height: @input-height-base - @input-padding-vertical-base * 2; // Normal 24px
+@select-multiple-item-height: @input-height-base - @input-padding-vertical-base *
+  2; // Normal 24px
 @select-multiple-item-height-lg: 32px;
 @select-multiple-item-spacing-half: ceil((@input-padding-vertical-base / 2));
 @select-multiple-disabled-background: @input-disabled-bg;
@@ -747,17 +759,17 @@
 
 // Alert
 // ---
-@alert-success-border-color: ~`colorPalette('@{success-color}', 3) `;
-@alert-success-bg-color: ~`colorPalette('@{success-color}', 1) `;
+@alert-success-border-color: ~`colorPalette("@{success-color}", 3) `;
+@alert-success-bg-color: ~`colorPalette("@{success-color}", 1) `;
 @alert-success-icon-color: @success-color;
-@alert-info-border-color: ~`colorPalette('@{info-color}', 3) `;
-@alert-info-bg-color: ~`colorPalette('@{info-color}', 1) `;
+@alert-info-border-color: ~`colorPalette("@{info-color}", 3) `;
+@alert-info-bg-color: ~`colorPalette("@{info-color}", 1) `;
 @alert-info-icon-color: @info-color;
-@alert-warning-border-color: ~`colorPalette('@{warning-color}', 3) `;
-@alert-warning-bg-color: ~`colorPalette('@{warning-color}', 1) `;
+@alert-warning-border-color: ~`colorPalette("@{warning-color}", 3) `;
+@alert-warning-bg-color: ~`colorPalette("@{warning-color}", 1) `;
 @alert-warning-icon-color: @warning-color;
-@alert-error-border-color: ~`colorPalette('@{error-color}', 3) `;
-@alert-error-bg-color: ~`colorPalette('@{error-color}', 1) `;
+@alert-error-border-color: ~`colorPalette("@{error-color}", 3) `;
+@alert-error-bg-color: ~`colorPalette("@{error-color}", 1) `;
 @alert-error-icon-color: @error-color;
 
 // List
@@ -805,7 +817,10 @@
 @image-color: #fff;
 @image-preview-operation-size: 18px;
 @image-preview-operation-color: @text-color-dark;
-@image-preview-operation-disabled-color: fade(@image-preview-operation-color, 45%);
+@image-preview-operation-disabled-color: fade(
+  @image-preview-operation-color,
+  45%
+);
 
 // Steps
 @steps-nav-arrow-color: fade(@black, 25%);

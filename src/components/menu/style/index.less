@@ -1,7 +1,7 @@
-@import '../../style/themes/index';
-@import '../../style/mixins/index';
+@import "../../style/themes/index";
+@import "../../style/mixins/index";
 
-@menu-prefix-cls: ~'@{wd-prefix}-menu';
+@menu-prefix-cls: ~"@{wd-prefix}-menu";
 
 // default theme
 .@{menu-prefix-cls} {
@@ -70,7 +70,7 @@
       bottom: 0;
       left: 0;
       background-color: transparent;
-      content: '';
+      content: "";
     }
   }
 
@@ -204,7 +204,7 @@
         bottom: 0;
         left: 0;
         opacity: 0.0001;
-        content: ' ';
+        content: " ";
       }
     }
 
@@ -235,13 +235,17 @@
           // Since `linear-gradient` not work on IE9, we should hack it.
           // ref: https://github.com/ant-design/ant-design/issues/15910
           background: @menu-bg;
-          background: ~'@{menu-item-color} \9';
-          background-image: linear-gradient(to right, @menu-item-color, @menu-item-color);
-          background-image: ~'none \9';
+          background: ~"@{menu-item-color} \9";
+          background-image: linear-gradient(
+            to right,
+            @menu-item-color,
+            @menu-item-color
+          );
+          background-image: ~"none \9";
           border-radius: 2px;
           transition: background 0.3s @ease-in-out, transform 0.3s @ease-in-out,
             top 0.3s @ease-in-out;
-          content: '';
+          content: "";
         }
         &::before {
           transform: rotate(45deg) translateY(-2px);
@@ -250,15 +254,22 @@
           transform: rotate(-45deg) translateY(2px);
         }
       }
-      > .@{menu-prefix-cls}-submenu-title:hover .@{menu-prefix-cls}-submenu-arrow {
+      > .@{menu-prefix-cls}-submenu-title:hover
+        .@{menu-prefix-cls}-submenu-arrow {
         &::after,
         &::before {
-          background: linear-gradient(to right, @menu-highlight-color, @menu-highlight-color);
+          background: linear-gradient(
+            to right,
+            @menu-highlight-color,
+            @menu-highlight-color
+          );
         }
       }
     }
 
-    &-inline > .@{menu-prefix-cls}-submenu-title .@{menu-prefix-cls}-submenu-arrow {
+    &-inline
+      > .@{menu-prefix-cls}-submenu-title
+      .@{menu-prefix-cls}-submenu-arrow {
       &::before {
         transform: rotate(-45deg) translateX(2px);
       }
@@ -335,7 +346,7 @@
       display: block;
       clear: both;
       height: 0;
-      content: '\20';
+      content: "\20";
     }
   }
 
@@ -354,7 +365,7 @@
         transform: scaleY(0.0001);
         opacity: 0;
         transition: transform 0.15s @ease-out, opacity 0.15s @ease-out;
-        content: '';
+        content: "";
       }
     }
 
@@ -399,7 +410,7 @@
 
     .@{menu-prefix-cls}-item,
     .@{menu-prefix-cls}-submenu-title {
-      width: ~'calc(100% + 1px)';
+      width: ~"calc(100% + 1px)";
     }
 
     .@{menu-prefix-cls}-submenu-title {
@@ -512,4 +523,4 @@
   }
 }
 
-@import './dark';
+@import "./dark";

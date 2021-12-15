@@ -1,4 +1,4 @@
-@import './index';
+@import "./index";
 
 @selection-item-padding: ceil((@font-size-base * 1.25));
 
@@ -51,7 +51,7 @@
       display: inline-block;
       width: 0;
       visibility: hidden;
-      content: '\a0';
+      content: "\a0";
     }
   }
 
@@ -61,7 +61,8 @@
   }
 
   &.@{select-prefix-cls}-show-arrow .@{select-prefix-cls}-selection-item,
-  &.@{select-prefix-cls}-show-arrow .@{select-prefix-cls}-selection-placeholder {
+  &.@{select-prefix-cls}-show-arrow
+    .@{select-prefix-cls}-selection-placeholder {
     padding-right: @selection-item-padding;
   }
 
@@ -121,7 +122,7 @@
   // ==                          Size                          ==
   // ============================================================
   .select-size(@suffix, @input-height) {
-    @merged-cls: ~'@{select-prefix-cls}-@{suffix}';
+    @merged-cls: ~"@{select-prefix-cls}-@{suffix}";
 
     &.@{merged-cls}:not(.@{select-prefix-cls}-customize-input) {
       .@{select-prefix-cls}-selector {
@@ -143,8 +144,8 @@
     }
   }
 
-  .select-size('lg', @select-single-item-height-lg);
-  .select-size('sm', @input-height-sm);
+  .select-size("lg", @select-single-item-height-lg);
+  .select-size("sm", @input-height-sm);
 
   // Size small need additional set padding
   &.@{select-prefix-cls}-sm {
@@ -164,7 +165,8 @@
       }
 
       &.@{select-prefix-cls}-show-arrow .@{select-prefix-cls}-selection-item,
-      &.@{select-prefix-cls}-show-arrow .@{select-prefix-cls}-selection-placeholder {
+      &.@{select-prefix-cls}-show-arrow
+        .@{select-prefix-cls}-selection-placeholder {
         padding-right: @font-size-base * 1.5;
       }
     }

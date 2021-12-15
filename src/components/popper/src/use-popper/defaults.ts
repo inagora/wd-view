@@ -1,43 +1,48 @@
-import type { PropType } from 'vue'
-import type { Placement, PositioningStrategy, Instance as PopperInstance, Options } from '@popperjs/core'
+import type { PropType } from "vue";
+import type {
+  Placement,
+  PositioningStrategy,
+  Instance as PopperInstance,
+  Options,
+} from "@popperjs/core";
 
 export enum Effect {
-  DARK = 'dark',
-  LIGHT = 'light'
+  DARK = "dark",
+  LIGHT = "light",
 }
 declare type Nullable<T> = T | null;
-export type RefElement = Nullable<HTMLElement>
-export type Offset = [number, number] | number
+export type RefElement = Nullable<HTMLElement>;
+export type Offset = [number, number] | number;
 
-export type { Placement, PositioningStrategy, PopperInstance, Options }
+export type { Placement, PositioningStrategy, PopperInstance, Options };
 
-export type TriggerType = 'click' | 'hover' | 'focus' | 'manual'
+export type TriggerType = "click" | "hover" | "focus" | "manual";
 
-export type Trigger = TriggerType | TriggerType[]
+export type Trigger = TriggerType | TriggerType[];
 
 export type IPopperOptions = {
-  arrowOffset: number
-  autoClose: number
-  boundariesPadding: number
-  class: string
-  cutoff: boolean
-  disabled: boolean
-  enterable: boolean
-  hideAfter: number
-  manualMode: boolean
-  offset: number
-  placement: Placement
-  popperOptions: Options
-  showAfter: number
-  showArrow: boolean
-  strategy: PositioningStrategy
-  trigger: Trigger
-  visible: boolean
-  stopPopperMouseEvent: boolean
-  gpuAcceleration: boolean
-}
+  arrowOffset: number;
+  autoClose: number;
+  boundariesPadding: number;
+  class: string;
+  cutoff: boolean;
+  disabled: boolean;
+  enterable: boolean;
+  hideAfter: number;
+  manualMode: boolean;
+  offset: number;
+  placement: Placement;
+  popperOptions: Options;
+  showAfter: number;
+  showArrow: boolean;
+  strategy: PositioningStrategy;
+  trigger: Trigger;
+  visible: boolean;
+  stopPopperMouseEvent: boolean;
+  gpuAcceleration: boolean;
+};
 
-export const DEFAULT_TRIGGER = 'hover'
+export const DEFAULT_TRIGGER = "hover";
 
 export default {
   // the arrow size is an equailateral triangle with 10px side length, the 3rd side length ~ 14.1px
@@ -60,11 +65,11 @@ export default {
   },
   content: {
     type: String,
-    default: '',
+    default: "",
   },
   class: {
     type: String,
-    default: '',
+    default: "",
   },
   style: Object,
   hideAfter: {
@@ -101,11 +106,11 @@ export default {
   },
   placement: {
     type: String as PropType<Placement>,
-    default: 'bottom' as Placement,
+    default: "bottom" as Placement,
   },
   popperClass: {
     type: String,
-    default: '',
+    default: "",
   },
   pure: {
     type: Boolean,
@@ -122,11 +127,11 @@ export default {
   },
   strategy: {
     type: String as PropType<PositioningStrategy>,
-    default: 'fixed' as PositioningStrategy,
+    default: "fixed" as PositioningStrategy,
   },
   transition: {
     type: String,
-    default: 'el-fade-in-linear',
+    default: "el-fade-in-linear",
   },
   trigger: {
     type: [String, Array] as PropType<Trigger>,
@@ -144,4 +149,4 @@ export default {
     type: Boolean,
     default: true,
   },
-}
+};

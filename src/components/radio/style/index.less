@@ -1,9 +1,9 @@
-@import '../../style/themes/index';
-@import '../../style/mixins/index';
+@import "../../style/themes/index";
+@import "../../style/mixins/index";
 
-@radio-prefix-cls: ~'@{wd-prefix}-radio';
-@radio-group-prefix-cls: ~'@{radio-prefix-cls}-group';
-@radio-inner-prefix-cls: ~'@{radio-prefix-cls}-inner';
+@radio-prefix-cls: ~"@{wd-prefix}-radio";
+@radio-group-prefix-cls: ~"@{radio-prefix-cls}-group";
+@radio-inner-prefix-cls: ~"@{radio-prefix-cls}-inner";
 @radio-duration: 0.3s;
 @radio-focused-outline: 3px solid fade(@radio-dot-color, 6%);
 
@@ -56,7 +56,7 @@
     visibility: hidden;
     animation: antRadioEffect 0.36s ease-in-out;
     animation-fill-mode: both;
-    content: '';
+    content: "";
   }
 
   &:hover::after,
@@ -81,7 +81,7 @@
       transform: scale(0);
       opacity: 0;
       transition: all @radio-duration @ease-in-out-circ;
-      content: ' ';
+      content: " ";
     }
 
     position: relative;
@@ -196,7 +196,7 @@ span.@{radio-prefix-cls} + * {
       width: 1px;
       height: 100%;
       background-color: @border-color-base;
-      content: '';
+      content: "";
     }
   }
   &:first-child {
@@ -222,8 +222,8 @@ span.@{radio-prefix-cls} + * {
   }
 
   .@{radio-prefix-cls}-inner,
-  input[type='checkbox'],
-  input[type='radio'] {
+  input[type="checkbox"],
+  input[type="radio"] {
     width: 0;
     height: 0;
     opacity: 0;
@@ -320,7 +320,8 @@ span.@{radio-prefix-cls} + * {
 }
 
 // Firefox hack
-@supports (-moz-appearance: meterbar) and (background-blend-mode: difference, normal) {
+@supports (-moz-appearance: meterbar) and
+  (background-blend-mode: difference, normal) {
   .@{radio-prefix-cls} {
     vertical-align: text-bottom;
   }

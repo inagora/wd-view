@@ -1,36 +1,35 @@
 <template>
-    <div class="container">
-        <div class="component-box">
-          <div class="component-box-top">
-            <wd-radio 
-                v-model="isRadioChecked"
-                :checked="isRadioChecked"
-                name="color"
-                @change="handleRadioChange">
-                红色
-            </wd-radio>
-          </div>
-          <div class="component-box-bottom">
-            <div class="component-title">单选组件</div>
-            <div class="component-desc">
-              用于选择多个值中的一个；
-            </div>
-          </div>
-        </div>
+  <div class="container">
+    <div class="component-box">
+      <div class="component-box-top">
+        <wd-radio
+          v-model="isRadioChecked"
+          :checked="isRadioChecked"
+          name="color"
+          @change="handleRadioChange"
+        >
+          红色
+        </wd-radio>
+      </div>
+      <div class="component-box-bottom">
+        <div class="component-title">单选组件</div>
+        <div class="component-desc">用于选择多个值中的一个；</div>
+      </div>
     </div>
+  </div>
 </template>
 
 <script lang="ts">
-import {defineComponent, ref} from 'vue';
+import { defineComponent, ref } from "vue";
 export default defineComponent({
-    name: 'Radio',
-    setup() {
-        let isRadioChecked = ref(false);
-        return {
-          isRadioChecked
-        }
-    }
-})
+  name: "Radio",
+  setup() {
+    let isRadioChecked = ref(false);
+    return {
+      isRadioChecked,
+    };
+  },
+});
 </script>
 <style lang="less">
 .component-box {
@@ -66,5 +65,3 @@ export default defineComponent({
   padding: 20px 10px 10px 10px;
 }
 </style>
-
-

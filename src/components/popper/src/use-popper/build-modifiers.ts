@@ -1,30 +1,27 @@
-import type { StrictModifiers } from '@popperjs/core'
+import type { StrictModifiers } from "@popperjs/core";
 
 interface ModifierProps {
-  offset?: number
-  arrow?: HTMLElement
-  arrowOffset?: number
-  gpuAcceleration?: boolean
+  offset?: number;
+  arrow?: HTMLElement;
+  arrowOffset?: number;
+  gpuAcceleration?: boolean;
 }
 
-export default function buildModifier(props: ModifierProps, externalModifiers: StrictModifiers[] = []) {
-
-  const {
-    arrow,
-    arrowOffset,
-    offset,
-    gpuAcceleration,
-  } = props
+export default function buildModifier(
+  props: ModifierProps,
+  externalModifiers: StrictModifiers[] = []
+) {
+  const { arrow, arrowOffset, offset, gpuAcceleration } = props;
 
   const modifiers: Array<StrictModifiers> = [
     {
-      name: 'offset',
+      name: "offset",
       options: {
         offset: [0, offset ?? 12],
       },
     },
     {
-      name: 'preventOverflow',
+      name: "preventOverflow",
       options: {
         padding: {
           top: 2,
@@ -35,33 +32,33 @@ export default function buildModifier(props: ModifierProps, externalModifiers: S
       },
     },
     {
-      name: 'flip',
+      name: "flip",
       options: {
         padding: 5,
       },
     },
     {
-      name: 'computeStyles',
+      name: "computeStyles",
       options: {
         gpuAcceleration,
         adaptive: gpuAcceleration,
       },
     },
     // tippyModifier,
-  ]
+  ];
 
   if (arrow) {
     modifiers.push({
-      name: 'arrow',
+      name: "arrow",
       options: {
         element: arrow,
         // the arrow size is an equailateral triangle with 10px side length, the 3rd side length ~ 14.1px
         // adding a offset to the ceil of 4.1 should be 5 this resolves the problem of arrow overflowing out of popper.
         padding: arrowOffset ?? 5,
       },
-    })
+    });
   }
 
-  modifiers.push(...(externalModifiers))
-  return modifiers
+  modifiers.push(...externalModifiers);
+  return modifiers;
 }

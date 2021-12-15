@@ -1,46 +1,43 @@
 <template>
-    <div class="container">
-        <div class="component-box">
-          <div class="component-box-top">
-            <wd-input-number
-                v-model="inputNum"
-                max=20
-                min=0
-                size="small"
-                @input="handleInputNumber"
-                @change="handleChangeNumber"
-                type="text"></wd-input-number>
-          </div>
-          <div class="component-box-bottom">
-            <div class="component-title">数字输入框</div>
-            <div class="component-desc">
-              数字输入框只能输入数字，可以设置数值的最大值和最小值；
-              并且可以通过上下按钮增加或者减小数值
-            </div>
-          </div>
+  <div class="container">
+    <div class="component-box">
+      <div class="component-box-top">
+        <wd-input-number
+          v-model="inputNum"
+          max="20"
+          min="0"
+          size="small"
+          @input="handleInputNumber"
+          @change="handleChangeNumber"
+          type="text"
+        ></wd-input-number>
+      </div>
+      <div class="component-box-bottom">
+        <div class="component-title">数字输入框</div>
+        <div class="component-desc">
+          数字输入框只能输入数字，可以设置数值的最大值和最小值；
+          并且可以通过上下按钮增加或者减小数值
         </div>
+      </div>
     </div>
+  </div>
 </template>
 
 <script lang="ts">
-import {defineComponent, ref} from 'vue';
+import { defineComponent, ref } from "vue";
 export default defineComponent({
-    name: 'inputnumber',
-    setup() {
-        const inputNum = ref(0);
-        const handleInputNumber = () => {
-
-        }
-        const handleChangeNumber = () => {
-
-        }
-        return {
-          inputNum,
-          handleInputNumber,
-          handleChangeNumber
-        }
-    }
-})
+  name: "inputnumber",
+  setup() {
+    const inputNum = ref(0);
+    const handleInputNumber = () => {};
+    const handleChangeNumber = () => {};
+    return {
+      inputNum,
+      handleInputNumber,
+      handleChangeNumber,
+    };
+  },
+});
 </script>
 <style lang="less">
 .component-box {
@@ -76,5 +73,3 @@ export default defineComponent({
   padding: 20px 10px 10px 10px;
 }
 </style>
-
-
