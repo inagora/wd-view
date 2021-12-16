@@ -9,157 +9,146 @@
       optionsShow ? 'wd-select-show-search' : '',
     ]"
   >
-    <div class="select-trigger">
-      <div
-        v-if="multiple"
-        @click="clickHandler"
-        tabindex="0"
-        ref="selectSelector"
-        class="wd-select-selector"
-      >
-        <div
-          role="combobox"
-          class="wd-select-selection wd-select-selection--multiple"
-        >
-          <span
-            v-for="(selected, index) in selectedArray"
-            :key="index"
-            class="wd-select-selection-item"
+    <wd-popper
+      ref="popper"
+      style="width: 150px"
+      placement="bottom-start"
+      effect="light"
+      pure
+      transition="el-zoom-in-top"
+      trigger="click"
+      :stop-popper-mouse-event="true"
+      :gpu-acceleration="false"
+    >
+      <template #trigger>
+        <div class="select-trigger">
+          <div
+            v-if="multiple"
+            @click="clickHandler"
+            tabindex="0"
+            ref="selectSelector"
+            class="wd-select-selector"
           >
-            <span class="wd-select-selection-item-content">
-              {{ selected.label }}
-            </span>
-            <span
-              @click="removeSelectedItem(index)"
-              class="wd-select-selection-item-remove"
-              unselectable="on"
-              aria-hidden="true"
-              style="user-select: none"
-              ><span
-                role="img"
-                aria-label="close"
-                class="anticon anticon-close"
-                ><svg
-                  focusable="false"
-                  class=""
-                  data-icon="close"
-                  width="1em"
-                  height="1em"
-                  fill="currentColor"
-                  aria-hidden="true"
-                  viewBox="64 64 896 896"
-                >
-                  <path
-                    d="M563.8 512l262.5-312.9c4.4-5.2.7-13.1-6.1-13.1h-79.8c-4.7 0-9.2 2.1-12.3 5.7L511.6 449.8 295.1 191.7c-3-3.6-7.5-5.7-12.3-5.7H203c-6.8 0-10.5 7.9-6.1 13.1L459.4 512 196.9 824.9A7.95 7.95 0 00203 838h79.8c4.7 0 9.2-2.1 12.3-5.7l216.5-258.1 216.5 258.1c3 3.6 7.5 5.7 12.3 5.7h79.8c6.8 0 10.5-7.9 6.1-13.1L563.8 512z"
-                  ></path></svg></span
-            ></span>
-          </span>
-          <span class="wd-select-selection-item wd-select-selection-search">
-            <input
-              ref="searchInput"
-              :style="{ opacity: isFocused ? 1 : 0 }"
-              :placeholder="currentPlaceholder"
-              class="wd-select-selection-search-input"
-              @input="debouncedOnInputChange"
-              @focus="handleSearchInputFocus"
-              @blur="handleSearchInputBlur"
-              @keydown="handleSearchInputKeydown"
-            />
-            <span style="visibility: hidden">{{ searchKey }}</span>
-          </span>
-        </div>
-        <span
-            unselectable="on"
-            class="wd-select-arrow"
-            style="user-select: none"
-          >
-            <i
-              aria-label="图标: down"
-              class="anticon anticon-down wd-select-arrow-icon"
+            <div
+              role="combobox"
+              class="wd-select-selection wd-select-selection--multiple"
             >
-              <svg
-                viewBox="64 64 896 896"
-                data-icon="down"
-                width="1em"
-                height="1em"
-                fill="currentColor"
-                aria-hidden="true"
-                focusable="false"
-                class=""
+              <span
+                v-for="(selected, index) in selectedArray"
+                :key="index"
+                class="wd-select-selection-item"
               >
-                <path
-                  d="M884 256h-75c-5.1 0-9.9 2.5-12.9 6.6L512 654.2 227.9 262.6c-3-4.1-7.8-6.6-12.9-6.6h-75c-6.5 0-10.3 7.4-6.5 12.7l352.6 486.1c12.8 17.6 39 17.6 51.7 0l352.6-486.1c3.9-5.3.1-12.7-6.4-12.7z"
-                ></path>
-              </svg>
-            </i>
-          </span>
-        <div class="wd-select-options">
-          <slot></slot>
-        </div>
-      </div>
-      <div
-        v-else
-        @click="clickHandler"
-        tabindex="1"
-        ref="selectSelector"
-        class="wd-select-selector"
-      >
-        <span class="wd-select-selection-search">
-          <input
-            ref="searchInput"
-            v-model="searchKey"
-            :style="{ opacity: isFocused ? 1 : 0 }"
-            :placeholder="currentPlaceholder"
-            class="wd-select-selection-search-input"
-            @input="handleSearchInputChange"
-            @focus="handleSearchInputFocus"
-            @keydown="handleSearchInputKeydown"
-          />
-        </span>
-        <div
-          role="combobox"
-          class="wd-select-selection wd-select-selection--single"
-        >
-          <div class="wd-select-selection-item" v-if="selectedValue && !isFocused">
-            {{ selectedValue.label }}
+                <span class="wd-select-selection-item-content">
+                  {{ selected.label }}
+                </span>
+                <span
+                  @click="removeSelectedItem(index)"
+                  class="wd-select-selection-item-remove"
+                  unselectable="on"
+                  aria-hidden="true"
+                  style="user-select: none"
+                  ><span
+                    role="img"
+                    aria-label="close"
+                    class="anticon anticon-close"
+                    ><svg
+                      focusable="false"
+                      class=""
+                      data-icon="close"
+                      width="1em"
+                      height="1em"
+                      fill="currentColor"
+                      aria-hidden="true"
+                      viewBox="64 64 896 896"
+                    >
+                      <path
+                        d="M563.8 512l262.5-312.9c4.4-5.2.7-13.1-6.1-13.1h-79.8c-4.7 0-9.2 2.1-12.3 5.7L511.6 449.8 295.1 191.7c-3-3.6-7.5-5.7-12.3-5.7H203c-6.8 0-10.5 7.9-6.1 13.1L459.4 512 196.9 824.9A7.95 7.95 0 00203 838h79.8c4.7 0 9.2-2.1 12.3-5.7l216.5-258.1 216.5 258.1c3 3.6 7.5 5.7 12.3 5.7h79.8c6.8 0 10.5-7.9 6.1-13.1L563.8 512z"
+                      ></path></svg></span
+                ></span>
+              </span>
+              <span class="wd-select-selection-item wd-select-selection-search">
+                <input
+                  ref="searchInput"
+                  :style="{ opacity: isFocused ? 1 : 0 }"
+                  :placeholder="currentPlaceholder"
+                  class="wd-select-selection-search-input"
+                  @input="debouncedOnInputChange"
+                  @focus="handleSearchInputFocus"
+                  @blur="handleSearchInputBlur"
+                  @keydown="handleSearchInputKeydown"
+                />
+                <span style="visibility: hidden">{{ searchKey }}</span>
+              </span>
+            </div>
           </div>
           <div
-            v-else-if="!isFocused"
-            class="wd-select-selection-placeholder"
+            v-else
+            @click="clickHandler"
+            tabindex="1"
+            ref="selectSelector"
+            class="wd-select-selector"
           >
-            {{ placeholder }}
-          </div>
-          <span
-            unselectable="on"
-            class="wd-select-arrow"
-            style="user-select: none"
-          >
-            <i
-              aria-label="图标: down"
-              class="anticon anticon-down wd-select-arrow-icon"
+            <span class="wd-select-selection-search">
+              <input
+                ref="searchInput"
+                v-model="searchKey"
+                :style="{ opacity: isFocused ? 1 : 0 }"
+                :placeholder="currentPlaceholder"
+                class="wd-select-selection-search-input"
+                @input="handleSearchInputChange"
+                @focus="handleSearchInputFocus"
+                @blur="handleSearchInputBlur"
+                @keydown="handleSearchInputKeydown"
+              />
+            </span>
+            <div
+              role="combobox"
+              class="wd-select-selection wd-select-selection--single"
             >
-              <svg
-                viewBox="64 64 896 896"
-                data-icon="down"
-                width="1em"
-                height="1em"
-                fill="currentColor"
-                aria-hidden="true"
-                focusable="false"
-                class=""
+              <div v-if="selectedValue && !isFocused">
+                {{ selectedValue.label }}
+              </div>
+              <div
+                v-else-if="!isFocused"
+                class="wd-select-selection-placeholder"
               >
-                <path
-                  d="M884 256h-75c-5.1 0-9.9 2.5-12.9 6.6L512 654.2 227.9 262.6c-3-4.1-7.8-6.6-12.9-6.6h-75c-6.5 0-10.3 7.4-6.5 12.7l352.6 486.1c12.8 17.6 39 17.6 51.7 0l352.6-486.1c3.9-5.3.1-12.7-6.4-12.7z"
-                ></path>
-              </svg>
-            </i>
-          </span>
+                {{ placeholder }}
+              </div>
+              <span
+                unselectable="on"
+                class="wd-select-arrow"
+                style="user-select: none"
+              >
+                <i
+                  aria-label="图标: down"
+                  class="anticon anticon-down wd-select-arrow-icon"
+                >
+                  <svg
+                    viewBox="64 64 896 896"
+                    data-icon="down"
+                    width="1em"
+                    height="1em"
+                    fill="currentColor"
+                    aria-hidden="true"
+                    focusable="false"
+                    class=""
+                  >
+                    <path
+                      d="M884 256h-75c-5.1 0-9.9 2.5-12.9 6.6L512 654.2 227.9 262.6c-3-4.1-7.8-6.6-12.9-6.6h-75c-6.5 0-10.3 7.4-6.5 12.7l352.6 486.1c12.8 17.6 39 17.6 51.7 0l352.6-486.1c3.9-5.3.1-12.7-6.4-12.7z"
+                    ></path>
+                  </svg>
+                </i>
+              </span>
+            </div>
+          </div>
         </div>
+      </template>
+      <template #default>
         <div class="wd-select-options">
           <slot></slot>
         </div>
-      </div>
-    </div>
+      </template>
+    </wd-popper>
   </div>
 </template>
 
@@ -189,7 +178,6 @@ import {
   provide,
   watch,
   inject,
-  onMounted,
 } from "vue";
 import lodashDebounce from "lodash/debounce";
 import {
@@ -204,7 +192,6 @@ type optionType = {
 };
 // import WdPopper from '../popper/index';
 import WdInput from "../input/index";
-import { createPopper } from '@popperjs/core';
 export default defineComponent({
   name: "wd-select",
   components: {
@@ -260,30 +247,6 @@ export default defineComponent({
     "blur",
   ],
   setup(props, context) {
-    // init popperjs
-    let target: HTMLElement;
-    let options: HTMLElement;
-    let popperInstance;
-    onMounted(() => {
-      // target = document.querySelector('.wd-select');
-      // options = document.querySelector('.wd-select-options');
-      // popperInstance = createPopper(target, options, {
-      //   modifiers: [
-      //     {
-      //       name: 'offset',
-      //       options: {
-      //         offset: [0, 30],
-      //       },
-      //     },
-      //   ],
-      // });
-      // target.addEventListener('click', () => {
-        
-      //   options.setAttribute('data-show', '');
-      //   popperInstance.update();
-      // });
-    });
-    
     const sizeMap = reactive({
       small: "sm",
       large: "lg",
@@ -305,17 +268,12 @@ export default defineComponent({
     const searchInput = ref(null); // 搜索框
     const popperVisible = ref(false); // 手动控制下拉显示与隐藏
 
-    onMounted(() => {
-      // 失去焦点隐藏选项
-      console.log(document.querySelector('.wd-select-selector'));
-      document.querySelector('body').addEventListener('click', () => {
-          if(popperInstance && options.hasAttribute('data-show')) {
-            options.removeAttribute('data-show');
-            popperInstance.update();
-            isFocused.value = false;
-          }
-      }, true);
-    });
+    // nextTick(() => {
+    //     // 失去焦点隐藏选项
+    //     selectSelector.value.addEventListener('blur', () => {
+    //         optionsShow.value = false;
+    //     }, false);
+    // });
     let selectedValue = ref(props.modelValue);
     let selectedArray = ref([]);
     let { visibleValue } = toRefs(props);
@@ -333,8 +291,8 @@ export default defineComponent({
       currentPlaceholder.value = "";
     };
     const setCurrentPlaceholder = () => {
-      const selectedLabel: any = selectedValue && selectedValue.value;
-      currentPlaceholder.value = selectedLabel && selectedLabel.label;
+      const selectedLabel: any = selectedValue.value;
+      currentPlaceholder.value = selectedLabel.label;
     };
 
     const debouncedOnInputChange = lodashDebounce((e) => {
@@ -343,6 +301,9 @@ export default defineComponent({
 
     // 处理搜素
     const handleSearchInputChange = (val) => {
+      // 筛选和
+      // searchInputWidth.value = 'auto';
+      console.log(val);
       searchKey.value = val;
     };
 
@@ -356,28 +317,10 @@ export default defineComponent({
     };
     // methods
     // 点击显示与隐藏
-    const clickHandler = (e) => {
+    const clickHandler = () => {
       searchInput.value.focus();
       optionsShow.value = !optionsShow.value;
       popperVisible.value = true;
-
-      target = e.target;
-      options = document.querySelector('.wd-select-options');
-      if(!popperInstance) {
-        popperInstance = createPopper(target, options, {
-          modifiers: [
-            {
-              name: 'offset',
-              options: {
-                offset: [0, 10],
-              },
-            },
-          ],
-        });
-      }
-      
-      options.setAttribute('data-show', '');
-      popperInstance.update();
     };
     // 选项显示与隐藏钩子
     const visibleChange = () => {
@@ -451,7 +394,7 @@ export default defineComponent({
       popperVisible,
       debouncedOnInputChange,
       inputSize,
-      selectDisabled
+      selectDisabled,
     };
   },
 });

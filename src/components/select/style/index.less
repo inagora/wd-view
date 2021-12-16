@@ -67,6 +67,7 @@
   position: relative;
   display: inline-block;
   cursor: pointer;
+  width: 150px;
 
   &-options {
     margin: 0;
@@ -89,6 +90,11 @@
     border-radius: 2px;
     outline: none;
     box-shadow: 0 2px 8px rgb(0 0 0 / 15%);
+    display: none;
+  }
+
+  &-options[data-show] {
+    display: block;
   }
 
   &:not(.@{select-prefix-cls}-disabled):hover &-selector {
@@ -263,7 +269,7 @@
   &-item {
     .item();
 
-    min-width: 120px;
+    min-width: 150px;
     cursor: pointer;
     transition: background 0.3s ease;
 

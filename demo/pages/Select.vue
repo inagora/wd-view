@@ -19,16 +19,16 @@
           <wd-option label="必2应" value="bing2">hhh</wd-option>
           <wd-option label="3必应" value="bing3">hhh</wd-option>
         </wd-select>
-        <wd-select
-          v-model="selectedValue"
-          @change="selectedChangeHandler"
+        <!-- <wd-select
+          v-model="selectedValue1"
+          @change="selectedChangeHandler1"
           placeholder="请选择搜索引擎"
           size="small"
         >
           <wd-option label="百度" value="baidu">hhh</wd-option>
           <wd-option label="谷歌" value="google">hhh</wd-option>
           <wd-option label="必应" value="bing">hhh</wd-option>
-        </wd-select>
+        </wd-select> -->
       </div>
       <div class="component-box-bottom">
         <div class="component-title">下拉框</div>
