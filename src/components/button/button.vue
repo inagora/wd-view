@@ -1,6 +1,7 @@
 <template>
   <button
     class="wd-btn"
+    ref="buttonNode"
     :class="[
       type || groupProps.type ? 'wd-btn-' + type || groupProps.type : '',
       size ? 'wd-btn-' + sizeMap[size] : '',
@@ -8,6 +9,7 @@
       {
         'wd-btn-loading': loading,
         'wd-btn-disabled': disabled,
+        'wd-btn-two-chinese-chars': hasTwoCNChar
       },
     ]"
     :type="nativeType"
@@ -20,7 +22,7 @@
 </template>
 
 <script lang="ts">
-import { defineComponent, reactive, PropType } from "vue";
+import { defineComponent, reactive, PropType, onMounted, ref } from "vue";
 type ButtonTypes = PropType<
   "primary" | "success" | "warning" | "danger" | "info" | "text" | "dashed"
 >;
@@ -62,7 +64,44 @@ export default defineComponent({
     const handleClick = (options) => {
       context.emit("click", options);
     };
-    console.log(props.type);
+    const buttonNode = ref(null);
+    const hasTwoCNChar = ref(false);
+    // 两个中文字符自动插入空格
+    const rxTwoCNChar = /^[\u4e00-\u9fa5]{2}$/;
+    const isTwoCNChar = rxTwoCNChar.test.bind(rxTwoCNChar);
+    onMounted(() => {
+      fixTwoCNChar();
+    });
+    const fixTwoCNChar = () => {
+      const node = buttonNode.value;
+      console.log(node);
+      if (!node) {
+        return;
+      }
+      const buttonText = node.textContent;
+      if (isTwoCNChar(buttonText)) {
+        if (!hasTwoCNChar.value) {
+          hasTwoCNChar.value = true;
+        }
+      } else if (hasTwoCNChar.value) {
+        hasTwoCNChar.value = false;
+      }
+    }
+
+    // const isNeedInserted = () => {
+
+    // }
+    // insertSpace(child: VNode, needInserted: boolean) {
+    //   const SPACE = needInserted ? ' ' : '';
+    //   if (child.type === Text) {
+    //     let text = (child.children as string).trim();
+    //     if (isTwoCNChar(text)) {
+    //       text = text.split('').join(SPACE);
+    //     }
+    //     return <span>{text}</span>;
+    //   }
+    //   return child;
+    // },
     const sizeMap = reactive({
       small: "sm",
       large: "lg",
@@ -70,6 +109,8 @@ export default defineComponent({
     return {
       handleClick,
       sizeMap,
+      hasTwoCNChar,
+      buttonNode
     };
   },
 });

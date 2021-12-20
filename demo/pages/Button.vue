@@ -93,6 +93,13 @@
             @click="clickHandler"
             >主要按钮</wd-button
           >
+          <wd-button
+            round-shape="none"
+            icon="home-outlined"
+            type="primary"
+            @click="clickHandler"
+            >按钮</wd-button
+          >
           <wd-button round-shape="circle" type="primary"
             >C</wd-button
           >
