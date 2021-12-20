@@ -30,6 +30,7 @@
       :page-count="pageCount"
       :pager-count="pagerCount"
       :total="total"
+      :position="paginationPosition"
       :current-page="currentPage"
       @current-change="pageChangeHandler"
       @prev-click="prevClickChangeHandler"
@@ -98,6 +99,10 @@ export default defineComponent({
       type: [Number, String],
       default: 1,
     },
+    paginationPosition: {
+      type: String,
+      default: 'right'
+    }
   },
   emits: [
     "current-change",

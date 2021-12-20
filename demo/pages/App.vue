@@ -117,7 +117,7 @@ export default defineComponent({
       date: datepickerValue.value,
     });
     let userInfoForm = <any>ref();
-    let componentType = ref("select");
+    let componentType = ref("button");
     let menuList = ref([]);
     menuList.value = [
       {
@@ -492,12 +492,6 @@ export default defineComponent({
 }
 .wd-layout {
   height: 100%;
-}
-.wd-btn,
-.wd-link,
-.wd-input__outer {
-  margin-right: 10px;
-  margin-bottom: 10px;
 }
 fieldset {
   border-style: dotted;

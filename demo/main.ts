@@ -2,6 +2,7 @@ import { createApp } from "vue";
 import App from "./pages/App.vue";
 import WdLink from "../src/components/link";
 import WdButton from "../src/components/button";
+import WdButtonGroup from "../src/components/button/buttongroup.vue";
 import WdInput from "../src/components/input";
 import WdInputNumber from "../src/components/input-number";
 import WdSwitch from "../src/components/switch";
@@ -22,6 +23,7 @@ import WdPagination from "../src/components/pagination";
 import WdMenu from "../src/components/menu";
 
 const app = createApp(App);
+app.component(WdButtonGroup.name, WdButtonGroup);
 // app.component(ADatePicker.name, ADatePicker);
 // app.component(ATimePicker.name, ATimePicker);
 app.use(WdLink.install);

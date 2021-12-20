@@ -76,6 +76,35 @@
         </div>
       </div>
     </div>
+    <div class="component-box">
+      <div class="component-box-top">
+        <wd-button-group size="small" type="success">
+          <wd-button
+            round-shape="none"
+            icon="home-outlined"
+            @click="clickHandler"
+            >成功按钮</wd-button
+          >
+          <wd-button
+            size="large"
+            round-shape="none"
+            icon="home-outlined"
+            type="primary"
+            @click="clickHandler"
+            >主要按钮</wd-button
+          >
+          <wd-button round-shape="circle" type="primary"
+            >C</wd-button
+          >
+        </wd-button-group>
+      </div>
+      <div class="component-box-bottom">
+        <div class="component-title">ButtonGroup</div>
+        <div class="component-desc">
+          通过设置round-shape属性，可以设置按钮的形状：circle | none
+        </div>
+      </div>
+    </div>
     <!-- <fieldset>
             <legend>按钮</legend>
             <wd-button 
@@ -141,10 +170,6 @@ export default defineComponent({
 });
 </script>
 <style lang="less" scoped>
-.wd-btn {
-  margin-bottom: 5px !important;
-  margin-right: 10px !important;
-}
 .component-box {
   width: 500px;
   min-height: 200px;

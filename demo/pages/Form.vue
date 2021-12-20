@@ -114,7 +114,7 @@ export default defineComponent({
     let isFemale = ref(false);
     let datepickerValue = ref("2021-02-02 02:02:02");
     let userInfo = reactive({
-      name: "",
+      name: "niu",
       age: "",
       isMerried: "",
       date: datepickerValue.value,

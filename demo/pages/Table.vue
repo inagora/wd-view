@@ -14,6 +14,7 @@
           :sticky="true"
           page-count="3"
           current-page="1"
+          pagination-position="center"
           @current-change="pageChangeHandler"
           @prev-click="prevClickChangeHandler"
           @next-click="nextClickChangeHandler"

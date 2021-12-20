@@ -2,7 +2,7 @@
   <button
     class="wd-btn"
     :class="[
-      type ? 'wd-btn-' + type : '',
+      type || groupProps.type ? 'wd-btn-' + type || groupProps.type : '',
       size ? 'wd-btn-' + sizeMap[size] : '',
       roundShape ? 'wd-btn-roundshape-' + roundShape : '',
       {
@@ -52,7 +52,7 @@ export default defineComponent({
       default: "",
     },
     disabled: Boolean,
-    loading: Boolean,
+    loading: Boolean
   },
   // components: {
   //     ...IconList
@@ -62,6 +62,7 @@ export default defineComponent({
     const handleClick = (options) => {
       context.emit("click", options);
     };
+    console.log(props.type);
     const sizeMap = reactive({
       small: "sm",
       large: "lg",

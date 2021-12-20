@@ -12,6 +12,7 @@ import WdDropdown from "../src/components/dropdown";
 import WdDatePicker from "../src/components/date-picker";
 import WdLayout from "../src/components/layout";
 import WdSelect from "../src/components/select";
+import WdOption from '../src/components/select/option.vue';
 import WdTable from "../src/components/table";
 import WdForm from "../src/components/form";
 import WdPagination from "./components/pagination";
@@ -35,6 +36,7 @@ const components = [
   WdDatePicker,
   WdLayout,
   WdSelect,
+  WdOption,
   WdTable,
   WdForm,
   WdFormItem,
@@ -65,6 +67,7 @@ export {
   WdDatePicker,
   WdLayout,
   WdSelect,
+  WdOption,
   WdTable,
   WdForm,
   WdFormItem,
@@ -89,6 +92,7 @@ export default {
   WdDatePicker,
   WdLayout,
   WdSelect,
+  WdOption,
   WdTable,
   WdForm,
   WdFormItem,

@@ -1,5 +1,5 @@
 <template>
-  <ul class="wd-pagination" :class="{ 'wd-pagination-disabled': disabled }">
+  <ul class="wd-pagination" :class="[ disabled ? 'wd-pagination-disabled' : '', 'wd-pagination-' + position ]">
     <li
       class="wd-pagination-prev"
       :class="{ 'wd-pagination-disabled': newCurrentPage === 1 }"
@@ -146,6 +146,10 @@ export default defineComponent({
         );
       },
       default: 7,
+    },
+    position: {
+      type: String,
+      default: 'right'
     },
   },
   emits: ["current-change", "prev-click", "next-click"],
