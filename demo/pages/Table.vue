@@ -1,9 +1,8 @@
 <template>
   <div class="container">
-    <div class="component-box">
+    <!-- <div class="component-box">
       <div class="component-box-top">
         <wd-form></wd-form>
-        <!-- <wd-button @click="getTableRows" type="primary">获取选择项</wd-button> -->
         <wd-table
           ref="wdTable"
           :columns="tableColumns"
@@ -14,6 +13,7 @@
           :sticky="true"
           page-count="3"
           current-page="1"
+          height="100%"
           pagination-position="center"
           @current-change="pageChangeHandler"
           @prev-click="prevClickChangeHandler"
@@ -29,7 +29,29 @@
           该组件主要是显示一个列表，并且在列表底部可以显示分页；
         </div>
       </div>
-    </div>
+    </div> -->
+    <!-- <wd-form></wd-form> -->
+    <wd-table
+      ref="wdTable"
+      :columns="tableColumns"
+      :data-source="dataList"
+      :show-header="true"
+      size="small"
+      bordered
+      :sticky="true"
+      page-count="3"
+      current-page="1"
+      height="100%"
+      pagination-position="left"
+      header-align="center"
+      :cell-wrap="false"
+      @current-change="pageChangeHandler"
+      @prev-click="prevClickChangeHandler"
+      @next-click="nextClickChangeHandler"
+      @select-change="tableSelectChangeHandler"
+      @cellClick="cellClickHandler"
+      @rowClick="rowClickHandler"
+    ></wd-table>
   </div>
 </template>
 
@@ -102,12 +124,12 @@ export default defineComponent({
     let dataList: any = ref([]);
 
     setTimeout(() => {
-      for (let i = 0; i < 15; i++) {
+      for (let i = 0; i < 60; i++) {
         dataList.value.push({
           id: "" + (4 + i),
           goods_name: "sk4",
           price: "1180",
-          ctime: "2021-09-26",
+          ctime: "2021-09-26 2021-09-26 2021-09-26 2021-09-26 2021-09-26",
           update_time: "2021-09-26",
           location: "中国",
         });

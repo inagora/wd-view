@@ -18,7 +18,7 @@
         >
           <td
             :class="[
-              column.ellipsis
+              column.ellipsis || !cellWrap
                 ? 'wd-table-row-cell-ellipsis'
                 : 'wd-table-row-cell-break-word',
               column.type === 'checkbox' || column.type === 'index'
@@ -29,7 +29,7 @@
             v-for="(column, index) in store.columns"
             :style="filterColumnStyle(column, index)"
             :key="column.dataIndex || column.key"
-            :title="column.ellipsis ? row[column.dataIndex] : ''"
+            :title="column.ellipsis || !cellWrap ? row[column.dataIndex] : ''"
             @click="
               cellClickHandler(
                 column.type,
@@ -84,6 +84,7 @@ export default defineComponent({
   name: "table-body",
   props: {
     store: Object as PropType<StoreProps>,
+    cellWrap: Boolean
   },
   emits: ["select-change", "cell-click", "row-click"],
   setup(props, { emit }) {

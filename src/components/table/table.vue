@@ -1,4 +1,5 @@
 <template>
+<div class="wd-table-container">
   <div
     class="wd-table"
     :class="[
@@ -13,18 +14,21 @@
         v-if="showHeader"
         :store="store"
         :fixed="sticky"
+        :header-align="headerAlign"
         @select-change="selectChangeHandler"
       ></table-header>
       <!-- table body -->
       <table-body
         :store="store"
         :data-source="dataSource"
+        :cell-wrap="cellWrap"
         @select-change="selectChangeHandler"
         @cell-click="cellClickHandler"
         @row-click="rowClickHandler"
       ></table-body>
     </div>
-    <wd-pagination
+  </div>
+  <wd-pagination
       class="wd-table-pagination"
       :page-size="pageSize"
       :page-count="pageCount"
@@ -36,7 +40,7 @@
       @prev-click="prevClickChangeHandler"
       @next-click="nextClickChangeHandler"
     ></wd-pagination>
-  </div>
+</div>
 </template>
 
 <script lang="ts">
@@ -102,6 +106,15 @@ export default defineComponent({
     paginationPosition: {
       type: String,
       default: 'right'
+    },
+    height: String,
+    headerAlign: {
+      type: String,
+      default: 'left'
+    },
+    cellWrap: {
+      type: Boolean,
+      default: true
     }
   },
   emits: [

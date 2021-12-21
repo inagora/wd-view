@@ -14,7 +14,7 @@
             class="wd-table-row-cell-break-word"
             v-for="(column, index) in store.columns"
             :key="column.dataIndex || column.key"
-            :style="filterColumnStyle(column, index)"
+            :style="[filterColumnStyle(column, index), {textAlign: headerAlign}]"
             :class="[
               column.type === 'checkbox' || column.type === 'index'
                 ? 'wd-table-selection-column'
@@ -53,6 +53,7 @@ export default defineComponent({
     fixed: {
       type: Boolean,
     },
+    headerAlign: String
   },
   emits: ["select-change"],
   setup(props, { emit }) {

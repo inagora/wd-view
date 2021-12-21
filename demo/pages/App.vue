@@ -1,6 +1,5 @@
 <template>
   <div class="container">
-    <wd-layout>
       <wd-layout has-sider="true">
         <wd-layout-sider>
           <div class="logo">
@@ -13,43 +12,44 @@
           />
         </wd-layout-sider>
         <wd-layout-content>
-          <div class="header">
-            <span>hi~，牛利杰</span>
-            <img
-              src="https://s4.wandougongzhu.cn/s/d8/_09d8fbe8-fbe1-4294-b9cd-9ad8d75f7b9a_25178a.png"
-              alt=""
-            />
-            <wd-dropdown
-              :visible="false"
-              trigger="hover"
-              @visibleChange="visibleChangeHandler"
-            >
-              <a class="wd-dropdown-link">
-                设置
-                <down-outlined></down-outlined>
-              </a>
-              <template #dropdown>
-                <wd-dropdown-menu>
-                  <wd-dropdown-menu-item>
-                    <a href="https://www.baidu.com">百度</a>
-                  </wd-dropdown-menu-item>
-                  <wd-dropdown-menu-item disabled>
-                    <a href="https://www.baidu.com">百度</a>
-                  </wd-dropdown-menu-item>
-                  <wd-dropdown-menu-item>
-                    <a href="javascript:;">1st menu item</a>
-                  </wd-dropdown-menu-item>
-                </wd-dropdown-menu>
-              </template>
-            </wd-dropdown>
-          </div>
+          <!-- <wd-layout-header>
+            <div class="header">
+              <span>hi~，牛利杰</span>
+              <img
+                src="https://s4.wandougongzhu.cn/s/d8/_09d8fbe8-fbe1-4294-b9cd-9ad8d75f7b9a_25178a.png"
+                alt=""
+              />
+              <wd-dropdown
+                :visible="false"
+                trigger="hover"
+                @visibleChange="visibleChangeHandler"
+              >
+                <a class="wd-dropdown-link">
+                  设置
+                  <down-outlined></down-outlined>
+                </a>
+                <template #dropdown>
+                  <wd-dropdown-menu>
+                    <wd-dropdown-menu-item>
+                      <a href="https://www.baidu.com">百度</a>
+                    </wd-dropdown-menu-item>
+                    <wd-dropdown-menu-item disabled>
+                      <a href="https://www.baidu.com">百度</a>
+                    </wd-dropdown-menu-item>
+                    <wd-dropdown-menu-item>
+                      <a href="javascript:;">1st menu item</a>
+                    </wd-dropdown-menu-item>
+                  </wd-dropdown-menu>
+                </template>
+              </wd-dropdown>
+            </div>
+          </wd-layout-header> -->
           <component :is="componentType"></component>
         </wd-layout-content>
       </wd-layout>
       <!-- <wd-layout-footer>
                     @footer
                 </wd-layout-footer> -->
-    </wd-layout>
   </div>
 </template>
 <script lang="ts">
@@ -117,7 +117,7 @@ export default defineComponent({
       date: datepickerValue.value,
     });
     let userInfoForm = <any>ref();
-    let componentType = ref("button");
+    let componentType = ref("table");
     let menuList = ref([]);
     menuList.value = [
       {

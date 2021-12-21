@@ -1,5 +1,4 @@
 <template>
-  <div class="container">
     <wd-form
       ref="userInfoForm"
       label-width="100px"
@@ -88,7 +87,6 @@
         >
       </wd-form-item>
     </wd-form>
-  </div>
 </template>
 
 <script lang="ts">
