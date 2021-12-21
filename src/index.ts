@@ -2,6 +2,7 @@
 import type { App } from "vue";
 import WdLink from "../src/components/link";
 import WdButton from "../src/components/button";
+import WdButtonGroup from '../src/components/buttongroup';
 import WdInput from "../src/components/input";
 import WdInputNumber from "../src/components/input-number";
 import WdSwitch from "../src/components/switch";
@@ -25,6 +26,7 @@ import WdMenu from "./components/menu";
 
 const components = [
   WdButton,
+  WdButtonGroup,
   WdLink,
   WdInput,
   WdInputNumber,
@@ -57,6 +59,7 @@ export {
   WdLink,
   install,
   WdButton,
+  WdButtonGroup,
   WdInput,
   WdInputNumber,
   WdSwitch,
@@ -82,6 +85,7 @@ export default {
   WdLink,
   install,
   WdButton,
+  WdButtonGroup,
   WdInput,
   WdInputNumber,
   WdSwitch,
