@@ -4,14 +4,33 @@ module.exports = {
   themeConfig: {
     darkMode: 'false',
     logo: 'https://s1.wandougongzhu.cn/s/ed/logo2x_b9a58d.png',
-    sidebar: [
+    navbar: [
       {
-        text: 'layout',
-        link: '/layout'
+        text: '版本',
+        children: ['v1.0', 'v2.0']
       },
       {
-        text: 'button',
-        link: '/button'
+        text: 'GitHub',
+        link: 'https://github.com/inagora/wd-view'
+      }
+    ],
+    sidebar: [
+      {
+        text: '安装',
+        link: '/install'
+      },
+      {
+        text: '组件',
+        children: [
+          {
+            text: 'layout',
+            link: '/layout'
+          },
+          {
+            text: 'Button 按钮',
+            link: '/button'
+          }
+        ]
       }
     ]
   }
