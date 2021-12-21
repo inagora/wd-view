@@ -42,7 +42,7 @@
       page-count="3"
       current-page="1"
       height="100%"
-      pagination-position="left"
+      pagination-position="right"
       header-align="center"
       :cell-wrap="false"
       @current-change="pageChangeHandler"
