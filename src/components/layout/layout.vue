@@ -10,7 +10,9 @@ import "./style/index";
 export default defineComponent({
   name: "wd-layout",
   props: {
-    hasSider: Boolean,
+    hasSider: {
+      type: [Boolean, String]
+    },
   },
   setup(props, ctx) {
     // let hasSider = ref(false);

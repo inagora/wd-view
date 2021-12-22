@@ -61,9 +61,9 @@
           @change="selectedChangeHandler"
           placeholder="请选择学历"
         >
-          <wd-option label="研究生" value="baidu">hhh</wd-option>
-          <wd-option label="本科" value="google">hhh</wd-option>
-          <wd-option label="专科" value="bing">hhh</wd-option>
+          <wd-option label="研究生" value="baidu"></wd-option>
+          <wd-option label="本科" value="google"></wd-option>
+          <wd-option label="专科" value="bing"></wd-option>
         </wd-select>
       </wd-form-item>
       <wd-form-item label="毕业日期" prop="date">

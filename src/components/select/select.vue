@@ -1,18 +1,19 @@
 <template>
+<popper
+  offset-distance="0"
+  offsetSkid="0">
   <div
     ref="selectWrapper"
     class="wd-select"
     :class="[
       selectDisabled ? 'wd-select-disabled' : 'wd-select-enabled',
       'wd-select-' + inputSize,
-      multiple ? ' wd-select-multiple' : ' wd-select-single',
-      optionsShow ? 'wd-select-show-search' : '',
+      multiple ? ' wd-select-multiple' : ' wd-select-single'
     ]"
   >
     <div class="select-trigger">
       <div
         v-if="multiple"
-        @click="clickHandler"
         tabindex="0"
         ref="selectSelector"
         class="wd-select-selector"
@@ -93,18 +94,14 @@
               </svg>
             </i>
           </span>
-        <div class="wd-select-options">
-          <slot></slot>
-        </div>
       </div>
       <div
         v-else
-        @click="clickHandler"
         tabindex="1"
         ref="selectSelector"
         class="wd-select-selector"
       >
-        <span class="wd-select-selection-search">
+        <!-- <span class="wd-select-selection-search">
           <input
             ref="searchInput"
             v-model="searchKey"
@@ -115,7 +112,7 @@
             @focus="handleSearchInputFocus"
             @keydown="handleSearchInputKeydown"
           />
-        </span>
+        </span> -->
         <div
           role="combobox"
           class="wd-select-selection wd-select-selection--single"
@@ -155,43 +152,27 @@
             </i>
           </span>
         </div>
-        <div class="wd-select-options">
-          <slot></slot>
-        </div>
       </div>
     </div>
   </div>
+  <template #content>
+    <div class="wd-select-options">
+      <slot></slot>
+    </div>
+  </template>
+</popper>
 </template>
 
 <script lang="ts">
-/**
- *
- * z-index 的深度区分，统一规范
- * option的优化：每一个item可以增加z-index
- *
- * 新增：
- * 1、filter实现
- *
- * （1）、单选设置input：input宽度和下拉宽度一样
- * （2）、placeholder设置：如果input focused则显示input的placeholder，如果有选择值，则用选择值，没有就用默认的placeholder
- * （3）、如果input没有focused，则设置input的opacity为0
- * （4）、多选：如果没有选项，则和单选一样，如果有选项，则在选项最后插入一个input，宽度设置为100%，然后显示内容用一个span撑开
- * （5）、多选删除
- * （6）、筛选
- * （7）、多选限制
- */
+import Popper from 'vue3-popper';
 import {
   defineComponent,
   reactive,
   ref,
   toRefs,
-  nextTick,
   provide,
-  watch,
   inject,
-  onMounted,
 } from "vue";
-import lodashDebounce from "lodash/debounce";
 import {
   wdFormKey,
   wdFormItemKey,
@@ -209,6 +190,7 @@ export default defineComponent({
   name: "wd-select",
   components: {
     WdInput,
+    Popper
   },
   props: {
     modelValue: [Array, String, Number, Boolean, Object],
@@ -260,30 +242,6 @@ export default defineComponent({
     "blur",
   ],
   setup(props, context) {
-    // init popperjs
-    let target: HTMLElement;
-    let options: HTMLElement;
-    let popperInstance;
-    onMounted(() => {
-      // target = document.querySelector('.wd-select');
-      // options = document.querySelector('.wd-select-options');
-      // popperInstance = createPopper(target, options, {
-      //   modifiers: [
-      //     {
-      //       name: 'offset',
-      //       options: {
-      //         offset: [0, 30],
-      //       },
-      //     },
-      //   ],
-      // });
-      // target.addEventListener('click', () => {
-        
-      //   options.setAttribute('data-show', '');
-      //   popperInstance.update();
-      // });
-    });
-    
     const sizeMap = reactive({
       small: "sm",
       large: "lg",
@@ -304,18 +262,6 @@ export default defineComponent({
     const searchKey = ref(""); // 搜索关键词
     const searchInput = ref(null); // 搜索框
     const popperVisible = ref(false); // 手动控制下拉显示与隐藏
-
-    onMounted(() => {
-      // 失去焦点隐藏选项
-      console.log(document.querySelector('.wd-select-selector'));
-      document.querySelector('body').addEventListener('click', () => {
-          if(popperInstance && options.hasAttribute('data-show')) {
-            options.removeAttribute('data-show');
-            popperInstance.update();
-            isFocused.value = false;
-          }
-      }, true);
-    });
     let selectedValue = ref(props.modelValue);
     let selectedArray = ref([]);
     let { visibleValue } = toRefs(props);
@@ -337,10 +283,6 @@ export default defineComponent({
       currentPlaceholder.value = selectedLabel && selectedLabel.label;
     };
 
-    const debouncedOnInputChange = lodashDebounce((e) => {
-      handleSearchInputChange(e.target.value);
-    }, 300);
-
     // 处理搜素
     const handleSearchInputChange = (val) => {
       searchKey.value = val;
@@ -353,31 +295,6 @@ export default defineComponent({
       if (keyCode === 8 && !searchKey.value) {
         removeSelectedItem(selectedArray.value.length - 1);
       }
-    };
-    // methods
-    // 点击显示与隐藏
-    const clickHandler = (e) => {
-      searchInput.value.focus();
-      optionsShow.value = !optionsShow.value;
-      popperVisible.value = true;
-
-      target = e.target;
-      options = document.querySelector('.wd-select-options');
-      if(!popperInstance) {
-        popperInstance = createPopper(target, options, {
-          modifiers: [
-            {
-              name: 'offset',
-              options: {
-                offset: [0, 10],
-              },
-            },
-          ],
-        });
-      }
-      
-      options.setAttribute('data-show', '');
-      popperInstance.update();
     };
     // 选项显示与隐藏钩子
     const visibleChange = () => {
@@ -415,7 +332,7 @@ export default defineComponent({
       setCurrentPlaceholder();
       emit("update:modelValue", val);
       emit("change", val);
-      searchInput.value.focus();
+      // searchInput.value.focus();
     };
     const removeSelectedItem = (index) => {
       removeItem.value = selectedArray.value.splice(index, 1)[0];
@@ -431,7 +348,6 @@ export default defineComponent({
 
     return {
       sizeMap,
-      clickHandler,
       optionsShow,
       selectSelector,
       selectWrapper,
@@ -449,7 +365,6 @@ export default defineComponent({
       handleSearchInputKeydown,
       searchInput,
       popperVisible,
-      debouncedOnInputChange,
       inputSize,
       selectDisabled
     };

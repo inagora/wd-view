@@ -7,7 +7,7 @@
     <li
       class="wd-menu-submenu wd-menu-submenu-inline"
       :class="[menu.selected ? 'wd-menu-submenu-selected' : '']"
-      v-for="(menu, index) in _menuList"
+      v-for="(menu, index) in originalMenuList"
       :key="index"
     >
       <div
@@ -53,7 +53,7 @@ export default defineComponent({
   },
   emits: ["click"], // onchange
   setup(props, context) {
-    const _menuList = props.menuList;
+    const originalMenuList = props.menuList;
     const setMenuCount = (submenu, count, parentMenu) => {
       ++count;
       if (submenu) {
@@ -66,7 +66,7 @@ export default defineComponent({
         });
       }
     };
-    _menuList.forEach((menu) => {
+    originalMenuList.forEach((menu) => {
       let menuCount = 0;
       if (menu.submenu.length > 0) {
         setMenuCount(menu.submenu, menuCount, menu);
@@ -78,12 +78,12 @@ export default defineComponent({
 
     // menu的点击，显示子menu
     const menuClickHandler = (currentIndex) => {
-      _menuList.forEach((menu, index) => {
+      originalMenuList.forEach((menu, index) => {
         if (index !== currentIndex) {
           menu.selected = false;
         }
       });
-      _menuList[currentIndex].selected = !_menuList[currentIndex].selected;
+      originalMenuList[currentIndex].selected = !originalMenuList[currentIndex].selected;
     };
 
     const emitClick = (params) => {
@@ -91,7 +91,7 @@ export default defineComponent({
     };
 
     return {
-      _menuList,
+      originalMenuList,
       setMenuCount,
       menuClickHandler,
       emitClick,

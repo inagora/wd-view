@@ -92,14 +92,14 @@ export default defineComponent({
     if (props.type === "range" && !(props.defaultValue instanceof Array)) {
       console.warn("rangepicker need Array form defaultValue");
     }
-    onMounted(() => {
-      loadCss(
-        "https://cdn.jsdelivr.net/npm/ant-design-vue@2.2.0/dist/antd.min.css"
-      );
-      loadJs(
-        "https://cdn.jsdelivr.net/npm/ant-design-vue@2.2.0/dist/antd.min.js"
-      );
-    });
+    // onMounted(() => {
+    //   loadCss(
+    //     "https://cdn.jsdelivr.net/npm/ant-design-vue@2.2.0/dist/antd.min.css"
+    //   );
+    //   loadJs(
+    //     "https://cdn.jsdelivr.net/npm/ant-design-vue@2.2.0/dist/antd.min.js"
+    //   );
+    // });
     return {
       pickerType,
       change,
