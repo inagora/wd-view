@@ -107,7 +107,12 @@ const config = {
     minimize: true,
   },
   externals: {
-    vue: "Vue",
+    vue: {
+      root: 'Vue',
+      commonjs2: 'vue',
+      commonjs: 'vue',
+      amd: 'vue',
+    },
     "ant-design-vue": "ant-design-vue",
   },
 };
