@@ -13,7 +13,7 @@ import WdDropdown from "../src/components/dropdown";
 import WdDatePicker from "../src/components/date-picker";
 import WdLayout from "../src/components/layout";
 import WdSelect from "../src/components/select";
-import WdOption from '../src/components/select/option.vue';
+import WdOption from '../src/components/option';
 import WdTable from "../src/components/table";
 import WdForm from "../src/components/form";
 import WdPagination from "./components/pagination";
@@ -51,7 +51,6 @@ const components = [
 ];
 const install = (app: App): void => {
   components.forEach((component) => {
-    console.log(component);
     app.component((component as any).name, component);
   });
 };

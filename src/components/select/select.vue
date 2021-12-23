@@ -306,7 +306,8 @@ export default defineComponent({
     };
     // 设置选择的值
     const setSelectedValue = (val: optionType) => {
-      let options = slots.default();
+      let options: any = slots.default();
+      if(options && options[0].children) options = options[0].children; 
       if (isMultiple.value) {
         // 多选
         if (val.selected) {

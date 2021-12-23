@@ -74,7 +74,6 @@ export default defineComponent({
     });
     const fixTwoCNChar = () => {
       const node = buttonNode.value;
-      console.log(node);
       if (!node) {
         return;
       }

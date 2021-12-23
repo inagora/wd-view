@@ -7,6 +7,8 @@
       'wd-select-item-option-selected': isItemSelected,
       'wd-select-item-option-active': isItemActived,
     }"
+    :label="label"
+    :value="value"
     @mouseover="mouseoverHandler"
     @mouseleave="mouseleaveHandler"
     @click="clickHandler"
@@ -69,7 +71,6 @@ export default defineComponent({
     let limitCount: number = inject("limitCount");
     let isItemVisible = ref(true);
     let searchKey: any = inject("searchKey");
-
     // methods
     const mouseoverHandler = () => {
       isItemActived.value = true;
