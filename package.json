@@ -1,7 +1,7 @@
 {
-  "name": "wd-view",
-  "version": "0.0.1",
-  "description": "",
+  "name": "@inagora/wd-view",
+  "version": "0.0.2",
+  "description": "wd UI",
   "main": "dist/index.js",
   "scripts": {
     "start": "webpack serve --config webpack.dev.config.js --mode development --env development --profile --progress",
@@ -10,8 +10,15 @@
     "docs:dev": "vuepress dev docs",
     "docs:build": "vuepress build docs"
   },
-  "keywords": [],
-  "author": "niulijie",
+  "keywords": [
+    "UI",
+    "vue3",
+    "vue",
+    "framework",
+    "components",
+    "ant-design-vue"
+  ],
+  "author": "lijieniu",
   "license": "ISC",
   "devDependencies": {
     "@babel/core": "^7.12.17",
@@ -136,5 +143,16 @@
       "vue/max-attributes-per-line": 0,
       "vue/no-v-html": "off"
     }
-  }
+  },
+  "directories": {
+    "doc": "docs"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/inagora/wd-view.git"
+  },
+  "bugs": {
+    "url": "https://github.com/inagora/wd-view/issues"
+  },
+  "homepage": "https://github.com/inagora/wd-view#readme"
 }
