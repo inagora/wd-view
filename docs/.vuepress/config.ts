@@ -29,6 +29,58 @@ module.exports = {
           {
             text: 'Button 按钮',
             link: '/button'
+          },
+          {
+            text: 'Checkbox 多选',
+            link: '/checkbox'
+          },
+          {
+            text: 'Datepicker 日期选择器',
+            link: '/datepicker'
+          },
+          {
+            text: 'Dropdown 下拉列表',
+            link: '/dropdown'
+          },
+          {
+            text: 'Form 表单',
+            link: '/form'
+          },
+          {
+            text: 'Input 输入框',
+            link: '/input'
+          },
+          {
+            text: 'Inputnumber 数组输入框',
+            link: '/inputnumber'
+          },
+          {
+            text: 'Link 链接',
+            link: '/link'
+          },
+          {
+            text: 'Menu 菜单',
+            link: '/menu'
+          },
+          {
+            text: 'Pagination 分页器',
+            link: '/pagination'
+          },
+          {
+            text: 'Radio 单选按钮',
+            link: '/radio'
+          },
+          {
+            text: 'Select 下拉选择',
+            link: '/select'
+          },
+          {
+            text: 'Switch 开关',
+            link: '/switch'
+          },
+          {
+            text: 'Table 表格',
+            link: '/table'
           }
         ]
       }
