@@ -10,6 +10,8 @@ import WdCheckbox from "../src/components/checkbox";
 import WdCheckboxGroup from "../src/components/checkbox";
 import WdRadio from "../src/components/radio";
 import WdDropdown from "../src/components/dropdown";
+import WdDropdownMenu from "../src/components/dropdownmenu";
+import WdDropdownMenuItem from "../src/components/dropdownmenuitem";
 import WdDatePicker from "../src/components/date-picker";
 import WdLayout from "../src/components/layout";
 import WdSelect from "../src/components/select";
@@ -35,6 +37,8 @@ const components = [
   WdCheckboxGroup,
   WdRadio,
   WdDropdown,
+  WdDropdownMenu,
+  WdDropdownMenuItem,
   WdDatePicker,
   WdLayout,
   WdSelect,
@@ -66,6 +70,8 @@ export {
   WdCheckboxGroup,
   WdRadio,
   WdDropdown,
+  WdDropdownMenu,
+  WdDropdownMenuItem,
   WdDatePicker,
   WdLayout,
   WdSelect,
@@ -92,6 +98,8 @@ export default {
   WdCheckboxGroup,
   WdRadio,
   WdDropdown,
+  WdDropdownMenu,
+  WdDropdownMenuItem,
   WdDatePicker,
   WdLayout,
   WdSelect,
