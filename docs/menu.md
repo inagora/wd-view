@@ -1,11 +1,42 @@
-## Button 按钮
+## Menu 菜单
 ### 用法
-* 基础用法
-* 禁用状态
-* 按钮图标
-* 按钮组
-* 按钮尺寸
+#### 基本用法
+<div class="component-box">
+  <div class="component-box-top">
+    <wd-menu
+      :menu-list="[{text: '表单组件', submenu: [{text: 'Button'}]}, {text: '表单组件', submenu: [{text: 'Button'}]},{text: '表单组件', submenu: [{text: 'Button'}]}]"
+      theme="dark"
+      @click="menuClickHandler"
+    />
+  </div>
+  <div class="component-box-bottom">
+    <div class="component-title">菜单组件</div>
+    <div class="component-desc">
+      该组件需要传入一个数据数组，描述菜单项
+    </div>
+  </div>
+</div>
+
+::: details 点击查看代码 
+```html
+<wd-menu
+  :menu-list="[{text: '表单组件', submenu: [{text: 'Button'}]}, {text: '表单组件', submenu: [{text: 'Button'}]},{text: '表单组件', submenu: [{text: 'Button'}]}]"
+  theme="dark"
+  @click="menuClickHandler"
+/>
+```
+:::
+
 ### 属性
 | 参数 | 说明 | 类型 | 可选值 | 默认值 |
 | :--: | :--: | :--: | :--: | :--: |
-| size | 组件大小 | string | small / large | small |
+| menu-list | 菜单列表 | Array | - | - |
+| theme | 主题 | string | dark / light | light |
+
+### MenuList
+
+### MenuItem
+### 事件
+| 事件名称 | 说明 | 回调参数 |
+| :--: | :--: | :--: |
+| click | 菜单项点击 | Function(MenuItem) |

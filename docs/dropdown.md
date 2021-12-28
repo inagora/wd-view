@@ -69,3 +69,8 @@
 | visible | 是否显示下拉选项 | boolean | true / false | false |
 | trigger | 触发选项弹出的事件 | string | hover / click | hover |
 | disabled | 是否可用 | boolean | true / false | false |
+
+### 事件
+| 事件名称 | 说明 | 回调参数 |
+| :--: | :--: | :--: |
+| visible-change | 下拉项显示与隐藏的回调 | Function(visibleValue) |

@@ -4,22 +4,18 @@
 <div class="component-box">
     <div class="component-box-top">
         <wd-checkbox
-            :checked="isCheckboxChecked"
-            @change="handleCheckboxChange"
+            :checked="true"
         >
             复选框
         </wd-checkbox>
         <wd-checkbox
-            :checked="checkboxDefaultCheck"
-            v-model="checkboxDefaultCheck"
-            @change="handleCheckboxChange"
+            :checked="false"
         >
             复选框默认选中
         </wd-checkbox>
         <wd-checkbox
-            :checked="isCheckboxChecked"
+            :checked="true"
             :disabled="true"
-            @change="handleCheckboxChange"
         >
             复选框不可用
         </wd-checkbox>
@@ -58,37 +54,6 @@
 ```
 :::
 
-#### 复选框组
-<div class="component-box">
-    <div class="component-box-top">
-        <wd-checkbox-group
-          @change="handleCheckboxChange"
-          v-model="checkboxGroupValue"
-          :default-value="['a']"
-          :options="checkboxGroupOptions"
-        >
-        </wd-checkbox-group>
-    </div>
-    <div class="component-box-bottom">
-        <div class="component-title">复选框组</div>
-        <div class="component-desc">
-            options属性可以设置多个选项；default-value可以设置默认值
-        </div>
-    </div>
-</div> 
-
-::: details 点击查看代码 
-```html
-<wd-checkbox-group
-    @change="handleCheckboxChange"
-    v-model="checkboxGroupValue"
-    :default-value="['a']"
-    :options="checkboxGroupOptions"
->
-</wd-checkbox-group>
-```
-:::
-
 ### 属性
 | 参数 | 说明 | 类型 | 可选值 | 默认值 |
 | :--: | :--: | :--: | :--: | :--: |
@@ -96,3 +61,8 @@
 | name | 组件名称 | string | - | - |
 | default-value | 复选框组才有的属性 | Array | - | - |
 | disabled | 是否可用 | boolean | true / false | true |
+
+### 事件
+| 事件名称 | 说明 | 回调参数 |
+| :--: | :--: | :--: |
+| change | 值变化时触发 | Function(checkedValue) |

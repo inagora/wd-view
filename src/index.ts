@@ -7,7 +7,7 @@ import WdInput from "../src/components/input";
 import WdInputNumber from "../src/components/input-number";
 import WdSwitch from "../src/components/switch";
 import WdCheckbox from "../src/components/checkbox";
-import WdCheckboxGroup from "../src/components/checkbox";
+import WdCheckboxGroup from "../src/components/checkboxgroup";
 import WdRadio from "../src/components/radio";
 import WdDropdown from "../src/components/dropdown";
 import WdDropdownMenu from "../src/components/dropdownmenu";

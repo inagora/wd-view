@@ -1,9 +1,14 @@
 module.exports = {
   title: 'WdView',
   base: '/wd-view/',
+  bundlerConfig: {
+    
+  },
   themeConfig: {
     darkMode: 'false',
-    logo: 'https://s1.wandougongzhu.cn/s/ed/logo2x_b9a58d.png',
+    lastUpdated: false,
+    contributors: false,
+    logo: 'https://s2.wandougongzhu.cn/s/b7/logo-_b70294.png',
     navbar: [
       {
         text: '版本',

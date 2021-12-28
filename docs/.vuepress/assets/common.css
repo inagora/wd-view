@@ -80,3 +80,9 @@ dt, h1, h2, h3, h4, h5, h6 {
 .custom-container {
   margin-top: 0 !important;
 }
+.wd-table table {
+  margin: 0 !important;
+}
+.sidebar {
+  font-size: 14px;
+}

@@ -220,3 +220,8 @@
 | type(ButtonGroup组件) | 类型 | string | primary / success / warning / danger / info / text / dashed | - |
 | roundShape | 形状 | string | circle / none | none |
 | disabled | 是否可用 | boolean | true / false | true |
+
+### 事件
+| 事件名称 | 说明 | 回调参数 |
+| :--: | :--: | :--: |
+| click | 按钮的点击事件 | (event) => void |
