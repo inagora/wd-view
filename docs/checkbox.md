@@ -3,6 +3,7 @@
 #### 基本用法
 <div class="component-box">
     <div class="component-box-top">
+        <ClientOnly>
         <wd-checkbox
             :checked="true"
         >
@@ -19,6 +20,7 @@
         >
             复选框不可用
         </wd-checkbox>
+        </ClientOnly>
     </div>
     <div class="component-box-bottom">
         <div class="component-title">复选框</div>

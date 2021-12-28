@@ -2,7 +2,13 @@ module.exports = {
   title: 'WdView',
   base: '/wd-view/',
   bundlerConfig: {
-    
+    // vue: {
+    //   compilerOptions: {
+    //     isCustomElement(tag) {
+    //       return tag.startsWith('wd-')
+    //     }
+    //   }
+    // }
   },
   themeConfig: {
     darkMode: 'false',
