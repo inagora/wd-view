@@ -21,7 +21,7 @@ Vue.createApp({})
 ### NPM
 1、通过npm安装
 ```javascript
-npm install wd-view
+npm install @inagora/wd-view
 ```
 2、使用组件
 ```javascript
