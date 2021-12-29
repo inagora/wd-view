@@ -1,4 +1,4 @@
-# wd-view
+# <center>wd-view</center>
 wd-view是一套UI组件库，包含丰富的常用组件，可以快速搭建页面。
 ## 📦 安装使用
 ### 浏览器
