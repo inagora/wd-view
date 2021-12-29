@@ -1,5 +1,6 @@
-# <center>wd-view</center>
+<h1 align="center">wd-view</h1>
 wd-view是一套UI组件库，包含丰富的常用组件，可以快速搭建页面。
+
 ## 📦 安装使用
 ### 浏览器
 1、页面中引入js
