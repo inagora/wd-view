@@ -25,7 +25,7 @@ import WdLayoutFooter from "./components/layout/components/footer.vue";
 import WdLayoutSider from "./components/layout/components/sider.vue";
 import WdLayoutContent from "./components/layout/components/content.vue";
 import WdMenu from "./components/menu";
-import WdToast from './components/toast';
+import WdToast from './components/toast/toast';
 import WdProgress from './components/progress';
 
 const components = [
@@ -61,6 +61,7 @@ const install = (app: App): void => {
   components.forEach((component) => {
     app.component((component as any).name, component);
   });
+  app.config.globalProperties.$toast = WdToast;
 };
 export {
   WdLink,
@@ -93,32 +94,5 @@ export {
   WdProgress
 };
 export default {
-  WdLink,
-  install,
-  WdButton,
-  WdButtonGroup,
-  WdInput,
-  WdInputNumber,
-  WdSwitch,
-  WdCheckbox,
-  WdCheckboxGroup,
-  WdRadio,
-  WdDropdown,
-  WdDropdownMenu,
-  WdDropdownMenuItem,
-  WdDatePicker,
-  WdLayout,
-  WdSelect,
-  WdOption,
-  WdTable,
-  WdForm,
-  WdFormItem,
-  WdPagination,
-  WdLayoutContent,
-  WdLayoutFooter,
-  WdLayoutSider,
-  WdLayoutHeader,
-  WdMenu,
-  WdToast,
-  WdProgress
+  install
 };

@@ -68,6 +68,7 @@ import Select from "./Select.vue";
 import Datepicker from "./Datepicker.vue";
 import Dropdown from "./Dropdown.vue";
 import moment from "moment";
+import Toast from './Toast.vue';
 export default defineComponent({
   name: "App",
   components: {
@@ -84,6 +85,7 @@ export default defineComponent({
     Radio,
     Switch,
     Select,
+    Toast
   },
   setup() {
     let user = {
@@ -117,7 +119,7 @@ export default defineComponent({
       date: datepickerValue.value,
     });
     let userInfoForm = <any>ref();
-    let componentType = ref("form");
+    let componentType = ref("toast");
     let menuList = ref([]);
     menuList.value = [
       {

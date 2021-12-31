@@ -1,10 +1,10 @@
 <template>
-  <div class="wd-toast" v-show="showToast">{{ msg }}</div>
+  <div class="wd-toast" v-show="showToast">{{ message }}</div>
 </template>
 
 <script lang="ts">
 /**
- * msg: toast的内容
+ * message: toast的内容
  * visible: toast显示/隐藏
  * duration: toast显示时长
  * position: toast显示的位置
@@ -14,15 +14,11 @@ enum POSITION {
   center,
   bottom,
 }
-import { ref, watch, toRefs } from "vue";
+import { ref, watch, toRefs, onMounted } from "vue";
 export default {
   name: "wd-toast",
   props: {
-    msg: String,
-    visible: {
-      type: Boolean,
-      default: false,
-    },
+    message: String,
     duration: {
       type: Number,
       default: 3000,
@@ -33,15 +29,12 @@ export default {
     },
   },
   setup(props) {
-    let { msg, visible, duration } = toRefs(props);
-    let showToast = ref(false);
-    watch(duration, () => {
+    let { message, duration } = toRefs(props);
+    let showToast = ref(true);
+    onMounted(() => {
       setTimeout(() => {
         showToast.value = false;
       }, duration.value);
-    });
-    watch(visible, () => {
-      showToast.value = true;
     });
     return {
       showToast,

@@ -1,9 +1,9 @@
 // @ts-nocheck
 import { App } from "vue";
-import WdToast from "./toast.vue";
+import WdToast from "./toast";
 
 WdToast.install = (app: App) => {
-  app.component(WdToast.name, WdToast);
+  app.config.globalProperties.$toast = WdToast;
 };
 
 export default WdToast;
