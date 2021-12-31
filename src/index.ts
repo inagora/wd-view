@@ -25,6 +25,8 @@ import WdLayoutFooter from "./components/layout/components/footer.vue";
 import WdLayoutSider from "./components/layout/components/sider.vue";
 import WdLayoutContent from "./components/layout/components/content.vue";
 import WdMenu from "./components/menu";
+import WdToast from './components/toast';
+import WdProgress from './components/progress';
 
 const components = [
   WdButton,
@@ -52,6 +54,8 @@ const components = [
   WdLayoutSider,
   WdLayoutHeader,
   WdMenu,
+  WdToast,
+  WdProgress
 ];
 const install = (app: App): void => {
   components.forEach((component) => {
@@ -85,6 +89,8 @@ export {
   WdLayoutSider,
   WdLayoutHeader,
   WdMenu,
+  WdToast,
+  WdProgress
 };
 export default {
   WdLink,
@@ -113,4 +119,6 @@ export default {
   WdLayoutSider,
   WdLayoutHeader,
   WdMenu,
+  WdToast,
+  WdProgress
 };
