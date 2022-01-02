@@ -35,22 +35,7 @@
       ref="wdTable"
       :columns="tableColumns"
       :data-source="dataList"
-      :show-header="true"
-      size="small"
-      bordered
-      :sticky="true"
-      page-count="3"
-      current-page="1"
-      height="100%"
-      pagination-position="right"
-      header-align="center"
-      :cell-wrap="false"
-      @current-change="pageChangeHandler"
-      @prev-click="prevClickChangeHandler"
-      @next-click="nextClickChangeHandler"
-      @select-change="tableSelectChangeHandler"
-      @cellClick="cellClickHandler"
-      @rowClick="rowClickHandler"
+      :page-count="3"
     ></wd-table>
   </div>
 </template>

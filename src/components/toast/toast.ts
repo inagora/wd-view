@@ -1,3 +1,4 @@
+// @ts-nocheck
 import {createVNode, render} from 'vue'
 import ToastConstructor from './toast.vue';
 type WdToast = {
