@@ -45,9 +45,11 @@
 <script lang="ts">
 // @ts-nocheck
 import { defineComponent, PropType, reactive, ref, watch } from "vue";
+import WdCheckbox from '../checkbox/checkbox.vue';
 import { StoreProps } from "./table-type";
 export default defineComponent({
   name: "table-header",
+  components: {WdCheckbox},
   props: {
     store: Object as PropType<StoreProps>,
     fixed: {

@@ -47,6 +47,7 @@
 import { defineComponent, reactive, ref } from "vue";
 import TableHeader from "./table-header.vue";
 import TableBody from "./table-body.vue";
+import WdPagination from '../pagination/pagination.vue';
 import { StoreProps } from "./table-type";
 
 /**
@@ -66,7 +67,7 @@ import { StoreProps } from "./table-type";
  * 行号 done
  */
 export default defineComponent({
-  components: { TableHeader, TableBody },
+  components: { TableHeader, TableBody, WdPagination },
   name: "wd-table",
   props: {
     dataSource: {

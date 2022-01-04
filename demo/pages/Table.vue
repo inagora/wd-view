@@ -56,12 +56,12 @@ export default defineComponent({
 
     // table数据
     const tableColumns = [
-      // {
-      //     title: '',
-      //     dataIndex: '',
-      //     key: '',
-      //     type: 'checkbox'
-      // },
+      {
+          title: '',
+          dataIndex: '',
+          key: '',
+          type: 'checkbox'
+      },
       // {
       //     type: 'index',
       //     index: (index) => {
