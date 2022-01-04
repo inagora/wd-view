@@ -14,7 +14,7 @@
             class="wd-table-row-cell-break-word"
             v-for="(column, index) in store.columns"
             :key="column.dataIndex || column.key"
-            :style="[filterColumnStyle(column, index), {textAlign: headerAlign}]"
+            :style="[filterColumnStyle(column, index), {textAlign: column.type === 'checkbox' ? 'center' : headerAlign}]"
             :class="[
               column.type === 'checkbox' || column.type === 'index'
                 ? 'wd-table-selection-column'

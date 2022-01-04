@@ -121,14 +121,14 @@ export default defineComponent({
         return {
           position: column.fixed ? "sticky" : "",
           left: index * column.width + "px",
-          zIndex: 1000 - index,
+          zIndex: 98,
           backgroundColor: "#ffffff",
         };
       } else if (column.fixed === "right") {
         return {
           position: column.fixed ? "sticky" : "",
           right: index * column.width + "px",
-          zIndex: 1000 - index,
+          zIndex: 98,
           backgroundColor: "#ffffff",
         };
       } else {

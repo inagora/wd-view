@@ -44,7 +44,7 @@
 </template>
 
 <script lang="ts">
-import { defineComponent, reactive, ref } from "vue";
+import { defineComponent, reactive, ref, watchEffect } from "vue";
 import TableHeader from "./table-header.vue";
 import TableBody from "./table-body.vue";
 import WdPagination from '../pagination/pagination.vue';
@@ -137,17 +137,22 @@ export default defineComponent({
     let leftFixedColumns = ref([]);
     let rightFixedColumns = ref([]);
     let normalColumns = ref([]);
+    let checkColumn = ref(null);
 
     store.originColumns.forEach((column) => {
       if (!column.width) {
         column.width = 150;
       }
-      if (column.fixed === "left") {
-        leftFixedColumns.value.push(column);
-      } else if (column.fixed === "right") {
-        rightFixedColumns.value.push(column);
+      if(column.type === 'checkbox') {
+        checkColumn.value = column;
       } else {
-        normalColumns.value.push(column);
+        if (column.fixed === "left") {
+          leftFixedColumns.value.push(column);
+        } else if (column.fixed === "right") {
+          rightFixedColumns.value.push(column);
+        } else {
+          normalColumns.value.push(column);
+        }
       }
     });
     // 处理最后左边固定的最后一个和右边固定的最后一个
@@ -161,7 +166,10 @@ export default defineComponent({
       .concat(leftFixedColumns.value)
       .concat(normalColumns.value)
       .concat(rightFixedColumns.value);
-
+    // 选择列放在第一列
+    if(checkColumn.value) {
+      store.columns.unshift(checkColumn.value);
+    }
     // 页码变化
     const pageChangeHandler = (page) => {
       emit("current-change", page);
@@ -202,6 +210,9 @@ export default defineComponent({
     const rowClickHandler = (row) => {
       emit("row-click", row);
     };
+    watchEffect(() => {
+      store.dataSource = reactive(props.dataSource);
+    });
     return {
       store,
       tableLayoutFixed,

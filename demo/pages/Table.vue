@@ -36,6 +36,7 @@
       :columns="tableColumns"
       :data-source="dataList"
       :page-count="3"
+      :sticky="true"
     ></wd-table>
   </div>
 </template>
@@ -107,10 +108,11 @@ export default defineComponent({
     ];
 
     let dataList: any = ref([]);
+    const rowData = [];
 
     setTimeout(() => {
       for (let i = 0; i < 60; i++) {
-        dataList.value.push({
+        rowData.push({
           id: "" + (4 + i),
           goods_name: "sk4",
           price: "1180",
@@ -119,7 +121,9 @@ export default defineComponent({
           location: "中国",
         });
       }
+      dataList.value = rowData;
     }, 2000);
+    
     const pageChangeHandler = (page) => {
       // setTableData(page);
       console.log("11111");

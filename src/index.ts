@@ -27,6 +27,7 @@ import WdLayoutContent from "./components/layout/components/content.vue";
 import WdMenu from "./components/menu";
 import WdToast from './components/toast/toast';
 import WdProgress from './components/progress';
+import WdDialog from "./components/dialog";
 
 const components = [
   WdButton,
@@ -55,7 +56,8 @@ const components = [
   WdLayoutHeader,
   WdMenu,
   WdToast,
-  WdProgress
+  WdProgress,
+  WdDialog
 ];
 const install = (app: App): void => {
   components.forEach((component) => {
@@ -91,7 +93,8 @@ export {
   WdLayoutHeader,
   WdMenu,
   WdToast,
-  WdProgress
+  WdProgress,
+  WdDialog
 };
 export default {
   install

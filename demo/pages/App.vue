@@ -69,6 +69,7 @@ import Datepicker from "./Datepicker.vue";
 import Dropdown from "./Dropdown.vue";
 import moment from "moment";
 import Toast from './Toast.vue';
+import Dialog from './Dialog.vue';
 export default defineComponent({
   name: "App",
   components: {
@@ -85,7 +86,8 @@ export default defineComponent({
     Radio,
     Switch,
     Select,
-    Toast
+    Toast,
+    Dialog
   },
   setup() {
     let user = {
