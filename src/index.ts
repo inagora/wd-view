@@ -97,7 +97,8 @@ export {
   WdMenu,
   WdToast,
   WdProgress,
-  WdDialog
+  WdDialog,
+  WdMessage
 };
 export default {
   install
