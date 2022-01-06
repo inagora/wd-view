@@ -1,40 +1,48 @@
-@import '../../input/style/mixin';
+@import "../../input/style/mixin";
 
-.form-control-validation(
-  @text-color: @input-color;
-  @border-color: @input-border-color;
-  @background-color: @input-bg;
-  @hoverBorderColor: @primary-color-hover;
-  @outlineColor: @primary-color-outline;
-) {
-  .@{wd-prefix}-form-item-split {
+.form-control-validation(@text-color: @input-color; @border-color: @input-border-color; @background-color: @input-bg) {
+  .@{wd-prefix}-form-explain,
+  .@{wd-prefix}-form-split {
     color: @text-color;
   }
   // 输入框的不同校验状态
-  :not(.@{wd-prefix}-input-disabled):not(.@{wd-prefix}-input-borderless).@{wd-prefix}-input,
-  :not(.@{wd-prefix}-input-affix-wrapper-disabled):not(.@{wd-prefix}-input-affix-wrapper-borderless).@{wd-prefix}-input-affix-wrapper {
+  .@{wd-prefix}-input,
+  .@{wd-prefix}-input-affix-wrapper {
     &,
     &:hover {
-      background-color: @background-color;
       border-color: @border-color;
     }
 
     &:focus,
     &-focused {
-      .active(@border-color, @hoverBorderColor, @outlineColor);
+      .active(@border-color);
+    }
+  }
+
+  .@{wd-prefix}-input {
+    &:not(&-disabled) {
+      background-color: @background-color;
+    }
+  }
+
+  .@{wd-prefix}-input-affix-wrapper {
+    &:not(&-disabled) {
+      background-color: @background-color;
+    }
+    input:focus {
+      box-shadow: none !important;
     }
   }
 
   .@{wd-prefix}-calendar-picker-open .@{wd-prefix}-calendar-picker-input {
-    .active(@border-color, @hoverBorderColor, @outlineColor);
+    .active(@border-color);
   }
 
   .@{wd-prefix}-input-prefix {
     color: @text-color;
   }
 
-  .@{wd-prefix}-input-group-addon,
-  .@{wd-prefix}-input-number-group-addon {
+  .@{wd-prefix}-input-group-addon {
     color: @text-color;
     border-color: @border-color;
   }
@@ -64,22 +72,22 @@
     font-size: @font-size-base;
   }
 
-  input[type='search'] {
+  input[type="search"] {
     box-sizing: border-box;
   }
 
   // Position radios and checkboxes better
-  input[type='radio'],
-  input[type='checkbox'] {
+  input[type="radio"],
+  input[type="checkbox"] {
     line-height: normal;
   }
 
-  input[type='file'] {
+  input[type="file"] {
     display: block;
   }
 
   // Make range inputs behave like textual form controls
-  input[type='range'] {
+  input[type="range"] {
     display: block;
     width: 100%;
   }
@@ -91,9 +99,9 @@
   }
 
   // Focus for file, radio, and checkbox
-  input[type='file']:focus,
-  input[type='radio']:focus,
-  input[type='checkbox']:focus {
+  input[type="file"]:focus,
+  input[type="radio"]:focus,
+  input[type="checkbox"]:focus {
     outline: thin dotted;
     outline: 5px auto -webkit-focus-ring-color;
     outline-offset: -2px;

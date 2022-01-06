@@ -1,110 +1,97 @@
-@import "../../style/themes/index";
-@import "../../style/mixins/index";
-@import "../../input/style/mixin";
-@import "../../button/style/mixin";
-// @import './grid/mixin';
-@import "./mixin";
+@import '../../style/themes/index';
+@import '../../style/mixins/index';
+@import '../../input/style/mixin';
+@import '../../button/style/mixin';
+@import '../../style/grid/style/mixin';
+@import './components';
+@import './inline';
+@import './horizontal';
+@import './vertical';
+@import './status';
+@import './mixin';
 
-@form-prefix-cls: ~"@{wd-prefix}-form";
-@form-component-height: @input-height-base;
-@form-component-max-height: @input-height-lg;
-@form-feedback-icon-size: @font-size-base;
-@form-help-margin-top: (
-    (@form-component-height - @form-component-max-height) / 2
-  ) + 2px;
-@form-explain-font-size: @font-size-base;
-// Extends additional 1px to fix precision issue.
-// https://github.com/ant-design/ant-design/issues/12803
-// https://github.com/ant-design/ant-design/issues/8220
-@form-explain-precision: 1px;
-@form-explain-height: floor(@form-explain-font-size * @line-height-base);
+@form-prefix-cls: ~'@{wd-prefix}-form';
+@form-item-prefix-cls: ~'@{form-prefix-cls}-item';
+@form-font-height: ceil(@font-size-base * @line-height-base);
+.@{wd-prefix}-row {
+  display: flex;
+  flex-flow: row wrap;
 
+  &::before,
+  &::after {
+    display: flex;
+  }
+
+  // No wrap of flex
+  &-no-wrap {
+    flex-wrap: nowrap;
+  }
+}
 .@{form-prefix-cls} {
   .reset-component();
   .reset-form();
-}
 
-.@{form-prefix-cls}-item-required::before {
-  display: inline-block;
-  margin-right: 4px;
-  color: @label-required-color;
-  font-size: @font-size-base;
-  font-family: SimSun, sans-serif;
-  line-height: 1;
-  content: "*";
-  .@{form-prefix-cls}-hide-required-mark & {
-    display: none;
+  .@{form-prefix-cls}-text {
+    display: inline-block;
+    padding-right: 8px;
   }
-}
 
-.@{form-prefix-cls}-item-label > label {
-  color: @label-color;
-
-  &::after {
-    & when (@form-item-trailing-colon=true) {
-      content: ":";
-    }
-    & when not (@form-item-trailing-colon=true) {
-      content: " ";
+  // ================================================================
+  // =                             Size                             =
+  // ================================================================
+  .formSize(@input-height) {
+    .@{form-item-prefix-cls}-label > label {
+      height: @input-height;
     }
 
-    position: relative;
-    top: -0.5px;
-    margin: 0 @form-item-label-colon-margin-right 0
-      @form-item-label-colon-margin-left;
-  }
-
-  &.@{form-prefix-cls}-item-no-colon::after {
-    content: " ";
-  }
-}
-
-// Form items
-// You should wrap labels and controls in .@{form-prefix-cls}-item for optimum spacing
-.@{form-prefix-cls}-item {
-  display: flex;
-  align-items: center;
-
-  &-top {
-    align-items: unset;
-    flex-direction: column;
-  }
-
-  label {
-    position: relative;
-
-    > .@{iconfont-css-prefix} {
-      font-size: @font-size-base;
-      vertical-align: top;
+    .@{form-item-prefix-cls}-control-input {
+      min-height: @input-height;
     }
   }
 
+  &-small {
+    .formSize(@input-height-sm);
+  }
+  &-large {
+    .formSize(@input-height-lg);
+  }
+}
+
+.explainAndExtraDistance(@num) when (@num >= 0) {
+  padding-top: floor(@num);
+}
+
+.explainAndExtraDistance(@num) when (@num < 0) {
+  margin-top: ceil(@num);
+  margin-bottom: ceil(@num);
+}
+
+// ================================================================
+// =                             Item                             =
+// ================================================================
+.@{form-item-prefix-cls} {
   .reset-component();
 
   margin-bottom: @form-item-margin-bottom;
   vertical-align: top;
 
-  &-control {
-    position: relative;
-    line-height: @form-component-max-height;
-    .clearfix();
-  }
-
-  &-children {
-    position: relative;
-  }
-
   &-with-help {
-    margin-bottom: max(
-      0,
-      @form-item-margin-bottom - @form-explain-height - @form-help-margin-top
-    );
+    margin-bottom: 0;
   }
 
+  &-hidden,
+  &-hidden.@{wd-prefix}-row {
+    // https://github.com/ant-design/ant-design/issues/26141
+    display: none;
+  }
+
+  // ==============================================================
+  // =                            Label                           =
+  // ==============================================================
   &-label {
     display: inline-block;
+    flex-grow: 0;
     overflow: hidden;
-    line-height: @form-component-max-height - 0.0001px;
     white-space: nowrap;
     text-align: right;
     vertical-align: middle;
@@ -112,518 +99,131 @@
     &-left {
       text-align: left;
     }
-  }
 
-  .@{wd-prefix}-switch {
-    margin: 2px 0 4px;
-  }
-}
-
-.@{form-prefix-cls}-explain,
-.@{form-prefix-cls}-extra {
-  clear: both;
-  min-height: @form-explain-height + @form-explain-precision;
-  margin-top: @form-help-margin-top;
-  color: @text-color-secondary;
-  font-size: @form-explain-font-size;
-  line-height: @line-height-base;
-  transition: color 0.3s @ease-out; // sync input color transition
-}
-
-.@{form-prefix-cls}-explain {
-  margin-bottom: -@form-explain-precision;
-}
-
-.@{form-prefix-cls}-extra {
-  padding-top: 4px;
-}
-
-.@{form-prefix-cls}-text {
-  display: inline-block;
-  padding-right: 8px;
-}
-
-.@{form-prefix-cls}-split {
-  display: block;
-  text-align: center;
-}
-
-form {
-  .has-feedback {
-    // https://github.com/ant-design/ant-design/issues/19884
-    .@{wd-prefix}-input-affix-wrapper {
-      .@{wd-prefix}-input-suffix {
-        padding-right: 18px;
-      }
-    }
-
-    // Fix overlapping between feedback icon and <Select>'s arrow.
-    // https://github.com/ant-design/ant-design/issues/4431
-    > .@{wd-prefix}-select .@{wd-prefix}-select-arrow,
-    > .@{wd-prefix}-select .@{wd-prefix}-select-selection__clear,
-    :not(.@{wd-prefix}-input-group-addon)
-      > .@{wd-prefix}-select
-      .@{wd-prefix}-select-arrow,
-    :not(.@{wd-prefix}-input-group-addon)
-      > .@{wd-prefix}-select
-      .@{wd-prefix}-select-selection__clear {
-      right: (@form-component-height / 2) + @form-feedback-icon-size - 2px;
-    }
-    > .@{wd-prefix}-select .@{wd-prefix}-select-selection-selected-value,
-    :not(.@{wd-prefix}-input-group-addon)
-      > .@{wd-prefix}-select
-      .@{wd-prefix}-select-selection-selected-value {
-      padding-right: 42px;
-    }
-
-    .@{wd-prefix}-cascader-picker {
-      &-arrow {
-        margin-right: (@form-component-height / 2) + @form-feedback-icon-size -
-          13px;
-      }
-      &-clear {
-        right: (@form-component-height / 2) + @form-feedback-icon-size - 2px;
-      }
-    }
-
-    // Fix issue: https://github.com/ant-design/ant-design/issues/7854
-    .@{wd-prefix}-input-search:not(.@{wd-prefix}-input-search-enter-button) {
-      .@{wd-prefix}-input-suffix {
-        right: (@form-component-height / 2) + @form-feedback-icon-size - 2px;
-      }
-    }
-
-    // Fix issue: https://github.com/ant-design/ant-design/issues/4783
-    .@{wd-prefix}-calendar-picker,
-    .@{wd-prefix}-time-picker {
-      &-icon,
-      &-clear {
-        right: (@form-component-height / 2) + @form-feedback-icon-size - 2px;
-      }
-    }
-  }
-
-  .@{wd-prefix}-mentions,
-  textarea.@{wd-prefix}-input {
-    height: auto;
-    margin-bottom: 4px;
-  }
-
-  // input[type=file]
-  .@{wd-prefix}-upload {
-    background: transparent;
-  }
-
-  input[type="radio"],
-  input[type="checkbox"] {
-    width: 14px;
-    height: 14px;
-  }
-
-  // Radios and checkboxes on same line
-  .@{wd-prefix}-radio-inline,
-  .@{wd-prefix}-checkbox-inline {
-    display: inline-block;
-    margin-left: 8px;
-    font-weight: normal;
-    vertical-align: middle;
-    cursor: pointer;
-
-    &:first-child {
-      margin-left: 0;
-    }
-  }
-
-  .@{wd-prefix}-checkbox-vertical,
-  .@{wd-prefix}-radio-vertical {
-    display: block;
-  }
-
-  .@{wd-prefix}-checkbox-vertical + .@{wd-prefix}-checkbox-vertical,
-  .@{wd-prefix}-radio-vertical + .@{wd-prefix}-radio-vertical {
-    margin-left: 0;
-  }
-
-  .@{wd-prefix}-input-number {
-    + .@{form-prefix-cls}-text {
-      margin-left: 8px;
-    }
-    &-handler-wrap {
-      z-index: 2; // https://github.com/ant-design/ant-design/issues/6289
-    }
-  }
-
-  // .@{wd-prefix}-select,
-  .@{wd-prefix}-cascader-picker {
-    width: 100%;
-  }
-
-  // Don't impact select inside input group
-  .@{wd-prefix}-input-group .@{wd-prefix}-select,
-  .@{wd-prefix}-input-group .@{wd-prefix}-cascader-picker {
-    width: auto;
-  }
-
-  // fix input with addon position. https://github.com/ant-design/ant-design/issues/8243
-  :not(.@{wd-prefix}-input-group-wrapper) > .@{wd-prefix}-input-group,
-  .@{wd-prefix}-input-group-wrapper {
-    display: inline-block;
-    vertical-align: middle;
-  }
-
-  // https://github.com/ant-design/ant-design/issues/20616
-  &:not(.@{form-prefix-cls}-vertical) {
-    :not(.@{wd-prefix}-input-group-wrapper) > .@{wd-prefix}-input-group,
-    .@{wd-prefix}-input-group-wrapper {
+    > label {
       position: relative;
-      top: -1px;
+      // display: inline;
+      display: inline-flex;
+      align-items: center;
+      height: @form-item-label-height;
+      color: @label-color;
+      font-size: @form-item-label-font-size;
+
+      > .@{iconfont-css-prefix} {
+        font-size: @form-item-label-font-size;
+        vertical-align: top;
+      }
+
+      // Required mark
+      &.@{form-item-prefix-cls}-required:not(.@{form-item-prefix-cls}-required-mark-optional)::before {
+        display: inline-block;
+        margin-right: 4px;
+        color: @label-required-color;
+        font-size: @form-item-label-font-size;
+        font-family: SimSun, sans-serif;
+        line-height: 1;
+        content: '*';
+
+        .@{form-prefix-cls}-hide-required-mark & {
+          display: none;
+        }
+      }
+
+      // Optional mark
+      .@{form-item-prefix-cls}-optional {
+        display: inline-block;
+        margin-left: @margin-xss;
+        color: @text-color-secondary;
+
+        .@{form-prefix-cls}-hide-required-mark & {
+          display: none;
+        }
+      }
+
+      // Optional mark
+      .@{form-item-prefix-cls}-tooltip {
+        color: @text-color-secondary;
+        cursor: help;
+        writing-mode: horizontal-tb;
+        margin-inline-start: @margin-xss;
+      }
+
+      &::after {
+        & when (@form-item-trailing-colon=true) {
+          content: ':';
+        }
+        & when not (@form-item-trailing-colon=true) {
+          content: ' ';
+        }
+
+        position: relative;
+        top: -0.5px;
+        margin: 0 @form-item-label-colon-margin-right 0 @form-item-label-colon-margin-left;
+      }
+
+      &.@{form-item-prefix-cls}-no-colon::after {
+        content: ' ';
+      }
     }
   }
-}
 
-// Form layout
-//== Vertical Form
-.make-vertical-layout-label() {
-  display: block;
-  margin: @form-vertical-label-margin;
-  padding: @form-vertical-label-padding;
-  line-height: @line-height-base;
-  white-space: initial;
-  text-align: left;
-
-  label::after {
-    display: none;
-  }
-}
-
-.make-vertical-layout() {
-  .@{form-prefix-cls}-item-label,
-  .@{form-prefix-cls}-item-control-wrapper {
-    display: block;
-    width: 100%;
-  }
-  .@{form-prefix-cls}-item-label {
-    .make-vertical-layout-label();
-  }
-}
-
-.@{form-prefix-cls}-vertical {
-  .@{form-prefix-cls}-item {
+  // ==============================================================
+  // =                            Input                           =
+  // ==============================================================
+  &-control {
+    display: flex;
     flex-direction: column;
+    flex-grow: 1;
 
-    &-label > label {
-      height: auto;
+    &:first-child:not([class^=~"'@{wd-prefix}-col-'"]):not([class*=~"' @{wd-prefix}-col-'"]) {
+      width: 100%;
     }
   }
 
-  // fix https://github.com/vueComponent/ant-design-vue/issues/3319
-  .@{form-prefix-cls}-item-control-wrapper {
-    width: 100%;
-  }
-}
+  &-control-input {
+    position: relative;
+    display: flex;
+    align-items: center;
+    min-height: @input-height-base;
 
-.@{form-prefix-cls}-vertical .@{form-prefix-cls}-item-label,
-  // when labelCol is 24, it is a vertical form
-.@{wd-prefix}-col-24.@{form-prefix-cls}-item-label,
-.@{wd-prefix}-col-xl-24.@{form-prefix-cls}-item-label {
-  .make-vertical-layout-label();
-}
-
-.@{form-prefix-cls}-vertical {
-  .@{form-prefix-cls}-item {
-    padding-bottom: 8px;
+    &-content {
+      flex: auto;
+      max-width: 100%;
+    }
   }
-  .@{form-prefix-cls}-item-control {
+
+  &-explain,
+  &-extra {
+    clear: both;
+    min-height: @form-item-margin-bottom;
+    color: @text-color-secondary;
+    font-size: @font-size-base;
     line-height: @line-height-base;
-  }
-  .@{form-prefix-cls}-explain {
-    margin-top: 2px;
-    margin-bottom: -4px - @form-explain-precision;
-  }
-  .@{form-prefix-cls}-extra {
-    margin-top: 2px;
-    margin-bottom: -4px;
-  }
-}
-
-@media (max-width: @screen-xs-max) {
-  .make-vertical-layout();
-  .@{wd-prefix}-col-xs-24.@{form-prefix-cls}-item-label {
-    .make-vertical-layout-label();
-  }
-}
-
-@media (max-width: @screen-sm-max) {
-  .@{wd-prefix}-col-sm-24.@{form-prefix-cls}-item-label {
-    .make-vertical-layout-label();
-  }
-}
-
-@media (max-width: @screen-md-max) {
-  .@{wd-prefix}-col-md-24.@{form-prefix-cls}-item-label {
-    .make-vertical-layout-label();
-  }
-}
-
-@media (max-width: @screen-lg-max) {
-  .@{wd-prefix}-col-lg-24.@{form-prefix-cls}-item-label {
-    .make-vertical-layout-label();
-  }
-}
-
-@media (max-width: @screen-xl-max) {
-  .@{wd-prefix}-col-xl-24.@{form-prefix-cls}-item-label {
-    .make-vertical-layout-label();
-  }
-}
-
-//== Inline Form
-.@{form-prefix-cls}-inline {
-  .@{form-prefix-cls}-item {
-    display: inline-block;
-    margin-right: 16px;
-    margin-bottom: 0;
-
-    &-with-help {
-      margin-bottom: @form-item-margin-bottom;
-    }
-
-    > .@{form-prefix-cls}-item-control-wrapper,
-    > .@{form-prefix-cls}-item-label {
-      display: inline-block;
-      vertical-align: top;
-      line-height: @form-component-max-height - 0.0001px;
-    }
+    transition: color 0.3s @ease-out; // sync input color transition
+    .explainAndExtraDistance((@form-item-margin-bottom - @form-font-height) / 2);
   }
 
-  .@{form-prefix-cls}-text {
-    display: inline-block;
-  }
-
-  .has-feedback {
-    display: inline-block;
-  }
-}
-
-// Validation state
-.has-success,
-.has-warning,
-.has-error,
-.is-validating {
-  &.has-feedback .@{form-prefix-cls}-item-children-icon {
-    position: absolute;
-    top: 50%;
-    right: 0;
-    z-index: 1;
-    width: @form-component-height;
-    height: 20px;
-    margin-top: -10px;
-    font-size: @form-feedback-icon-size;
-    line-height: 20px;
-    text-align: center;
-    visibility: visible;
-    animation: zoomIn 0.3s @ease-out-back;
-    pointer-events: none;
-
-    & svg {
-      position: absolute;
-      top: 0;
-      right: 0;
-      bottom: 0;
-      left: 0;
-      margin: auto;
-    }
-  }
-}
-
-.has-success {
-  &.has-feedback .@{form-prefix-cls}-item-children-icon {
-    color: @success-color;
-    animation-name: diffZoomIn1 !important;
-  }
-}
-
-.has-warning {
-  .form-control-validation(@warning-color; @warning-color; @form-warning-input-bg;);
-
-  &.has-feedback .@{form-prefix-cls}-item-children-icon {
-    color: @warning-color;
-    animation-name: diffZoomIn3 !important;
-  }
-
-  //select
-  .@{wd-prefix}-select {
-    &-selection {
-      border-color: @warning-color;
-      &:hover {
-        border-color: @warning-color;
-      }
-    }
-    &-open .@{wd-prefix}-select-selection,
-    &-focused .@{wd-prefix}-select-selection {
-      .active(@warning-color);
-    }
-  }
-
-  // arrow and icon
-  .@{wd-prefix}-calendar-picker-icon::after,
-  .@{wd-prefix}-time-picker-icon::after,
-  .@{wd-prefix}-picker-icon::after,
-  .@{wd-prefix}-select-arrow,
-  .@{wd-prefix}-cascader-picker-arrow {
-    color: @warning-color;
-  }
-
-  //input-number, timepicker
-  .@{wd-prefix}-input-number,
-  .@{wd-prefix}-time-picker-input {
-    border-color: @warning-color;
-    &-focused,
-    &:focus {
-      .active(@warning-color);
-    }
-    &:not([disabled]):hover {
-      border-color: @warning-color;
-    }
-  }
-
-  .@{wd-prefix}-cascader-picker {
-    &:focus .@{wd-prefix}-cascader-input {
-      .active(@warning-color);
-    }
-    &:hover .@{wd-prefix}-cascader-input {
-      border-color: @warning-color;
-    }
-  }
-}
-
-.has-error,
-&-has-error {
-  .form-control-validation(@error-color; @error-color; @form-error-input-bg;);
-
-  &.has-feedback .@{form-prefix-cls}-item-children-icon {
-    color: @error-color;
-    animation-name: diffZoomIn2 !important;
-  }
-
-  //select
-  .@{wd-prefix}-select:not(.@{wd-prefix}-select-borderless) {
-    .@{wd-prefix}-select-selector {
-      border-color: @error-color !important;
-    }
-    &.@{wd-prefix}-select-open .@{wd-prefix}-select-selector,
-    &.@{wd-prefix}-select-focused .@{wd-prefix}-select-selector {
-      .active(@error-color);
-    }
-  }
-
-  .@{wd-prefix}-select.@{wd-prefix}-select-auto-complete {
-    .@{wd-prefix}-input:focus {
-      border-color: @error-color;
-    }
-  }
-
-  .@{wd-prefix}-input-group-addon .@{wd-prefix}-select {
-    &-selection {
-      border-color: transparent;
-      box-shadow: none;
-    }
-  }
-
-  //input-number, timepicker
-  .@{wd-prefix}-input-number,
-  .@{wd-prefix}-time-picker-input {
-    border-color: @error-color;
-    &-focused,
-    &:focus {
-      .active(@error-color);
-    }
-    &:not([disabled]):hover {
-      border-color: @error-color;
-    }
-  }
-  .@{wd-prefix}-mention-wrapper {
-    .@{wd-prefix}-mention-editor {
-      &,
-      &:not([disabled]):hover {
-        border-color: @error-color;
-      }
-    }
-    &.@{wd-prefix}-mention-active:not([disabled]) .@{wd-prefix}-mention-editor,
-    .@{wd-prefix}-mention-editor:not([disabled]):focus {
-      .active(@error-color);
-    }
-  }
-
-  .@{wd-prefix}-cascader-picker {
-    &:focus .@{wd-prefix}-cascader-input {
-      .active(@error-color);
-    }
-    &:hover .@{wd-prefix}-cascader-input {
-      border-color: @error-color;
-    }
-  }
-
-  // transfer
-  .@{wd-prefix}-transfer {
-    &-list {
-      border-color: @error-color;
-
-      &-search:not([disabled]) {
-        border-color: @input-border-color;
-
-        &:hover {
-          .hover();
-        }
-
-        &:focus {
-          .active();
-        }
-      }
-    }
-  }
-}
-
-.is-validating {
-  &.has-feedback .@{form-prefix-cls}-item-children-icon {
-    display: inline-block;
-    color: @primary-color;
-  }
-}
-
-.@{wd-prefix}-advanced-search-form {
-  .@{form-prefix-cls}-item {
-    margin-bottom: @form-item-margin-bottom;
-
-    &-with-help {
-      margin-bottom: @form-item-margin-bottom - @form-explain-height -
-        @form-help-margin-top;
+  .@{wd-prefix}-input-textarea-show-count {
+    &::after {
+      margin-bottom: -22px;
     }
   }
 }
 
 .show-help-motion(@className, @keyframeName, @duration: @animation-duration-slow) {
-  .make-motion(@className, @keyframeName, @duration);
-  .@{className}-enter,
-  .@{className}-appear {
+  @name: ~'@{wd-prefix}-@{className}';
+  .make-motion(@name, @keyframeName, @duration);
+  .@{name}-enter,
+  .@{name}-appear {
     opacity: 0;
     animation-timing-function: @ease-in-out;
   }
-  .@{className}-leave {
+  .@{name}-leave {
     animation-timing-function: @ease-in-out;
   }
 }
 
 .show-help-motion(show-help, antShowHelp, 0.3s);
-
-.@{form-prefix-cls}-item-explain,
-.@{form-prefix-cls}-item-extra {
-  &-error {
-    color: #ff4d4f;
-    font-size: 12px;
-    line-height: 1;
-  }
-}
 
 @keyframes antShowHelpIn {
   0% {
@@ -672,30 +272,4 @@ form {
   }
 }
 
-.wd-zoom-in-center-enter-active,
-.wd-zoom-in-center-leave-active {
-  transition: all 0.3s cubic-bezier(0.55, 0, 0.1, 1);
-}
-.wd-zoom-in-center-enter-from,
-.wd-zoom-in-center-leave-active {
-  opacity: 0;
-  transform: scaleX(0);
-}
-
-.wd-zoom-in-top-enter-active,
-.wd-zoom-in-top-leave-active {
-  opacity: 1;
-  transform: scaleY(1);
-  transition: transform 300ms cubic-bezier(0.23, 1, 0.32, 1),
-    opacity 300ms cubic-bezier(0.23, 1, 0.32, 1);
-  transform-origin: center top;
-
-  &[data-popper-placement^="top"] {
-    transform-origin: center bottom;
-  }
-}
-.wd-zoom-in-top-enter-from,
-.wd-zoom-in-top-leave-active {
-  opacity: 0;
-  transform: scaleY(0);
-}
+@import './rtl';

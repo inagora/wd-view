@@ -1,0 +1,73 @@
+@import './index';
+
+// ================================================================
+// =                      Children Component                      =
+// ================================================================
+.@{form-item-prefix-cls} {
+  .@{wd-prefix}-mentions,
+  textarea.@{wd-prefix}-input {
+    height: auto;
+  }
+
+  // input[type=file]
+  .@{wd-prefix}-upload {
+    background: transparent;
+  }
+  .@{wd-prefix}-upload.@{wd-prefix}-upload-drag {
+    background: @background-color-light;
+  }
+
+  input[type='radio'],
+  input[type='checkbox'] {
+    width: 14px;
+    height: 14px;
+  }
+
+  // Radios and checkboxes on same line
+  .@{wd-prefix}-radio-inline,
+  .@{wd-prefix}-checkbox-inline {
+    display: inline-block;
+    margin-left: 8px;
+    font-weight: normal;
+    vertical-align: middle;
+    cursor: pointer;
+
+    &:first-child {
+      margin-left: 0;
+    }
+  }
+
+  .@{wd-prefix}-checkbox-vertical,
+  .@{wd-prefix}-radio-vertical {
+    display: block;
+  }
+
+  .@{wd-prefix}-checkbox-vertical + .@{wd-prefix}-checkbox-vertical,
+  .@{wd-prefix}-radio-vertical + .@{wd-prefix}-radio-vertical {
+    margin-left: 0;
+  }
+
+  .@{wd-prefix}-input-number {
+    + .@{form-prefix-cls}-text {
+      margin-left: 8px;
+    }
+    &-handler-wrap {
+      z-index: 2; // https://github.com/ant-design/ant-design/issues/6289
+    }
+  }
+
+  .@{wd-prefix}-select,
+  .@{wd-prefix}-cascader-picker {
+    width: 100%;
+  }
+
+  // Don't impact select inside input group and calendar header select
+  .@{wd-prefix}-picker-calendar-year-select,
+  .@{wd-prefix}-picker-calendar-month-select,
+  .@{wd-prefix}-input-group .@{wd-prefix}-select,
+  .@{wd-prefix}-input-group .@{wd-prefix}-cascader-picker,
+  .@{wd-prefix}-input-number-group .@{wd-prefix}-select,
+  .@{wd-prefix}-input-number-group .@{wd-prefix}-cascader-picker {
+    width: auto;
+  }
+}

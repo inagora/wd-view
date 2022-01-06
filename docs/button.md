@@ -65,7 +65,7 @@
         >主要按钮</wd-button
       >
       <wd-button size="small" type="danger">危险按钮</wd-button>
-      <wd-button size="large" type="success">成功按钮</wd-button>
+      <wd-button type="success">成功按钮</wd-button>
       <wd-button size="small" type="dashed">dashed按钮</wd-button>
       <wd-button size="large" type="info">info按钮</wd-button>
       <wd-button size="small" type="text">text按钮</wd-button>
@@ -78,7 +78,7 @@
   <div class="component-box-bottom">
     <div class="component-title">不同尺寸按钮</div>
     <div class="component-desc">
-      通过设置size属性，可以设置按钮的大小：small | default | large
+      通过设置size属性，可以设置按钮的大小：small | middle | large
     </div>
   </div>
 </div>
@@ -95,7 +95,7 @@
   >主要按钮</wd-button
 >
 <wd-button size="small" type="danger">危险按钮</wd-button>
-<wd-button size="large" type="success">成功按钮</wd-button>
+<wd-button size="middle" type="success">成功按钮</wd-button>
 <wd-button size="small" type="dashed">dashed按钮</wd-button>
 <wd-button size="large" type="info">info按钮</wd-button>
 <wd-button size="small" type="text">text按钮</wd-button>
@@ -220,7 +220,7 @@
 ### 属性
 | 参数 | 说明 | 类型 | 可选值 | 默认值 |
 | :--: | :--: | :--: | :--: | :--: |
-| size(ButtonGroup组件) | 组件大小 | string | small / large | small |
+| size(ButtonGroup组件) | 组件大小 | string | small / middle / large | middle |
 | type(ButtonGroup组件) | 类型 | string | primary / success / warning / danger / info / text / dashed | - |
 | roundShape | 形状 | string | circle / none | none |
 | disabled | 是否可用 | boolean | true / false | true |

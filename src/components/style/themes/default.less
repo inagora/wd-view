@@ -144,6 +144,7 @@
 @outline-blur-size: 0;
 @outline-width: 2px;
 @outline-color: @primary-color;
+@outline-fade: 20%;
 
 @background-color-light: hsv(
   0,
@@ -376,6 +377,8 @@
 @form-item-label-colon-margin-right: 8px;
 @form-item-label-colon-margin-left: 2px;
 @form-error-input-bg: @input-bg;
+@form-item-label-height: @input-height-base;
+@form-item-label-font-size: @font-size-base;
 
 // Input
 // ---
@@ -831,3 +834,20 @@
 @notification-bg: @component-background;
 @notification-padding-vertical: 16px;
 @notification-padding-horizontal: 24px;
+
+
+// >>> Warning
+@warning-color: @gold-6;
+@warning-color-hover: color(~`colorPalette('@{warning-color}', 5) `);
+@warning-color-active: color(~`colorPalette('@{warning-color}', 7) `);
+@warning-color-outline: fade(@warning-color, @outline-fade);
+@warning-color-deprecated-bg: color(~`colorPalette('@{warning-color}', 1) `);
+@warning-color-deprecated-border: color(~`colorPalette('@{warning-color}', 3) `);
+
+// >>> Error
+@error-color: @red-5;
+@error-color-hover: color(~`colorPalette('@{error-color}', 5) `);
+@error-color-active: color(~`colorPalette('@{error-color}', 7) `);
+@error-color-outline: fade(@error-color, @outline-fade);
+@error-color-deprecated-bg: color(~`colorPalette('@{error-color}', 1) `);
+@error-color-deprecated-border: color(~`colorPalette('@{error-color}', 3) `);

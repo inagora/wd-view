@@ -1,9 +1,8 @@
 <template>
   <div
     :class="[
-      'wd-form-item',
+      'wd-row wd-form-item',
       labelPosition === 'top' ? 'wd-form-item-top' : '',
-      inline ? 'wd-form-item-inline' : '',
       ...classes,
     ]"
   >
@@ -16,15 +15,20 @@
 
     <div
       :class="[
-        'wd-form-item-control-wrapper',
-        'wd-form-item-explain wd-form-item-explain-error',
+        'wd-form-item-control',
+        'wd-col',
+        inline ? '' : 'wd-col-16'
       ]"
     >
-      <slot></slot>
-      <transition name="wd-zoom-in-top">
-        <slot name="error" v-if="showErrmsg">
+      <div class="wd-form-item-control-input">
+        <div class="wd-form-item-control-input-content">
+          <slot></slot>
+        </div>
+      </div>
+      <transition name="fade">
+        <div :class="[...msgClasses]" v-if="showErrmsg">
           <div role="alert">{{ validateMessage }}</div>
-        </slot>
+        </div>
       </transition>
     </div>
   </div>
@@ -261,12 +265,21 @@ export default defineComponent({
     validateState.value = props.validateStatus;
     const classes = computed(() => {
       return [
-        validateState.value ? "has-feedback" : "",
-        validateState.value === "success" ? "has-success" : "",
-        validateState.value === "warning" ? "has-warning" : "",
-        validateState.value === "error" ? "has-error" : "",
-        validateState.value === "validating" ? "is-validating" : "",
-        // showErrmsg ? 'wd-form-item-with-help' : ''
+        validateState.value ? "wd-form-item-has-feedback" : "",
+        validateState.value === "success" ? "wd-form-item-has-success" : "",
+        validateState.value === "warning" ? "wd-form-item-has-warning" : "",
+        validateState.value === "error" ? "wd-form-item-has-error" : "",
+        validateState.value === "validating" ? "wd-form-item-is-validating" : "",
+        showErrmsg ? 'wd-form-item-with-help' : ''
+      ];
+    });
+
+    const msgClasses = computed(() => {
+      return [
+        validateState.value ? "wd-form-item-explain" : "",
+        validateState.value === "success" ? "wd-form-item-explain-success" : "",
+        validateState.value === "warning" ? "wd-form-item-explain-warning" : "",
+        validateState.value === "error" ? "wd-form-item-explain-error" : ""
       ];
     });
 
@@ -301,11 +314,12 @@ export default defineComponent({
       labelPosition,
       isRequired,
       inline,
+      msgClasses
     };
   },
 });
 </script>
-<style>
+<style lang="less">
 .fade-enter-active,
 .fade-leave-active {
   transition: opacity 0.5s ease;

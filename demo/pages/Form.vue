@@ -4,12 +4,11 @@
       label-width="100px"
       label-align="right"
       size="small"
-      inline
       :model="userInfo"
       :validate-on-rule-change="true"
       :rules="formRules"
       :show-message="true"
-      label-position="left"
+      label-position="top"
     >
       <wd-form-item label="姓名" prop="name">
         <wd-input
@@ -202,7 +201,7 @@ export default defineComponent({
     let formRules = {
       name: { required: true, message: "请填写姓名", trigger: "change" },
       age: {
-        message: "年龄不能小于18",
+        message: "age not right",
         trigger: "change",
         validator: checkAge,
         required: true,

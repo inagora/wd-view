@@ -1,0 +1,17 @@
+// @ts-nocheck
+import {createVNode, render} from 'vue'
+import ToastConstructor from './message.vue';
+type WdToast = {
+
+}
+type WdToastOptions = {
+  duration: number | string,
+  message: string
+}
+const Toast: WdToast = (options?: WdToastOptions) => {
+  const container = document.createElement('div')
+  const vm = createVNode(ToastConstructor, options);
+  render(vm, container);
+  document.body.appendChild(container.firstElementChild);
+}
+export default Toast;

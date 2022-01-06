@@ -1,6 +1,6 @@
 <template>
   <div>
-    <form :class="['wd-form', inline ? 'wd-form-inline' : '']">
+    <form :class="['wd-form', inline ? 'wd-form-inline' : 'wd-form-horizontal']">
       <slot></slot>
     </form>
   </div>

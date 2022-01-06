@@ -42,7 +42,7 @@
         <wd-button size="small" type="danger">危险按钮</wd-button>
         <wd-button size="large" type="success">成功按钮</wd-button>
         <wd-button size="small" type="dashed">dashed按钮</wd-button>
-        <wd-button size="large" type="info">info按钮</wd-button>
+        <wd-button type="info">info按钮</wd-button>
         <wd-button size="small" type="text">text按钮</wd-button>
         <wd-button size="large" disabled="true" type="primary"
           >按钮不可用</wd-button
@@ -51,7 +51,7 @@
       <div class="component-box-bottom">
         <div class="component-title">不同尺寸按钮</div>
         <div class="component-desc">
-          通过设置size属性，可以设置按钮的大小：small | default | large
+          通过设置size属性，可以设置按钮的大小：small | middle | large
         </div>
       </div>
     </div>

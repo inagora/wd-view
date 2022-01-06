@@ -26,7 +26,8 @@ import { defineComponent, reactive, PropType, onMounted, ref } from "vue";
 type ButtonTypes = PropType<
   "primary" | "success" | "warning" | "danger" | "info" | "text" | "dashed"
 >;
-type ButtonSizes = PropType<"small" | "large">;
+import {Sizes as ButtonSizes} from '../../utils/size';
+// type ButtonSizes = PropType<"small" | "large">;
 type ButtonRoundShape = PropType<"none" | "small" | "large" | "circle">;
 type ButtonNativeType = PropType<"button" | "submit" | "reset">;
 // import * as IconList from '@ant-design/icons-vue';
@@ -43,7 +44,7 @@ export default defineComponent({
     },
     size: {
       type: String as ButtonSizes,
-      default: "small",
+      default: "middle",
     },
     roundShape: {
       type: String as ButtonRoundShape,
@@ -103,6 +104,7 @@ export default defineComponent({
     // },
     const sizeMap = reactive({
       small: "sm",
+      middle: '',
       large: "lg",
     });
     return {

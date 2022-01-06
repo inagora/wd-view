@@ -28,6 +28,7 @@ import WdMenu from "./components/menu";
 import WdToast from './components/toast/toast';
 import WdProgress from './components/progress';
 import WdDialog from "./components/dialog";
+import WdMessage from './components/message';
 
 const components = [
   WdButton,
@@ -57,13 +58,15 @@ const components = [
   WdMenu,
   WdToast,
   WdProgress,
-  WdDialog
+  WdDialog,
+  WdMessage
 ];
 const install = (app: App): void => {
   components.forEach((component) => {
     app.component((component as any).name, component);
   });
   app.config.globalProperties.$toast = WdToast;
+  app.config.globalProperties.$message = WdMessage;
 };
 export {
   WdLink,
