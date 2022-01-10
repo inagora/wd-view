@@ -61,12 +61,26 @@
     animation-name: MessageMoveOut;
     animation-duration: 0.3s;
   }
+  &-fade-enter-from, &-fade-leave-to {
+    opacity: 0;
+    animation-duration: 0.3s;
+    animation-fill-mode: both;
+    animation-timing-function: cubic-bezier(0.55, 0, 0.55, 0.2);
+  }
+  &-fade-enter-active {
+    animation-name: MessageMoveIn;
+    animation-play-state: running;
+  }
+  &-fade-leave-active {
+    animation-name: MessageMoveOut;
+    animation-play-state: running;
+  }
 }
 
 @keyframes MessageMoveOut {
   0% {
     max-height: 150px;
-    padding: 8px;
+    padding: 0px;
     opacity: 1;
   }
   100% {

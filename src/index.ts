@@ -28,6 +28,7 @@ import WdMenu from "./components/menu";
 import WdToast from './components/toast/toast';
 import WdProgress from './components/progress';
 import WdDialog from "./components/dialog";
+import WdDrawer from "./components/drawer";
 import WdMessage from './components/message';
 
 const components = [
@@ -59,7 +60,8 @@ const components = [
   WdToast,
   WdProgress,
   WdDialog,
-  WdMessage
+  WdMessage,
+  WdDrawer
 ];
 const install = (app: App): void => {
   components.forEach((component) => {
@@ -98,7 +100,8 @@ export {
   WdToast,
   WdProgress,
   WdDialog,
-  WdMessage
+  WdMessage,
+  WdDrawer
 };
 export default {
   install

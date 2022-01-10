@@ -1,5 +1,9 @@
 <template>
   <div class="container">
+    <wd-layout>
+      <wd-layout-header>
+        这里是header
+      </wd-layout-header>
       <wd-layout has-sider="true">
         <wd-layout-sider>
           <div class="logo">
@@ -47,9 +51,10 @@
           <component :is="componentType"></component>
         </wd-layout-content>
       </wd-layout>
-      <!-- <wd-layout-footer>
-                    @footer
-                </wd-layout-footer> -->
+      <wd-layout-footer>
+          @footer
+      </wd-layout-footer>
+    </wd-layout>
   </div>
 </template>
 <script lang="ts">
@@ -71,6 +76,7 @@ import moment from "moment";
 import Toast from './Toast.vue';
 import Message from './Message.vue';
 import Dialog from './Dialog.vue';
+import Drawer from './Drawer.vue';
 export default defineComponent({
   name: "App",
   components: {
@@ -89,7 +95,8 @@ export default defineComponent({
     Select,
     Toast,
     Dialog,
-    Message
+    Message,
+    Drawer
   },
   setup() {
     let user = {
@@ -123,7 +130,7 @@ export default defineComponent({
       date: datepickerValue.value,
     });
     let userInfoForm = <any>ref();
-    let componentType = ref("message");
+    let componentType = ref("drawer");
     let menuList = ref([]);
     menuList.value = [
       {
