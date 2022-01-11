@@ -36,6 +36,7 @@
       :columns="tableColumns"
       :data-source="dataList"
       :page-count="3"
+      :cell-wrap="false"
       :sticky="true"
     ></wd-table>
   </div>

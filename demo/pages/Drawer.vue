@@ -1,38 +1,41 @@
 <template>
-  <wd-button @click="centerDialogVisible = true">show dialog</wd-button>
+  <wd-button @click="centerDialogVisible = true">show drawer</wd-button>
   <wd-drawer
     v-model="centerDialogVisible"
     title="Notice"
     width="40%"
     :show-close="true"
     @open="openHandler"
+    @before-open="beforeOpen"
     :append-to-body="false"
     :closeOnClickModal="false"
+    placement="top"
   >
-    <span
-      >Notice: before dialog gets opened for the first time this node and the
-      one bellow will not be rendered</span
-    >
+    <span>
+      <x-form />
+    </span>
     <template #footer>
       <wd-button type="primary">确定</wd-button>
     </template>
   </wd-drawer>
 </template>
 <script>
-import { getCurrentInstance, ref } from 'vue'
-export default({
+import { defineComponent, ref } from 'vue'
+import XForm from './Form.vue'
+export default defineComponent({
+  components: {XForm},
   setup() {
-    const showDialog = () => {
-      console.log(111);
-    }
     const openHandler = () => {
-      console.log('dialog open');
+      console.log('drawer open');
+    }
+    const beforeOpen = () => {
+      console.log('before open');
     }
     const centerDialogVisible = ref(false);
     return {
-      showDialog,
       centerDialogVisible,
-      openHandler
+      openHandler,
+      beforeOpen
     }
   }
 });

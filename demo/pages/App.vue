@@ -136,7 +136,6 @@ export default defineComponent({
       {
         text: "表单组件",
         icon: "",
-        open: true,
         submenu: [
           {
             text: "Button",
@@ -181,6 +180,14 @@ export default defineComponent({
           {
             text: "Form",
             type: "form",
+          },
+          {
+            text: "Message",
+            type: "message",
+          },
+          {
+            text: "Drawer",
+            type: "drawer",
           },
         ],
       },
@@ -235,6 +242,7 @@ export default defineComponent({
     const menuClickHandler = (params) => {
       console.log(params);
       componentType.value = params.type;
+      menuList.value[0].submenu[0].selected = false;
     };
 
     // 获取table引用
