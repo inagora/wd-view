@@ -14,6 +14,7 @@ const Message = (options?: WdMessageOptions | string) => {
       message: options
     }
   }
+  // offset为0的问题
   let verticalOffset = options.offset || 20; // 多个message间距
   instances.forEach(({ vm }) => {
     verticalOffset += (vm.el.offsetHeight || 0) + 16;
@@ -30,14 +31,14 @@ const Message = (options?: WdMessageOptions | string) => {
   container.className = `container_${id}`;
   const vm = createVNode(MessageConstructor, options);
   vm.props.onDestroy = () => {
+    // 组件的销毁方式
     // 销毁之后从队列中删除
-    let currentId = instances.findIndex(vmItem => {
-      return vmItem.vm.props.id = vm.props.id;
+    let currentIndex = instances.findIndex(vmItem => {
+      return vmItem.vm.props.id === vm.props.id;
     });
-    instances.splice(currentId, 1);
+    instances.splice(currentIndex, 1);
     const len = instances.length
-    if (len < 1) return
-    for (let i = currentId; i < len; i++) {
+    for (let i = currentIndex; i < len; i++) {
       const pos = parseInt(instances[i].vm.el.style['top']) - elHeight - 16
       instances[i].vm.component.props.offset = pos
     }

@@ -130,7 +130,7 @@ export default defineComponent({
       date: datepickerValue.value,
     });
     let userInfoForm = <any>ref();
-    let componentType = ref("drawer");
+    let componentType = ref("message");
     let menuList = ref([]);
     menuList.value = [
       {

@@ -16,12 +16,6 @@
   </transition>
 </template>
 <script lang="ts">
-/**
- * message: toast的内容
- * visible: toast显示/隐藏
- * duration: toast显示时长
- * position: toast显示的位置
- */
 enum POSITION {
   top,
   center,

@@ -9,7 +9,7 @@
     @before-open="beforeOpen"
     :append-to-body="false"
     :closeOnClickModal="false"
-    placement="top"
+    placement="right"
   >
     <span>
       <x-form />
