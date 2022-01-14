@@ -1,26 +1,30 @@
 <template>
   <ul
-    class="wd-menu-sub"
-    v-for="(submenu, subIndex) in menuList"
-    :style="{
-      paddingLeft: submenu.index * 12 + 'px',
-      display: showSubMenu ? 'block' : 'none',
-    }"
+    class="wd-menu wd-menu-sub"
     data-menu-list="true"
-    :key="subIndex"
   >
-    <li class="wd-menu-item-group wd-menu-submenu-inline">
+    <li 
+      class="wd-menu-submenu-inline"
+      :class="[submenu.selected ? 'wd-menu-submenu-selected wd-menu-submenu-open' : '']"
+      v-for="(submenu, subIndex) in menuList"
+      :key="subIndex"
+      :style="{
+        paddingLeft: 24 + 'px',
+        display: showSubMenu ? 'block' : 'none',
+      }">
       <div
-        class="wd-menu-item-group-title wd-menu-submenu-title"
-        :class="[submenu.selected ? 'wd-menu-submenu-selected' : '']"
+        class="wd-menu-submenu-title"
         @click="submenuClickHandler(subIndex)"
       >
-        {{ submenu.text
-        }}<i v-if="submenu.submenu" class="wd-menu-submenu-arrow"></i>
+        <span v-if="!submenu.icon" class="anticon"></span>
+        <component :is="submenu.icon" />
+        <span class="wd-menu-title-content">{{ submenu.text }}</span>
+        <i v-if="submenu.submenu" class="wd-menu-submenu-arrow"></i>
       </div>
       <wd-sub-menu
         :sub-menu-list="submenu.submenu"
         :show-sub-menu="submenu.selected"
+        v-if="submenu.submenu"
         @click="emitClick"
       >
       </wd-sub-menu>

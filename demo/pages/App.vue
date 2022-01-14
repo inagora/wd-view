@@ -130,16 +130,16 @@ export default defineComponent({
       date: datepickerValue.value,
     });
     let userInfoForm = <any>ref();
-    let componentType = ref("message");
+    let componentType = ref("dialog");
     let menuList = ref([]);
     menuList.value = [
       {
         text: "表单组件",
-        icon: "",
+        icon: "BarsOutlined",
         submenu: [
           {
             text: "Button",
-            type: "button",
+            type: "button"
           },
           {
             text: "Checkbox",
@@ -193,7 +193,7 @@ export default defineComponent({
       },
       {
         text: "列表组件",
-        icon: "",
+        icon: "BarsOutlined",
         submenu: [
           {
             text: "Table",
@@ -242,7 +242,7 @@ export default defineComponent({
     const menuClickHandler = (params) => {
       console.log(params);
       componentType.value = params.type;
-      menuList.value[0].submenu[0].selected = false;
+      menuList.value = [];
     };
 
     // 获取table引用

@@ -5,8 +5,8 @@
     style="width: 256px"
   >
     <li
-      class="wd-menu-submenu wd-menu-submenu-inline"
-      :class="[menu.selected ? 'wd-menu-submenu-selected' : '']"
+      class="wd-menu-submenu-inline"
+      :class="[menu.selected ? 'wd-menu-submenu-selected wd-menu-submenu-open' : '', menu.submenu ? 'wd-menu-submenu' : 'wd-menu-item']"
       v-for="(menu, index) in originalMenuList"
       :key="index"
     >
@@ -15,15 +15,14 @@
         style="padding-left: 24px"
         @click="menuClickHandler(index)"
       >
-        <span class="anticon anticon-mail wd-menu-item-icon">
-          <BarsOutlined />
-        </span>
+        <component :is="menu.icon" />
         <span class="wd-menu-title-content">{{ menu.text }}</span>
         <i class="wd-menu-submenu-arrow"></i>
       </div>
       <sub-menu
         :sub-menu-list="menu.submenu"
         :show-sub-menu="menu.selected"
+        v-if="menu.submenu"
         @click="emitClick"
       >
       </sub-menu>
@@ -32,7 +31,7 @@
 </template>
 
 <script lang="ts">
-import { defineComponent, reactive } from "vue";
+import { defineComponent, reactive, watchEffect } from "vue";
 import "./style/index";
 import SubMenu from "./sub-menu.vue";
 import { BarsOutlined } from "@ant-design/icons-vue";
@@ -53,7 +52,7 @@ export default defineComponent({
   },
   emits: ["click"], // onchange
   setup(props, context) {
-    const originalMenuList = props.menuList;
+    let originalMenuList = reactive(props.menuList);
     const setMenuCount = (submenu, count, parentMenu) => {
       ++count;
       if (submenu) {
@@ -89,7 +88,10 @@ export default defineComponent({
     const emitClick = (params) => {
       context.emit("click", params);
     };
-
+    watchEffect(() => {
+      originalMenuList = reactive(props.menuList);
+      console.log(originalMenuList);
+    });
     return {
       originalMenuList,
       setMenuCount,
