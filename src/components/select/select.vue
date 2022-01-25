@@ -1,5 +1,6 @@
 <template>
 <popper
+  :show="optionsShow"
   offset-distance="0"
   offsetSkid="0">
   <div
@@ -10,6 +11,7 @@
       'wd-select-' + inputSize,
       multiple ? ' wd-select-multiple' : ' wd-select-single'
     ]"
+    @click="showPopper"
   >
     <div class="select-trigger">
       <div
@@ -208,6 +210,10 @@ export default defineComponent({
     noDataText: String,
     remoteMethod: Function,
     multiple: Boolean, // 是否多选
+    autoClose: {
+      type: Boolean,
+      default: true
+    }, // 选择后是否自动收起选项
     multipleLimit: {
       type: Number,
     },
@@ -283,6 +289,11 @@ export default defineComponent({
       currentPlaceholder.value = selectedLabel && selectedLabel.label;
     };
 
+    // 显示option
+    const showPopper = () => {
+      optionsShow.value = true;
+    }
+
     // 处理搜素
     const handleSearchInputChange = (val) => {
       searchKey.value = val;
@@ -302,6 +313,9 @@ export default defineComponent({
     };
     // option item 点击
     const optionClickHandler = (value) => {
+      if(props.autoClose) {
+        optionsShow.value = false;
+      }
       setSelectedValue(value);
     };
     // 设置选择的值
@@ -367,7 +381,8 @@ export default defineComponent({
       searchInput,
       popperVisible,
       inputSize,
-      selectDisabled
+      selectDisabled,
+      showPopper
     };
   },
 });

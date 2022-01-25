@@ -88,7 +88,7 @@
           <wd-button
             size="large"
             round-shape="none"
-            icon="home-outlined"
+            icon="upload-outlined"
             type="primary"
             @click="clickHandler"
             >主要按钮</wd-button
