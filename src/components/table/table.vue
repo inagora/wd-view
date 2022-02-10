@@ -1,34 +1,34 @@
 <template>
-<div class="wd-table-container">
-  <div
-    class="wd-table"
-    :class="[
-      'wd-table-' + size,
-      store.bordered ? 'wd-table-bordered' : '',
-      tableLayoutFixed ? 'wd-table-layout-fixed' : '',
-    ]"
-  >
-    <div class="wd-table-content">
-      <!-- table header -->
-      <table-header
-        v-if="showHeader"
-        :store="store"
-        :fixed="sticky"
-        :header-align="headerAlign"
-        @select-change="selectChangeHandler"
-      ></table-header>
-      <!-- table body -->
-      <table-body
-        :store="store"
-        :data-source="dataSource"
-        :cell-wrap="cellWrap"
-        @select-change="selectChangeHandler"
-        @cell-click="cellClickHandler"
-        @row-click="rowClickHandler"
-      ></table-body>
+  <div class="wd-table-container">
+    <div
+      class="wd-table"
+      :class="[
+        'wd-table-' + size,
+        store.bordered ? 'wd-table-bordered' : '',
+        tableLayoutFixed ? 'wd-table-layout-fixed' : '',
+      ]"
+    >
+      <div class="wd-table-content">
+        <!-- table header -->
+        <table-header
+          v-if="showHeader"
+          :store="store"
+          :fixed="sticky"
+          :header-align="headerAlign"
+          @select-change="selectChangeHandler"
+        ></table-header>
+        <!-- table body -->
+        <table-body
+          :store="store"
+          :data-source="dataSource"
+          :cell-wrap="cellWrap"
+          @select-change="selectChangeHandler"
+          @cell-click="cellClickHandler"
+          @row-click="rowClickHandler"
+        ></table-body>
+      </div>
     </div>
-  </div>
-  <wd-pagination
+    <wd-pagination
       class="wd-table-pagination"
       :page-size="pageSize"
       :page-count="pageCount"
@@ -41,14 +41,14 @@
       @next-click="nextClickChangeHandler"
     ></wd-pagination>
     <!-- <div v-if="loading">loading...</div> -->
-</div>
+  </div>
 </template>
 
 <script lang="ts">
 import { defineComponent, reactive, ref, watchEffect } from "vue";
 import TableHeader from "./table-header.vue";
 import TableBody from "./table-body.vue";
-import WdPagination from '../pagination/pagination.vue';
+import WdPagination from "../pagination/pagination.vue";
 import { StoreProps } from "./table-type";
 
 /**
@@ -107,18 +107,18 @@ export default defineComponent({
     },
     paginationPosition: {
       type: String,
-      default: 'right'
+      default: "right",
     },
     height: String,
     headerAlign: {
       type: String,
-      default: 'left'
+      default: "left",
     },
     cellWrap: {
       type: Boolean,
-      default: true
+      default: true,
     },
-    loading: Boolean
+    loading: Boolean,
   },
   emits: [
     "current-change",
@@ -145,7 +145,7 @@ export default defineComponent({
       if (!column.width) {
         column.width = 150;
       }
-      if(column.type === 'checkbox') {
+      if (column.type === "checkbox") {
         checkColumn.value = column;
       } else {
         if (column.fixed === "left") {
@@ -169,7 +169,7 @@ export default defineComponent({
       .concat(normalColumns.value)
       .concat(rightFixedColumns.value);
     // 选择列放在第一列
-    if(checkColumn.value) {
+    if (checkColumn.value) {
       store.columns.unshift(checkColumn.value);
     }
     // 页码变化

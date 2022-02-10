@@ -30,6 +30,7 @@ import WdProgress from './components/progress';
 import WdDialog from "./components/dialog";
 import WdDrawer from "./components/drawer";
 import WdMessage from './components/message';
+import WdLoading from './components/loading';
 
 const components = [
   WdButton,
@@ -61,7 +62,8 @@ const components = [
   WdProgress,
   WdDialog,
   WdMessage,
-  WdDrawer
+  WdDrawer,
+  WdLoading
 ];
 const install = (app: App): void => {
   components.forEach((component) => {
@@ -101,7 +103,8 @@ export {
   WdProgress,
   WdDialog,
   WdMessage,
-  WdDrawer
+  WdDrawer,
+  WdLoading
 };
 export default {
   install
