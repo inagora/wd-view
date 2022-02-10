@@ -130,7 +130,10 @@ export default defineComponent({
   props: {
     pageSize: Number,
     total: Number,
-    pageCount: Number,
+    pageCount: {
+      type: Number,
+      default: 1,
+    },
     currentPage: Number,
     disabled: {
       type: Boolean,
@@ -275,9 +278,9 @@ export default defineComponent({
     // 下一页
     const nextPageClickHandler = () => {
       if (props.disabled) return;
-      if (++newCurrentPage.value > pageCount) {
+      if (++newCurrentPage.value > props.pageCount) {
         prevDisabled.value = true;
-        newCurrentPage.value = pageCount;
+        newCurrentPage.value = props.pageCount;
         return;
       }
       emit("next-click", newCurrentPage.value);

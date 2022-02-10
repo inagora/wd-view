@@ -40,6 +40,7 @@
       @prev-click="prevClickChangeHandler"
       @next-click="nextClickChangeHandler"
     ></wd-pagination>
+    <!-- <div v-if="loading">loading...</div> -->
 </div>
 </template>
 
@@ -116,7 +117,8 @@ export default defineComponent({
     cellWrap: {
       type: Boolean,
       default: true
-    }
+    },
+    loading: Boolean
   },
   emits: [
     "current-change",

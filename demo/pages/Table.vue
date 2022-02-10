@@ -35,9 +35,11 @@
       ref="wdTable"
       :columns="tableColumns"
       :data-source="dataList"
-      :page-count="3"
+      :page-count="pageCount"
       :cell-wrap="false"
       :sticky="true"
+      :loading="loading"
+      @current-change="pageChangeHandler"
     ></wd-table>
   </div>
 </template>
@@ -51,8 +53,10 @@ export default defineComponent({
     WdForm,
   },
   setup() {
+    let loading = ref(true);
     // 获取table引用
     let wdTable = ref(null);
+    let pageCount = ref(0);
 
     const textData = ref("");
 
@@ -123,11 +127,13 @@ export default defineComponent({
         });
       }
       dataList.value = rowData;
+      loading.value = false;
+      pageCount.value = 100;
     }, 2000);
     
     const pageChangeHandler = (page) => {
-      // setTableData(page);
-      console.log("11111");
+      setTableData(page);
+      console.log(page);
     };
     const prevClickChangeHandler = (page) => {
       console.log(page);
@@ -136,18 +142,25 @@ export default defineComponent({
       console.log(page);
     };
     const setTableData = (page) => {
+      loading.value = true;
       // dataList = dataList.substr(page * 15, 15);
       dataList.value.length = 0;
-      for (let i = page * 60; i < (page + 1) * 15; i++) {
-        dataList.value.push({
-          id: "" + (4 + i),
-          goods_name: "sk4",
-          price: "1180",
-          ctime: "2021-09-26",
-          update_time: "2021-09-26",
-          location: "中国",
-        });
-      }
+      setTimeout(() => {
+        let rowData = [];
+        for (let i = page * 15; i < (page + 1) * 15; i++) {
+          rowData.push({
+            id: "" + (4 + i),
+            goods_name: "sk4",
+            price: "1180",
+            ctime: "2021-09-26",
+            update_time: "2021-09-26",
+            location: "中国",
+          });
+        }  
+        console.log(rowData);
+        dataList.value = rowData;
+        loading.value = false;
+      }, 2000);
     };
     const tableSelectChangeHandler = (selectedRows) => {
       console.log(selectedRows);
@@ -180,6 +193,8 @@ export default defineComponent({
       rowClickHandler,
       componentType,
       changeContent,
+      loading,
+      pageCount
     };
   },
 });
