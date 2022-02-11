@@ -31,18 +31,18 @@
       </div>
     </div> -->
 		<!-- <wd-form></wd-form> -->
-		<wd-loading :loading="loading" text="数据加载中">
-			<wd-table
-				ref="wdTable"
-				:columns="tableColumns"
-				:data-source="dataList"
-				:page-count="pageCount"
-				:cell-wrap="false"
-				:sticky="true"
-				:loading="loading"
-				@current-change="pageChangeHandler"
-			></wd-table>
-		</wd-loading>
+		<wd-table
+			ref="wdTable"
+			:columns="tableColumns"
+			:data-source="dataList"
+			:page-count="pageCount"
+			:cell-wrap="false"
+			:sticky="true"
+			:loading="loading"
+			text="数据加载中"
+			empty-text="现在还没有数据噢~"
+			@current-change="pageChangeHandler"
+		></wd-table>
 	</div>
 </template>
 
