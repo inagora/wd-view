@@ -2,7 +2,7 @@
 	<div class="container">
 		<div class="component-box">
 			<div class="component-box-top">
-				<wd-button size="large" icon="filter-filled">普通按钮</wd-button>
+				<wd-button size="large" icon="bi-github">普通按钮</wd-button>
 				<wd-button
 					size="large"
 					type="primary"

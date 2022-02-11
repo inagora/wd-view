@@ -125,7 +125,7 @@ export default defineComponent({
 			date: datepickerValue.value,
 		});
 		let userInfoForm = <any>ref();
-		let componentType = ref('table');
+		let componentType = ref('button');
 		let menuList = ref([]);
 		menuList.value = [
 			{
