@@ -118,7 +118,7 @@ export default defineComponent({
 		const rowData = [];
 
 		setTimeout(() => {
-			for (let i = 0; i < 60; i++) {
+			for (let i = 0; i < 15; i++) {
 				rowData.push({
 					id: '' + (4 + i),
 					goods_name: 'sk4',

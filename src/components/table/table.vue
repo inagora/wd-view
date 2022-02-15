@@ -159,6 +159,7 @@ export default defineComponent({
 			}
 			if (column.type === 'checkbox') {
 				checkColumn.value = column;
+				column.fixed = 'left';
 			} else {
 				if (column.fixed === 'left') {
 					leftFixedColumns.value.push(column);

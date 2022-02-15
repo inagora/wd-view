@@ -130,7 +130,7 @@ export default defineComponent({
 		menuList.value = [
 			{
 				text: '表单组件',
-				icon: 'BarsOutlined',
+				icon: 'bi-github',
 				submenu: [
 					{
 						text: 'Button',
@@ -188,11 +188,12 @@ export default defineComponent({
 			},
 			{
 				text: '列表组件',
-				icon: 'BarsOutlined',
+				icon: 'bi-github',
 				submenu: [
 					{
 						text: 'Table',
 						type: 'table',
+						icon: 'bi-bank',
 					},
 					{
 						text: 'Pagination',
