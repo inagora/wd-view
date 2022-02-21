@@ -55,7 +55,6 @@
 </template>
 <script lang="ts">
 import { ref, defineComponent, reactive, onMounted, toRefs } from 'vue';
-import * as IconList from '@ant-design/icons-vue';
 import Button from './Button.vue';
 import Checkbox from './Checkbox.vue';
 import Form from './Form.vue';
@@ -77,7 +76,6 @@ import Loading from './Loading.vue';
 export default defineComponent({
 	name: 'App',
 	components: {
-		...IconList,
 		Button,
 		Form,
 		Table,

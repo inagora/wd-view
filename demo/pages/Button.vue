@@ -19,6 +19,7 @@
 				<wd-button size="large" disabled="true" type="primary"
 					>按钮不可用</wd-button
 				>
+				<wd-icon icon="bi-github" />
 			</div>
 			<div class="component-box-bottom">
 				<div class="component-title">不同样式按钮</div>

@@ -16,7 +16,7 @@
 		:disabled="disabled"
 		@click="handleClick"
 	>
-		<i v-if="icon" :class="['wd-icon', icon ? icon : '']"></i>
+		<wd-icon v-if="icon" :icon="icon" />
 		<span>
 			<slot name="default"></slot>
 		</span>
@@ -33,6 +33,7 @@ import { Sizes as ButtonSizes } from '../../utils/size';
 type ButtonRoundShape = PropType<'none' | 'small' | 'large' | 'circle'>;
 type ButtonNativeType = PropType<'button' | 'submit' | 'reset'>;
 // import * as IconList from '@ant-design/icons-vue';
+import WdIcon from '../icon/icon.vue';
 export default defineComponent({
 	name: 'wd-button',
 	props: {
@@ -59,9 +60,9 @@ export default defineComponent({
 		disabled: Boolean,
 		loading: Boolean,
 	},
-	// components: {
-	//     ...IconList
-	// },
+	components: {
+		WdIcon,
+	},
 	emits: ['click'],
 	setup(props, context) {
 		const handleClick = (options) => {
@@ -109,18 +110,6 @@ export default defineComponent({
 			middle: '',
 			large: 'lg',
 		});
-		const iconLinks = document.querySelector('link[data-extra="wd-icon"]');
-		if (props.icon && !iconLinks) {
-			// 动态加载css
-			const linkUrl =
-				'https://cdn.jsdelivr.net/npm/bootstrap-icons@1.8.1/font/bootstrap-icons.css';
-			const linkEl = document.createElement('link');
-			linkEl.setAttribute('rel', 'stylesheet');
-			linkEl.setAttribute('type', 'text/css');
-			linkEl.setAttribute('data-extra', 'wd-icon');
-			linkEl.setAttribute('href', linkUrl);
-			document.getElementsByTagName('head')[0].appendChild(linkEl);
-		}
 		return {
 			handleClick,
 			sizeMap,

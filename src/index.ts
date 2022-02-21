@@ -31,6 +31,7 @@ import WdDialog from "./components/dialog";
 import WdDrawer from "./components/drawer";
 import WdMessage from './components/message';
 import WdLoading from './components/loading';
+import WdIcon from "./components/icon";
 
 const components = [
   WdButton,
@@ -63,9 +64,15 @@ const components = [
   WdDialog,
   WdMessage,
   WdDrawer,
-  WdLoading
+  WdLoading,
+  WdIcon
 ];
-const install = (app: App): void => {
+const install = async (app: App): void => {
+  // 是否需要加载icon css
+  const iconLinks = document.querySelector('link[data-extra="wd-icon"]');
+  if (iconLinks) {
+    app.config.globalProperties.hasIconLinks = true;
+  }
   components.forEach((component) => {
     app.component((component as any).name, component);
   });
@@ -104,7 +111,8 @@ export {
   WdDialog,
   WdMessage,
   WdDrawer,
-  WdLoading
+  WdLoading,
+  WdIcon
 };
 export default {
   install

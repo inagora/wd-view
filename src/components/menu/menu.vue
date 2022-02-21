@@ -18,10 +18,7 @@
 				style="padding-left: 24px"
 				@click="menuClickHandler(index)"
 			>
-				<i
-					v-if="menu.icon"
-					:class="['wd-icon', menu.icon ? menu.icon : '']"
-				></i>
+				<wd-icon v-if="menu.icon" :icon="menu.icon" />
 				<span class="wd-menu-title-content">{{ menu.text }}</span>
 				<i class="wd-menu-submenu-arrow"></i>
 			</div>
@@ -40,6 +37,7 @@
 import { defineComponent, reactive, watchEffect } from 'vue';
 import './style/index';
 import SubMenu from './sub-menu.vue';
+import WdIcon from '../icon/icon.vue';
 export default defineComponent({
 	name: 'wd-menu',
 	props: {
@@ -53,6 +51,7 @@ export default defineComponent({
 	},
 	components: {
 		SubMenu,
+		WdIcon,
 	},
 	emits: ['click'], // onchange
 	setup(props, context) {
@@ -97,18 +96,6 @@ export default defineComponent({
 			originalMenuList = reactive(props.menuList);
 			console.log(originalMenuList);
 		});
-		const iconLinks = document.querySelector('link[data-extra="wd-icon"]');
-		if (!iconLinks) {
-			// 动态加载css
-			const linkUrl =
-				'https://cdn.jsdelivr.net/npm/bootstrap-icons@1.8.1/font/bootstrap-icons.css';
-			const linkEl = document.createElement('link');
-			linkEl.setAttribute('rel', 'stylesheet');
-			linkEl.setAttribute('type', 'text/css');
-			linkEl.setAttribute('data-extra', 'wd-icon');
-			linkEl.setAttribute('href', linkUrl);
-			document.getElementsByTagName('head')[0].appendChild(linkEl);
-		}
 		return {
 			originalMenuList,
 			setMenuCount,
