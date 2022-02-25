@@ -42,7 +42,21 @@
 			text="数据加载中"
 			empty-text="现在还没有数据噢~"
 			@current-change="pageChangeHandler"
-		></wd-table>
+		>
+			<!-- <wd-table-column prop="id"> -->
+			<template v-slot:custom="slotScope">
+				<template v-if="slotScope.column.dataIndex === 'id'">
+					<span>{{ slotScope.row.id }}</span>
+				</template>
+				<template v-if="slotScope.column.dataIndex === 'action'">
+					<wd-button @click="doEdit(slotScope.row)" type="primary"
+						>按钮</wd-button
+					>
+				</template>
+			</template>
+			<!-- </wd-table-column> -->
+			<template #footer> 这里是footer </template>
+		</wd-table>
 	</div>
 </template>
 
@@ -111,6 +125,11 @@ export default defineComponent({
 				title: '更新时间',
 				dataIndex: 'update_time',
 				key: 'update_time',
+			},
+			{
+				title: '操作',
+				dataIndex: 'action',
+				key: 'action',
 			},
 		];
 
@@ -181,6 +200,9 @@ export default defineComponent({
 			componentType.value = type;
 		};
 		onMounted(() => {});
+		const doEdit = (row) => {
+			console.log(row.id);
+		};
 		return {
 			textData,
 			dataList,
@@ -197,6 +219,7 @@ export default defineComponent({
 			changeContent,
 			loading,
 			pageCount,
+			doEdit,
 		};
 	},
 });

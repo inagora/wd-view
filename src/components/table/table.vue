@@ -27,10 +27,20 @@
 						@select-change="selectChangeHandler"
 						@cell-click="cellClickHandler"
 						@row-click="rowClickHandler"
-					></table-body>
+					>
+						<template v-slot:custom="slotScope">
+							<slot
+								name="custom"
+								:row="slotScope.row"
+								:column="slotScope.column"
+							></slot>
+						</template>
+					</table-body>
+					<slot name="footer"></slot>
 				</div>
 			</div>
 			<wd-pagination
+				v-if="pagination"
 				class="wd-table-pagination"
 				:page-size="pageSize"
 				:page-count="pageCount"
@@ -130,6 +140,14 @@ export default defineComponent({
 		loadingText: {
 			type: String,
 			default: '',
+		},
+		pagination: {
+			type: Boolean,
+			default: true,
+		},
+		buttons: {
+			// 最后一列操作按钮，方便操作
+			type: Array,
 		},
 	},
 	emits: [

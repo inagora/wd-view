@@ -68,7 +68,9 @@
 							</span>
 						</template>
 						<span v-else>
-							{{ row[column.dataIndex] }}
+							<slot name="custom" :row="row" :column="column">{{
+								row[column.dataIndex]
+							}}</slot>
 						</span>
 					</td>
 				</tr>
@@ -79,7 +81,7 @@
 </template>
 <script lang="ts">
 // @ts-nocheck
-import { defineComponent, PropType, toRefs, reactive } from 'vue';
+import { defineComponent, PropType, toRefs, reactive, ref } from 'vue';
 import WdCheckbox from '../checkbox/checkbox.vue';
 import { StoreProps } from './table-type';
 export default defineComponent({
@@ -91,7 +93,7 @@ export default defineComponent({
 		emptyText: String,
 	},
 	emits: ['select-change', 'cell-click', 'row-click'],
-	setup(props, { emit }) {
+	setup(props, { emit, slots }) {
 		const { dataSource } = toRefs(reactive(props.store));
 		const selectChangeHandler = (val, index) => {
 			const store: any = toRefs(reactive(props.store));
@@ -137,12 +139,19 @@ export default defineComponent({
 				return {};
 			}
 		};
+		// 是否是自定义
+		const isCustom = ref(false);
+		console.log(slots);
+		if (slots.custom) {
+			isCustom.value = true;
+		}
 		return {
 			selectChangeHandler,
 			cellClickHandler,
 			rowClickHandler,
 			rowNum,
 			dataSource,
+			isCustom,
 			filterColumnStyle,
 			renderColumn,
 		};
