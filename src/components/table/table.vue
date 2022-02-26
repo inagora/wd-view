@@ -217,7 +217,7 @@ export default defineComponent({
 		const selectChangeHandler = () => {
 			emit(
 				'select-change',
-				dataSource
+				(store.dataSource as any)
 					.filter((item) => item.isSelected)
 					.map((item) => {
 						const selectedRow = { ...item };
@@ -228,7 +228,7 @@ export default defineComponent({
 		};
 		// 获取选中的项
 		const getSelectedRows = () => {
-			return dataSource
+			return (store.dataSource as any)
 				.filter((item) => item.isSelected)
 				.map((item) => {
 					const selectedRow = { ...item };

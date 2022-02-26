@@ -1,5 +1,6 @@
 <template>
 	<div class="container">
+		<wd-button @click="getTableRows">获取选中项</wd-button>
 		<!-- <div class="component-box">
       <div class="component-box-top">
         <wd-form></wd-form>

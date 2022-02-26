@@ -56,9 +56,7 @@ export default defineComponent({
 			emit('update:modelValue', val);
 			emit('change', val);
 		};
-		onMounted(() => {
-			console.log(props);
-		});
+		onMounted(() => {});
 		return {
 			sizeMap,
 			checked,

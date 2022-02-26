@@ -12,8 +12,8 @@
 			<tbody class="wd-table-tbody">
 				<tr
 					class="wd-table-row"
-					v-for="(row, index) in dataSource"
-					:key="index"
+					v-for="(row, rowIndex) in dataSource"
+					:key="rowIndex"
 					@click="rowClickHandler(row)"
 				>
 					<td
@@ -26,15 +26,15 @@
 								: '',
 							column.leftLast ? 'wd-table-fixed-left-last' : '',
 						]"
-						v-for="(column, index) in store.columns"
-						:style="filterColumnStyle(column, index)"
+						v-for="(column, colIndex) in store.columns"
+						:style="filterColumnStyle(column, colIndex)"
 						:key="column.dataIndex || column.key"
 						:title="column.ellipsis || !cellWrap ? row[column.dataIndex] : ''"
 						@click="
 							cellClickHandler(
 								column.type,
 								row,
-								index,
+								rowIndex,
 								column.dataIndex,
 								row[column.dataIndex]
 							)
@@ -46,7 +46,7 @@
 									<div class="wd-table-selection">
 										<wd-checkbox
 											:checked="row.isSelected"
-											@change="selectChangeHandler($event, index)"
+											@change="selectChangeHandler($event, rowIndex)"
 										></wd-checkbox>
 									</div>
 								</span>
@@ -55,7 +55,7 @@
 						<template v-else-if="column.type === 'index'">
 							<span class="wd-table-column-title">
 								<div class="wd-table-selection">
-									{{ rowNum(column, index) }}
+									{{ rowNum(column, rowIndex) }}
 								</div>
 							</span>
 						</template>
@@ -141,7 +141,6 @@ export default defineComponent({
 		};
 		// 是否是自定义
 		const isCustom = ref(false);
-		console.log(slots);
 		if (slots.custom) {
 			isCustom.value = true;
 		}

@@ -94,7 +94,6 @@ export default defineComponent({
 		};
 		watchEffect(() => {
 			originalMenuList = reactive(props.menuList);
-			console.log(originalMenuList);
 		});
 		return {
 			originalMenuList,

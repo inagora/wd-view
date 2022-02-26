@@ -8,6 +8,7 @@
 					type="primary"
 					round-shape="none"
 					icon="home-outlined"
+					:loading="true"
 					@click="clickHandler"
 					>主要按钮</wd-button
 				>
