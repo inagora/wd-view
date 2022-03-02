@@ -65,6 +65,10 @@ export default defineComponent({
 		const optionClickHandler: any = inject('optionClickHandler');
 		const removeItem: any = inject('removeItem'); // 删除的元素
 		const selectedItem: any = inject('selectedItem'); // 选择的元素
+		const optionsArray: any = inject('options');
+		if (value.value === selectedItem.value) {
+			isItemSelected.value = true;
+		}
 		let multiple = inject('multiple');
 		let selectedArray: any = inject('selectedArray');
 		let currentCount = selectedArray.length;

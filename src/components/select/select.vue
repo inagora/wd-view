@@ -26,7 +26,7 @@
 							class="wd-select-selection-item"
 						>
 							<span class="wd-select-selection-item-content">
-								{{ selected.label }}
+								{{ selectedItem.label }}
 							</span>
 							<span
 								@click="removeSelectedItem(index)"
@@ -119,7 +119,7 @@
 							class="wd-select-selection-item"
 							v-if="selectedValue && !isFocused"
 						>
-							{{ selectedValue.label }}
+							{{ selectedItem.label }}
 						</div>
 						<div v-else-if="!isFocused" class="wd-select-selection-placeholder">
 							{{ placeholder }}
@@ -247,7 +247,8 @@ export default defineComponent({
 			sizeMap[props.size] || sizeMap[wdFormItem.size] || sizeMap[wdForm.size];
 		let selectDisabled =
 			props.disabled || wdFormItem.disabled || wdForm.disabled;
-		const { slots, emit } = context;
+		const { emit } = context;
+		const slots = context.slots;
 		const selectSelector = ref(null);
 		const selectWrapper = ref<HTMLElement | null>(null);
 		const isMultiple = ref(props.multiple);
@@ -256,9 +257,19 @@ export default defineComponent({
 		const searchKey = ref(''); // 搜索关键词
 		const searchInput = ref(null); // 搜索框
 		let selectedValue = ref(props.modelValue);
+		let selectedItem: any = ref({
+			label: '',
+			value: '',
+		});
 		let selectedArray = ref([]);
 		let { visibleValue } = toRefs(props);
 		let isFocused = ref(false);
+		const optionsArray = slots.default().map((item) => {
+			if (item.props.value === selectedValue.value) {
+				selectedItem.value = item.props;
+			}
+			return item.props;
+		});
 		// 初始化input的placeholder
 		let currentPlaceholder = ref(placeholder.value);
 		const handleSearchInputFocus = () => {
@@ -299,7 +310,7 @@ export default defineComponent({
 		// 设置选择的值
 		const setSelectedValue = (val: optionType) => {
 			let options: any = slots.default();
-			if (options && options[0].children) options = options[0].children;
+			// if (options && options[0].children) options = options[0].children;
 			if (isMultiple.value) {
 				// 多选
 				if (val.selected) {
@@ -321,10 +332,11 @@ export default defineComponent({
 					return item.props.value === val.value;
 				})[0];
 				selectedValue.value = selectedOption.props;
+				selectedItem.value = selectedOption.props;
 			}
 			setCurrentPlaceholder();
-			emit('update:modelValue', val);
-			emit('change', val);
+			emit('update:modelValue', val.value);
+			emit('change', val.value);
 			// searchInput.value.focus();
 		};
 		const removeSelectedItem = (index) => {
@@ -338,6 +350,7 @@ export default defineComponent({
 		provide('selectedArray', selectedArray.value);
 		provide('limitCount', props.multipleLimit);
 		provide('searchKey', searchKey);
+		provide('options', optionsArray);
 
 		return {
 			sizeMap,
@@ -358,6 +371,8 @@ export default defineComponent({
 			searchInput,
 			inputSize,
 			selectDisabled,
+			optionsArray,
+			selectedItem,
 		};
 	},
 });
