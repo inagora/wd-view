@@ -8,7 +8,6 @@
 				'wd-select-' + inputSize,
 				multiple ? ' wd-select-multiple' : ' wd-select-single',
 			]"
-			@click="showPopper"
 		>
 			<div class="select-trigger">
 				<div
@@ -154,8 +153,8 @@
 				</div>
 			</div>
 		</div>
-		<template #content>
-			<div class="wd-select-options">
+		<template #content="{ close }">
+			<div class="wd-select-options" @click="close">
 				<slot></slot>
 			</div>
 		</template>
@@ -177,7 +176,6 @@ type optionType = {
 };
 // import WdPopper from '../popper/index';
 import WdInput from '../input/index';
-import { createPopper } from '@popperjs/core';
 export default defineComponent({
 	name: 'wd-select',
 	components: {
@@ -257,11 +255,9 @@ export default defineComponent({
 		const removeItem = ref(null); // 删除的元素
 		const searchKey = ref(''); // 搜索关键词
 		const searchInput = ref(null); // 搜索框
-		const popperVisible = ref(false); // 手动控制下拉显示与隐藏
 		let selectedValue = ref(props.modelValue);
 		let selectedArray = ref([]);
 		let { visibleValue } = toRefs(props);
-		let optionsShow = ref(visibleValue.value);
 		let isFocused = ref(false);
 		// 初始化input的placeholder
 		let currentPlaceholder = ref(placeholder.value);
@@ -277,11 +273,6 @@ export default defineComponent({
 		const setCurrentPlaceholder = () => {
 			const selectedLabel: any = selectedValue && selectedValue.value;
 			currentPlaceholder.value = selectedLabel && selectedLabel.label;
-		};
-
-		// 显示option
-		const showPopper = () => {
-			optionsShow.value = true;
 		};
 
 		// 处理搜素
@@ -303,9 +294,6 @@ export default defineComponent({
 		};
 		// option item 点击
 		const optionClickHandler = (value) => {
-			if (props.autoClose) {
-				optionsShow.value = false;
-			}
 			setSelectedValue(value);
 		};
 		// 设置选择的值
@@ -353,7 +341,6 @@ export default defineComponent({
 
 		return {
 			sizeMap,
-			optionsShow,
 			selectSelector,
 			selectWrapper,
 			visibleChange,
@@ -369,10 +356,8 @@ export default defineComponent({
 			searchKey,
 			handleSearchInputKeydown,
 			searchInput,
-			popperVisible,
 			inputSize,
 			selectDisabled,
-			showPopper,
 		};
 	},
 });
