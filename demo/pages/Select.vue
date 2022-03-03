@@ -27,9 +27,13 @@
 					size="small"
 					key="s2"
 				>
-					<wd-option label="百度" value="baidu">hhh</wd-option>
-					<wd-option label="谷歌" value="google">hhh</wd-option>
-					<wd-option label="必应" value="bing">hhh</wd-option>
+					<wd-option
+						v-for="(item, index) in options"
+						:label="item.label"
+						:key="index"
+						:value="item.value"
+						>hhh</wd-option
+					>
 				</wd-select>
 			</div>
 			<div class="component-box-bottom">
@@ -53,9 +57,20 @@ export default defineComponent({
 		const selectedChangeHandler1 = (val) => {
 			console.log(val);
 		};
+		const options = [
+			{
+				label: '百度',
+				value: 'baidu',
+			},
+			{
+				label: '谷歌',
+				value: 'google',
+			},
+		];
 		return {
 			selectedValue,
 			selectedValue1,
+			options,
 			selectedChangeHandler,
 			selectedChangeHandler1,
 		};

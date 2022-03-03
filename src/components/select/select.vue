@@ -176,11 +176,13 @@ type optionType = {
 };
 // import WdPopper from '../popper/index';
 import WdInput from '../input/index';
+import WdOption from './option.vue';
 export default defineComponent({
 	name: 'wd-select',
 	components: {
 		WdInput,
 		Popper,
+		WdOption,
 	},
 	props: {
 		modelValue: [Array, String, Number, Boolean, Object],
@@ -264,11 +266,18 @@ export default defineComponent({
 		let selectedArray = ref([]);
 		let { visibleValue } = toRefs(props);
 		let isFocused = ref(false);
-		const optionsArray = slots.default().map((item) => {
-			if (item.props.value === selectedValue.value) {
-				selectedItem.value = item.props;
+		let slotsDefault: any = slots.default();
+		if (slots.default && slots.default().length > 0) {
+			if (!slots.default()[0].props) {
+				slotsDefault = slots.default()[0].children;
 			}
-			return item.props;
+		}
+		const optionsArray = slotsDefault.map((item) => {
+			const option = item.props || (item.children as any).props;
+			if (option.value === selectedValue.value) {
+				selectedItem.value = option;
+			}
+			return option;
 		});
 		// 初始化input的placeholder
 		let currentPlaceholder = ref(placeholder.value);
@@ -309,7 +318,7 @@ export default defineComponent({
 		};
 		// 设置选择的值
 		const setSelectedValue = (val: optionType) => {
-			let options: any = slots.default();
+			let options: any = slotsDefault;
 			// if (options && options[0].children) options = options[0].children;
 			if (isMultiple.value) {
 				// 多选
