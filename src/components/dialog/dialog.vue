@@ -61,6 +61,7 @@
 <script lang="ts">
 import { defineComponent, ref, watch, computed, CSSProperties } from 'vue';
 declare type TimeoutHandle = ReturnType<typeof global.setTimeout>;
+
 export default defineComponent({
 	name: 'WdDialog',
 	props: {

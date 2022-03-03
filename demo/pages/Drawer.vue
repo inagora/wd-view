@@ -7,6 +7,7 @@
 		:show-close="true"
 		@open="openHandler"
 		@before-open="beforeOpen"
+		@before-close="beforeClose"
 		:append-to-body="true"
 		:closeOnClickModal="false"
 		:destroy-on-close="true"
@@ -16,7 +17,9 @@
 			<x-form />
 		</span>
 		<template #footer>
-			<wd-button type="primary">确定</wd-button>
+			<wd-button type="primary" @click="centerDialogVisible = false"
+				>确定</wd-button
+			>
 		</template>
 	</wd-drawer>
 </template>
@@ -32,11 +35,15 @@ export default defineComponent({
 		const beforeOpen = () => {
 			console.log('before open');
 		};
+		const beforeClose = () => {
+			console.log('before close');
+		};
 		const centerDialogVisible = ref(false);
 		return {
 			centerDialogVisible,
 			openHandler,
 			beforeOpen,
+			beforeClose,
 		};
 	},
 });
