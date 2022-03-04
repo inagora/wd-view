@@ -1,6 +1,12 @@
 <template>
 	<teleport to="body" :disabled="!appendToBody">
-		<transition name="wd-dialog-fade">
+		<transition
+			name="wd-dialog-fade"
+			@before-leave="animaBeforeLeave"
+			@before-enter="animaBeforeEnter"
+			@after-enter="animaAfterEnter"
+			@after-leave="animaAfterLeave"
+		>
 			<div class="wd-dialog-mask" v-show="visible" @click="maskClickHandler">
 				<div
 					ref="dialogRef"
@@ -59,7 +65,14 @@
 </template>
 
 <script lang="ts">
-import { defineComponent, ref, watch, computed, CSSProperties } from 'vue';
+import {
+	defineComponent,
+	ref,
+	watch,
+	computed,
+	CSSProperties,
+	onMounted,
+} from 'vue';
 declare type TimeoutHandle = ReturnType<typeof global.setTimeout>;
 
 export default defineComponent({
@@ -76,6 +89,10 @@ export default defineComponent({
 		closeOnClickModal: {
 			type: Boolean,
 			default: true,
+		},
+		destroyOnClose: {
+			type: Boolean,
+			default: false,
 		},
 		showClose: {
 			type: Boolean,
@@ -110,7 +127,7 @@ export default defineComponent({
 			type: Number,
 		},
 	},
-	emits: ['close', 'open', 'update:modelValue'],
+	emits: ['close', 'open', 'before-close', 'before-open', 'update:modelValue'],
 	setup(props, ctx) {
 		const dialogRef = ref<HTMLElement>(null);
 		const visible = ref(false);
@@ -165,12 +182,26 @@ export default defineComponent({
 		};
 		const doOpen = () => {
 			visible.value = true;
-			ctx.emit('open');
 		};
 		const doClose = () => {
 			visible.value = false;
 			ctx.emit('close');
 			ctx.emit('update:modelValue', false);
+		};
+		const animaAfterEnter = () => {
+			ctx.emit('open');
+		};
+		const animaAfterLeave = () => {
+			ctx.emit('close');
+			if (props.destroyOnClose) {
+				rendered.value = false;
+			}
+		};
+		const animaBeforeLeave = () => {
+			ctx.emit('before-close');
+		};
+		const animaBeforeEnter = () => {
+			ctx.emit('before-open');
 		};
 		watch(
 			() => props.modelValue,
@@ -188,6 +219,13 @@ export default defineComponent({
 				}
 			}
 		);
+		onMounted(() => {
+			if (props.modelValue) {
+				closed.value = false;
+				rendered.value = true;
+				doOpen();
+			}
+		});
 		return {
 			closed,
 			rendered,
@@ -199,6 +237,10 @@ export default defineComponent({
 			style,
 			closeDialog,
 			maskClickHandler,
+			animaBeforeLeave,
+			animaBeforeEnter,
+			animaAfterEnter,
+			animaAfterLeave,
 		};
 	},
 });

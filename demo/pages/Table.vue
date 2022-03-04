@@ -49,25 +49,37 @@
 				<template v-if="slotScope.column.dataIndex === 'id'">
 					<span>{{ slotScope.row.id }}</span>
 				</template>
-				<template v-if="slotScope.column.dataIndex === 'action'">
-					<wd-button @click="doEdit(slotScope.row)" type="primary"
-						>按钮</wd-button
-					>
+				<template v-else-if="slotScope.column.dataIndex === 'action'">
+					<wd-button-group>
+						<wd-button
+							size="small"
+							v-if="slotScope.row.id === '4'"
+							@click="doEdit(slotScope.row)"
+							type="primary"
+							>按钮</wd-button
+						>
+						<wd-button size="small" @click="openDrawer" type="primary"
+							>按钮</wd-button
+						>
+					</wd-button-group>
 				</template>
 			</template>
 			<!-- </wd-table-column> -->
 			<template #footer> 这里是footer </template>
 		</wd-table>
+		<drawer v-model="isDrawerOpen" :show="isDrawerOpen"></drawer>
 	</div>
 </template>
 
 <script lang="ts">
 import { ref, defineComponent, reactive, onMounted } from 'vue';
 import WdForm from './Form.vue';
+import Drawer from './Drawer.vue';
 export default defineComponent({
 	name: 'Table',
 	components: {
 		WdForm,
+		Drawer,
 	},
 	setup() {
 		let loading = ref(true);
@@ -179,7 +191,7 @@ export default defineComponent({
 					});
 				}
 				console.log(rowData);
-				dataList.value.length = 0;
+				// dataList.value.length = 0;
 				dataList.value = rowData;
 				loading.value = false;
 			}, 2000);
@@ -204,6 +216,10 @@ export default defineComponent({
 		const doEdit = (row) => {
 			console.log(row.id);
 		};
+		const isDrawerOpen = ref(false);
+		const openDrawer = () => {
+			isDrawerOpen.value = true;
+		};
 		return {
 			textData,
 			dataList,
@@ -221,6 +237,8 @@ export default defineComponent({
 			loading,
 			pageCount,
 			doEdit,
+			isDrawerOpen,
+			openDrawer,
 		};
 	},
 });

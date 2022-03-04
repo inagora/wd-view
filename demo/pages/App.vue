@@ -98,7 +98,6 @@ export default defineComponent({
 		let user = { name: 'niu', age: 18 };
 
 		let { name } = reactive(user);
-		console.log(name, user);
 
 		let counter = ref(1);
 		let isShowToast = ref(false);
@@ -123,7 +122,7 @@ export default defineComponent({
 			date: datepickerValue.value,
 		});
 		let userInfoForm = <any>ref();
-		let componentType = ref('select');
+		let componentType = ref('dialog');
 		let menuList = ref([]);
 		menuList.value = [
 			{

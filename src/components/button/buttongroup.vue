@@ -1,12 +1,13 @@
 <template>
 	<div class="wd-button-group">
-		<component
+		<!-- <component
 			v-for="(slot, index) in slots"
 			:type="slot.props.type || type"
 			:size="slot.props.size || size"
 			:key="index"
 			:is="slot"
-		/>
+		/> -->
+		<slot></slot>
 	</div>
 </template>
 
@@ -16,7 +17,7 @@ type ButtonTypes = PropType<
 	'primary' | 'success' | 'warning' | 'danger' | 'info' | 'text' | 'dashed'
 >;
 type ButtonSizes = PropType<'small' | 'large'>;
-import WdButton from './button.vue';
+// import WdButton from './button.vue';
 // import * as IconList from '@ant-design/icons-vue';
 export default defineComponent({
 	name: 'wd-button-group',
@@ -30,9 +31,9 @@ export default defineComponent({
 			default: 'small',
 		},
 	},
-	components: {
-		WdButton,
-	},
+	// components: {
+	// 	WdButton,
+	// },
 	emits: ['click'],
 	setup(props, context) {
 		const handleClick = (options) => {

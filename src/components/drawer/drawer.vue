@@ -1,7 +1,7 @@
 <template>
 	<teleport to="body" :disabled="!appendToBody">
 		<transition
-			appear
+			:appear="appear"
 			name="wd-drawer-fade"
 			@before-leave="animaBeforeLeave"
 			@before-enter="animaBeforeEnter"
@@ -9,6 +9,7 @@
 			@after-leave="animaAfterLeave"
 		>
 			<div
+				v-show="visible"
 				ref="drawerRef"
 				:class="[
 					'wd-drawer',
@@ -124,6 +125,10 @@ export default defineComponent({
 			type: String,
 			default: 'right',
 		},
+		appear: {
+			type: Boolean,
+			default: false,
+		},
 	},
 	emits: ['close', 'open', 'before-close', 'before-open', 'update:modelValue'],
 	setup(props, ctx) {
@@ -173,11 +178,11 @@ export default defineComponent({
 		const animaAfterEnter = () => {
 			ctx.emit('open');
 		};
-		const animaAfterLeave = (el, done) => {
+		const animaAfterLeave = () => {
 			ctx.emit('close');
-			console.log('close');
-			rendered.value = false;
-			done();
+			if (props.destroyOnClose) {
+				rendered.value = false;
+			}
 		};
 		const animaBeforeLeave = () => {
 			ctx.emit('before-close');

@@ -1,5 +1,5 @@
 <template>
-	<wd-button @click="centerDialogVisible = true">show drawer</wd-button>
+	<!-- <wd-button @click="centerDialogVisible = true">show drawer</wd-button> -->
 	<wd-drawer
 		v-model="centerDialogVisible"
 		title="Notice"
@@ -10,8 +10,9 @@
 		@before-close="beforeClose"
 		:append-to-body="true"
 		:closeOnClickModal="false"
-		:destroy-on-close="true"
+		:destroy-on-close="false"
 		placement="right"
+		:appear="true"
 	>
 		<span>
 			<x-form />
@@ -24,11 +25,14 @@
 	</wd-drawer>
 </template>
 <script>
-import { defineComponent, ref } from 'vue';
+import { defineComponent, ref, watch } from 'vue';
 import XForm from './Form.vue';
 export default defineComponent({
 	components: { XForm },
-	setup() {
+	props: {
+		show: Boolean,
+	},
+	setup(props) {
 		const openHandler = () => {
 			console.log('drawer open');
 		};
@@ -38,7 +42,13 @@ export default defineComponent({
 		const beforeClose = () => {
 			console.log('before close');
 		};
-		const centerDialogVisible = ref(false);
+		watch(
+			() => props.show,
+			(val) => {
+				centerDialogVisible.value = val;
+			}
+		);
+		const centerDialogVisible = ref(props.show);
 		return {
 			centerDialogVisible,
 			openHandler,
