@@ -46,6 +46,7 @@
 				:page-count="pageCount"
 				:pager-count="pagerCount"
 				:total="total"
+				:show-total="showTotal"
 				:position="paginationPosition"
 				:current-page="currentPage"
 				@current-change="pageChangeHandler"
@@ -149,6 +150,7 @@ export default defineComponent({
 			// 最后一列操作按钮，方便操作
 			type: Array,
 		},
+		showTotal: [Boolean, Object],
 	},
 	emits: [
 		'current-change',

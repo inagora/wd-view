@@ -6,6 +6,7 @@
 			'wd-pagination-' + position,
 		]"
 	>
+		<li class="wd-pagination-total-text" v-if="showTotal">{{ totalText }}</li>
 		<li
 			class="wd-pagination-prev"
 			:class="{ 'wd-pagination-disabled': newCurrentPage === 1 }"
@@ -114,6 +115,7 @@ import {
 	computed,
 	watchEffect,
 	watch,
+	PropType,
 } from 'vue';
 interface PropsType {
 	pageSize: number;
@@ -124,6 +126,7 @@ interface PropsType {
 	prevText: string;
 	nextText: string;
 	pagerCount: number;
+	showTotal: any;
 }
 import WdIcon from '../icon/icon.vue';
 export default defineComponent({
@@ -158,6 +161,7 @@ export default defineComponent({
 			type: String,
 			default: 'right',
 		},
+		showTotal: [Boolean, Object],
 	},
 	emits: ['current-change', 'prev-click', 'next-click'],
 	setup(props: PropsType, { emit }) {
@@ -289,6 +293,18 @@ export default defineComponent({
 			}
 			emit('next-click', newCurrentPage.value);
 		};
+		// 处理总数据
+		let totalText = ref('');
+		watchEffect(() => {
+			if (props.showTotal) {
+				if (typeof props.showTotal === 'function') {
+					totalText.value = props.showTotal();
+				} else {
+					totalText.value = `共${props.total}条`;
+				}
+			}
+		});
+
 		return {
 			pageClickHandler,
 			prevPageClickHandler,
@@ -302,6 +318,7 @@ export default defineComponent({
 			showNextMore,
 			quickprevIconClass,
 			quicknextIconClass,
+			totalText,
 		};
 	},
 });

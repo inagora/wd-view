@@ -37,8 +37,10 @@
 			:columns="tableColumns"
 			:data-source="dataList"
 			:page-count="pageCount"
+			:current-page="currentPage"
 			:cell-wrap="false"
 			:sticky="true"
+			:total="total"
 			:loading="loading"
 			text="数据加载中"
 			empty-text="现在还没有数据噢~"
@@ -147,6 +149,8 @@ export default defineComponent({
 		];
 
 		let dataList: any = ref([]);
+		let total = ref(0);
+		const currentPage = ref(1);
 		const rowData = [];
 
 		setTimeout(() => {
@@ -160,9 +164,11 @@ export default defineComponent({
 					location: '中国',
 				});
 			}
+			total.value = 200;
 			dataList.value = rowData;
 			loading.value = false;
 			pageCount.value = 100;
+			currentPage.value = 3;
 		}, 2000);
 
 		const pageChangeHandler = (page) => {
@@ -194,6 +200,7 @@ export default defineComponent({
 				// dataList.value.length = 0;
 				dataList.value = rowData;
 				loading.value = false;
+				total.value = 300;
 			}, 2000);
 		};
 		const tableSelectChangeHandler = (selectedRows) => {
@@ -239,6 +246,8 @@ export default defineComponent({
 			doEdit,
 			isDrawerOpen,
 			openDrawer,
+			total,
+			currentPage,
 		};
 	},
 });
