@@ -65,16 +65,25 @@ export default defineComponent({
 		const optionClickHandler: any = inject('optionClickHandler');
 		const removeItem: any = inject('removeItem'); // 删除的元素
 		const selectedItem: any = inject('selectedItem'); // 选择的元素
-		const optionsArray: any = inject('options');
-		if (value.value === selectedItem.value) {
-			isItemSelected.value = true;
-		}
-		let multiple = inject('multiple');
 		let selectedArray: any = inject('selectedArray');
+		const optionsArray: any = inject('options');
+
+		let multiple = inject('multiple');
 		let currentCount = selectedArray.length;
 		let limitCount: number = inject('limitCount');
 		let isItemVisible = ref(true);
 		let searchKey: any = inject('searchKey');
+		if (multiple) {
+			selectedArray.forEach((item) => {
+				if (item.value === value.value) {
+					isItemSelected.value = true;
+				}
+			});
+		} else {
+			if (value.value === selectedItem.value) {
+				isItemSelected.value = true;
+			}
+		}
 		// methods
 		const mouseoverHandler = () => {
 			isItemActived.value = true;
@@ -119,6 +128,11 @@ export default defineComponent({
 			}
 		});
 		watch(selectedArray, () => {
+			selectedArray.forEach((item) => {
+				if (item.value === value.value) {
+					isItemSelected.value = true;
+				}
+			});
 			currentCount = selectedArray.length;
 		});
 		watch(searchKey, () => {

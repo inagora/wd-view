@@ -79,7 +79,7 @@ const config = {
 						options: {
 							configFile: path.resolve(__dirname, './tsconfig.json'),
 							appendTsSuffixTo: [/\.vue$/],
-							// transpileOnly: true,
+							transpileOnly: true,
 						},
 					},
 				],

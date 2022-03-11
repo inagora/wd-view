@@ -21,7 +21,7 @@
 						class="wd-select-selection wd-select-selection--multiple"
 					>
 						<span
-							v-for="(selected, index) in selectedArray"
+							v-for="(selectedItem, index) in selectedArray"
 							:key="index"
 							class="wd-select-selection-item"
 						>
@@ -163,7 +163,15 @@
 
 <script lang="ts">
 import Popper from 'vue3-popper';
-import { defineComponent, reactive, ref, toRefs, provide, inject } from 'vue';
+import {
+	defineComponent,
+	reactive,
+	ref,
+	watch,
+	toRefs,
+	provide,
+	inject,
+} from 'vue';
 import {
 	wdFormKey,
 	wdFormItemKey,
@@ -263,7 +271,7 @@ export default defineComponent({
 			label: '',
 			value: '',
 		});
-		let selectedArray = ref([]);
+
 		let { visibleValue } = toRefs(props);
 		let isFocused = ref(false);
 		let slotsDefault: any = slots.default();
@@ -279,6 +287,15 @@ export default defineComponent({
 			}
 			return option;
 		});
+		// 处理多选
+		let selectedArray = ref([]);
+		if (isMultiple.value && selectedValue.value instanceof Array) {
+			optionsArray.forEach((option) => {
+				if ((selectedValue.value as any).includes(option.value)) {
+					selectedArray.value.push(option);
+				}
+			});
+		}
 		// 初始化input的placeholder
 		let currentPlaceholder = ref(placeholder.value);
 		const handleSearchInputFocus = () => {
@@ -336,22 +353,31 @@ export default defineComponent({
 						selectedArray.value.splice(removeIndex, 1);
 					}
 				}
+				setCurrentPlaceholder();
+				emit(
+					'update:modelValue',
+					selectedArray.value.map((item) => item.value)
+				);
+				emit(
+					'change',
+					selectedArray.value.map((item) => item.value)
+				);
 			} else {
 				let selectedOption = options.filter((item) => {
 					return item.props.value === val.value;
 				})[0];
-				selectedValue.value = selectedOption.props;
 				selectedItem.value = selectedOption.props;
+				setCurrentPlaceholder();
+				emit('update:modelValue', val.value);
+				emit('change', val.value);
 			}
-			setCurrentPlaceholder();
-			emit('update:modelValue', val.value);
-			emit('change', val.value);
 			// searchInput.value.focus();
 		};
 		const removeSelectedItem = (index) => {
 			removeItem.value = selectedArray.value.splice(index, 1)[0];
+			setSelectedValue(removeItem.value);
 		};
-		provide('selectedItem', selectedValue);
+		provide('selectedItem', selectedItem);
 		provide('removeItem', removeItem);
 		provide('multiple', isMultiple.value);
 		// vue3中没有$on，所以用provide方法将父组件的方法传给子组件，子组件直接调用
@@ -360,6 +386,30 @@ export default defineComponent({
 		provide('limitCount', props.multipleLimit);
 		provide('searchKey', searchKey);
 		provide('options', optionsArray);
+
+		watch(
+			() => props.modelValue,
+			(val) => {
+				selectedValue.value = val;
+				if (isMultiple.value && val instanceof Array) {
+					optionsArray.forEach((option) => {
+						if (
+							(val as any).includes(option.value) &&
+							!selectedArray.value.includes(option)
+						) {
+							selectedArray.value.push(option);
+						}
+					});
+				}
+				if (!isMultiple.value) {
+					optionsArray.forEach((option) => {
+						if (option.value === val) {
+							selectedItem.value = option;
+						}
+					});
+				}
+			}
+		);
 
 		return {
 			sizeMap,

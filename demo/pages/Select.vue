@@ -4,7 +4,6 @@
 			<div class="component-box-top">
 				<wd-select
 					multiple
-					:multiple-limit="2"
 					v-model="selectedValue"
 					@change="selectedChangeHandler"
 					placeholder="请选择搜索引擎"
@@ -51,13 +50,12 @@ import { defineComponent, ref } from 'vue';
 export default defineComponent({
 	name: 'Select',
 	setup() {
-		const selectedValue = ref('');
+		const selectedValue = ref([]);
 		const selectedValue1 = ref('');
-		const selectedChangeHandler = () => {};
-		const selectedChangeHandler1 = (val) => {
-			console.log(val);
-		};
-		const options = [
+		setTimeout(() => {
+			selectedValue.value = ['baidu', 'google'];
+		}, 2000);
+		let options = ref([
 			{
 				label: '百度',
 				value: 'baidu',
@@ -66,7 +64,20 @@ export default defineComponent({
 				label: '谷歌',
 				value: 'google',
 			},
-		];
+		]);
+		setTimeout(() => {
+			// options.value = [
+
+			// ];
+			selectedValue1.value = 'baidu';
+		}, 2000);
+		const selectedChangeHandler = (val) => {
+			console.log(val);
+		};
+		const selectedChangeHandler1 = (val) => {
+			console.log(val);
+		};
+
 		return {
 			selectedValue,
 			selectedValue1,
