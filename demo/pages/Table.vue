@@ -109,6 +109,7 @@ export default defineComponent({
 				title: 'ID',
 				dataIndex: 'id',
 				key: 'id',
+				sorter: true,
 			},
 			{
 				title: '商品名',
