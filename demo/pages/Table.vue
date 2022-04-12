@@ -109,7 +109,9 @@ export default defineComponent({
 				title: 'ID',
 				dataIndex: 'id',
 				key: 'id',
-				sorter: true,
+				sorter: (val) => {
+					getSortData(val);
+				},
 			},
 			{
 				title: '商品名',
@@ -123,6 +125,9 @@ export default defineComponent({
 				dataIndex: 'price',
 				key: 'price',
 				fixed: 'left',
+				sorter: (val) => {
+					getSortData(val);
+				},
 				render(column, row) {
 					return `<span style="color: red;">${row[column.dataIndex]}</span>`;
 				},
@@ -171,6 +176,18 @@ export default defineComponent({
 			pageCount.value = 100;
 			currentPage.value = 3;
 		}, 2000);
+
+		const getSortData = (sort) => {
+			const data = dataList.value;
+			data.sort((item1, item2) => {
+				if (sort === 'desc') {
+					return parseInt(item2.id) - parseInt(item1.id);
+				} else {
+					return parseInt(item1.id) - parseInt(item2.id);
+				}
+			});
+			dataList.value = data;
+		};
 
 		const pageChangeHandler = (page) => {
 			setTableData(page);

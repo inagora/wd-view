@@ -47,7 +47,7 @@
 							</div>
 						</th>
 						<th
-							class="wd-table-cell wd-table-column-has-sorters wd-table-header-column"
+							class="wd-table-cell wd-table-column-has-sorters"
 							v-else
 							:style="[
 								filterColumnStyle(column, index),
@@ -56,7 +56,7 @@
 								},
 							]"
 						>
-							<div class="wd-table-column-sorters">
+							<div @click="doSort(column)" class="wd-table-column-sorters">
 								<span class="wd-table-column-title">{{ column.title }}</span>
 								<span
 									class="wd-table-column-sorter wd-table-column-sorter-full"
@@ -66,6 +66,7 @@
 											role="img"
 											aria-label="caret-up"
 											class="anticon anticon-caret-up wd-table-column-sorter-up"
+											:class="[column.orderType === 'asc' ? 'active' : '']"
 											><svg
 												focusable="false"
 												class=""
@@ -83,6 +84,7 @@
 											role="img"
 											aria-label="caret-down"
 											class="anticon anticon-caret-down wd-table-column-sorter-down"
+											:class="[column.orderType === 'desc' ? 'active' : '']"
 											><svg
 												focusable="false"
 												class=""
@@ -153,6 +155,21 @@ export default defineComponent({
 			}
 		};
 
+		// 点击了排序
+		const doSort = (column) => {
+			if (!column.orderType) {
+				column.orderType = 'desc';
+			} else {
+				column.orderType = column.orderType === 'asc' ? 'desc' : 'asc';
+			}
+			// 排序回调
+			if (column.sorter) {
+				if (typeof column.sorter === 'function') {
+					column.sorter(column.orderType);
+				}
+			}
+		};
+
 		watch(store.dataSource, (val) => {
 			isSelectedAll.value = checkSelectedAll(val);
 		});
@@ -163,6 +180,7 @@ export default defineComponent({
 			isSelectedAll,
 			selectAllChangeHandler,
 			filterColumnStyle,
+			doSort,
 		};
 	},
 });
