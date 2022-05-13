@@ -179,7 +179,7 @@ export default defineComponent({
 			default: false,
 		},
 	},
-	emits: ['update:modelValue', 'input', 'change', 'clear'],
+	emits: ['update:modelValue', 'input', 'change', 'clear', 'blur'],
 	setup(props: WdInputProps, ctx) {
 		const sizeMap = reactive({
 			small: 'sm',
@@ -268,6 +268,7 @@ export default defineComponent({
 			wdFormItem.formItemMitt?.emit('wd.form.change', [event.target.value]);
 		};
 		const handleBlur = (event) => {
+			ctx.emit('blur', event.target.value);
 			//   wdFormItem.formItemMitt?.emit("wd.form.blur", [event.target.value]);
 		};
 		const clear = () => {

@@ -21,6 +21,7 @@
           v-model="textData"
           @input="handleInput"
           @change="handleChange"
+          @blur="handleBlur"
           placeholder="限制内容长度的输入框"
         ></wd-input>
         <wd-input type="text" placeholder="带前置内容的输入框">
@@ -119,8 +120,13 @@ import { defineComponent, ref } from "vue";
 export default defineComponent({
   name: "input",
   setup() {
-    const handleChange = () => {};
+    const handleChange = (val) => {
+      console.log(val);
+    };
     const handleInput = () => {};
+    const handleBlur = (val) => {
+      console.log(val);
+    }
     const clearChangeHandler = () => {};
     const textData = ref("");
     return {
@@ -128,6 +134,7 @@ export default defineComponent({
       handleInput,
       clearChangeHandler,
       textData,
+      handleBlur
     };
   },
 });
