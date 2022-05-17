@@ -18,7 +18,7 @@ export default defineComponent({
 		// 设置css url
 		const iconCssUrl =
 			app.appContext.config.globalProperties.iconCssUrl ||
-			'https://cdn.jsdelivr.net/npm/bootstrap-icons@1.8.1/font/bootstrap-icons.css';
+			'https://oss.wandougongzhu.cn/lib/bootstrap-icons/1.8.2/font/bootstrap-icons.css';
 		if (needLoadIcons) {
 			// 动态加载css
 			const linkEl = document.createElement('link');

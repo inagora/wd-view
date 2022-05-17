@@ -102,7 +102,6 @@ import {
 	onMounted,
 	inject,
 } from 'vue';
-// import * as IconList from "@ant-design/icons-vue";
 import calcTextareaHeight from './calcTextareaHeight';
 import { isObject } from '@vue/shared';
 import {

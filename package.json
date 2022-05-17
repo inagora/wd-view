@@ -1,6 +1,6 @@
 {
 	"name": "@inagora/wd-view",
-	"version": "0.0.17",
+	"version": "0.0.18",
 	"description": "基于Vue3和Typescript的UI组件库",
 	"main": "dist/index.js",
 	"scripts": {
