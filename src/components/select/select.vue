@@ -397,6 +397,7 @@ export default defineComponent({
 			(val) => {
 				selectedValue.value = val;
 				if (isMultiple.value && val instanceof Array) {
+					selectedArray.value = [];
 					optionsArray.forEach((option) => {
 						if (
 							(val as any).includes(option.value) &&

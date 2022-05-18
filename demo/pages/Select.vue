@@ -75,7 +75,7 @@ export default defineComponent({
 			console.log(val);
 		};
 		const selectedChangeHandler1 = (val) => {
-			console.log(val);
+			selectedValue.value = ['baidu'];
 		};
 
 		return {
