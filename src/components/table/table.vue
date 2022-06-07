@@ -176,6 +176,12 @@ export default defineComponent({
 		store.originColumns.forEach((column) => {
 			if (!column.width) {
 				column.width = 150;
+			} else {
+				if (isNaN(Number(column.width))) {
+					if (column.width.indexOf('px') > -1) {
+						column.width = column.width.substr(0, column.width.indexOf('px'));
+					}
+				}
 			}
 			if (column.type === 'checkbox') {
 				checkColumn.value = column;

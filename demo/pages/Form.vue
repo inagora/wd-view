@@ -14,6 +14,7 @@
 			<wd-input
 				type="text"
 				v-model="userInfo.name"
+				readonly
 				placeholder="请输入姓名"
 			></wd-input>
 		</wd-form-item>
@@ -58,6 +59,7 @@
 			<wd-select
 				v-model="selectedValue"
 				@change="selectedChangeHandler"
+				:disabled="true"
 				placeholder="请选择学历"
 			>
 				<wd-option label="研究生" value="baidu"></wd-option>

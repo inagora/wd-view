@@ -1,5 +1,5 @@
 <template>
-	<popper offset-distance="0" offsetSkid="0">
+	<popper offset-distance="0" offsetSkid="0" :disabled="selectDisabled">
 		<div
 			ref="selectWrapper"
 			class="wd-select"
