@@ -11,11 +11,7 @@
 		label-position="top"
 	>
 		<wd-form-item label="姓名" prop="name">
-			<wd-input
-				v-model="userInfo.name"
-				type="text"
-				placeholder="请输入姓名"
-			></wd-input>
+			<wd-input type="text" placeholder="请输入姓名"></wd-input>
 		</wd-form-item>
 		<wd-form-item label="性别" prop="gender">
 			<wd-radio :checked="isMale" name="color" @change="handleRadioChange">
@@ -34,6 +30,7 @@
 			<wd-input-number
 				max="20"
 				min="0"
+				v-model="userInfo.age"
 				@input="handleInputNumber"
 				@change="handleChangeNumber"
 				type="text"
@@ -77,7 +74,7 @@ export default defineComponent({
 		let datepickerValue = ref('2021-02-02 02:02:02');
 		let userInfo = reactive({
 			name: 'niu',
-			age: '',
+			age: '1',
 			isMerried: '',
 			date: datepickerValue.value,
 			degree: 'bing',

@@ -30,7 +30,7 @@
 			</span>
 			<input
 				:class="['wd-input', 'wd-input-' + inputSize]"
-				v-bind="$attrs"
+				v-bind="attrs"
 				:type="type"
 				ref="input"
 				:disabled="inputDisabled"
@@ -70,7 +70,7 @@
 		<textarea
 			v-else
 			class="textarea wd-input wd-input-textarea"
-			v-bind="$attrs"
+			v-bind="attrs"
 			ref="textarea"
 			:disabled="inputDisabled"
 			:readonly="readonly"
@@ -104,6 +104,7 @@ import {
 } from 'vue';
 import calcTextareaHeight from './calcTextareaHeight';
 import { isObject } from '@vue/shared';
+import { useAttrs } from '../../hooks';
 import {
 	wdFormKey,
 	wdFormItemKey,
@@ -180,6 +181,7 @@ export default defineComponent({
 	},
 	emits: ['update:modelValue', 'input', 'change', 'clear', 'blur'],
 	setup(props: WdInputProps, ctx) {
+		const attrs = useAttrs();
 		const sizeMap = reactive({
 			small: 'sm',
 			large: 'lg',
@@ -295,6 +297,7 @@ export default defineComponent({
 			textareaStyle,
 			inputDisabled,
 			handleBlur,
+			attrs,
 		};
 	},
 });
