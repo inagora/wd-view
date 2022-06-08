@@ -236,7 +236,6 @@ export default defineComponent({
 		});
 		const setNativeInputValue = () => {
 			const input = inputOrTextarea.value;
-			console.log(input);
 			if (!input || input.value === nativeInputValue.value) return;
 			input.value = nativeInputValue.value;
 		};
@@ -277,6 +276,7 @@ export default defineComponent({
 			ctx.emit('clear');
 		};
 		onMounted(() => {
+			setNativeInputValue();
 			nextTick(resizeTextarea);
 		});
 		return {
