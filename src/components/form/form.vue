@@ -2,6 +2,7 @@
 	<div>
 		<form
 			:class="['wd-form', inline ? 'wd-form-inline' : 'wd-form-horizontal']"
+			v-bind="attrs"
 		>
 			<slot></slot>
 		</form>
@@ -25,12 +26,14 @@ import {
 } from './props';
 import FieldErrorList from 'async-validator';
 import mitt from 'mitt';
+import { useAttrs } from '../../hooks';
 
 interface Callback {
 	(isValid?: boolean, invalidFields?: FieldErrorList): void;
 }
 export default defineComponent({
 	name: 'wd-form',
+	inheritAttrs: false,
 	props: {
 		modelValue: {
 			type: Object,
@@ -60,6 +63,8 @@ export default defineComponent({
 	setup(props, { emit }) {
 		const formMitt = mitt();
 		const fields: FormItemCtx[] = [];
+
+		const attrs = useAttrs();
 
 		// 监测rules的变化
 		watch(
@@ -146,6 +151,7 @@ export default defineComponent({
 
 		return {
 			validate,
+			attrs,
 		};
 	},
 });

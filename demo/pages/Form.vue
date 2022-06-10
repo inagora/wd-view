@@ -4,6 +4,8 @@
 		label-width="100px"
 		label-align="right"
 		size="small"
+		action="/login"
+		method="post"
 		:model="userInfo"
 		:validate-on-rule-change="true"
 		:rules="formRules"
@@ -57,10 +59,18 @@
 			></wd-date-picker>
 		</wd-form-item>
 		<wd-form-item>
-			<wd-button size="small" type="danger">重置</wd-button>
-			<wd-button size="small" type="success" @click="regHandler"
-				>提交</wd-button
-			>
+			<wd-button-group>
+				<wd-button size="small" nativeType="reset" type="danger"
+					>重置</wd-button
+				>
+				<wd-button
+					size="small"
+					type="success"
+					nativeType="submit"
+					@click="regHandler"
+					>提交</wd-button
+				>
+			</wd-button-group>
 		</wd-form-item>
 	</wd-form>
 </template>
