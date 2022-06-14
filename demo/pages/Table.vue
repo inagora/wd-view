@@ -98,6 +98,7 @@ export default defineComponent({
 				dataIndex: '',
 				key: '',
 				type: 'checkbox',
+				width: 80,
 			},
 			// {
 			//     type: 'index',
@@ -136,6 +137,7 @@ export default defineComponent({
 				title: '生产日期',
 				dataIndex: 'ctime',
 				key: 'ctime',
+				fixed: 'right',
 			},
 			{
 				title: '产地',
@@ -151,6 +153,8 @@ export default defineComponent({
 				title: '操作',
 				dataIndex: 'action',
 				key: 'action',
+				fixed: 'right',
+				width: '300px',
 			},
 		];
 

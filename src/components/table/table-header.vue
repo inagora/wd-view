@@ -137,22 +137,66 @@ export default defineComponent({
 
 		const filterColumnStyle = (column, index) => {
 			if (column.fixed === 'left') {
+				const leftOffset = getOffset(column, 'left');
 				return {
 					position: column.fixed ? 'sticky' : '',
-					left: index * column.width + 'px',
+					left: leftOffset + 'px',
 					zIndex: 1000 - index,
 					backgroundColor: '#ffffff',
 				};
 			} else if (column.fixed === 'right') {
+				const rightOffset = getOffset(column, 'right');
 				return {
 					position: column.fixed ? 'sticky' : '',
-					right: index * column.width + 'px',
+					right: rightOffset + 'px',
 					zIndex: 1000 - index,
 					backgroundColor: '#ffffff',
 				};
 			} else {
 				return {};
 			}
+		};
+		const getOffset = (column, type) => {
+			let columns = [];
+			if (type === 'left') {
+				columns = store.leftFixedColumns;
+			} else {
+				columns = store.rightFixedColumns;
+			}
+			if (column.type === 'checkbox') {
+				return 0;
+			}
+			let offset = 0;
+			if (
+				store.columns &&
+				store.columns.length > 0 &&
+				store.columns[0].type === 'checkbox' &&
+				type === 'left'
+			) {
+				offset += store.columns[0].width;
+			}
+			if (type === 'right') {
+				for (let i = columns.length - 1; i >= 0; i--) {
+					const item = columns[i];
+					if (item.dataIndex === column.dataIndex) {
+						break;
+					}
+					offset += item.width;
+				}
+			} else {
+				for (let i = 0; i < columns.length; i++) {
+					const item = columns[i];
+					if (item.dataIndex === column.dataIndex) {
+						break;
+					}
+					offset += item.width;
+				}
+			}
+
+			if (type === 'right') {
+				console.log(column.dataIndex, offset);
+			}
+			return offset;
 		};
 
 		// 点击了排序

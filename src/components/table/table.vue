@@ -203,6 +203,8 @@ export default defineComponent({
 		if (rightFixedColumns.value.length > 0) {
 			rightFixedColumns.value[0].rightFirst = true;
 		}
+		store.rightFixedColumns = rightFixedColumns.value;
+		store.leftFixedColumns = leftFixedColumns.value;
 		store.columns = []
 			.concat(leftFixedColumns.value)
 			.concat(normalColumns.value)
