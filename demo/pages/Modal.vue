@@ -7,8 +7,17 @@ export default {
 	setup() {
 		const showModal = () => {
 			WdModal({
-				modelValue: true,
 				title: 'model',
+				content: '这里是内容',
+				confirmButtonText: 'OK',
+				cancelButtonText: 'Cancel',
+				isShowCancelButton: true,
+				onCancel() {
+					console.log('cancel');
+				},
+				onConfirm() {
+					console.log('confirm');
+				},
 			});
 		};
 		return {
