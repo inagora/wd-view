@@ -73,6 +73,7 @@ import Message from './Message.vue';
 import Dialog from './Dialog.vue';
 import Drawer from './Drawer.vue';
 import Loading from './Loading.vue';
+import Modal from './Modal.vue';
 export default defineComponent({
 	name: 'App',
 	components: {
@@ -93,6 +94,7 @@ export default defineComponent({
 		Message,
 		Drawer,
 		Loading,
+		Modal,
 	},
 	setup() {
 		let user = { name: 'niu', age: 18 };
@@ -122,7 +124,7 @@ export default defineComponent({
 			date: datepickerValue.value,
 		});
 		let userInfoForm = <any>ref();
-		let componentType = ref('table');
+		let componentType = ref('modal');
 		let menuList = ref([]);
 		menuList.value = [
 			{
