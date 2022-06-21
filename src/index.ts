@@ -32,6 +32,7 @@ import WdDrawer from "./components/drawer";
 import WdMessage from './components/message';
 import WdLoading from './components/loading';
 import WdIcon from "./components/icon";
+import WdModal from "./components/modal";
 
 const components = [
   WdButton,
@@ -65,7 +66,8 @@ const components = [
   WdMessage,
   WdDrawer,
   WdLoading,
-  WdIcon
+  WdIcon,
+  WdModal
 ];
 const install = async (app: App): void => {
   // 是否需要加载icon css
@@ -112,7 +114,8 @@ export {
   WdMessage,
   WdDrawer,
   WdLoading,
-  WdIcon
+  WdIcon,
+  WdModal
 };
 export default {
   install
