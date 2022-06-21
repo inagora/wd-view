@@ -3,6 +3,9 @@ import WdDialog from "../dialog";
 import WdButton from '../button/index';
 const Modal = (options) => {
   options.modelValue = true;
+  options.destroy = () => {
+    vm.component.props.modelValue = false;
+  }
   if(typeof options.isShowConfirmButton === 'undefined') {
     options.isShowConfirmButton = true;
   }
@@ -13,14 +16,18 @@ const Modal = (options) => {
   const footerSlots = [];
   if(options.isShowConfirmButton) {
     footerSlots.push(createVNode(WdButton, {type: 'primary', size: 'small', onClick: () => {
-      options.onConfirm();
+      if(options.onConfirm) {
+        options.onConfirm();
+      } else {
+        vm.component.props.modelValue = false;
+      }
     }}, {
       default: options.confirmButtonText || '确定'
     }));
   }
   if(options.isShowCancelButton) {
     footerSlots.push(createVNode(WdButton, { size: 'small', onClick: () => {
-      options.onCancel();
+      options.onCancel && options.onCancel();
       vm.component.props.modelValue = false;
     }}, {
       default: options.cancelButtonText || '取消'
@@ -28,7 +35,8 @@ const Modal = (options) => {
   }
   const container = document.createElement('div');
   const vm = createVNode(WdDialog, options, {
-    footer: footerSlots
+    footer: footerSlots,
+    default: options.content
   });
   render(vm, container);
   document.body.appendChild(container.firstElementChild);

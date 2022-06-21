@@ -2,7 +2,7 @@
 	<wd-button @click="showModal('')">show Modal</wd-button>
 </template>
 <script>
-import WdModal from '../../src/components/modal/index';
+import { WdModal } from '../../src/index';
 export default {
 	setup() {
 		const showModal = () => {
@@ -27,9 +27,6 @@ export default {
 				isShowCancelButton: true,
 				onCancel() {
 					console.log('cancel');
-				},
-				onConfirm() {
-					console.log('confirm');
 				},
 			});
 		};
