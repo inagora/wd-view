@@ -31,13 +31,13 @@
 	}
 
 	&-empty &-body {
-		// https://github.com/ant-design/ant-design/issues/11135
+		
 		overflow-x: auto !important;
-		// https://github.com/ant-design/ant-design/issues/17175
+		
 		overflow-y: hidden !important;
 	}
 
-	// https://github.com/ant-design/ant-design/issues/17611
+	
 	table {
 		width: 100%;
 		text-align: left;
@@ -136,12 +136,12 @@
 
 		&.@{table-prefix-cls}-column-has-actions {
 			position: relative;
-			background-clip: padding-box; // For Firefox background bug, https://github.com/ant-design/ant-design/issues/12628
+			background-clip: padding-box; // For Firefox background bug, 
 			/* stylelint-disable-next-line */
-			-webkit-background-clip: border-box; // For Chrome extra space: https://github.com/ant-design/ant-design/issues/14926
+			-webkit-background-clip: border-box; // For Chrome extra space: 
 
 			&.@{table-prefix-cls}-column-has-filters {
-				// https://github.com/ant-design/ant-design/issues/12650
+				
 				padding-right: 30px !important;
 
 				.@{iconfont-css-prefix}-filter,
@@ -319,13 +319,13 @@
 		}
 	}
 
-	// https://github.com/ant-design/ant-design/issues/4373
+	
 	&-without-column-header &-title + &-content,
 	&-without-column-header table {
 		border-radius: 0;
 	}
 
-	// https://github.com/ant-design/ant-design/issues/14834
+	
 	&-without-column-header&-bordered&-empty &-placeholder {
 		border-top: 1px solid @border-color-split;
 		border-radius: @border-radius-base;
@@ -454,8 +454,8 @@
 		box-shadow: @box-shadow-base;
 
 		.@{wd-prefix}-dropdown-menu {
-			// https://github.com/ant-design/ant-design/issues/4916
-			// https://github.com/ant-design/ant-design/issues/19542
+			
+			
 			max-height: ~'calc(100vh - 130px)';
 			overflow-x: hidden;
 			border: 0;
@@ -628,8 +628,8 @@
 		table {
 			min-width: 100%;
 
-			// https://github.com/ant-design/ant-design/issues/14545
-			// https://github.com/ant-design/ant-design/issues/19491
+			
+			
 			.@{table-prefix-cls}-fixed-columns-in-body:not([colspan]) {
 				color: transparent;
 				& > * {
@@ -657,7 +657,7 @@
 		padding-bottom: 20px;
 		overflow: scroll;
 		// Workaround for additional scroll bar on the table header
-		// https://github.com/ant-design/ant-design/issues/6515#issuecomment-419634369
+		
 		opacity: 0.9999;
 
 		&::-webkit-scrollbar {
@@ -667,7 +667,7 @@
 	}
 
 	&-hide-scrollbar {
-		// https://github.com/ant-design/ant-design/issues/4637
+		
 		// https://stackoverflow.com/a/54101063
 		// https://github.com/react-component/table/pull/333
 		scrollbar-color: transparent transparent;
@@ -675,7 +675,7 @@
 
 		&::-webkit-scrollbar {
 			// set min width to window chrome scrollbar
-			// https://github.com/ant-design/ant-design/issues/19952#issuecomment-559367149
+			
 			min-width: inherit;
 			background-color: transparent;
 		}
@@ -764,7 +764,7 @@
 			border-radius: 0 @table-border-radius-base 0 0;
 		}
 		// hide expand row content in right-fixed Table
-		// https://github.com/ant-design/ant-design/issues/1898
+		
 		.@{table-prefix-cls}-expanded-row {
 			color: transparent;
 			pointer-events: none;
@@ -918,7 +918,7 @@
 * Another fix of Firefox:
 */
 @supports (-moz-appearance: meterbar) {
-	// https://github.com/ant-design/ant-design/issues/12628
+	
 	.@{table-prefix-cls}-thead > tr > th.@{table-prefix-cls}-column-has-actions {
 		background-clip: padding-box;
 	}

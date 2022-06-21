@@ -14,8 +14,8 @@
   ) + 2px;
 @form-explain-font-size: @font-size-base;
 // Extends additional 1px to fix precision issue.
-// https://github.com/ant-design/ant-design/issues/12803
-// https://github.com/ant-design/ant-design/issues/8220
+
+
 @form-explain-precision: 1px;
 @form-explain-height: floor(@form-explain-font-size * @line-height-base);
 
@@ -150,7 +150,7 @@
 
 form {
   .has-feedback {
-    // https://github.com/ant-design/ant-design/issues/19884
+    
     .@{wd-prefix}-input-affix-wrapper {
       .@{wd-prefix}-input-suffix {
         padding-right: 18px;
@@ -158,7 +158,7 @@ form {
     }
 
     // Fix overlapping between feedback icon and <Select>'s arrow.
-    // https://github.com/ant-design/ant-design/issues/4431
+    
     > .@{wd-prefix}-select .@{wd-prefix}-select-arrow,
     > .@{wd-prefix}-select .@{wd-prefix}-select-selection__clear,
     :not(.@{wd-prefix}-input-group-addon)
@@ -186,14 +186,14 @@ form {
       }
     }
 
-    // Fix issue: https://github.com/ant-design/ant-design/issues/7854
+    // Fix issue: 
     .@{wd-prefix}-input-search:not(.@{wd-prefix}-input-search-enter-button) {
       .@{wd-prefix}-input-suffix {
         right: (@form-component-height / 2) + @form-feedback-icon-size - 2px;
       }
     }
 
-    // Fix issue: https://github.com/ant-design/ant-design/issues/4783
+    // Fix issue: 
     .@{wd-prefix}-calendar-picker,
     .@{wd-prefix}-time-picker {
       &-icon,
@@ -249,7 +249,7 @@ form {
       margin-left: 8px;
     }
     &-handler-wrap {
-      z-index: 2; // https://github.com/ant-design/ant-design/issues/6289
+      z-index: 2; 
     }
   }
 
@@ -264,14 +264,14 @@ form {
     width: auto;
   }
 
-  // fix input with addon position. https://github.com/ant-design/ant-design/issues/8243
+  // fix input with addon position. 
   :not(.@{wd-prefix}-input-group-wrapper) > .@{wd-prefix}-input-group,
   .@{wd-prefix}-input-group-wrapper {
     display: inline-block;
     vertical-align: middle;
   }
 
-  // https://github.com/ant-design/ant-design/issues/20616
+  
   &:not(.@{form-prefix-cls}-vertical) {
     :not(.@{wd-prefix}-input-group-wrapper) > .@{wd-prefix}-input-group,
     .@{wd-prefix}-input-group-wrapper {
