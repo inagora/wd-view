@@ -20,7 +20,11 @@
 						:is-show-left-shadow="isShowLeftShadow"
 						:is-show-right-shadow="isShowRightShadow"
 						@select-change="selectChangeHandler"
-					></table-header>
+					>
+						<template #headerCell="slotScope">
+							<slot name="headerCell" :column="slotScope.column"></slot>
+						</template>
+					</table-header>
 					<!-- table body -->
 					<table-body
 						:store="store"
