@@ -21,8 +21,8 @@
 						:is-show-right-shadow="isShowRightShadow"
 						@select-change="selectChangeHandler"
 					>
-						<template #headerCell="slotScope">
-							<slot name="headerCell" :column="slotScope.column"></slot>
+						<template #headercell="slotScope">
+							<slot name="headercell" :column="slotScope.column"></slot>
 						</template>
 					</table-header>
 					<!-- table body -->

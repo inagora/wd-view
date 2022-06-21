@@ -18,15 +18,14 @@
 				>
 					<td
 						:class="[
-							column.ellipsis || !cellWrap
-								? 'wd-table-row-cell-ellipsis'
-								: 'wd-table-row-cell-break-word',
 							column.type === 'checkbox' || column.type === 'index'
 								? 'wd-table-selection-column'
 								: '',
-							column.leftLast && isShowLeftShadow ? 'wd-table-fixed-left' : '',
+							column.leftLast && isShowLeftShadow
+								? 'wd-table-fixed-left wd-table-fixed-left-last'
+								: '',
 							column.rightFirst && isShowRightShadow
-								? 'wd-table-fixed-right'
+								? 'wd-table-fixed-right wd-table-fixed-right-first'
 								: '',
 						]"
 						v-for="(column, colIndex) in store.columns"
@@ -70,11 +69,18 @@
 								></div>
 							</span>
 						</template>
-						<span v-else>
+						<div
+							v-else
+							:class="[
+								column.ellipsis || !cellWrap
+									? 'wd-table-row-cell-ellipsis'
+									: 'wd-table-row-cell-break-word',
+							]"
+						>
 							<slot name="custom" :row="row" :column="column">{{
 								row[column.dataIndex]
 							}}</slot>
-						</span>
+						</div>
 					</td>
 				</tr>
 			</tbody>
@@ -132,7 +138,6 @@ export default defineComponent({
 					position: column.fixed ? 'sticky' : '',
 					left: leftOffset + 'px',
 					zIndex: 1000 - index,
-					backgroundColor: '#ffffff',
 				};
 			} else if (column.fixed === 'right') {
 				const rightOffset = getOffset(column, 'right');
@@ -140,7 +145,6 @@ export default defineComponent({
 					position: column.fixed ? 'sticky' : '',
 					right: rightOffset + 'px',
 					zIndex: 1000 - index,
-					backgroundColor: '#ffffff',
 				};
 			} else {
 				return {};

@@ -32,7 +32,7 @@
 									? 'wd-table-fixed-left wd-table-fixed-left-last'
 									: '',
 								column.rightFirst && isShowRightShadow
-									? 'wd-table-fixed-right'
+									? 'wd-table-fixed-right wd-table-fixed-right-first'
 									: '',
 							]"
 						>
@@ -50,7 +50,7 @@
 							</template>
 							<div class="wd-table-header-column" v-else>
 								<span class="wd-table-column-title">
-									<slot name="headerCell" :column="column">{{
+									<slot name="headercell" :column="column">{{
 										column.title
 									}}</slot>
 								</span>
@@ -70,13 +70,13 @@
 									? 'wd-table-fixed-left wd-table-fixed-left-last'
 									: '',
 								column.rightFirst && isShowRightShadow
-									? 'wd-table-fixed-right'
+									? 'wd-table-fixed-right wd-table-fixed-right-first'
 									: '',
 							]"
 						>
 							<div @click="doSort(column)" class="wd-table-column-sorters">
 								<span class="wd-table-column-title">
-									<slot name="headerCell" :column="column">
+									<slot name="headercell" :column="column">
 										{{ column.title }}
 									</slot>
 								</span>

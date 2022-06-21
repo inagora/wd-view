@@ -43,6 +43,14 @@ const Modal = (options) => {
 }
 ['alert', 'confirm'].forEach(type => {
   Modal[type] = (options) => {
+    if(type === 'confirm') {
+      if(typeof options.isShowConfirmButton === 'undefined') {
+        options.isShowConfirmButton = true;
+      }
+      if(typeof options.isShowCancelButton === 'undefined') {
+        options.isShowCancelButton = true;
+      }
+    }
     return Modal(options);
   }
 });

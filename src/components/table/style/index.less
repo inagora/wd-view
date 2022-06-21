@@ -348,6 +348,7 @@
 	&-tbody > tr > td {
 		padding: @table-padding-vertical @table-padding-horizontal;
 		overflow-wrap: break-word;
+    background-color: #ffffff;
 	}
 
 	&-expand-icon-th,
@@ -699,13 +700,15 @@
 		position: absolute;
 		top: 0;
 		z-index: @zindex-table-fixed;
-		overflow: hidden;
 		border-radius: 0;
 		transition: box-shadow 0.3s ease;
 		table {
 			width: auto;
 			background: @component-background;
 		}
+    &:hover {
+      background: @table-row-hover-bg;
+    }
 	}
 
 	&-fixed-header &-fixed-left &-body-outer &-fixed,
@@ -721,7 +724,7 @@
 
 	&-fixed-left {
 		left: 0;
-		box-shadow: 6px 0 6px -4px @shadow-color;
+		// box-shadow: 6px 0 6px -4px @shadow-color;
 		.@{table-prefix-cls}-header {
 			overflow-y: hidden;
 		}
@@ -741,21 +744,21 @@
 			border-top-right-radius: 0;
 		}
 		&-last::after {
-			position: absolute;
-			top: 0;
-			right: 0;
-			bottom: -1px;
-			width: 30px;
-			transform: translate(100%);
-			transition: box-shadow 0.3s;
-			content: '';
-			pointer-events: none;
+      position: absolute;
+      top: 0;
+      right: 0;
+      bottom: -1px;
+      width: 30px;
+      transform: translate(100%);
+      transition: box-shadow .3s;
+      content: "";
+      pointer-events: none;
+      box-shadow: inset 10px 0 8px -8px @shadow-color;
 		}
 	}
 
 	&-fixed-right {
 		right: 0;
-		box-shadow: -6px 0 6px -4px @shadow-color;
 		&,
 		table {
 			border-radius: 0 @table-border-radius-base 0 0;
@@ -768,6 +771,18 @@
 		}
 		.@{table-prefix-cls}-thead > tr > th:first-child {
 			border-top-left-radius: 0;
+		}
+    &-first::after {
+      position: absolute;
+    top: 0;
+    bottom: -1px;
+    left: 0;
+    width: 30px;
+    transform: translate(-100%);
+    transition: box-shadow .3s;
+    content: "";
+    pointer-events: none;
+      box-shadow: inset -10px 0 8px -8px @shadow-color;
 		}
 	}
 
@@ -818,7 +833,6 @@
 			}
 		}
 
-		// https://github.com/ant-design/ant-design/issues/30969
 		&.@{table-prefix-cls}-cell-fix-left:hover,
 		&.@{table-prefix-cls}-cell-fix-right:hover {
 			background: lighten(@black, 96%);
