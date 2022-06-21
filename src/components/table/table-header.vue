@@ -28,6 +28,12 @@
 								column.type === 'checkbox' || column.type === 'index'
 									? 'wd-table-selection-column'
 									: '',
+								column.leftLast && isShowLeftShadow
+									? 'wd-table-fixed-left'
+									: '',
+								column.rightFirst && isShowRightShadow
+									? 'wd-table-fixed-right'
+									: '',
 							]"
 						>
 							<template v-if="column.type === 'checkbox'">
@@ -54,6 +60,14 @@
 								{
 									textAlign: headerAlign,
 								},
+							]"
+							:class="[
+								column.leftLast && isShowLeftShadow
+									? 'wd-table-fixed-left'
+									: '',
+								column.rightFirst && isShowRightShadow
+									? 'wd-table-fixed-right'
+									: '',
 							]"
 						>
 							<div @click="doSort(column)" class="wd-table-column-sorters">
@@ -122,6 +136,8 @@ export default defineComponent({
 			type: Boolean,
 		},
 		headerAlign: String,
+		isShowLeftShadow: Boolean,
+		isShowRightShadow: Boolean,
 	},
 	emits: ['select-change'],
 	setup(props, { emit }) {
@@ -191,10 +207,6 @@ export default defineComponent({
 					}
 					offset += item.width;
 				}
-			}
-
-			if (type === 'right') {
-				console.log(column.dataIndex, offset);
 			}
 			return offset;
 		};

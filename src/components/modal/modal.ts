@@ -6,6 +6,9 @@ const Modal = (options) => {
   if(typeof options.isShowConfirmButton === 'undefined') {
     options.isShowConfirmButton = true;
   }
+  if(typeof options.width === 'undefined') {
+    options.width = '250px';
+  }
   // footer操作按钮
   const footerSlots = [];
   if(options.isShowConfirmButton) {
@@ -30,4 +33,9 @@ const Modal = (options) => {
   render(vm, container);
   document.body.appendChild(container.firstElementChild);
 }
+['alert', 'confirm'].forEach(type => {
+  Modal[type] = (options) => {
+    return Modal(options);
+  }
+});
 export default Modal;

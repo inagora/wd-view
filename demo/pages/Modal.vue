@@ -6,7 +6,20 @@ import WdModal from '../../src/components/modal/index';
 export default {
 	setup() {
 		const showModal = () => {
-			WdModal({
+			// WdModal({
+			// 	title: 'model',
+			// 	content: '这里是内容',
+			// 	confirmButtonText: 'OK',
+			// 	cancelButtonText: 'Cancel',
+			// 	isShowCancelButton: true,
+			// 	onCancel() {
+			// 		console.log('cancel');
+			// 	},
+			// 	onConfirm() {
+			// 		console.log('confirm');
+			// 	},
+			// });
+			WdModal.alert({
 				title: 'model',
 				content: '这里是内容',
 				confirmButtonText: 'OK',

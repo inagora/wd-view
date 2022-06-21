@@ -8,6 +8,7 @@
 					store.bordered ? 'wd-table-bordered' : '',
 					tableLayoutFixed ? 'wd-table-layout-fixed' : '',
 				]"
+				ref="wdTable"
 			>
 				<div class="wd-table-content">
 					<!-- table header -->
@@ -16,6 +17,8 @@
 						:store="store"
 						:fixed="sticky"
 						:header-align="headerAlign"
+						:is-show-left-shadow="isShowLeftShadow"
+						:is-show-right-shadow="isShowRightShadow"
 						@select-change="selectChangeHandler"
 					></table-header>
 					<!-- table body -->
@@ -24,6 +27,8 @@
 						:data-source="dataSource"
 						:cell-wrap="cellWrap"
 						:empty-text="emptyText"
+						:is-show-left-shadow="isShowLeftShadow"
+						:is-show-right-shadow="isShowRightShadow"
 						@select-change="selectChangeHandler"
 						@cell-click="cellClickHandler"
 						@row-click="rowClickHandler"
@@ -59,7 +64,7 @@
 </template>
 
 <script lang="ts">
-import { defineComponent, reactive, ref, watchEffect } from 'vue';
+import { defineComponent, onMounted, reactive, ref, watchEffect } from 'vue';
 import TableHeader from './table-header.vue';
 import TableBody from './table-body.vue';
 import WdPagination from '../pagination/pagination.vue';
@@ -172,6 +177,9 @@ export default defineComponent({
 		let rightFixedColumns = ref([]);
 		let normalColumns = ref([]);
 		let checkColumn = ref(null);
+		const wdTable = ref(null);
+		let isShowLeftShadow = ref(false);
+		let isShowRightShadow = ref(true);
 
 		store.originColumns.forEach((column) => {
 			if (!column.width) {
@@ -256,6 +264,22 @@ export default defineComponent({
 		watchEffect(() => {
 			store.dataSource = reactive(props.dataSource);
 		});
+		onMounted(() => {
+			wdTable.value.addEventListener('scroll', (e) => {
+				let scrollLeft = e.target.scrollLeft;
+				if (scrollLeft === 0) {
+					// 滚动到最左边
+					isShowLeftShadow.value = false;
+				} else {
+					isShowLeftShadow.value = true;
+				}
+				if (scrollLeft + e.target.clientWidth === e.target.scrollWidth) {
+					isShowRightShadow.value = false;
+				} else {
+					isShowRightShadow.value = true;
+				}
+			});
+		});
 		return {
 			store,
 			tableLayoutFixed,
@@ -267,6 +291,9 @@ export default defineComponent({
 			cellClickHandler,
 			rowClickHandler,
 			leftFixedColumns,
+			wdTable,
+			isShowLeftShadow,
+			isShowRightShadow,
 		};
 	},
 });

@@ -24,7 +24,10 @@
 							column.type === 'checkbox' || column.type === 'index'
 								? 'wd-table-selection-column'
 								: '',
-							column.leftLast ? 'wd-table-fixed-left-last' : '',
+							column.leftLast && isShowLeftShadow ? 'wd-table-fixed-left' : '',
+							column.rightFirst && isShowRightShadow
+								? 'wd-table-fixed-right'
+								: '',
 						]"
 						v-for="(column, colIndex) in store.columns"
 						:style="filterColumnStyle(column, colIndex)"
@@ -91,6 +94,8 @@ export default defineComponent({
 		store: Object as PropType<StoreProps>,
 		cellWrap: Boolean,
 		emptyText: String,
+		isShowLeftShadow: Boolean,
+		isShowRightShadow: Boolean,
 	},
 	emits: ['select-change', 'cell-click', 'row-click'],
 	setup(props, { emit, slots }) {
@@ -177,10 +182,6 @@ export default defineComponent({
 					}
 					offset += item.width;
 				}
-			}
-
-			if (type === 'right') {
-				console.log(column.dataIndex, offset);
 			}
 			return offset;
 		};

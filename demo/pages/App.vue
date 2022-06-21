@@ -124,7 +124,7 @@ export default defineComponent({
 			date: datepickerValue.value,
 		});
 		let userInfoForm = <any>ref();
-		let componentType = ref('modal');
+		let componentType = ref('table');
 		let menuList = ref([]);
 		menuList.value = [
 			{
