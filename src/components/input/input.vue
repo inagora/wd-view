@@ -35,6 +35,7 @@
 				ref="input"
 				:disabled="inputDisabled"
 				:readonly="readonly"
+				autocomplete="off"
 				@input="handleInput"
 				@change="handleChange"
 				@blur="handleBlur"
@@ -75,6 +76,7 @@
 			:disabled="inputDisabled"
 			:readonly="readonly"
 			:style="textareaStyle"
+			autocomplete="off"
 			@input="handleInput"
 			@change="handleChange"
 			@blur="handleBlur"
@@ -101,6 +103,7 @@ import {
 	shallowRef,
 	onMounted,
 	inject,
+	watchEffect,
 } from 'vue';
 import calcTextareaHeight from './calcTextareaHeight';
 import { isObject } from '@vue/shared';
@@ -191,8 +194,7 @@ export default defineComponent({
 		const wdFormItem = inject(wdFormItemKey, {} as WdFormItemContext);
 		let inputSize =
 			sizeMap[props.size] || sizeMap[wdFormItem.size] || sizeMap[wdForm.size];
-		let inputDisabled =
-			props.disabled || wdFormItem.disabled || wdForm.disabled;
+		let inputDisabled = ref(false);
 		const input = ref(null);
 		const textarea = ref(null);
 		const inputOrTextarea = computed(() => input.value || textarea.value);
@@ -277,6 +279,10 @@ export default defineComponent({
 			ctx.emit('change', '');
 			ctx.emit('clear');
 		};
+		watchEffect(() => {
+			inputDisabled.value =
+				props.disabled || wdFormItem.disabled || wdForm.disabled;
+		});
 		onMounted(() => {
 			setNativeInputValue();
 			nextTick(resizeTextarea);

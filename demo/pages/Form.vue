@@ -39,7 +39,11 @@
 			></wd-input-number>
 		</wd-form-item>
 		<wd-form-item label="学历" prop="degree">
-			<wd-select @change="selectedChangeHandler" placeholder="请选择学历">
+			<wd-select
+				@change="selectedChangeHandler"
+				:disabled="disabled"
+				placeholder="请选择学历"
+			>
 				<wd-option label="研究生" value="baidu"></wd-option>
 				<wd-option label="本科" value="google"></wd-option>
 				<wd-option label="专科" value="bing"></wd-option>
@@ -89,6 +93,10 @@ export default defineComponent({
 			date: datepickerValue.value,
 			degree: 'bing',
 		});
+		const disabled = ref(false);
+		setTimeout(() => {
+			disabled.value = true;
+		}, 1000);
 		let userInfoForm = <any>ref();
 		const checkAge = (rule, value) => {
 			if (value < 18) {
@@ -140,6 +148,7 @@ export default defineComponent({
 			formRules,
 			userInfoForm,
 			regHandler,
+			disabled,
 		};
 	},
 });

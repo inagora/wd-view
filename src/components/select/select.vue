@@ -176,6 +176,7 @@ import {
 	toRefs,
 	provide,
 	inject,
+	watchEffect,
 } from 'vue';
 import {
 	wdFormKey,
@@ -260,8 +261,7 @@ export default defineComponent({
 		const wdFormItem = inject(wdFormItemKey, {} as WdFormItemProps);
 		let inputSize =
 			sizeMap[props.size] || sizeMap[wdFormItem.size] || sizeMap[wdForm.size];
-		let selectDisabled =
-			props.disabled || wdFormItem.disabled || wdForm.disabled;
+		let selectDisabled = ref(false);
 		const { emit } = context;
 		const slots = context.slots;
 		const selectSelector = ref(null);
@@ -392,6 +392,10 @@ export default defineComponent({
 		provide('searchKey', searchKey);
 		provide('options', optionsArray);
 
+		watchEffect(() => {
+			selectDisabled.value =
+				props.disabled || wdFormItem.disabled || wdForm.disabled;
+		});
 		watch(
 			() => props.modelValue,
 			(val) => {
