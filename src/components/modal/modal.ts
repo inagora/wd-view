@@ -51,6 +51,11 @@ const Modal = (options) => {
   });
   render(vm, container);
   document.body.appendChild(container.firstElementChild);
+  return {
+    destroy: () => {
+      vm.component.props.modelValue = false
+    }
+  };
 }
 ['alert', 'confirm'].forEach(type => {
   Modal[type] = (options) => {
@@ -62,6 +67,12 @@ const Modal = (options) => {
         options.isShowCancelButton = true;
       }
     }
+    return Modal(options);
+  }
+});
+['success', 'error', 'warning', 'info'].forEach(type => {
+  Modal[type] = (options) => {
+    options.type = type;
     return Modal(options);
   }
 });

@@ -23,22 +23,16 @@ export default {
 			// 	title: 'model',
 			// 	content: '这里是内容',
 			// });
-			WdModal({
+			const wm = WdModal.success({
 				title: 'model',
 				content: '这里是内容',
 				confirmButtonText: 'OK',
 				cancelButtonText: 'Cancel',
 				isShowCancelButton: true,
-				buttons: [
-					{
-						text: '确定',
-						type: 'danger',
-						click() {
-							console.log(123);
-							this.destroy();
-						},
-					},
-				],
+				onConfirm() {
+					console.log(wm);
+					wm.destroy();
+				},
 			});
 		};
 		return {
