@@ -19,9 +19,26 @@ export default {
 			// 		console.log('confirm');
 			// 	},
 			// });
-			WdModal.confirm({
+			// WdModal.confirm({
+			// 	title: 'model',
+			// 	content: '这里是内容',
+			// });
+			WdModal({
 				title: 'model',
 				content: '这里是内容',
+				confirmButtonText: 'OK',
+				cancelButtonText: 'Cancel',
+				isShowCancelButton: true,
+				buttons: [
+					{
+						text: '确定',
+						type: 'danger',
+						click() {
+							console.log(123);
+							this.destroy();
+						},
+					},
+				],
 			});
 		};
 		return {

@@ -33,6 +33,17 @@ const Modal = (options) => {
       default: options.cancelButtonText || '取消'
     }));
   }
+  // 自定义footer
+  if(options.buttons && options.buttons.length > 0) {
+    footerSlots.length = 0;
+    options.buttons.forEach(button => {
+      footerSlots.push(createVNode(WdButton, {...button, onClick: () => {
+        button.click();
+      }}, {
+        default: button.text
+      }));
+    });
+  }
   const container = document.createElement('div');
   const vm = createVNode(WdDialog, options, {
     footer: footerSlots,
