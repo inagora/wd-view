@@ -75,6 +75,7 @@ import Drawer from './Drawer.vue';
 import Loading from './Loading.vue';
 import Modal from './Modal.vue';
 import Upload from './Upload.vue';
+import Tabs from './Tabs.vue';
 export default defineComponent({
 	name: 'App',
 	components: {
@@ -97,6 +98,7 @@ export default defineComponent({
 		Loading,
 		Modal,
 		Upload,
+		Tabs,
 	},
 	setup() {
 		let user = { name: 'niu', age: 18 };
@@ -126,7 +128,7 @@ export default defineComponent({
 			date: datepickerValue.value,
 		});
 		let userInfoForm = <any>ref();
-		let componentType = ref('upload');
+		let componentType = ref('tabs');
 		let menuList = ref([]);
 		menuList.value = [
 			{
