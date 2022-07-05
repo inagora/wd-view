@@ -83,7 +83,7 @@ export default defineComponent({
 	setup(props, { emit }) {
 		// variable
 		const navList = reactive(props.tabs);
-		const navTabRefs = ref([]);
+		const navTabRefs = [];
 		// nav item下划线
 		const inkBarStyle = reactive({
 			left: '0px',
@@ -92,8 +92,8 @@ export default defineComponent({
 
 		// 设置下划线
 		const setInkBarStyle = (index) => {
-			inkBarStyle.left = navTabRefs.value[index].offsetLeft + 'px';
-			inkBarStyle.width = navTabRefs.value[index].offsetWidth + 'px';
+			inkBarStyle.left = navTabRefs[index].offsetLeft + 'px';
+			inkBarStyle.width = navTabRefs[index].offsetWidth + 'px';
 		};
 
 		// 处理点击
@@ -106,7 +106,7 @@ export default defineComponent({
 
 		// * 设置多个引用
 		const setNavTabs = (el) => {
-			navTabRefs.value.push(el);
+			navTabRefs.push(el);
 		};
 
 		watchEffect(() => {

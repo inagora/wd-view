@@ -29,8 +29,8 @@ export default defineComponent({
 							'div',
 							{
 								class: [
-									'wd-tabs-tabpane',
-									tab.key === props.activeKey ? 'wd-tabs-tabpane-active' : '',
+									'wd-tabs-tabpanel',
+									tab.key === props.activeKey ? 'wd-tabs-tabpanel-active' : '',
 								],
 								style: {
 									display: props.activeKey === tab.key ? 'block' : 'none',

@@ -77,9 +77,13 @@
 									: 'wd-table-row-cell-break-word',
 							]"
 						>
-							<slot name="custom" :row="row" :column="column">{{
-								row[column.dataIndex]
-							}}</slot>
+							<slot
+								name="custom"
+								:row="row"
+								:column="column"
+								:row-index="rowIndex"
+								>{{ row[column.dataIndex] }}</slot
+							>
 						</div>
 					</td>
 				</tr>

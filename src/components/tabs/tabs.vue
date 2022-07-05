@@ -52,7 +52,7 @@ export default defineComponent({
 					key: node.key,
 					tab: node.props.tab,
 					disabled: node.props.disabled || '',
-					active: active || false,
+					active: active,
 					node,
 				};
 			})

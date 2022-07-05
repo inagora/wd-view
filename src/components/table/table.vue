@@ -42,6 +42,7 @@
 								name="custom"
 								:row="slotScope.row"
 								:column="slotScope.column"
+								:row-index="slotScope.rowIndex"
 							></slot>
 						</template>
 					</table-body>
