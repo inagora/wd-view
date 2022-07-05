@@ -1,50 +1,47 @@
-<template>
-	<div class="wd-tabs-content-holder">
-		<div class="wd-tabs-content wd-tabs-content-top">
-			<div
-				role="tabpanel"
-				tabindex="0"
-				aria-hidden="false"
-				class="wd-tabs-tabpane wd-tabs-tabpane-active"
-				id="rc-tabs-0-panel-1"
-				aria-labelledby="rc-tabs-0-tab-1"
-				style=""
-			>
-				Content of Tab Pane 1
-			</div>
-			<div
-				role="tabpanel"
-				tabindex="-1"
-				aria-hidden="true"
-				class="wd-tabs-tabpane"
-				id="rc-tabs-0-panel-2"
-				aria-labelledby="rc-tabs-0-tab-2"
-				style="display: none"
-			>
-				Content of Tab Pane 2
-			</div>
-			<div
-				role="tabpanel"
-				tabindex="-1"
-				aria-hidden="true"
-				class="wd-tabs-tabpane"
-				id="rc-tabs-0-panel-3"
-				aria-labelledby="rc-tabs-0-tab-3"
-				style="display: none"
-			>
-				Content of Tab Pane 3
-			</div>
-		</div>
-	</div>
-</template>
-
-<script lang="ts">
-import { defineComponent } from 'vue';
+<script>
+import { defineComponent, h, watch, ref } from 'vue';
 export default defineComponent({
 	name: 'wd-panel',
-	props: {},
-	setup() {
-		return {};
+	props: {
+		tabs: Array,
+		activeKey: String,
+	},
+	setup(props) {
+		// const activeKey = ref(props.activeKey);
+		// console.log(activeKey.value);
+		// watch(
+		// 	() => props.tabs,
+		// 	(val) => {
+		// 		props.tabs.forEach((tab) => {
+		// 			if (tab.active) {
+		// 				activeKey.value = tab.key;
+		// 			}
+		// 		});
+		// 	}
+		// );
+		return () => {
+			return h('div', { class: 'wd-tabs-content-holder' }, [
+				h(
+					'div',
+					{ class: 'wd-tabs-content wd-tabs-content-top' },
+					props.tabs.map((tab) => {
+						return h(
+							'div',
+							{
+								class: [
+									'wd-tabs-tabpane',
+									tab.key === props.activeKey ? 'wd-tabs-tabpane-active' : '',
+								],
+								style: {
+									display: props.activeKey === tab.key ? 'block' : 'none',
+								},
+							},
+							tab.node.children
+						);
+					})
+				),
+			]);
+		};
 	},
 });
 </script>

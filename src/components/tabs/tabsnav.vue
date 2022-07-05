@@ -4,9 +4,11 @@
 		<div class="wd-tabs-nav-wrap">
 			<div class="wd-tabs-nav-list" style="transform: translate(0px, 0px)">
 				<div
-					:class="['wd-tabs-tab', tab.active ? 'wd-tabs-tab-active' : '']"
-					v-for="tab in tabs"
-					:key="tab.key"
+					:ref="setNavTabs"
+					:class="['wd-tabs-tab', nav.active ? 'wd-tabs-tab-active' : '']"
+					v-for="(nav, index) in navList"
+					:key="index"
+					@click="tabClickHandler(index)"
 				>
 					<div
 						role="tab"
@@ -16,14 +18,16 @@
 						id="rc-tabs-0-tab-1"
 						aria-controls="rc-tabs-0-panel-1"
 					>
-						{{ tab.tab }}
+						<slot name="tab">
+							{{ nav.tab }}
+						</slot>
 					</div>
 					<!---->
 				</div>
 				<!---->
 				<div
 					class="wd-tabs-ink-bar wd-tabs-ink-bar-animated"
-					style="left: 0px; width: 36px"
+					:style="inkBarStyle"
 				></div>
 			</div>
 		</div>
@@ -61,14 +65,66 @@
 </template>
 
 <script lang="ts">
-import { defineComponent } from 'vue';
+import {
+	defineComponent,
+	nextTick,
+	onMounted,
+	reactive,
+	ref,
+	watchEffect,
+} from 'vue';
 export default defineComponent({
 	name: 'wd-tabsnav',
 	props: {
 		tabs: Array,
+		activeKey: String,
 	},
-	setup() {
-		return {};
+	emits: ['change'],
+	setup(props, { emit }) {
+		// variable
+		const navList = reactive(props.tabs);
+		const navTabRefs = ref([]);
+		// nav item下划线
+		const inkBarStyle = reactive({
+			left: '0px',
+			width: '36px',
+		});
+
+		// 设置下划线
+		const setInkBarStyle = (index) => {
+			inkBarStyle.left = navTabRefs.value[index].offsetLeft + 'px';
+			inkBarStyle.width = navTabRefs.value[index].offsetWidth + 'px';
+		};
+
+		// 处理点击
+		const tabClickHandler = (index) => {
+			const nav: any = navList[index];
+			setInkBarStyle(index);
+			// nav.active = true;
+			emit('change', { nav, index });
+		};
+
+		// * 设置多个引用
+		const setNavTabs = (el) => {
+			navTabRefs.value.push(el);
+		};
+
+		watchEffect(() => {
+			navList.forEach((nav, index) => {
+				if ((nav as any).key === props.activeKey) {
+					nextTick(() => {
+						setInkBarStyle(index);
+					});
+				}
+			});
+		});
+		return {
+			tabClickHandler,
+			setNavTabs,
+			navList,
+			inkBarStyle,
+			navTabRefs,
+		};
 	},
 });
 </script>
