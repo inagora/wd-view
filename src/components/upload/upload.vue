@@ -1,7 +1,12 @@
 <template>
 	<div class="wd-upload wd-upload-select wd-upload-select-text">
-		<span tabindex="0" class="wd-upload" role="button"
+		<span
+			@click="doSelectFileHandler"
+			tabindex="0"
+			class="wd-upload"
+			role="button"
 			><input
+				ref="uploadInput"
 				type="file"
 				accept=""
 				capture="false"
@@ -11,7 +16,7 @@
 </template>
 
 <script lang="ts">
-import { defineComponent } from 'vue';
+import { defineComponent, ref } from 'vue';
 export default defineComponent({
 	name: 'wd-upload',
 	props: {
@@ -60,7 +65,14 @@ export default defineComponent({
 		},
 	},
 	setup() {
-		return {};
+		const uploadInput = ref(null);
+		const doSelectFileHandler = () => {
+			uploadInput.value.click();
+		};
+		return {
+			uploadInput,
+			doSelectFileHandler,
+		};
 	},
 });
 </script>
