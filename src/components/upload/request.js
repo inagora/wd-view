@@ -21,7 +21,6 @@ function getBody(xhr) {
 }
 
 export default function upload(option) {
-	console.log(option);
 	const xhr = new window.XMLHttpRequest();
 
 	const formData = new window.FormData();

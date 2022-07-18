@@ -15,6 +15,12 @@ const changeHandler = ({ fileList }) => {
 	console.log(fileList);
 };
 const onError = (e) => {
-	console.log(e);
+	console.log('error: ', e);
+};
+const beforeUpload = () => {
+	console.log('before upload...');
+	return new Promise((resolve, reject) => {
+		resolve(false);
+	});
 };
 </script>
