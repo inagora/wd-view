@@ -85,7 +85,7 @@
 </template>
 
 <script lang="ts">
-import { defineComponent, ref } from 'vue';
+import { defineComponent, ref, watch } from 'vue';
 import upload from './request.js';
 export default defineComponent({
 	name: 'wd-upload',
@@ -145,6 +145,7 @@ export default defineComponent({
 		},
 	},
 	emits: ['change'],
+	// 清除之后需要抛出事件
 	setup(props, { emit }) {
 		const uploadInput = ref(null);
 		const fileList = ref([]);
@@ -244,6 +245,17 @@ export default defineComponent({
 		const getFile = (fid) => {
 			return fileList.value.find((file) => (file.fid = fid));
 		};
+		watch(
+			() => props.fileList,
+			() => {
+				console.log(props.fileList);
+				changeHandler({
+					target: {
+						files: props.fileList,
+					},
+				});
+			}
+		);
 		return {
 			uploadInput,
 			fileList,
