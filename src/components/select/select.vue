@@ -1,5 +1,11 @@
 <template>
-	<popper offset-distance="0" offsetSkid="0" :disabled="selectDisabled">
+	<popper
+		offset-distance="0"
+		offsetSkid="0"
+		:disabled="selectDisabled"
+		@open:popper="openHandler"
+		@close:popper="closeHandler"
+	>
 		<div
 			ref="selectWrapper"
 			class="wd-select"
@@ -159,9 +165,16 @@
 			</div>
 		</div>
 		<template #content="{ close }">
-			<div class="wd-select-options" @click="close">
-				<slot></slot>
-			</div>
+			<teleport to="body" :disabled="!appendToBody">
+				<div
+					ref="selectOptions"
+					class="wd-select-options"
+					:style="optionsStyle"
+					@click="close"
+				>
+					<slot></slot>
+				</div>
+			</teleport>
 		</template>
 	</popper>
 </template>
@@ -177,6 +190,7 @@ import {
 	provide,
 	inject,
 	watchEffect,
+	computed,
 } from 'vue';
 import {
 	wdFormKey,
@@ -241,6 +255,10 @@ export default defineComponent({
 			type: String,
 			default: 'small',
 		},
+		appendToBody: {
+			type: Boolean,
+			default: false,
+		},
 	},
 	emits: [
 		'update:modelValue',
@@ -265,6 +283,7 @@ export default defineComponent({
 		const { emit } = context;
 		const slots = context.slots;
 		const selectSelector = ref(null);
+		const selectOptions = ref(null);
 		const selectWrapper = ref<HTMLElement | null>(null);
 		const isMultiple = ref(props.multiple);
 		const placeholder = ref(props.placeholder);
@@ -418,12 +437,48 @@ export default defineComponent({
 						}
 					});
 				}
+				computePosition();
 			}
 		);
+
+		// 处理appendToBody后的options位置
+		const optionsPosition = ref({
+			top: 0,
+			left: 0,
+			width: 150,
+		});
+		const optionsStyle = computed(() => {
+			return props.appendToBody
+				? {
+						top: `${optionsPosition.value.top}px`,
+						left: `${optionsPosition.value.left}px`,
+						width: `${optionsPosition.value.width}px`,
+						position: 'absolute',
+						display: 'none',
+				  }
+				: {};
+		});
+		const computePosition = () => {
+			if (props.appendToBody) {
+				const selectSelectorRect = selectSelector.value.getBoundingClientRect();
+				optionsPosition.value.top =
+					selectSelectorRect.top + selectSelectorRect.height + 5;
+				optionsPosition.value.left = selectSelectorRect.left;
+				optionsPosition.value.width = selectSelectorRect.width;
+			}
+		};
+
+		const openHandler = () => {
+			optionsStyle.value.display = 'block';
+		};
+		const closeHandler = () => {
+			optionsStyle.value.display = 'none';
+		};
 
 		return {
 			sizeMap,
 			selectSelector,
+			selectOptions,
 			selectWrapper,
 			visibleChange,
 			selectedValue,
@@ -442,6 +497,9 @@ export default defineComponent({
 			selectDisabled,
 			optionsArray,
 			selectedItem,
+			optionsStyle,
+			openHandler,
+			closeHandler,
 		};
 	},
 });

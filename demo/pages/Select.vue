@@ -20,6 +20,7 @@
 					<wd-option label="3必应" value="bing3">hhh</wd-option>
 				</wd-select>
 				<wd-select
+					:append-to-body="true"
 					v-model="selectedValue1"
 					@change="selectedChangeHandler1"
 					placeholder="请选择搜索引擎"
