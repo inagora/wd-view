@@ -458,7 +458,7 @@ export default defineComponent({
 			if (props.appendToBody) {
 				const selectSelectorRect = selectSelector.value.getBoundingClientRect();
 				optionsPosition.value.top =
-					selectSelectorRect.top + selectSelectorRect.height + 5;
+					selectSelectorRect.top + selectSelectorRect.height;
 				optionsPosition.value.left = selectSelectorRect.left;
 				optionsPosition.value.width = selectSelectorRect.width;
 			}

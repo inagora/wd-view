@@ -17,7 +17,10 @@
 	position: relative;
 	clear: both;
 	background: @table-bg;
-	overflow: auto;
+
+	&-content {
+		height: 100vh;
+	}
 
 	&-body {
 		transition: opacity 0.3s;
@@ -719,7 +722,7 @@
 	&-fixed-header {
 		top: 0;
 		position: sticky;
-		z-index: 99;
+		z-index: 1001;
 	}
 
 	&-fixed-left {
