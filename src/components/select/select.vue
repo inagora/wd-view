@@ -1,11 +1,5 @@
 <template>
-	<popper
-		offset-distance="0"
-		offsetSkid="0"
-		:disabled="selectDisabled"
-		@open:popper="openHandler"
-		@close:popper="closeHandler"
-	>
+	<popper offset-distance="0" offsetSkid="0" :disabled="selectDisabled">
 		<div
 			ref="selectWrapper"
 			class="wd-select"
@@ -14,6 +8,7 @@
 				'wd-select-' + inputSize,
 				multiple ? ' wd-select-multiple' : ' wd-select-single',
 			]"
+			@click="openHandler"
 		>
 			<div class="select-trigger">
 				<div
@@ -109,6 +104,7 @@
 					tabindex="1"
 					ref="selectSelector"
 					class="wd-select-selector"
+					@blur="closeHandler"
 				>
 					<!-- <span class="wd-select-selection-search">
           <input
@@ -356,6 +352,7 @@ export default defineComponent({
 		// option item 点击
 		const optionClickHandler = (value) => {
 			setSelectedValue(value);
+			closeHandler();
 		};
 		// 设置选择的值
 		const setSelectedValue = (val: optionType) => {
@@ -447,16 +444,15 @@ export default defineComponent({
 			left: 0,
 			width: 150,
 		});
-		const optionsStyle = computed(() => {
-			return props.appendToBody
-				? {
-						top: `${optionsPosition.value.top}px`,
-						left: `${optionsPosition.value.left}px`,
-						width: `${optionsPosition.value.width}px`,
-						position: 'absolute',
-						display: 'none',
-				  }
-				: {};
+		let optionsStyle = props.appendToBody
+			? ref({ display: 'none', position: 'absolute' } as any)
+			: ref({});
+		watchEffect(() => {
+			if (props.appendToBody) {
+				optionsStyle.value.top = `${optionsPosition.value.top}px`;
+				optionsStyle.value.left = `${optionsPosition.value.left}px`;
+				optionsStyle.value.width = `${optionsPosition.value.width}px`;
+			}
 		});
 		const computePosition = () => {
 			if (props.appendToBody) {
@@ -472,7 +468,9 @@ export default defineComponent({
 			optionsStyle.value.display = 'block';
 		};
 		const closeHandler = () => {
-			optionsStyle.value.display = 'none';
+			setTimeout(() => {
+				optionsStyle.value.display = 'none';
+			}, 100);
 		};
 
 		return {
