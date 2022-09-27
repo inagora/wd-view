@@ -46,25 +46,27 @@
 							></slot>
 						</template>
 					</table-body>
-					<slot name="footer"></slot>
 				</div>
 			</div>
-			<wd-pagination
-				v-if="pagination"
-				class="wd-table-pagination"
-				:page-size="pageSize"
-				:page-count="pageCount"
-				:pager-count="pagerCount"
-				:total="total"
-				:show-total="showTotal"
-				:position="paginationPosition"
-				:current-page="currentPage"
-				@current-change="pageChangeHandler"
-				@prev-click="prevClickChangeHandler"
-				@next-click="nextClickChangeHandler"
-			></wd-pagination>
+			<slot name="footer"></slot>
+
 			<!-- <div v-if="loading">loading...</div> -->
 		</div>
+		<wd-pagination
+			v-if="pagination"
+			class="wd-table-pagination"
+			:page-size="pageSize"
+			:page-count="pageCount"
+			:pager-count="pagerCount"
+			:total="total"
+			:show-total="showTotal"
+			:position="paginationPosition"
+			:current-page="currentPage"
+			:is-show-page="isShowPage"
+			@current-change="pageChangeHandler"
+			@prev-click="prevClickChangeHandler"
+			@next-click="nextClickChangeHandler"
+		></wd-pagination>
 	</wd-loading>
 </template>
 
@@ -161,6 +163,10 @@ export default defineComponent({
 			type: Array,
 		},
 		showTotal: [Boolean, Object],
+		isShowPage: {
+			type: Boolean,
+			default: true,
+		},
 	},
 	emits: [
 		'current-change',

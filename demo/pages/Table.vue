@@ -42,6 +42,7 @@
 			:sticky="true"
 			:total="total"
 			:loading="loading"
+			:is-show-page="false"
 			text="数据加载中"
 			empty-text="现在还没有数据噢~"
 			@current-change="pageChangeHandler"

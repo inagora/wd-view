@@ -18,71 +18,73 @@
 				<wd-icon icon="bi-chevron-left" />
 			</a>
 		</li>
-		<li
-			v-if="pageCount > 0"
-			:class="{ 'wd-pagination-item-active': newCurrentPage === 1, disabled }"
-			class="wd-pagination-item wd-pagination-item-1"
-			@click="pageClickHandler(1)"
-		>
-			<a>1</a>
-		</li>
-		<li
-			v-if="showPrevMore"
-			class="wd-pagination-jump-prev wd-pagination-jump-prev-custom-icon"
-			@mouseenter="onMouseenter('left')"
-			@mouseleave="quickprevIconClass = 'icon-more'"
-			@click="moreLeftClickHandler"
-		>
-			<a class="wd-pagination-item-link">
-				<div class="wd-pagination-item-container">
-					<wd-icon
-						v-if="quickprevIconClass === 'arrow-left'"
-						icon="bi-chevron-double-left"
-					/>
-					<span v-else class="wd-pagination-item-ellipsis">···</span>
-				</div>
-			</a>
-		</li>
-		<li
-			class="wd-pagination-item"
-			:class="[
-				page === newCurrentPage ? 'wd-pagination-item-active' : '',
-				'wd-pagination-item-' + page,
-			]"
-			v-for="page in pagers"
-			:key="page"
-			@click="pageClickHandler(page)"
-		>
-			<a>{{ page }}</a>
-		</li>
-		<li
-			v-if="showNextMore"
-			class="wd-pagination-jump-next wd-pagination-jump-next-custom-icon"
-			@mouseenter="onMouseenter('right')"
-			@mouseleave="quicknextIconClass = 'icon-more'"
-			@click="moreRightClickHandler"
-		>
-			<a class="wd-pagination-item-link">
-				<div class="wd-pagination-item-container">
-					<wd-icon
-						v-if="quicknextIconClass === 'arrow-right'"
-						icon="bi-chevron-double-right"
-					/>
-					<span v-else class="wd-pagination-item-ellipsis">···</span>
-				</div>
-			</a>
-		</li>
-		<li
-			v-if="pageCount > 1"
-			:class="[
-				newCurrentPage === pageCount ? 'wd-pagination-item-active' : '',
-				'wd-pagination-item-' + pageCount,
-			]"
-			class="wd-pagination-item"
-			@click="pageClickHandler(pageCount)"
-		>
-			<a>{{ pageCount }}</a>
-		</li>
+		<template v-if="isShowPage">
+			<li
+				v-if="pageCount > 0"
+				:class="{ 'wd-pagination-item-active': newCurrentPage === 1, disabled }"
+				class="wd-pagination-item wd-pagination-item-1"
+				@click="pageClickHandler(1)"
+			>
+				<a>1</a>
+			</li>
+			<li
+				v-if="showPrevMore"
+				class="wd-pagination-jump-prev wd-pagination-jump-prev-custom-icon"
+				@mouseenter="onMouseenter('left')"
+				@mouseleave="quickprevIconClass = 'icon-more'"
+				@click="moreLeftClickHandler"
+			>
+				<a class="wd-pagination-item-link">
+					<div class="wd-pagination-item-container">
+						<wd-icon
+							v-if="quickprevIconClass === 'arrow-left'"
+							icon="bi-chevron-double-left"
+						/>
+						<span v-else class="wd-pagination-item-ellipsis">···</span>
+					</div>
+				</a>
+			</li>
+			<li
+				class="wd-pagination-item"
+				:class="[
+					page === newCurrentPage ? 'wd-pagination-item-active' : '',
+					'wd-pagination-item-' + page,
+				]"
+				v-for="page in pagers"
+				:key="page"
+				@click="pageClickHandler(page)"
+			>
+				<a>{{ page }}</a>
+			</li>
+			<li
+				v-if="showNextMore"
+				class="wd-pagination-jump-next wd-pagination-jump-next-custom-icon"
+				@mouseenter="onMouseenter('right')"
+				@mouseleave="quicknextIconClass = 'icon-more'"
+				@click="moreRightClickHandler"
+			>
+				<a class="wd-pagination-item-link">
+					<div class="wd-pagination-item-container">
+						<wd-icon
+							v-if="quicknextIconClass === 'arrow-right'"
+							icon="bi-chevron-double-right"
+						/>
+						<span v-else class="wd-pagination-item-ellipsis">···</span>
+					</div>
+				</a>
+			</li>
+			<li
+				v-if="pageCount > 1"
+				:class="[
+					newCurrentPage === pageCount ? 'wd-pagination-item-active' : '',
+					'wd-pagination-item-' + pageCount,
+				]"
+				class="wd-pagination-item"
+				@click="pageClickHandler(pageCount)"
+			>
+				<a>{{ pageCount }}</a>
+			</li>
+		</template>
 		<li
 			class="wd-pagination-next"
 			:class="{ 'wd-pagination-disabled': newCurrentPage === pageCount }"
@@ -162,6 +164,10 @@ export default defineComponent({
 			default: 'right',
 		},
 		showTotal: [Boolean, Object],
+		isShowPage: {
+			type: Boolean,
+			default: true,
+		},
 	},
 	emits: ['current-change', 'prev-click', 'next-click'],
 	setup(props: PropsType, { emit }) {
