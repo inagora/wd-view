@@ -11,7 +11,10 @@
 			</colgroup>
 			<tbody class="wd-table-tbody">
 				<tr
-					class="wd-table-row"
+					:class="[
+						'wd-table-row',
+						clickRowIndex === rowIndex ? 'wd-table-row-clicked' : '',
+					]"
 					v-for="(row, rowIndex) in dataSource"
 					:key="rowIndex"
 					@click="rowClickHandler(row)"
@@ -109,6 +112,7 @@ export default defineComponent({
 	},
 	emits: ['select-change', 'cell-click', 'row-click'],
 	setup(props, { emit, slots }) {
+		const clickRowIndex = ref(-1);
 		const { dataSource } = toRefs(reactive(props.store));
 		const selectChangeHandler = (val, index) => {
 			const store: any = toRefs(reactive(props.store));
@@ -118,6 +122,7 @@ export default defineComponent({
 		const cellClickHandler = (type, row, rowIndex, dataIndex, value) => {
 			if (type === 'checkbox') return; // 如果点击的是选择列则不处理
 			const clickRow = { ...row };
+			clickRowIndex.value = rowIndex;
 			emit('cell-click', { row: clickRow, rowIndex, dataIndex, value });
 		};
 		const rowClickHandler = (row) => {
@@ -207,6 +212,7 @@ export default defineComponent({
 			isCustom,
 			filterColumnStyle,
 			renderColumn,
+			clickRowIndex,
 		};
 	},
 });
