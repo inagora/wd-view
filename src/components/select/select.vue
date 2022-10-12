@@ -8,7 +8,6 @@
 				'wd-select-' + inputSize,
 				multiple ? ' wd-select-multiple' : ' wd-select-single',
 			]"
-			@click="openHandler"
 		>
 			<div class="select-trigger">
 				<div
@@ -104,7 +103,6 @@
 					tabindex="1"
 					ref="selectSelector"
 					class="wd-select-selector"
-					@blur="closeHandler"
 				>
 					<!-- <span class="wd-select-selection-search">
           <input
@@ -161,16 +159,9 @@
 			</div>
 		</div>
 		<template #content="{ close }">
-			<teleport to="body" :disabled="!appendToBody">
-				<div
-					ref="selectOptions"
-					class="wd-select-options"
-					:style="optionsStyle"
-					@click="close"
-				>
-					<slot></slot>
-				</div>
-			</teleport>
+			<div class="wd-select-options" @click="close">
+				<slot></slot>
+			</div>
 		</template>
 	</popper>
 </template>
