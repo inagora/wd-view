@@ -34,7 +34,7 @@ module.exports = {
         text: '组件',
         children: [
           {
-            text: 'layout',
+            text: 'Layout 布局',
             link: '/layout'
           },
           {
@@ -48,6 +48,22 @@ module.exports = {
           {
             text: 'Datepicker 日期选择器',
             link: '/datepicker'
+          },
+          {
+            text: 'Dialog 弹窗',
+            link: '/dialog'
+          },
+          {
+            text: 'Modal 对话框',
+            link: '/modal'
+          },
+          {
+            text: 'Message 消息提示',
+            link: '/message'
+          },
+          {
+            text: 'Drawer 抽屉',
+            link: '/drawer'
           },
           {
             text: 'Dropdown 下拉列表',
@@ -68,6 +84,10 @@ module.exports = {
           {
             text: 'Link 链接',
             link: '/link'
+          },
+          {
+            text: 'Loading 加载中',
+            link: '/loading'
           },
           {
             text: 'Menu 菜单',

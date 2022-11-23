@@ -33,13 +33,17 @@
 
 ::: details 点击查看代码 
 ```html
-<wd-radio
-  v-model="isRadioChecked"
-  :checked="isRadioChecked"
-  name="color"
-  @change="handleRadioChange"
->
-  红色
-</wd-radio>
+<wd-layout has-sider="true">
+  <wd-layout-sider>
+    <wd-menu
+      :menu-list="[{text: '表单组件', submenu: [{text: 'Button'}]}, {text: '表单组件', submenu: [{text: 'Button'}]},{text: '表单组件', submenu: [{text: 'Button'}]}]"
+      theme="dark"
+      @click="menuClickHandler"
+    />
+  </wd-layout-sider>
+  <wd-layout-content>
+    content
+  </wd-layout-content>
+</wd-layout>
 ```
 :::

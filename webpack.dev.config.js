@@ -15,7 +15,7 @@ const config = {
 		contentBase: false,
 		// publicPath: './dist',
 		hot: true,
-		host: '0.0.0.0',
+		// host: '0.0.0.0',
 		port: 8090,
 		open: true,
 		// hotOnly: true,
