@@ -86,6 +86,7 @@ const install = async (app: App): void => {
 	});
 	app.config.globalProperties.$toast = WdToast;
 	app.config.globalProperties.$message = WdMessage;
+  app.config.warnHandler = () => null;
 };
 export {
 	WdLink,
