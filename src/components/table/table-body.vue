@@ -1,5 +1,5 @@
 <template>
-	<div class="wd-table-body" v-if="dataSource.length > 0">
+	<div class="wd-table-body" v-if="dataSource.length > 0" :style="{ height }">
 		<table border="0" cellpadding="0" cellspacing="0">
 			<!-- 设置对齐 -->
 			<colgroup>
@@ -97,7 +97,16 @@
 </template>
 <script lang="ts">
 // @ts-nocheck
-import { defineComponent, PropType, toRefs, reactive, ref } from 'vue';
+import {
+	defineComponent,
+	PropType,
+	toRefs,
+	reactive,
+	ref,
+	nextTick,
+	onMounted,
+	watch,
+} from 'vue';
 import WdCheckbox from '../checkbox/checkbox.vue';
 import { StoreProps } from './table-type';
 export default defineComponent({
@@ -109,6 +118,7 @@ export default defineComponent({
 		emptyText: String,
 		isShowLeftShadow: Boolean,
 		isShowRightShadow: Boolean,
+		dataSource: Object,
 	},
 	emits: ['select-change', 'cell-click', 'row-click'],
 	setup(props, { emit, slots }) {
@@ -146,14 +156,14 @@ export default defineComponent({
 				return {
 					position: column.fixed ? 'sticky' : '',
 					left: leftOffset + 'px',
-					zIndex: 1000 - index,
+					zIndex: 500 - index,
 				};
 			} else if (column.fixed === 'right') {
 				const rightOffset = getOffset(column, 'right');
 				return {
 					position: column.fixed ? 'sticky' : '',
 					right: rightOffset + 'px',
-					zIndex: 1000 - index,
+					zIndex: 500 - index,
 				};
 			} else {
 				return {};
@@ -203,6 +213,28 @@ export default defineComponent({
 		if (slots.custom) {
 			isCustom.value = true;
 		}
+		const height = ref('');
+		const getTableBodyHeight = () => {
+			nextTick(() => {
+				const tableBody = document.querySelector('.wd-table-tbody');
+				const boundRect = tableBody.getBoundingClientRect();
+				const layoutFooter = document.querySelector('.wd-layout-footer');
+				const tableFooter = document.querySelector('.wd-table-footer');
+				height.value =
+					document.body.clientHeight -
+					boundRect.top -
+					50 -
+					(layoutFooter ? layoutFooter.clientHeight : 0) -
+					(tableFooter ? tableFooter.clientHeight : 0) +
+					'px';
+			});
+		};
+		watch(
+			() => props.dataSource,
+			() => {
+				getTableBodyHeight();
+			}
+		);
 		return {
 			selectChangeHandler,
 			cellClickHandler,
@@ -213,6 +245,7 @@ export default defineComponent({
 			filterColumnStyle,
 			renderColumn,
 			clickRowIndex,
+			height,
 		};
 	},
 });

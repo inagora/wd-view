@@ -165,7 +165,7 @@ export default defineComponent({
 				return {
 					position: column.fixed ? 'sticky' : '',
 					left: leftOffset + 'px',
-					zIndex: 1000 - index,
+					zIndex: 500 - index,
 					backgroundColor: '#ffffff',
 				};
 			} else if (column.fixed === 'right') {
@@ -173,7 +173,7 @@ export default defineComponent({
 				return {
 					position: column.fixed ? 'sticky' : '',
 					right: rightOffset + 'px',
-					zIndex: 1000 - index,
+					zIndex: 500 - index,
 					backgroundColor: '#ffffff',
 				};
 			} else {

@@ -48,8 +48,9 @@
 					</table-body>
 				</div>
 			</div>
-			<slot name="footer"></slot>
-
+			<!-- <div class="wd-table-footer">
+				<slot name="footer"></slot>
+			</div> -->
 			<!-- <div v-if="loading">loading...</div> -->
 		</div>
 		<wd-pagination
