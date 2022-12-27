@@ -119,6 +119,8 @@ export default defineComponent({
 		isShowLeftShadow: Boolean,
 		isShowRightShadow: Boolean,
 		dataSource: Object,
+		fixedHeight: Boolean,
+		height: String,
 	},
 	emits: ['select-change', 'cell-click', 'row-click'],
 	setup(props, { emit, slots }) {
@@ -215,18 +217,24 @@ export default defineComponent({
 		}
 		const height = ref('');
 		const getTableBodyHeight = () => {
+			if (!props.fixedHeight) {
+				return;
+			}
 			nextTick(() => {
 				const tableBody = document.querySelector('.wd-table-tbody');
-				const boundRect = tableBody.getBoundingClientRect();
-				const layoutFooter = document.querySelector('.wd-layout-footer');
-				const tableFooter = document.querySelector('.wd-table-footer');
-				height.value =
-					document.body.clientHeight -
-					boundRect.top -
-					50 -
-					(layoutFooter ? layoutFooter.clientHeight : 0) -
-					(tableFooter ? tableFooter.clientHeight : 0) +
-					'px';
+				if (tableBody) {
+					const boundRect = tableBody.getBoundingClientRect();
+					const layoutFooter = document.querySelector('.wd-layout-footer');
+					const tableFooter = document.querySelector('.wd-table-footer');
+					height.value = props.height
+						? props.height
+						: document.body.clientHeight -
+						  boundRect.top -
+						  50 -
+						  (layoutFooter ? layoutFooter.clientHeight : 0) -
+						  (tableFooter ? tableFooter.clientHeight : 0) +
+						  'px';
+				}
 			});
 		};
 		watch(
@@ -235,6 +243,12 @@ export default defineComponent({
 				getTableBodyHeight();
 			}
 		);
+		onMounted(() => {
+			getTableBodyHeight();
+			window.onresize = () => {
+				getTableBodyHeight();
+			};
+		});
 		return {
 			selectChangeHandler,
 			cellClickHandler,

@@ -33,6 +33,8 @@
 						:empty-text="emptyText"
 						:is-show-left-shadow="isShowLeftShadow"
 						:is-show-right-shadow="isShowRightShadow"
+						:height="height"
+						:fixedHeight="fixedHeight"
 						@select-change="selectChangeHandler"
 						@cell-click="cellClickHandler"
 						@row-click="rowClickHandler"
@@ -137,7 +139,6 @@ export default defineComponent({
 			type: String,
 			default: 'right',
 		},
-		height: String,
 		headerAlign: {
 			type: String,
 			default: 'left',
@@ -165,6 +166,14 @@ export default defineComponent({
 		},
 		showTotal: [Boolean, Object],
 		isShowPage: {
+			type: Boolean,
+			default: true,
+		},
+		height: {
+			type: String,
+			default: '',
+		},
+		fixedHeight: {
 			type: Boolean,
 			default: true,
 		},

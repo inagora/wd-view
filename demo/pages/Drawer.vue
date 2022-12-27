@@ -3,7 +3,7 @@
 	<wd-drawer
 		v-model="centerDialogVisible"
 		title="Notice"
-		width="40%"
+		width="70%"
 		:show-close="true"
 		@open="openHandler"
 		@before-open="beforeOpen"
@@ -17,6 +17,20 @@
 		<span>
 			<x-form />
 		</span>
+		<wd-table
+			ref="wdTable"
+			:columns="tableColumns"
+			:data-source="dataList"
+			:page-count="2"
+			:current-page="1"
+			:cell-wrap="true"
+			:sticky="true"
+			:total="100"
+			:fixed-height="false"
+			text="数据加载中"
+			empty-text="现在还没有数据噢~"
+		>
+		</wd-table>
 		<template #footer>
 			<wd-button type="primary" @click="centerDialogVisible = false"
 				>确定</wd-button
@@ -42,6 +56,72 @@ export default defineComponent({
 		const beforeClose = () => {
 			console.log('before close');
 		};
+		// table数据
+		const tableColumns = [
+			{
+				title: 'ID',
+				dataIndex: 'id',
+				key: 'id',
+			},
+			{
+				title: '商品名',
+				dataIndex: 'goods_name',
+				key: 'goods_name',
+				ellipsis: true,
+				fixed: 'left',
+			},
+			{
+				title: '价格',
+				dataIndex: 'price',
+				key: 'price',
+				fixed: 'left',
+			},
+			{
+				title: '生产日期',
+				dataIndex: 'ctime',
+				key: 'ctime',
+				fixed: 'right',
+			},
+			{
+				title: '产地',
+				dataIndex: 'location',
+				key: 'location',
+			},
+			{
+				title: '更新时间',
+				dataIndex: 'update_time',
+				key: 'update_time',
+			},
+			{
+				title: '操作',
+				dataIndex: 'action',
+				key: 'action',
+				fixed: 'right',
+				width: '300px',
+			},
+		];
+		let dataList = ref([]);
+		let total = ref(0);
+		const currentPage = ref(1);
+		const rowData = [];
+
+		setTimeout(() => {
+			for (let i = 0; i < 15; i++) {
+				rowData.push({
+					id: '' + (4 + i),
+					goods_name: 'sk4',
+					price: '1180',
+					ctime:
+						i > 18
+							? '2021-09-26 2021-09-26 2021-09-26 2021-09-26 2021-09-26'
+							: '',
+					update_time: '2021-09-26',
+					location: '中国',
+				});
+			}
+			total.value = 200;
+			dataList.value = rowData;
+		}, 2000);
 		watch(
 			() => props.show,
 			(val) => {
@@ -54,6 +134,8 @@ export default defineComponent({
 			openHandler,
 			beforeOpen,
 			beforeClose,
+			dataList,
+			tableColumns,
 		};
 	},
 });
