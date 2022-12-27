@@ -38,7 +38,7 @@
 			:data-source="dataList"
 			:page-count="pageCount"
 			:current-page="currentPage"
-			:cell-wrap="false"
+			:cell-wrap="true"
 			:sticky="true"
 			:total="total"
 			:loading="loading"
@@ -176,7 +176,10 @@ export default defineComponent({
 					id: '' + (4 + i),
 					goods_name: 'sk4',
 					price: '1180',
-					ctime: '2021-09-26 2021-09-26 2021-09-26 2021-09-26 2021-09-26',
+					ctime:
+						i > 18
+							? '2021-09-26 2021-09-26 2021-09-26 2021-09-26 2021-09-26'
+							: '',
 					update_time: '2021-09-26',
 					location: '中国',
 				});
@@ -220,7 +223,10 @@ export default defineComponent({
 						id: '' + (4 + i),
 						goods_name: 'sk4',
 						price: '1180',
-						ctime: '2021-09-26',
+						ctime:
+							i > 35
+								? '2021-09-262021-09-262021-09-262021-09-262021-09-262021-09-26'
+								: '',
 						update_time: '2021-09-26',
 						location: '中国',
 					});

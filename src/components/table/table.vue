@@ -277,7 +277,9 @@ export default defineComponent({
 			store.dataSource = reactive(props.dataSource);
 		});
 		onMounted(() => {
-			wdTable.value.addEventListener('scroll', (e) => {
+			const wdTableContent: any = document.querySelector('.wd-table-content');
+
+			wdTableContent.addEventListener('scroll', (e) => {
 				let scrollLeft = e.target.scrollLeft;
 				if (scrollLeft === 0) {
 					// 滚动到最左边

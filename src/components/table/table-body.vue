@@ -25,10 +25,10 @@
 								? 'wd-table-selection-column'
 								: '',
 							column.leftLast && isShowLeftShadow
-								? 'wd-table-fixed-left wd-table-fixed-left-last'
+								? 'wd-table-fixed-left-last'
 								: '',
 							column.rightFirst && isShowRightShadow
-								? 'wd-table-fixed-right wd-table-fixed-right-first'
+								? 'wd-table-fixed-right-first'
 								: '',
 						]"
 						v-for="(column, colIndex) in store.columns"
