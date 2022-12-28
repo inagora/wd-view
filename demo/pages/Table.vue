@@ -74,7 +74,7 @@
 					<div>自定义</div>
 				</template>
 			</template>
-			<template #footer> 这里是footer </template>
+			<!-- <template #footer> 这里是footer </template> -->
 		</wd-table>
 		<drawer v-model="isDrawerOpen" :show="isDrawerOpen"></drawer>
 	</div>
