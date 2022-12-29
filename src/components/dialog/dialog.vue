@@ -7,7 +7,11 @@
 			@after-enter="animaAfterEnter"
 			@after-leave="animaAfterLeave"
 		>
-			<div class="wd-dialog-mask" v-show="visible" @click="maskClickHandler">
+			<div
+				:class="['wd-dialog-mask', centered ? 'wd-dialog-centered' : '']"
+				v-show="visible"
+				@click="maskClickHandler"
+			>
 				<div
 					ref="dialogRef"
 					:class="['wd-dialog', customClass, type ? 'wd-dialog-' + type : '']"
@@ -126,7 +130,7 @@
 							</button>
 						</div>
 						<template v-if="rendered">
-							<div class="wd-dialog-body">
+							<div class="wd-dialog-body" :style="bodyStyle" v-bind="$attrs">
 								<slot></slot>
 							</div>
 						</template>
@@ -153,6 +157,7 @@ declare type TimeoutHandle = ReturnType<typeof global.setTimeout>;
 
 export default defineComponent({
 	name: 'WdDialog',
+	inheritAttrs: false,
 	props: {
 		appendToBody: {
 			type: Boolean,
@@ -206,6 +211,19 @@ export default defineComponent({
 			type: String,
 			default: '',
 		},
+		open: {
+			// 使用open控制时，必须要调用close
+			type: Boolean,
+			default: false,
+		},
+		centered: {
+			type: Boolean,
+			default: false,
+		},
+		bodyStyle: {
+			type: Object,
+			default: {},
+		},
 	},
 	emits: ['close', 'open', 'before-close', 'before-open', 'update:modelValue'],
 	setup(props, ctx) {
@@ -234,7 +252,7 @@ export default defineComponent({
 
 		const style = computed(() => {
 			const style = {} as CSSProperties;
-			style.marginTop = props.top;
+			style.marginTop = !props.centered && props.top;
 			if (props.width) {
 				style.width = normalizeWidth();
 			}
@@ -264,9 +282,8 @@ export default defineComponent({
 			visible.value = true;
 		};
 		const doClose = () => {
-			visible.value = false;
-			ctx.emit('close');
 			ctx.emit('update:modelValue', false);
+			visible.value = false;
 		};
 		const animaAfterEnter = () => {
 			ctx.emit('open');
@@ -286,21 +303,31 @@ export default defineComponent({
 		watch(
 			() => props.modelValue,
 			(val) => {
-				if (val) {
-					closed.value = false;
-					open();
-					rendered.value = true; // enables lazy rendering
-					zIndex.value = props.zIndex ? zIndex.value++ : 99;
-				} else {
-					// this.$el.removeEventListener('scroll', this.updatePopper
-					if (visible.value) {
-						close();
-					}
-				}
+				openChange(val);
 			}
 		);
+		watch(
+			() => props.open,
+			(val) => {
+				openChange(val);
+			}
+		);
+		// open或者modelValue变化
+		const openChange = (val) => {
+			if (val) {
+				closed.value = false;
+				open();
+				rendered.value = true; // enables lazy rendering
+				zIndex.value = props.zIndex ? zIndex.value++ : 99;
+			} else {
+				// this.$el.removeEventListener('scroll', this.updatePopper
+				if (visible.value) {
+					close();
+				}
+			}
+		};
 		onMounted(() => {
-			if (props.modelValue) {
+			if (props.modelValue || props.open) {
 				closed.value = false;
 				rendered.value = true;
 				doOpen();

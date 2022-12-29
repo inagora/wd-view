@@ -1,23 +1,29 @@
 <template>
 	<wd-button @click="centerDialogVisible = true">show dialog</wd-button>
 	<wd-dialog
-		v-model="centerDialogVisible"
+		:open="centerDialogVisible"
 		title="Notice"
 		width="40%"
+		:centered="true"
 		:show-close="true"
+		class="my-class"
+		:bodyStyle="{ maxHeight: '300px', overflow: 'scroll' }"
 		@open="openHandler"
+		@close="closeHandler"
 		@before-open="beforeOpen"
 		@before-close="beforeClose"
 		:append-to-body="false"
 		:closeOnClickModal="false"
 		:destroy-on-close="true"
 	>
-		<span
+		<span v-for="item in 20" :key="item"
 			>Notice: before dialog gets opened for the first time this node and the
 			one bellow will not be rendered</span
 		>
 		<template #footer>
-			<wd-button type="primary">确定</wd-button>
+			<wd-button type="primary" @click="centerDialogVisible = false"
+				>确定</wd-button
+			>
 		</template>
 	</wd-dialog>
 </template>
@@ -37,6 +43,10 @@ export default {
 		const beforeClose = () => {
 			console.log('before close');
 		};
+		const closeHandler = () => {
+			console.log('close');
+			centerDialogVisible.value = false;
+		};
 		const centerDialogVisible = ref(false);
 		return {
 			showDialog,
@@ -44,6 +54,7 @@ export default {
 			openHandler,
 			beforeOpen,
 			beforeClose,
+			closeHandler,
 		};
 	},
 };
