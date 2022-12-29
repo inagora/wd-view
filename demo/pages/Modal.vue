@@ -33,7 +33,42 @@ export default {
 					console.log(wm);
 					wm.destroy();
 				},
+				onCancel() {
+					return new Promise((resolve, reject) => {
+						setTimeout(() => {
+							console.log(123);
+							resolve(true);
+						}, 2000);
+					});
+				},
+				buttons: [
+					{
+						type: 'primary',
+						text: '自定义按钮',
+						size: 'small',
+						click() {
+							return new Promise((resolve, reject) => {
+								setTimeout(() => {
+									console.log(123);
+									resolve(true);
+								}, 2000);
+							});
+						},
+					},
+				],
 			});
+			// const wm = WdModal.alert({
+			// 	title: 'alert',
+			// 	content: '这里是alert',
+			// 	onConfirm() {
+			// 		return new Promise((resolve, reject) => {
+			// 			setTimeout(() => {
+			// 				console.log(123);
+			// 				resolve(true);
+			// 			}, 2000);
+			// 		});
+			// 	},
+			// });
 		};
 		return {
 			showModal,

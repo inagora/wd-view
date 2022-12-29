@@ -17,7 +17,11 @@ const Modal = (options) => {
   if(options.isShowConfirmButton) {
     footerSlots.push(createVNode(WdButton, {type: 'primary', size: 'small', onClick: () => {
       if(options.onConfirm) {
-        options.onConfirm();
+        Promise.resolve(options.onConfirm()).then((val) => {
+          if(val !== false) {
+            vm.component.props.modelValue = false;
+          }
+        })
       } else {
         vm.component.props.modelValue = false;
       }
@@ -27,8 +31,16 @@ const Modal = (options) => {
   }
   if(options.isShowCancelButton) {
     footerSlots.push(createVNode(WdButton, { size: 'small', onClick: () => {
-      options.onCancel && options.onCancel();
-      vm.component.props.modelValue = false;
+      // options.onCancel && options.onCancel();
+      if(options.onCancel) {
+        Promise.resolve(options.onCancel()).then((val) => {
+          if(val !== false) {
+            vm.component.props.modelValue = false;
+          }
+        }) 
+      } else {
+        vm.component.props.modelValue = false;
+      }
     }}, {
       default: options.cancelButtonText || '取消'
     }));
@@ -38,7 +50,11 @@ const Modal = (options) => {
     footerSlots.length = 0;
     options.buttons.forEach(button => {
       footerSlots.push(createVNode(WdButton, {...button, onClick: () => {
-        button.click();
+        Promise.resolve(button.click()).then((val) => {
+          if(val !== false) {
+            vm.component.props.modelValue = false;
+          }
+        }) 
       }}, {
         default: button.text
       }));
