@@ -1,6 +1,7 @@
 <template>
 	<div class="container">
 		<wd-button @click="getTableRows">获取选中项</wd-button>
+		<wd-button @click="setPage">设置页码</wd-button>
 		<!-- <div class="component-box">
       <div class="component-box-top">
         <wd-form></wd-form>
@@ -42,7 +43,7 @@
 			:sticky="true"
 			:total="total"
 			:loading="loading"
-			:is-show-page="false"
+			:is-show-page="true"
 			text="数据加载中"
 			empty-text="现在还没有数据噢~"
 			@current-change="pageChangeHandler"
@@ -97,7 +98,9 @@ export default defineComponent({
 		let pageCount = ref(0);
 
 		const textData = ref('');
-
+		const setPage = () => {
+			setTableData(0);
+		};
 		// table数据
 		const tableColumns = [
 			{
@@ -283,6 +286,7 @@ export default defineComponent({
 			openDrawer,
 			total,
 			currentPage,
+			setPage,
 		};
 	},
 });

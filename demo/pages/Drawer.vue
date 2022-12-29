@@ -1,5 +1,5 @@
 <template>
-	<wd-button @click="centerDialogVisible = true">show drawer</wd-button>
+	<!-- <wd-button @click="centerDialogVisible = true">show drawer</wd-button> -->
 	<wd-drawer
 		title="Notice"
 		width="70%"
