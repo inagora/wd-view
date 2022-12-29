@@ -1,11 +1,14 @@
 <template>
-	<!-- <wd-button @click="centerDialogVisible = true">show drawer</wd-button> -->
+	<wd-button @click="centerDialogVisible = true">show drawer</wd-button>
 	<wd-drawer
-		v-model="centerDialogVisible"
 		title="Notice"
 		width="70%"
 		:show-close="true"
+		:open="centerDialogVisible"
+		:before-open="beforeOpenHandler"
+		:before-close="beforeCloseHandler"
 		@open="openHandler"
+		@close="centerDialogVisible = false"
 		@before-open="beforeOpen"
 		@before-close="beforeClose"
 		:append-to-body="true"
@@ -47,6 +50,20 @@ export default defineComponent({
 		show: Boolean,
 	},
 	setup(props) {
+		const beforeOpenHandler = () => {
+			return new Promise((resolve, reject) => {
+				setTimeout(() => {
+					resolve(false);
+				}, 2000);
+			});
+		};
+		const beforeCloseHandler = () => {
+			return new Promise((resolve, reject) => {
+				setTimeout(() => {
+					resolve(true);
+				}, 2000);
+			});
+		};
 		const openHandler = () => {
 			console.log('drawer open');
 		};
@@ -136,6 +153,8 @@ export default defineComponent({
 			beforeClose,
 			dataList,
 			tableColumns,
+			beforeOpenHandler,
+			beforeCloseHandler,
 		};
 	},
 });

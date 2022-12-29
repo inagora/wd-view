@@ -89,6 +89,12 @@ export default defineComponent({
 			type: Boolean,
 			default: false,
 		},
+		beforeClose: {
+			type: Function,
+		},
+		beforeOpen: {
+			type: Function,
+		},
 		customClass: {
 			type: String,
 			default: '',
@@ -126,6 +132,11 @@ export default defineComponent({
 			default: 'right',
 		},
 		appear: {
+			type: Boolean,
+			default: false,
+		},
+		open: {
+			// 使用open控制时，必须要调用close
 			type: Boolean,
 			default: false,
 		},
@@ -169,11 +180,36 @@ export default defineComponent({
 			return style;
 		});
 		const doOpen = () => {
-			visible.value = true;
+			if (props.beforeOpen) {
+				Promise.resolve(props.beforeOpen())
+					.then((val) => {
+						if (val) {
+							visible.value = true;
+						}
+					})
+					.catch((err) => {
+						console.log(err);
+					});
+			} else {
+				visible.value = true;
+			}
 		};
 		const doClose = () => {
-			visible.value = false;
-			ctx.emit('update:modelValue', false);
+			if (props.beforeClose) {
+				Promise.resolve(props.beforeClose())
+					.then((val) => {
+						if (val) {
+							ctx.emit('update:modelValue', false);
+							visible.value = false;
+						}
+					})
+					.catch((err) => {
+						console.log(err);
+					});
+			} else {
+				ctx.emit('update:modelValue', false);
+				visible.value = false;
+			}
 		};
 		const animaAfterEnter = () => {
 			ctx.emit('open');
@@ -193,20 +229,29 @@ export default defineComponent({
 		watch(
 			() => props.modelValue,
 			(val) => {
-				if (val) {
-					closed.value = false;
-					doOpen();
-					rendered.value = true; // enables lazy rendering
-					zIndex.value = props.zIndex ? zIndex.value++ : 99;
-				} else {
-					if (visible.value) {
-						doClose();
-					}
-				}
+				openChange(val);
 			}
 		);
+		watch(
+			() => props.open,
+			(val) => {
+				openChange(val);
+			}
+		);
+		const openChange = (val) => {
+			if (val) {
+				closed.value = false;
+				doOpen();
+				rendered.value = true; // enables lazy rendering
+				zIndex.value = props.zIndex ? zIndex.value++ : 99;
+			} else {
+				if (visible.value) {
+					doClose();
+				}
+			}
+		};
 		onMounted(() => {
-			if (props.modelValue) {
+			if (props.modelValue || props.open) {
 				closed.value = false;
 				rendered.value = true;
 				doOpen();
