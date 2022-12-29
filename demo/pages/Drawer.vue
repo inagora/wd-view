@@ -15,7 +15,6 @@
 		:closeOnClickModal="false"
 		:destroy-on-close="false"
 		placement="right"
-		:appear="true"
 	>
 		<span>
 			<x-form />
@@ -48,12 +47,13 @@ export default defineComponent({
 	components: { XForm },
 	props: {
 		show: Boolean,
+		default: false,
 	},
 	setup(props) {
 		const beforeOpenHandler = () => {
 			return new Promise((resolve, reject) => {
 				setTimeout(() => {
-					resolve(false);
+					resolve(true);
 				}, 2000);
 			});
 		};
