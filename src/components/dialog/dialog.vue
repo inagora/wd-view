@@ -163,6 +163,12 @@ export default defineComponent({
 			type: Boolean,
 			default: false,
 		},
+		beforeClose: {
+			type: Function,
+		},
+		beforeOpen: {
+			type: Function,
+		},
 		customClass: {
 			type: String,
 			default: '',
@@ -279,11 +285,36 @@ export default defineComponent({
 			}
 		};
 		const doOpen = () => {
-			visible.value = true;
+			if (props.beforeOpen) {
+				Promise.resolve(props.beforeOpen())
+					.then((val) => {
+						if (val) {
+							visible.value = true;
+						}
+					})
+					.catch((err) => {
+						console.log(err);
+					});
+			} else {
+				visible.value = true;
+			}
 		};
 		const doClose = () => {
-			ctx.emit('update:modelValue', false);
-			visible.value = false;
+			if (props.beforeClose) {
+				Promise.resolve(props.beforeClose())
+					.then((val) => {
+						if (val) {
+							ctx.emit('update:modelValue', false);
+							visible.value = false;
+						}
+					})
+					.catch((err) => {
+						console.log(err);
+					});
+			} else {
+				ctx.emit('update:modelValue', false);
+				visible.value = false;
+			}
 		};
 		const animaAfterEnter = () => {
 			ctx.emit('open');

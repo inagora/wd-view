@@ -8,6 +8,8 @@
 		:show-close="true"
 		class="my-class"
 		:bodyStyle="{ maxHeight: '300px', overflow: 'scroll' }"
+		:before-open="beforeOpenHandler"
+		:before-close="beforeCloseHandler"
 		@open="openHandler"
 		@close="closeHandler"
 		@before-open="beforeOpen"
@@ -47,6 +49,20 @@ export default {
 			console.log('close');
 			centerDialogVisible.value = false;
 		};
+		const beforeOpenHandler = () => {
+			return new Promise((resolve, reject) => {
+				setTimeout(() => {
+					resolve(true);
+				}, 2000);
+			});
+		};
+		const beforeCloseHandler = () => {
+			return new Promise((resolve, reject) => {
+				setTimeout(() => {
+					resolve(true);
+				}, 2000);
+			});
+		};
 		const centerDialogVisible = ref(false);
 		return {
 			showDialog,
@@ -55,6 +71,8 @@ export default {
 			beforeOpen,
 			beforeClose,
 			closeHandler,
+			beforeOpenHandler,
+			beforeCloseHandler,
 		};
 	},
 };
