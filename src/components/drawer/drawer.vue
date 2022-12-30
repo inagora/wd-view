@@ -18,6 +18,7 @@
 					customClass,
 				]"
 				@click.stop=""
+				:style="{ zIndex }"
 			>
 				<div class="wd-drawer-mask" @click="maskClickHandler"></div>
 				<div class="wd-drawer-content-wrapper" :style="style">
@@ -147,7 +148,7 @@ export default defineComponent({
 		const visible = ref(false);
 		const closed = ref(false);
 		const rendered = ref(false);
-		const zIndex = ref(props.zIndex || 99);
+		const zIndex = ref(props.zIndex);
 
 		// 关闭
 		const closeDrawer = () => {
@@ -243,7 +244,6 @@ export default defineComponent({
 				closed.value = false;
 				doOpen();
 				rendered.value = true; // enables lazy rendering
-				zIndex.value = props.zIndex ? zIndex.value++ : 99;
 			} else {
 				if (visible.value) {
 					doClose();

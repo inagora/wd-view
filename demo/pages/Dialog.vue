@@ -17,6 +17,7 @@
 		:append-to-body="false"
 		:closeOnClickModal="false"
 		:destroy-on-close="true"
+		zIndex="3000"
 	>
 		<span v-for="item in 20" :key="item"
 			>Notice: before dialog gets opened for the first time this node and the

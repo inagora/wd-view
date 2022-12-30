@@ -10,6 +10,7 @@
 			<div
 				:class="['wd-dialog-mask', centered ? 'wd-dialog-centered' : '']"
 				v-show="visible"
+				:style="{ zIndex }"
 				@click="maskClickHandler"
 			>
 				<div
@@ -237,7 +238,7 @@ export default defineComponent({
 		const visible = ref(false);
 		const closed = ref(false);
 		const rendered = ref(false); // when desctroyOnClose is true, we initialize it as false vise versa
-		const zIndex = ref(props.zIndex || 99);
+		const zIndex = ref(props.zIndex);
 		const openTimer = ref<TimeoutHandle>(null);
 		const closeTimer = ref<TimeoutHandle>(null);
 		const normalizeWidth = () => {
@@ -349,7 +350,6 @@ export default defineComponent({
 				closed.value = false;
 				open();
 				rendered.value = true; // enables lazy rendering
-				zIndex.value = props.zIndex ? zIndex.value++ : 99;
 			} else {
 				// this.$el.removeEventListener('scroll', this.updatePopper
 				if (visible.value) {

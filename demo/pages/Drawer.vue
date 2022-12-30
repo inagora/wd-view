@@ -15,6 +15,7 @@
 		:closeOnClickModal="false"
 		:destroy-on-close="false"
 		placement="right"
+		zIndex="3000"
 	>
 		<span>
 			<x-form />
@@ -76,6 +77,7 @@ export default defineComponent({
 			WdMessage({
 				message: '成功',
 				type: 'success',
+				zIndex: 2000,
 			});
 			// WdModal.alert({
 			// 	content: 'test',
