@@ -24,8 +24,7 @@ const Message = (options?: WdMessageOptions | string) => {
   options = {
     ...options,
     offset: verticalOffset,
-    id,
-    zIndex: 999
+    id
   }
   const container = document.createElement('div');
   container.className = `container_${id}`;

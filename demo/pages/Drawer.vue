@@ -34,15 +34,14 @@
 		>
 		</wd-table>
 		<template #footer>
-			<wd-button type="primary" @click="centerDialogVisible = false"
-				>确定</wd-button
-			>
+			<wd-button type="primary" @click="doConfirm">确定</wd-button>
 		</template>
 	</wd-drawer>
 </template>
 <script>
 import { defineComponent, ref, watch } from 'vue';
 import XForm from './Form.vue';
+import { WdMessage, WdModal } from '../../src/index';
 export default defineComponent({
 	components: { XForm },
 	props: {
@@ -72,6 +71,21 @@ export default defineComponent({
 		};
 		const beforeClose = () => {
 			console.log('before close');
+		};
+		const doConfirm = () => {
+			WdMessage({
+				message: '成功',
+				type: 'success',
+			});
+			// WdModal.alert({
+			// 	content: 'test',
+			// 	onConfirm() {
+			// 		WdMessage({
+			// 			message: '成功',
+			// 			type: 'success',
+			// 		});
+			// 	},
+			// });
 		};
 		// table数据
 		const tableColumns = [
@@ -155,6 +169,7 @@ export default defineComponent({
 			tableColumns,
 			beforeOpenHandler,
 			beforeCloseHandler,
+			doConfirm,
 		};
 	},
 });

@@ -82,6 +82,7 @@
 <script lang="ts">
 import { defineComponent, ref, reactive, onMounted } from 'vue';
 import moment from 'moment';
+import { WdMessage } from '../../src/index';
 export default defineComponent({
 	name: 'Form',
 	setup() {
