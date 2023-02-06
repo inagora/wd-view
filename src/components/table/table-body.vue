@@ -217,7 +217,7 @@ export default defineComponent({
 		}
 		const height = ref('');
 		const getTableBodyHeight = () => {
-			if (!props.fixedHeight) {
+			if (!props.fixedHeight && !props.height) {
 				return;
 			}
 			nextTick(() => {

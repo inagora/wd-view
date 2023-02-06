@@ -10,7 +10,10 @@
 				]"
 				ref="wdTable"
 			>
-				<div class="wd-table-content">
+				<div
+					class="wd-table-content"
+					:style="{ overflowY: fixedHeight || height ? 'scroll' : 'unset' }"
+				>
 					<!-- table header -->
 					<table-header
 						v-if="showHeader"
@@ -175,7 +178,7 @@ export default defineComponent({
 		},
 		fixedHeight: {
 			type: Boolean,
-			default: true,
+			default: false,
 		},
 	},
 	emits: [
@@ -286,7 +289,9 @@ export default defineComponent({
 			store.dataSource = reactive(props.dataSource);
 		});
 		onMounted(() => {
-			const wdTableContent: any = document.querySelector('.wd-table-content');
+			const wdTableContent: any = props.fixedHeight
+				? document.querySelector('.wd-table-content')
+				: document.querySelector('.wd-table');
 
 			wdTableContent.addEventListener('scroll', (e) => {
 				let scrollLeft = e.target.scrollLeft;
