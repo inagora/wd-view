@@ -67,7 +67,7 @@ import Switch from './Switch.vue';
 import Select from './Select.vue';
 import Datepicker from './Datepicker.vue';
 import Dropdown from './Dropdown.vue';
-import moment from 'moment';
+import dayjs from 'dayjs';
 import Toast from './Toast.vue';
 import Message from './Message.vue';
 import Dialog from './Dialog.vue';
@@ -262,7 +262,7 @@ export default defineComponent({
 			}
 		};
 		const checkDate = (rule, value) => {
-			if (value > moment(new Date()).format('YYYY-MM-DD HH-mm-ss')) {
+			if (value > dayjs(new Date()).format('YYYY-MM-DD HH-mm-ss')) {
 				return Promise.reject('');
 			} else {
 				return Promise.resolve('');

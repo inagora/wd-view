@@ -1,5 +1,5 @@
 <template>
-	<div class="wd-button-group">
+	<div class="wd-btn-group">
 		<!-- <component
 			v-for="(slot, index) in slots"
 			:type="slot.props.type || type"

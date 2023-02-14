@@ -81,7 +81,7 @@
 
 <script lang="ts">
 import { defineComponent, ref, reactive, onMounted } from 'vue';
-import moment from 'moment';
+import dayjs from 'dayjs';
 import { WdMessage } from '../../src/index';
 export default defineComponent({
 	name: 'Form',
@@ -107,7 +107,7 @@ export default defineComponent({
 			}
 		};
 		const checkDate = (rule, value) => {
-			if (value > moment(new Date()).format('YYYY-MM-DD HH-mm-ss')) {
+			if (value > dayjs(new Date()).format('YYYY-MM-DD HH-mm-ss')) {
 				return Promise.reject('');
 			} else {
 				return Promise.resolve('');

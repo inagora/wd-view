@@ -1,6 +1,6 @@
 {
 	"name": "@inagora/wd-view",
-	"version": "1.2.0",
+	"version": "1.2.1",
 	"description": "基于Vue3和Typescript的UI组件库",
 	"main": "dist/index.js",
 	"scripts": {
@@ -50,7 +50,7 @@
 	"dependencies": {
 		"@babel/runtime": "^7.12.18",
 		"@popperjs/core": "^2.11.0",
-		"ant-design-vue": "^1.7.8",
+		"ant-design-vue": "^3.2.15",
 		"async-validator": "^3.4.0",
 		"lodash": "^4.17.21",
 		"mitt": "^2.1.0",
