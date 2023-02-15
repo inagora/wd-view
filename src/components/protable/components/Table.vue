@@ -206,14 +206,12 @@ onMounted(async () => {
 			item.style.display = 'none';
 		});
 	}
-	document
-		.querySelector('.wv-table')
-		.addEventListener('scroll', scrollListener);
+	const wvTableEl = document.querySelector('.wv-table');
+	wvTableEl && wvTableEl.addEventListener('scroll', scrollListener);
 });
 onUnmounted(() => {
-	document
-		.querySelector('.wv-table')
-		.removeEventListener('scroll', scrollListener);
+	const wvTableEl = document.querySelector('.wv-table');
+	wvTableEl && wvTableEl.removeEventListener('scroll', scrollListener);
 });
 const scrollListener = (e) => {
 	if (!allFixedRightEls) {

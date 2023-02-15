@@ -114,7 +114,7 @@ const changeHandler = (val, fn) => {
 					v-if="filter.type === 'select' || filter.type === 'multiple'"
 					width="150px"
 					:is="filterMap[filter.type]"
-					:placeholder="filter.placeholder"
+					:placeholder="filter.placeholder || filter.label"
 					:value="formData[filter.prop]"
 					:multiple="filter.type === 'multiple'"
 					v-model="formData[filter.prop]"
@@ -146,7 +146,7 @@ const changeHandler = (val, fn) => {
 				<component
 					v-else
 					:is="filterMap[filter.type]"
-					:placeholder="filter.placeholder"
+					:placeholder="filter.placeholder || filter.label"
 					:value="formData[filter.prop]"
 					v-model="formData[filter.prop]"
 				>

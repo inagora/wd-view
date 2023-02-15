@@ -58,7 +58,7 @@ const changeHandler = (val, fn) => {
 				<wd-select
 					v-if="filter.type === 'select' || filter.type === 'multiple'"
 					:is="filterMap[filter.type]"
-					:placeholder="filter.placeholder"
+					:placeholder="filter.placeholder || filter.label"
 					:value="formData[filter.prop]"
 					v-model="formData[filter.prop]"
 					:multiple="filter.type === 'multiple'"
@@ -88,7 +88,7 @@ const changeHandler = (val, fn) => {
 				<component
 					v-else
 					:is="filterMap[filter.type]"
-					:placeholder="filter.placeholder"
+					:placeholder="filter.placeholder || filter.label"
 					:value="formData[filter.prop]"
 					v-model="formData[filter.prop]"
 				>
