@@ -153,9 +153,19 @@ emitter.on('*', (type, e) => {
 	}
 });
 // table组件
+const itemRefs = [];
+const setItemRef = (el) => {
+	if (el) {
+		itemRefs.push(el);
+	}
+};
 const wvTable = ref(null);
 const refresh = () => {
-	wvTable.value[0].load();
+	itemRefs.forEach((item) => {
+		if (item.load) {
+			item.load();
+		}
+	});
 };
 defineExpose({
 	refresh,
@@ -168,7 +178,7 @@ onUnmounted(() => {
 <template>
 	<div ref="wvProTable" class="wv-pro-table">
 		<template v-for="(com, index) in components" :key="index">
-			<component :ref="com.name" :is="com"></component>
+			<component :ref="setItemRef" :is="com"></component>
 		</template>
 	</div>
 </template>
