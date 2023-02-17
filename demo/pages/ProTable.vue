@@ -25,7 +25,7 @@ setTimeout(() => {
 	}
 	total.value = 200;
 	dataList.value = rowData;
-	currentPage.value = 3;
+	currentPage.value = 2;
 }, 2000);
 const tableColumns = [
 	{
@@ -177,7 +177,12 @@ const config = reactive({
 			url: 'http://123.57.68.108:8080',
 			data: params,
 		});
-		console.log(res);
+		console.log('res: ', res);
+		return {
+			list: res.data.list,
+			pageCount: res.data.total_count,
+			total: res.data.total,
+		};
 	},
 	toolbar: [
 		{
@@ -263,7 +268,6 @@ const config = reactive({
 			// return [];
 		},
 		beforeDataRequest(data) {
-			data.page = 3;
 			if (sortKey) data.sortKey = sortKey;
 			return data;
 		},
