@@ -76,6 +76,7 @@ import Loading from './Loading.vue';
 import Modal from './Modal.vue';
 import Upload from './Upload.vue';
 import Tabs from './Tabs.vue';
+import ProTable from './ProTable.vue';
 export default defineComponent({
 	name: 'App',
 	components: {
@@ -99,6 +100,7 @@ export default defineComponent({
 		Modal,
 		Upload,
 		Tabs,
+		ProTable,
 	},
 	setup() {
 		let user = { name: 'niu', age: 18 };
@@ -128,7 +130,7 @@ export default defineComponent({
 			date: datepickerValue.value,
 		});
 		let userInfoForm = <any>ref();
-		let componentType = ref('datepicker');
+		let componentType = ref('pro-table');
 		let menuList = ref([]);
 		menuList.value = [
 			{
@@ -219,6 +221,10 @@ export default defineComponent({
 					{
 						text: 'Menu',
 						type: 'menu',
+					},
+					{
+						text: 'ProTable',
+						type: 'pro-table',
 					},
 					{
 						text: '其他',

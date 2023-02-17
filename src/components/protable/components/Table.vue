@@ -300,7 +300,6 @@ const load = (currentPage) => {
 								document
 									.querySelector('.wd-pagination-prev')
 									.classList.remove('wd-pagination-disabled');
-								return;
 							}
 						} else {
 							if (res.data.list.length < Math.abs(count)) {
