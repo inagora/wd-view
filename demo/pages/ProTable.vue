@@ -2,8 +2,11 @@
 	<pro-table :config="config" />
 </template>
 <script setup>
-import { onMounted, reactive, ref } from 'vue';
+import { onMounted, reactive, ref, h, createVNode } from 'vue';
 import Ajax from '../../src/components/protable/utils/Ajax';
+import WdButton from '../../src/components/button/index';
+import WdInput from '../../src/components/input/index';
+const emit = defineEmits(['update:modelValue']);
 let sortKey = '';
 let dataList = ref([]);
 let total = ref(0);
@@ -27,6 +30,12 @@ setTimeout(() => {
 	dataList.value = rowData;
 	currentPage.value = 2;
 }, 2000);
+// 自定义组件点击
+const customClickHandler = () => {
+	console.log(123);
+};
+const msg = ref('niu');
+const btnType = ref('primary');
 const tableColumns = [
 	{
 		title: '',
@@ -69,15 +78,53 @@ const tableColumns = [
 			console.log(app);
 			// app.refresh();
 		},
-		render(column, row) {
+		render(text, record, col) {
 			// return `<span style="color: red;">${row[column.dataIndex]}</span>`;
-			return `<wd-button>${row[column.dataIndex]}</wd-button>`;
+			// const vnode = h({
+			// 	name: 'CustomComponent',
+			// 	template: `<wd-button :type="btnType" @click="customClickHandler2">${
+			// 		row[column.dataIndex]
+			// 	}</wd-button>`,
+			// 	methods: {
+			// 		customClickHandler2() {
+			// 			customClickHandler();
+			// 		},
+			// 	},
+			// });
+			const vnode = h('div', null, [
+				h(
+					WdButton,
+					{
+						type: btnType.value,
+						onClick() {
+							alert(msg.value);
+						},
+					},
+					[text]
+				),
+				h(WdInput, {
+					modelValue: msg.value,
+					onInput: (val) => {
+						msg.value = val;
+						console.log(val);
+					},
+				}),
+			]);
+			return vnode;
 		},
 		valueType: 'text', // 表单类型
 		defaultValue: '',
 		valueEnum() {
 			// 对应key的枚举值，减少render
 			return {};
+		},
+	},
+	{
+		title: '自定义列',
+		dataIndex: 'color',
+		render(text, record, col) {
+			return `<span style="color: red;">${text}</span>`;
+			// return <span>aaa</span>;
 		},
 	},
 	{
@@ -93,7 +140,6 @@ const tableColumns = [
 		valueEnum() {
 			// 对应key的枚举值，减少render，但是render的优先级更高
 			return {
-				red: '红色',
 				green: '绿色',
 				blue: '蓝色',
 			};
@@ -150,23 +196,51 @@ const tableColumns = [
 	},
 	{
 		title: '操作',
-		dataIndex: 'action',
-		key: 'action',
 		fixed: 'right',
 		width: '300px',
-		buttons: [
-			{
-				type: 'primary',
-				text: '编辑',
-				click() {},
-			},
-			{
-				type: 'danger',
-				text: '删除',
-				click() {},
-			},
-		],
+		render(_, record) {
+			return h('div', [
+				h(
+					WdButton,
+					{
+						type: 'primary',
+						size: 'small',
+						onClick() {
+							alert(record.color);
+						},
+					},
+					['编辑']
+				),
+				h(
+					WdButton,
+					{
+						type: 'danger',
+						size: 'small',
+					},
+					['删除']
+				),
+			]);
+		},
 	},
+	// {
+	// 	title: '操作',
+	// 	dataIndex: 'action',
+	// 	key: 'action',
+	// 	fixed: 'right',
+	// 	width: '300px',
+	// 	buttons: [
+	// 		{
+	// 			type: 'primary',
+	// 			text: '编辑',
+	// 			click() {},
+	// 		},
+	// 		{
+	// 			type: 'danger',
+	// 			text: '删除',
+	// 			click() {},
+	// 		},
+	// 	],
+	// },
 ];
 const config = reactive({
 	columns: tableColumns,

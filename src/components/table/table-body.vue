@@ -66,10 +66,11 @@
 						</template>
 						<template v-else-if="column.render">
 							<span class="wd-table-column-title">
-								<div
+								<!-- <div
 									class="wd-table-selection"
-									v-html="renderColumn(column, row)"
-								></div>
+									v-html="renderColumn(column, row) || ''"
+								></div> -->
+								<render :row="row" :column="column" />
 							</span>
 						</template>
 						<div
@@ -95,6 +96,115 @@
 	</div>
 	<div v-else class="wd-table-empty">{{ emptyText }}</div>
 </template>
+<script setup lang="ts">
+import { h, isVNode } from 'vue';
+const props = defineProps([
+	'store',
+	'dataSource',
+	'isShowLeftShadow',
+	'isShowRightShadow',
+	'cellWrap',
+	'emptyText',
+	'fixedHeight',
+	'height',
+]);
+const emit = defineEmits(['select-change', 'cell-click', 'row-click']);
+// 自定义列样式
+const renderColumn = (column, row) => {
+	if (column.render && column.render instanceof Function) {
+		const customEl = column.render(row[column.dataIndex], row, column);
+		// 判断是否是vnode
+		if (!isVNode(customEl)) {
+			return h({
+				name: 'CustomColumn',
+				template: customEl,
+			});
+		}
+		return customEl;
+	}
+};
+const render = (slotScope) => {
+	return renderColumn(slotScope.column, slotScope.row);
+};
+const filterColumnStyle = (column, index) => {
+	if (column.fixed === 'left') {
+		const leftOffset = getOffset(column, 'left');
+		return {
+			position: column.fixed ? 'sticky' : '',
+			left: leftOffset + 'px',
+			zIndex: 500 - index,
+		};
+	} else if (column.fixed === 'right') {
+		const rightOffset = getOffset(column, 'right');
+		return {
+			position: column.fixed ? 'sticky' : '',
+			right: rightOffset + 'px',
+			zIndex: 500 - index,
+		};
+	} else {
+		return {};
+	}
+};
+const getOffset = (column, type) => {
+	let columns = [];
+	if (type === 'left') {
+		columns = props.store.leftFixedColumns;
+	} else {
+		columns = props.store.rightFixedColumns;
+	}
+	if (column.type === 'checkbox') {
+		return 0;
+	}
+	let offset = 0;
+	if (
+		props.store.columns &&
+		props.store.columns.length > 0 &&
+		props.store.columns[0].type === 'checkbox' &&
+		type === 'left'
+	) {
+		offset += props.store.columns[0].width;
+	}
+	if (type === 'right') {
+		for (let i = columns.length - 1; i >= 0; i--) {
+			const item = columns[i];
+			if (item.dataIndex === column.dataIndex) {
+				break;
+			}
+			offset += item.width;
+		}
+	} else {
+		for (let i = 0; i < columns.length; i++) {
+			const item = columns[i];
+			if (item.dataIndex === column.dataIndex) {
+				break;
+			}
+			offset += item.width;
+		}
+	}
+	return offset;
+};
+const clickRowIndex = ref(-1);
+const selectChangeHandler = (val, index) => {
+	const store: any = toRefs(reactive(props.store));
+	store.dataSource.value[index].isSelected = val;
+	emit('select-change');
+};
+const cellClickHandler = (type, row, rowIndex, dataIndex, value) => {
+	if (type === 'checkbox') return; // 如果点击的是选择列则不处理
+	const clickRow = { ...row };
+	clickRowIndex.value = rowIndex;
+	emit('cell-click', { row: clickRow, rowIndex, dataIndex, value });
+};
+const rowClickHandler = (row) => {
+	emit('row-click', { ...row });
+};
+const rowNum = (column, index) => {
+	if (column.index && column.index instanceof Function) {
+		return column.index(index);
+	}
+	return index;
+};
+</script>
 <script lang="ts">
 // @ts-nocheck
 import {
@@ -124,92 +234,19 @@ export default defineComponent({
 	},
 	emits: ['select-change', 'cell-click', 'row-click'],
 	setup(props, { emit, slots }) {
-		const clickRowIndex = ref(-1);
 		const { dataSource } = toRefs(reactive(props.store));
-		const selectChangeHandler = (val, index) => {
-			const store: any = toRefs(reactive(props.store));
-			store.dataSource.value[index].isSelected = val;
-			emit('select-change');
-		};
-		const cellClickHandler = (type, row, rowIndex, dataIndex, value) => {
-			if (type === 'checkbox') return; // 如果点击的是选择列则不处理
-			const clickRow = { ...row };
-			clickRowIndex.value = rowIndex;
-			emit('cell-click', { row: clickRow, rowIndex, dataIndex, value });
-		};
-		const rowClickHandler = (row) => {
-			emit('row-click', { ...row });
-		};
-		const rowNum = (column, index) => {
-			if (column.index && column.index instanceof Function) {
-				return column.index(index);
-			}
-			return index;
-		};
-		// 自定义列样式
-		const renderColumn = (column, row) => {
-			if (column.render && column.render instanceof Function) {
-				return column.render(column, row);
-			}
-		};
-		const filterColumnStyle = (column, index) => {
-			if (column.fixed === 'left') {
-				const leftOffset = getOffset(column, 'left');
-				return {
-					position: column.fixed ? 'sticky' : '',
-					left: leftOffset + 'px',
-					zIndex: 500 - index,
-				};
-			} else if (column.fixed === 'right') {
-				const rightOffset = getOffset(column, 'right');
-				return {
-					position: column.fixed ? 'sticky' : '',
-					right: rightOffset + 'px',
-					zIndex: 500 - index,
-				};
-			} else {
-				return {};
-			}
-		};
 
-		const getOffset = (column, type) => {
-			let columns = [];
-			if (type === 'left') {
-				columns = props.store.leftFixedColumns;
-			} else {
-				columns = props.store.rightFixedColumns;
-			}
-			if (column.type === 'checkbox') {
-				return 0;
-			}
-			let offset = 0;
-			if (
-				props.store.columns &&
-				props.store.columns.length > 0 &&
-				props.store.columns[0].type === 'checkbox' &&
-				type === 'left'
-			) {
-				offset += props.store.columns[0].width;
-			}
-			if (type === 'right') {
-				for (let i = columns.length - 1; i >= 0; i--) {
-					const item = columns[i];
-					if (item.dataIndex === column.dataIndex) {
-						break;
-					}
-					offset += item.width;
-				}
-			} else {
-				for (let i = 0; i < columns.length; i++) {
-					const item = columns[i];
-					if (item.dataIndex === column.dataIndex) {
-						break;
-					}
-					offset += item.width;
-				}
-			}
-			return offset;
-		};
+		// 自定义列样式
+		// const render = (column, row) => {
+		// 	if (column.render && column.render instanceof Function) {
+		// 		// return column.render(column, row);
+		// 		return h(column.render(column, row));
+		// 	}
+		// };
+		// const filterColumnStyle = (column, index) => {
+
+		// };
+
 		// 是否是自定义
 		const isCustom = ref(false);
 		if (slots.custom) {
@@ -250,15 +287,8 @@ export default defineComponent({
 			};
 		});
 		return {
-			selectChangeHandler,
-			cellClickHandler,
-			rowClickHandler,
-			rowNum,
 			dataSource,
 			isCustom,
-			filterColumnStyle,
-			renderColumn,
-			clickRowIndex,
 			height,
 		};
 	},

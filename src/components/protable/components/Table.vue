@@ -49,7 +49,7 @@ config.columns.forEach((column) => {
 			valueEnum = column.valueEnum;
 		}
 		column.render = (_, row) => {
-			return valueEnum[row[column.dataIndex]];
+			return valueEnum[row[column.dataIndex]] || row[column.dataIndex];
 		};
 	}
 });
