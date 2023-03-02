@@ -131,6 +131,18 @@ const conf = Object.assign(
 		 * 是否显示pagination
 		 */
 		showPagination: true,
+		/**
+		 * 是否显示统计
+		 */
+		showTotal: false,
+		/**
+		 * loading文案
+		 */
+		loadingText: '',
+		/**
+		 * 空列表文案
+		 */
+		emptyText: '',
 	},
 	config
 );

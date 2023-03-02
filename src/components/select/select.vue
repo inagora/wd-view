@@ -386,7 +386,7 @@ export default defineComponent({
 			// searchInput.value.focus();
 		};
 		const removeSelectedItem = (index) => {
-			removeItem.value = selectedArray.value.splice(index, 1)[0];
+			removeItem.value = { ...selectedArray.value.splice(index, 1)[0] };
 			setSelectedValue(removeItem.value);
 		};
 		provide('selectedItem', selectedItem);

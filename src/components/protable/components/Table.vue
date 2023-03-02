@@ -257,6 +257,7 @@ const loading = ref(false);
 const pageCount = ref(1);
 let page = 1;
 let count = 20;
+const total = ref(0);
 let clickDirection = 'prev';
 let lastIndex = ''; // 瀑布流模式的最后一项
 // count 默认20条
@@ -291,6 +292,7 @@ const load = (currentPage) => {
 			loading.value = false;
 			records.value = res.list;
 			pageCount.value = res.pageCount;
+			total.value = res.total;
 		} else {
 			return new Promise((resolve, reject) => {
 				ajax
@@ -316,6 +318,7 @@ const load = (currentPage) => {
 							}
 							records.value = res.data.list;
 							pageCount.value = res.data.pageCount;
+							total.value = res.data.total;
 							resolve(res.data.list);
 						} else {
 							reject(res);
@@ -362,7 +365,7 @@ defineExpose({
 			:text="
 				exporting
 					? '数据导出中：当前第' + exportPage + '页，总共 ' + pageCount + '页'
-					: '数据加载中'
+					: config.loadingText || '数据加载中'
 			"
 		>
 			<wd-table
@@ -371,8 +374,9 @@ defineExpose({
 				:data-source="records"
 				:page-count="pageCount"
 				:height="config.tableHeight"
-				text="数据加载中"
-				empty-text="现在还没有数据噢~"
+				:empty-text="config.emptyText || '现在还没有数据噢~'"
+				:show-total="config.showTotal"
+				:total="total"
 				:pagination="config.showPagination"
 				@current-change="pageChangeHandler"
 				@prev-click="prevClick"

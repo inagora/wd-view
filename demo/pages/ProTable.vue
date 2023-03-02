@@ -246,6 +246,7 @@ const config = reactive({
 	columns: tableColumns,
 	downloadable: true,
 	url: 'http://123.57.68.108:8080',
+	showTotal: true,
 	request: async (params) => {
 		const res = await ajax.request({
 			url: 'http://123.57.68.108:8080',
