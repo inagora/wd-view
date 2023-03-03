@@ -142,6 +142,7 @@ const tableColumns = [
 			return {
 				green: '绿色',
 				blue: '蓝色',
+				green2: '绿色',
 			};
 		},
 	},
