@@ -3,8 +3,10 @@
 		ref="userInfoForm"
 		label-width="100px"
 		label-align="right"
-		action="/login"
-		method="post"
+		size="small"
+		action=""
+		method="get"
+		@submit.prevent="doSubmit"
 		:model="userInfo"
 		:validate-on-rule-change="true"
 		:rules="formRules"
@@ -13,8 +15,13 @@
 		:show-label="false"
 		inline
 	>
-		<wd-form-item label="姓名" prop="name" :show-label="true">
+		<wd-form-item label="姓名" prop="name" name="itemname" :show-label="true">
 			<wd-input type="text" placeholder="请输入姓名"></wd-input>
+			<wd-input
+				v-model="userInfo.name"
+				type="text"
+				placeholder="请输入姓名"
+			></wd-input>
 		</wd-form-item>
 		<wd-form-item label="毕业日期" prop="date">
 			<wd-date-picker
@@ -30,12 +37,10 @@
 			></wd-date-picker>
 		</wd-form-item>
 		<wd-form-item label="性别" prop="gender">
-			<wd-radio :checked="isMale" name="color" @change="handleRadioChange">
-				男
-			</wd-radio>
-			<wd-radio :checked="isFemale" name="color" @change="handleRadioChange">
-				女
-			</wd-radio>
+			<wd-radio-group v-model="userInfo.gender">
+				<wd-radio name="gender" value="male"> 男 </wd-radio>
+				<wd-radio name="gender" value="female"> 女 </wd-radio>
+			</wd-radio-group>
 		</wd-form-item>
 		<wd-form-item label="婚姻状况" prop="isMerried">
 			<wd-checkbox :checked="userInfo.isMerried" @change="handleCheckboxChange">
@@ -91,6 +96,7 @@ export default defineComponent({
 			isMerried: '',
 			date: datepickerValue.value,
 			degree: 'bing',
+			gender: 'male',
 		});
 		const disabled = ref(false);
 		setTimeout(() => {
@@ -139,6 +145,9 @@ export default defineComponent({
 				if (isValid) alert('提交成功');
 			});
 		};
+		const doSubmit = (e) => {
+			console.log(e);
+		};
 
 		onMounted(() => {});
 		return {
@@ -148,6 +157,7 @@ export default defineComponent({
 			userInfoForm,
 			regHandler,
 			disabled,
+			doSubmit,
 		};
 	},
 });

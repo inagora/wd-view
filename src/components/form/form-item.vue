@@ -61,6 +61,7 @@ export default defineComponent({
 		labelWidth: String,
 		required: Boolean,
 		prop: String,
+		name: String,
 		rules: Object,
 		error: String,
 		validateStatus: String,

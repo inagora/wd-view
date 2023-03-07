@@ -63,6 +63,7 @@
 								ref="searchInput"
 								:style="{ opacity: isFocused ? 1 : 0 }"
 								:placeholder="currentPlaceholder"
+								:name="formItemName"
 								class="wd-select-selection-search-input"
 								@input="debouncedOnInputChange"
 								@focus="handleSearchInputFocus"
@@ -246,6 +247,7 @@ export default defineComponent({
 			type: Boolean,
 			default: false,
 		},
+		name: String,
 	},
 	emits: [
 		'update:modelValue',
@@ -264,6 +266,7 @@ export default defineComponent({
 		});
 		const wdForm = inject(wdFormKey, {} as WdFormProps);
 		const wdFormItem = inject(wdFormItemKey, {} as WdFormItemProps);
+		const formItemName = props.name || wdFormItem.name;
 		let inputSize =
 			sizeMap[props.size] || sizeMap[wdFormItem.size] || sizeMap[wdForm.size];
 		let selectDisabled = ref(false);
@@ -489,6 +492,7 @@ export default defineComponent({
 			optionsStyle,
 			openHandler,
 			closeHandler,
+			formItemName,
 		};
 	},
 });

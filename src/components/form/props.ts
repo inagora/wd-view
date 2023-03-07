@@ -20,6 +20,7 @@ export interface WdFormItemProps {
   prop: string;
   formMitt: Emitter;
   showLabel: boolean
+  name: string;
 }
 
 export const wdFormKey: string = "wdForm";
@@ -68,4 +69,5 @@ export interface WdFormItemContext {
   size: string;
   disabled: boolean;
   showLabel: boolean
+  name: string;
 }

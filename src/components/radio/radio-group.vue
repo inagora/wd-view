@@ -1,6 +1,11 @@
 <template>
 	<div class="wd-checkbox-group">
-		<wd-radio v-for="(option, index) in getOptions" :key="index">
+		<wd-radio
+			@change="handleInputChange"
+			:name="name"
+			v-for="(option, index) in getOptions"
+			:key="index"
+		>
 			<slot></slot>
 		</wd-radio>
 	</div>
@@ -37,13 +42,13 @@ export default defineComponent({
 			type: Array as PropType<optionsType>,
 		},
 		disabled: Boolean,
+		name: String,
 	},
 	emits: ['update:modelValue', 'change'],
 	setup(props: WdRadioProps, ctx) {
-		const isChecked = ref(false);
-		const checkboxOptions = toRef(props, 'options');
+		const radioGroupOptions = toRef(props, 'options');
 		const getOptions = computed(() => {
-			return (checkboxOptions.value as (string | object)[]).map((option) => {
+			return (radioGroupOptions.value as (string | object)[]).map((option) => {
 				if (typeof option === 'string') {
 					return {
 						label: option,
@@ -54,10 +59,10 @@ export default defineComponent({
 				return { ...option, label };
 			});
 		});
-		const handleInputChange = () => {
-			isChecked.value = !isChecked.value;
-			ctx.emit('change', isChecked.value);
-			ctx.emit('update:modelValue', isChecked.value);
+		const handleInputChange = (val) => {
+			console.log(val);
+			ctx.emit('change', val);
+			ctx.emit('update:modelValue', val);
 		};
 		watch(
 			() => props.modelValue,
@@ -66,7 +71,6 @@ export default defineComponent({
 			}
 		);
 		return {
-			isChecked,
 			handleInputChange,
 			getOptions,
 		};

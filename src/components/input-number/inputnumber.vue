@@ -51,6 +51,8 @@
 			:readonly="readonly"
 			:max="max"
 			:min="min"
+			v-bind="attrs"
+			:name="formItemName"
 			style="border: none"
 			@keydown.up.prevent="increase"
 			@keydown.down.prevent="decrease"
@@ -114,6 +116,10 @@ export default defineComponent({
 			type: String,
 			default: 'text',
 		},
+		name: {
+			type: String,
+			default: '',
+		},
 		size: {
 			type: String,
 			default: 'default',
@@ -146,6 +152,7 @@ export default defineComponent({
 		const input = ref(null);
 		const wdForm = inject(wdFormKey, {} as WdFormProps);
 		const wdFormItem = inject(wdFormItemKey, {} as WdFormItemContext);
+		const formItemName = props.name || wdFormItem.name;
 		let inputSize = props.size || wdFormItem.size || wdForm.size;
 
 		const data = reactive({
@@ -286,6 +293,7 @@ export default defineComponent({
 			maxDisabled,
 			minDisabled,
 			inputSize,
+			formItemName,
 		};
 	},
 });
