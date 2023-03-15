@@ -19,7 +19,15 @@
 		<div :class="['wd-form-item-control', 'wd-col', inline ? '' : 'wd-col-16']">
 			<div class="wd-form-item-control-input">
 				<div class="wd-form-item-control-input-content">
-					<slot></slot>
+					<template v-if="wdForm.model && name">
+						<template v-for="(slot, index) in defaultSlots" :key="index">
+							<component
+								v-model="wdForm.model[name]"
+								:is="slot.type.name"
+							></component>
+						</template>
+					</template>
+					<slot v-else />
 				</div>
 			</div>
 			<transition name="fade">
@@ -52,10 +60,30 @@ import {
 	WdFormContext,
 	wdFormEvents,
 } from './props';
+import {
+	WdInput,
+	WdSelect,
+	WdDatePicker,
+	WdButton,
+	WdInputNumber,
+	WdSwitch,
+	WdCheckbox,
+	WdRadio,
+} from '../../index';
 import AsyncValidator from 'async-validator';
 import mitt from 'mitt';
 export default defineComponent({
 	name: 'wd-form-item',
+	components: {
+		WdInput,
+		WdSelect,
+		WdDatePicker,
+		WdButton,
+		WdInputNumber,
+		WdSwitch,
+		WdCheckbox,
+		WdRadio,
+	},
 	props: {
 		label: String,
 		labelWidth: String,
@@ -74,7 +102,11 @@ export default defineComponent({
 			default: true,
 		},
 	},
-	setup(props) {
+	setup(props, { slots }) {
+		const defaultSlots = ref([]);
+		slots.default().forEach((item) => {
+			defaultSlots.value.push(item);
+		});
 		let wdForm = inject(wdFormKey, {} as WdFormContext);
 		const isShowLabel = ref(wdForm.showLabel);
 		if (!props.showLabel) {
@@ -324,6 +356,7 @@ export default defineComponent({
 			inline,
 			msgClasses,
 			isShowLabel,
+			defaultSlots,
 		};
 	},
 });

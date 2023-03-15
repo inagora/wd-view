@@ -160,8 +160,16 @@
 			</div>
 		</div>
 		<template #content="{ close }">
-			<div class="wd-select-options" @click="close">
+			<div v-if="options.length === 0" class="wd-select-options" @click="close">
 				<slot></slot>
+			</div>
+			<div v-else class="wd-select-options" @click="close">
+				<wd-option
+					v-for="(option, index) in options"
+					:key="index"
+					:label="option.label"
+					:value="option.value"
+				></wd-option>
 			</div>
 		</template>
 	</popper>
@@ -179,6 +187,7 @@ import {
 	inject,
 	watchEffect,
 	computed,
+	h,
 } from 'vue';
 import {
 	wdFormKey,
@@ -193,6 +202,7 @@ type optionType = {
 // import WdPopper from '../popper/index';
 import WdInput from '../input/index';
 import WdOption from './option.vue';
+import { isObject } from '../../utils/util';
 export default defineComponent({
 	name: 'wd-select',
 	components: {
@@ -247,6 +257,10 @@ export default defineComponent({
 			type: Boolean,
 			default: false,
 		},
+		options: {
+			type: Array,
+			default: [],
+		},
 		name: String,
 	},
 	emits: [
@@ -285,6 +299,38 @@ export default defineComponent({
 			label: '',
 			value: '',
 		});
+		const vOptions = ref([]);
+		// 处理props.options属性
+		// 创建vnode
+		const createOption = (option) => {
+			return h(WdOption, option);
+		};
+		if (props.options.length > 0) {
+			// isArray
+			if (Array.isArray(props.options)) {
+				props.options.forEach((option) => {
+					if (typeof option === 'string') {
+						vOptions.value.push(
+							createOption({
+								label: option,
+								value: option,
+							})
+						);
+					} else {
+						vOptions.value.push(createOption(option));
+					}
+				});
+			} else if (isObject(props.options)) {
+				Object.keys(props.options).forEach((key) => {
+					vOptions.value.push(
+						createOption({
+							label: props.options[key],
+							value: key,
+						})
+					);
+				});
+			}
+		}
 
 		let { visibleValue } = toRefs(props);
 		let isFocused = ref(false);
@@ -293,6 +339,9 @@ export default defineComponent({
 			if (!slots.default()[0].props) {
 				slotsDefault = slots.default()[0].children;
 			}
+		}
+		if (vOptions.value.length > 0) {
+			slotsDefault = vOptions.value;
 		}
 		const optionsArray = slotsDefault.map((item) => {
 			const option = item.props || (item.children as any).props;

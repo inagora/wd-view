@@ -54,13 +54,12 @@
 				v-model="userInfo.age"
 				@input="handleInputNumber"
 				@change="handleChangeNumber"
-				type="text"
 			></wd-input-number>
 		</wd-form-item>
 		<wd-form-item label="学历" prop="degree">
 			<wd-select
-				@change="selectedChangeHandler"
-				:disabled="disabled"
+				v-model="userInfo.degree"
+				:options="options"
 				placeholder="请选择学历"
 			>
 				<wd-option label="研究生" value="baidu"></wd-option>
@@ -104,11 +103,11 @@ export default defineComponent({
 		}, 1000);
 		let userInfoForm = <any>ref();
 		const checkAge = (rule, value) => {
-			if (value < 18) {
-				return Promise.reject('未成年');
-			} else {
-				return Promise.resolve('成年');
-			}
+			// if (value < 18) {
+			// 	return Promise.reject('未成年');
+			// } else {
+			// 	return Promise.resolve('成年');
+			// }
 		};
 		const checkDate = (rule, value) => {
 			if (value > dayjs(new Date()).format('YYYY-MM-DD HH-mm-ss')) {
@@ -141,6 +140,7 @@ export default defineComponent({
 		};
 
 		const regHandler = () => {
+			console.log(userInfo);
 			userInfoForm.value.validate((isValid) => {
 				if (isValid) alert('提交成功');
 			});
@@ -149,6 +149,16 @@ export default defineComponent({
 			console.log(e);
 		};
 
+		const options = [
+			{
+				label: '选项1',
+				value: 'option1',
+			},
+			{
+				label: '选项2',
+				value: 'option2',
+			},
+		];
 		onMounted(() => {});
 		return {
 			datepickerValue,
@@ -158,6 +168,7 @@ export default defineComponent({
 			regHandler,
 			disabled,
 			doSubmit,
+			options,
 		};
 	},
 });
