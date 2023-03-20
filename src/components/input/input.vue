@@ -263,11 +263,12 @@ export default defineComponent({
 			const { value } = event.target;
 			ctx.emit('update:modelValue', value);
 			ctx.emit('input', value);
-			nextTick(setNativeInputValue);
+			// nextTick(setNativeInputValue);
 			wdFormItem.formItemMitt?.emit('wd.form.change', [event.target.value]);
 		};
 		const handleChange = (event) => {
 			ctx.emit('change', event.target.value);
+			nextTick(setNativeInputValue);
 			wdFormItem.formItemMitt?.emit('wd.form.change', [event.target.value]);
 		};
 		const handleBlur = (event) => {

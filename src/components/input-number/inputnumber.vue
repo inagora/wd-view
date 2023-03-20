@@ -196,20 +196,37 @@ export default defineComponent({
 			return precision;
 		};
 
+		// 转换value
+		const transValue = (val) => {
+			if (isNaN(parseInt(val))) {
+				val = 0;
+				return val;
+			}
+			if (parseInt(val) === parseFloat(val)) {
+				val = parseInt(val);
+			} else {
+				val = parseFloat(val);
+			}
+			return val;
+		};
+
 		const increase = () => {
 			if (props.disabled || props.readonly) return;
 			let val = input.value.input.value;
 			if (val === '' || val === undefined) val = props.min;
-			val++;
-			setCurrentValue(val);
+
+			val = transValue(val);
+			val += transValue(props.step);
+			setCurrentValue(toPrecision(val));
 		};
 
 		const decrease = () => {
 			if (props.disabled || props.readonly) return;
 			let val = input.value.input.value;
 			if (val === '' || val === undefined) val = props.min;
-			val--;
-			setCurrentValue(val);
+			val = transValue(val);
+			val = val - transValue(props.step);
+			setCurrentValue(toPrecision(val));
 		};
 
 		const setCurrentValue = (val) => {
