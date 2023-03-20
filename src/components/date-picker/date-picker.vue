@@ -6,7 +6,6 @@
 		:disabled="pickDisabled"
 		:format="format"
 		:value-format="valueFormat"
-		:show-time="true"
 		:size="inputSize"
 		:separator="separator"
 		:default-value="_defaultValue"

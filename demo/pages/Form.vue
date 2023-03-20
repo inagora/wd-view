@@ -3,7 +3,6 @@
 		ref="userInfoForm"
 		label-width="100px"
 		label-align="right"
-		size="small"
 		action="/login"
 		method="post"
 		:model="userInfo"
@@ -14,6 +13,18 @@
 	>
 		<wd-form-item label="姓名" prop="name">
 			<wd-input type="text" placeholder="请输入姓名"></wd-input>
+		</wd-form-item>
+		<wd-form-item label="毕业日期" prop="date">
+			<wd-date-picker
+				type="date"
+				:clearable="false"
+				:disabled="false"
+				default-value="2021-02-02 02:02:02"
+				format="YYYY/MM/DD HH:mm:ss"
+				value-format="YYYY-MM-DD HH-mm-ss"
+				placeholder="请选择日期"
+				@change="datepickerChange"
+			></wd-date-picker>
 		</wd-form-item>
 		<wd-form-item label="性别" prop="gender">
 			<wd-radio :checked="isMale" name="color" @change="handleRadioChange">
@@ -49,29 +60,13 @@
 				<wd-option label="专科" value="bing"></wd-option>
 			</wd-select>
 		</wd-form-item>
-		<wd-form-item label="毕业日期" prop="date">
-			<wd-date-picker
-				type="date"
-				:clearable="false"
-				:disabled="false"
-				default-value="2021-02-02 02:02:02"
-				format="YYYY/MM/DD HH:mm:ss"
-				value-format="YYYY-MM-DD HH-mm-ss"
-				size="small"
-				placeholder="请选择日期"
-				@change="datepickerChange"
-			></wd-date-picker>
-		</wd-form-item>
+
 		<wd-form-item>
 			<wd-button-group>
 				<wd-button size="small" nativeType="reset" type="danger"
 					>重置</wd-button
 				>
-				<wd-button
-					size="small"
-					type="success"
-					nativeType="submit"
-					@click="regHandler"
+				<wd-button type="success" nativeType="submit" @click="regHandler"
 					>提交</wd-button
 				>
 			</wd-button-group>

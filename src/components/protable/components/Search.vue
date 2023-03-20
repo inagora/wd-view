@@ -96,7 +96,7 @@ const changeHandler = (val, fn) => {
 </script>
 
 <template>
-	<div class="wv-search">
+	<div class="wv-search" v-if="searchFilters.length > 0">
 		<wd-form
 			ref="searchForm"
 			label-align="right"
