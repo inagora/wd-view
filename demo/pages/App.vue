@@ -232,6 +232,10 @@ export default defineComponent({
 						open: true,
 						submenu: [
 							{
+								text: 'Space',
+								type: 'space',
+							},
+							{
 								text: 'Layout',
 								type: 'layout',
 							},
