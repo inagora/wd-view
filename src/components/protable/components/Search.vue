@@ -77,7 +77,11 @@ config.columns.forEach((column) => {
 	}
 });
 searchFilters.value.forEach((filter) => {
-	formData.value[filter.prop] = filter.value || '';
+	if (filter.type === 'checkbox') {
+		formData.value[filter.prop] = filter.value || false;
+	} else {
+		formData.value[filter.prop] = filter.value || '';
+	}
 });
 const searchHandler = () => {
 	emitter.emit('wv:search', formData.value);

@@ -167,8 +167,18 @@ const refresh = () => {
 		}
 	});
 };
+const getSelectedRows = () => {
+	let selectedRows = [];
+	itemRefs.forEach((item) => {
+		if (item.getSelectedRows) {
+			selectedRows = item.getSelectedRows();
+		}
+	});
+	return selectedRows;
+};
 defineExpose({
 	refresh,
+	getSelectedRows,
 });
 onUnmounted(() => {
 	emitter.all.clear();

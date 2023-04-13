@@ -349,9 +349,16 @@ const nextClick = () => {
 		.querySelector('.wd-pagination-prev')
 		.classList.remove('wd-pagination-disabled');
 };
+/**
+ * 获取选中行
+ */
+const getSelectedRows = () => {
+	return wvTable.value.getSelectedRows();
+};
 // 暴露事件
 defineExpose({
 	load,
+	getSelectedRows,
 });
 </script>
 
