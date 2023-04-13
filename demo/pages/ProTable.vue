@@ -1,5 +1,5 @@
 <template>
-	<pro-table :config="config" />
+	<pro-table ref="myProTable" :config="config" />
 </template>
 <script setup>
 import { onMounted, reactive, ref, h, createVNode } from 'vue';
@@ -13,6 +13,7 @@ let total = ref(0);
 const currentPage = ref(1);
 const rowData = [];
 const ajax = new Ajax();
+const myProTable = ref(null);
 
 setTimeout(() => {
 	for (let i = 0; i < 15; i++) {
@@ -50,6 +51,12 @@ const tableColumns = [
 	//         return index * 2;
 	//     }
 	// },
+	{
+		title: '是否选中',
+		dataIndex: 'isCheck',
+		valueType: 'checkbox',
+		defaultValue: 0,
+	},
 	{
 		title: 'ID',
 		dataIndex: 'id',
@@ -334,7 +341,7 @@ const config = reactive({
 			text: '自定义按钮',
 			// loading: true,
 			click() {
-				console.log(123);
+				console.log(myProTable.value.getSelectedRows());
 			},
 		},
 	],
