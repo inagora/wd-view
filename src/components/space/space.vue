@@ -13,7 +13,7 @@ import {
 } from 'vue';
 import { isNumber, isArray, isString } from '../../utils/util.ts';
 import { isFragment, isValidElementNode } from '../../utils/vnode';
-import { isTypeScript } from '@babel/types';
+
 export default defineComponent({
 	name: 'wd-space',
 	props: {
@@ -35,7 +35,7 @@ export default defineComponent({
 		size: {
 			type: [String, Array, Number],
 			default: 'small',
-			validator:(val)=> isVNode(val) || isNumber(val) || isString(val)
+			validator:(val)=>  isNumber(val) || isString(val) || isArray(val)
 		},
 		wrap: Boolean,
 		spacer: {
@@ -53,7 +53,7 @@ export default defineComponent({
 			large: 16,
 		};
 
-		console.log('SIZE_MAP', SIZE_MAP);
+		
 		// 获取所有的子元素，
 
 		const itemStyle = computed(() => {
@@ -70,7 +70,7 @@ export default defineComponent({
 		const containerStyle = computed(() => {
 			const rowGap = `${verticalSize.value}px`;
 			const columnGap = `${horizontalSize.value}px`;
-			console.log('direction', props.direction);
+			
 			return {
 				alignItems: props.align,
 				flexDirection: props.direction,
@@ -79,11 +79,10 @@ export default defineComponent({
 				gap: `${rowGap} ${columnGap}`,
 			};
 		});
-		// ${horizontalSize.value}px
 
 		watchEffect(() => {
 			const { size = 'small' } = props;
-			console.log('size', size);
+			
 
 			if (isArray(size)) {
 				const [h = 0, v = 0] = size;
@@ -141,7 +140,6 @@ export default defineComponent({
 					);
 				}
 			});
-			console.log('newNodes', newNodes);
 
 			return newNodes;
 		}
@@ -156,23 +154,17 @@ export default defineComponent({
 				{ key: 0 },
 				() => []
 			);
-			console.log('children TESt', children);
+		
 			if ((children.children ?? []).length === 0) return null;
 
 			if (isArray(children.children)) {
 				let newNodes = updateChildSlots(children.children);
 				if (spacer) {
 					let len = newNodes.length - 1;
-					console.log('newNodes', newNodes);
+					
 					newNodes = newNodes.reduce((acc, child, idx) => {
-						// console.log('ac', acc, child, idx)
-						// console.log('child', child)
-						// console.log('idx', idx)
-						// console.log('展开', ...acc)
 						const children = [...acc, child];
-						console.log('children', children);
 						if (idx !== len) {
-							console.log('spacer', spacer);
 							children.push(
 								h(
 									'span',
@@ -186,7 +178,7 @@ export default defineComponent({
 						return children;
 					}, []);
 				}
-				console.log('containerStyle', containerStyle.value);
+				
 				return h(
 					'div',
 					{ class: 'wd-space', style: containerStyle.value },

@@ -168,10 +168,6 @@ export default defineComponent({
 						type: 'link',
 					},
 					{
-						text: 'Space',
-						type: 'Space',
-					},
-					{
 						text: 'Radio',
 						type: 'radio',
 					},
@@ -220,7 +216,7 @@ export default defineComponent({
 				text: '其他组件',
 				icon: '',
 				submenu: [
-				{
+					{
 						text: 'Space',
 						type: 'Space',
 					},
