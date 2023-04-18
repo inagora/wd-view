@@ -1,24 +1,25 @@
-<template>
-	<div class="wd-space" :style="[containerStyle]">
-		<!-- defaults -->
-
-		<div v-for="(child, index) in defaults" :style="[itemStyle]" :key="index">
-			<component :is="child"></component>
-		</div>
-	</div>
-</template>
-
-<script lang="ts">
-import { computed, defineComponent, ref, watchEffect } from 'vue';
-
-import { isArray, isNumber } from '../../utils/util';
-import { isFragment } from '../../utils/vnode';
+<script>
+import {
+	defineComponent,
+	h,
+	isVNode,
+	Comment,
+	renderSlot,
+	Fragment,
+	ref,
+	computed,
+	watchEffect,
+	createTextVNode,
+} from 'vue';
+import { isNumber, isArray, isString } from '../../utils/util.ts';
+import { isFragment, isValidElementNode } from '../../utils/vnode';
+import { isTypeScript } from '@babel/types';
 export default defineComponent({
 	name: 'wd-space',
 	props: {
 		direction: {
 			type: String,
-			default: 'row',
+			default: '', // 水平 竖直
 		},
 
 		style: {
@@ -26,25 +27,24 @@ export default defineComponent({
 			default: '',
 		},
 
-		alignment: {
+		align: {
 			type: String,
-			default: 'center',
+			default: 'center', // start, center ,end , baseline
 		},
 
 		size: {
 			type: [String, Array, Number],
 			default: 'small',
+			validator:(val)=> isVNode(val) || isNumber(val) || isString(val)
 		},
 		wrap: Boolean,
+		spacer: {
+			type: [ String, Number],
+			default: null,
+			validator: (val) => isVNode(val) || isNumber(val) || isString(val),
+		},
 	},
-
-	/**
-	 * 1. 如果是数组或者fragement 就递归处理.否则push到数组里
-	 * 2. 保不保留空节点可以根据 keepEmpty 的 option 来控制。
-	 */
-	setup(props, context) {
-		console.log('context', context);
-		console.log('props', props);
+	setup(props, content) {
 		const horizontalSize = ref(0);
 		const verticalSize = ref(0);
 		const SIZE_MAP = {
@@ -52,42 +52,45 @@ export default defineComponent({
 			default: 12,
 			large: 16,
 		};
-		// const isFragment = (node) => {
-		// 	return isVNode(node) && node.type === Fragment;
-		// };
+
 		console.log('SIZE_MAP', SIZE_MAP);
 		// 获取所有的子元素，
 
-		let defaults = context.slots.default();
-		console.log('defaults', defaults);
 		const itemStyle = computed(() => {
-			const itemBaseStyle = {
-				paddingBottom: `${verticalSize.value}px`,
-				marginRight: `${horizontalSize.value}px`,
+			// const itemBaseStyle = {
+			//   paddingBottom: `${verticalSize.value}px`,
+			//   marginRight: `${horizontalSize.value}px`
+			// }
+			// return [itemBaseStyle]
+			return {
+				// paddingBottom: `${verticalSize.value}px`,
+				// marginRight: `${horizontalSize.value}px`
 			};
-			return [itemBaseStyle];
 		});
 		const containerStyle = computed(() => {
-			const alignment = {
-				alignItems: props.alignment,
-			};
-
-			const direction = {
+			const rowGap = `${verticalSize.value}px`;
+			const columnGap = `${horizontalSize.value}px`;
+			console.log('direction', props.direction);
+			return {
+				alignItems: props.align,
 				flexDirection: props.direction,
+				flexWrap: props.wrap ? 'wrap' : 'nowrap',
+				...props.style,
+				gap: `${rowGap} ${columnGap}`,
 			};
-			const wrapKls = props.wrap ? { flexWrap: 'wrap' } : {};
-
-			return [alignment, props.style, direction, wrapKls];
 		});
+		// ${horizontalSize.value}px
 
 		watchEffect(() => {
 			const { size = 'small' } = props;
 			console.log('size', size);
+
 			if (isArray(size)) {
 				const [h = 0, v = 0] = size;
 				horizontalSize.value = h;
 				verticalSize.value = v;
 			} else {
+				// let val: number | String;
 				let val;
 				if (isNumber(size)) {
 					val = size;
@@ -97,41 +100,109 @@ export default defineComponent({
 				horizontalSize.value = verticalSize.value = val;
 			}
 		});
-
-		// 递归，不然注释 只能去掉一层，div层级也不确定
-		const extractChildren = (children, Option = { keepEmpty: '' }) => {
-			console.log('children', children);
-			console.log('children', Array.isArray(children));
-			let extractedChildren = [];
-			children.forEach((child) => {
-				console.log('child', child);
-				if (child == null && !Option?.keepEmpty) return;
-				if (Array.isArray(child)) {
-					console.log('');
-					extractedChildren = extractedChildren.concat(extractChildren(child));
-				} else if (isFragment(child) && child.props) {
-					extractedChildren = extractedChildren.concat(
-						extractChildren(child.props.children, Option)
+		// 对Fragement还要判断
+		function updateChildSlots(children, parentKey = '', newNodes = []) {
+			children.forEach((child, loopKey) => {
+				if (isFragment(child)) {
+					if (isArray(child.children)) {
+						child.children.forEach((nested, key) => {
+							if (isFragment(nested) && isArray(nested.children)) {
+								updateChildSlots(
+									nested.children,
+									`${parentKey + key}-`,
+									newNodes
+								);
+							} else {
+								newNodes.push(
+									h(
+										'div',
+										{
+											class: 'wd-space_item',
+											style: itemStyle.value,
+											key: `nested-${parentKey + key}`,
+										},
+										nested
+									)
+								);
+							}
+						});
+					}
+				} else if (isValidElementNode(child)) {
+					newNodes.push(
+						h(
+							'div',
+							{
+								class: 'wd-space_item',
+								style: itemStyle.value,
+								key: `LoopKey${parentKey + loopKey}`,
+							},
+							child
+						)
 					);
-				} else {
-					extractedChildren.push(child);
 				}
 			});
-			console.log('extractedChildren', extractedChildren);
-			return extractedChildren;
-		};
-		extractChildren(defaults, { keepEmpty: '' });
+			console.log('newNodes', newNodes);
 
-		return {
-			defaults,
-			itemStyle,
-			containerStyle,
-			// extractChildren,
+			return newNodes;
+		}
+
+		// 将虚拟dom,挂载到真实dom.renderSlot函数会返回当前插槽对应的VNode数组，可以在render函数中使用。
+		return () => {
+			const { spacer } = props;
+
+			const children = renderSlot(
+				content.slots,
+				'default',
+				{ key: 0 },
+				() => []
+			);
+			console.log('children TESt', children);
+			if ((children.children ?? []).length === 0) return null;
+
+			if (isArray(children.children)) {
+				let newNodes = updateChildSlots(children.children);
+				if (spacer) {
+					let len = newNodes.length - 1;
+					console.log('newNodes', newNodes);
+					newNodes = newNodes.reduce((acc, child, idx) => {
+						// console.log('ac', acc, child, idx)
+						// console.log('child', child)
+						// console.log('idx', idx)
+						// console.log('展开', ...acc)
+						const children = [...acc, child];
+						console.log('children', children);
+						if (idx !== len) {
+							console.log('spacer', spacer);
+							children.push(
+								h(
+									'span',
+									{
+										key: idx,
+									},
+									[isVNode(spacer) ? spacer : createTextVNode(spacer)]
+								)
+							);
+						}
+						return children;
+					}, []);
+				}
+				console.log('containerStyle', containerStyle.value);
+				return h(
+					'div',
+					{ class: 'wd-space', style: containerStyle.value },
+					newNodes
+				);
+			}
 		};
 	},
 });
 </script>
-
-<style lang="less">
-@import url(./style/index);
+<style>
+.wd-space {
+	display: inline-flex;
+}
+.wd-space_item {
+	display: inline-flex;
+	flex-wrap: wrap;
+}
 </style>

@@ -62,6 +62,7 @@ import Input from './Input.vue';
 import InputNumber from './Inputnumber.vue';
 import Table from './Table.vue';
 import Link from './Link.vue';
+import Space from './Space.vue';
 import Radio from './Radio.vue';
 import Switch from './Switch.vue';
 import Select from './Select.vue';
@@ -89,6 +90,7 @@ export default defineComponent({
 		Input,
 		InputNumber,
 		Link,
+		Space,
 		Radio,
 		Switch,
 		Select,
@@ -166,6 +168,10 @@ export default defineComponent({
 						type: 'link',
 					},
 					{
+						text: 'Space',
+						type: 'Space',
+					},
+					{
 						text: 'Radio',
 						type: 'radio',
 					},
@@ -214,6 +220,10 @@ export default defineComponent({
 				text: '其他组件',
 				icon: '',
 				submenu: [
+				{
+						text: 'Space',
+						type: 'Space',
+					},
 					{
 						text: 'Layout',
 						type: 'layout',
@@ -231,10 +241,6 @@ export default defineComponent({
 						type: 'other',
 						open: true,
 						submenu: [
-							{
-								text: 'Space',
-								type: 'space',
-							},
 							{
 								text: 'Layout',
 								type: 'layout',

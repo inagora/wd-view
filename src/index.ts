@@ -37,6 +37,7 @@ import WdUpload from './components/upload';
 import WdUploadDragger from './components/dragger';
 import WdTabs from './components/tabs';
 import ProTable from './components/protable'
+import WdSpace from './components/space'
 
 const components = [
 	WdButton,
@@ -75,6 +76,7 @@ const components = [
 	WdUpload,
 	WdUploadDragger,
 	WdTabs,
+	WdSpace,
   ProTable
 ];
 const install = async (app: App): void => {
@@ -128,6 +130,7 @@ export {
 	WdUpload,
 	WdUploadDragger,
 	WdTabs,
+	WdSpace,
   ProTable
 };
 export default {
