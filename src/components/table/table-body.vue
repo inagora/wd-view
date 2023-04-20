@@ -112,7 +112,11 @@ const emit = defineEmits(['select-change', 'cell-click', 'row-click']);
 // 自定义列样式
 const renderColumn = (column, row) => {
 	if (column.render && column.render instanceof Function) {
-		if (column.dataIndex && row[column.dataIndex]) {
+		if (
+			column.dataIndex &&
+			row[column.dataIndex] &&
+			typeof row[column.dataIndex] === 'string'
+		) {
 			row[column.dataIndex] = row[column.dataIndex].replace(/</g, '&lt;');
 		}
 		const customEl = column.render(row[column.dataIndex], row, column);
