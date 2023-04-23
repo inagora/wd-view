@@ -139,7 +139,7 @@ export default defineComponent({
 				sorter: (val) => {
 					getSortData(val);
 				},
-				render(column, row) {
+				render(_, row, column) {
 					return `<span style="color: red;">${row[column.dataIndex]}</span>`;
 				},
 			},

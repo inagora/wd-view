@@ -130,6 +130,7 @@ const tableColumns = [
 		title: '自定义列',
 		dataIndex: 'color',
 		render(text, record, col) {
+			console.log(text);
 			return `<span style="color: red;">${text}</span>`;
 			// return <span>aaa</span>;
 		},
@@ -143,7 +144,7 @@ const tableColumns = [
 		//   return `<span style="color: red;">${row[column.dataIndex]}</span>`;
 		// },
 		valueType: 'multiple', // 表单类型
-		defaultValue: 'red',
+		defaultValue: ['green'],
 		valueEnum() {
 			// 对应key的枚举值，减少render，但是render的优先级更高
 			return {

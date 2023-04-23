@@ -119,12 +119,15 @@ const renderColumn = (column, row) => {
 		) {
 			row[column.dataIndex] = row[column.dataIndex].replace(/</g, '&lt;');
 		}
-		const customEl = column.render(row[column.dataIndex], row, column);
+		let customEl = column.render(row[column.dataIndex], row, column);
+		if (isNumber(customEl)) {
+			customEl = String(customEl);
+		}
 		// 判断是否是vnode
 		if (!isVNode(customEl)) {
 			return h({
 				name: 'CustomColumn',
-				template: customEl,
+				template: customEl + '',
 			});
 		}
 		return customEl;
@@ -224,6 +227,7 @@ import {
 	onMounted,
 	watch,
 } from 'vue';
+import { isNumber } from '../../utils/util';
 import WdCheckbox from '../checkbox/checkbox.vue';
 import { StoreProps } from './table-type';
 export default defineComponent({
