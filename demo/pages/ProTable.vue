@@ -6,6 +6,7 @@ import { onMounted, reactive, ref, h, createVNode } from 'vue';
 import Ajax from '../../src/components/protable/utils/Ajax';
 import WdButton from '../../src/components/button/index';
 import WdInput from '../../src/components/input/index';
+import { WdModal } from '../../src';
 const emit = defineEmits(['update:modelValue']);
 let sortKey = '';
 let dataList = ref([]);
@@ -43,9 +44,19 @@ const getRemoteEnum = () => {
 		}, 3000);
 	});
 };
+// 编辑
+const doEdit = (row) => {
+	console.log(row);
+};
 // 自定义组件点击
 const customClickHandler = () => {
 	console.log(123);
+};
+const deleteItem = (record) => {
+	WdModal({
+		title: '提示',
+		content: '确定要删除吗？',
+	});
 };
 const msg = ref('niu');
 const btnType = ref('primary');
@@ -142,8 +153,8 @@ const tableColumns = [
 		title: '自定义列',
 		dataIndex: 'color',
 		render(text, record, col) {
-			return `<span style="color: red;">${text}</span>`;
-			// return <span>aaa</span>;
+			// return `<span style="color: red;">${text}</span>`;
+			return <span>aaa</span>;
 		},
 	},
 	{
@@ -220,27 +231,37 @@ const tableColumns = [
 		fixed: 'right',
 		width: '300px',
 		render(_, record) {
-			return h('div', [
-				h(
-					WdButton,
-					{
-						type: 'primary',
-						size: 'small',
-						onClick() {
-							alert(record.color);
-						},
-					},
-					['编辑']
-				),
-				h(
-					WdButton,
-					{
-						type: 'danger',
-						size: 'small',
-					},
-					['删除']
-				),
-			]);
+			return (
+				<wd-button-group>
+					<wd-button type="primary" onClick={() => doEdit(record)}>
+						编辑
+					</wd-button>
+					<wd-button type="danger" onClick={() => deleteItem(record)}>
+						删除
+					</wd-button>
+				</wd-button-group>
+			);
+			// return h('div', [
+			// 	h(
+			// 		WdButton,
+			// 		{
+			// 			type: 'primary',
+			// 			size: 'small',
+			// 			onClick() {
+			// 				alert(record.color);
+			// 			},
+			// 		},
+			// 		['编辑']
+			// 	),
+			// 	h(
+			// 		WdButton,
+			// 		{
+			// 			type: 'danger',
+			// 			size: 'small',
+			// 		},
+			// 		['删除']
+			// 	),
+			// ]);
 		},
 	},
 	// {
