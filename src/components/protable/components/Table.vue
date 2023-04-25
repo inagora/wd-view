@@ -33,7 +33,7 @@ const wvTable = ref(null);
 // 处理后的列，比如隐藏
 const exportableColumns = [];
 const _columns = [];
-config.columns.forEach((column) => {
+config.columns.forEach(async (column) => {
 	if (column.visible || column.visible === undefined) {
 		_columns.push(column);
 	}
@@ -44,7 +44,7 @@ config.columns.forEach((column) => {
 	if (!column.render && column.valueEnum) {
 		let valueEnum = {};
 		if (isFuction(column.valueEnum)) {
-			valueEnum = column.valueEnum();
+			valueEnum = await Promise.resolve(column.valueEnum());
 		} else {
 			valueEnum = column.valueEnum;
 		}
@@ -316,9 +316,15 @@ const load = (currentPage) => {
 										.classList.add('wd-pagination-disabled');
 								}
 							}
-							records.value = res.data.list;
-							pageCount.value = res.data.pageCount;
-							total.value = res.data.total;
+							records.value = config.ajaxSetting.listKey
+								? res.data[config.ajaxSetting.listKey]
+								: res.data.list;
+							pageCount.value = config.ajaxSetting.pageCountKey
+								? res.data[config.ajaxSetting.pageCountKey]
+								: res.data.pageCount;
+							total.value = config.ajaxSetting.totalKey
+								? res.data[config.ajaxSetting.totalKey]
+								: res.data.total;
 							resolve(res.data.list);
 						} else {
 							reject(res);

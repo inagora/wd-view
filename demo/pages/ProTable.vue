@@ -31,6 +31,18 @@ setTimeout(() => {
 	dataList.value = rowData;
 	currentPage.value = 2;
 }, 2000);
+// 获取远程valueEnum
+const getRemoteEnum = () => {
+	return new Promise((resolve) => {
+		setTimeout(() => {
+			resolve({
+				green: '绿色',
+				blue: '蓝色',
+				green2: '绿色',
+			});
+		}, 3000);
+	});
+};
 // 自定义组件点击
 const customClickHandler = () => {
 	console.log(123);
@@ -130,7 +142,6 @@ const tableColumns = [
 		title: '自定义列',
 		dataIndex: 'color',
 		render(text, record, col) {
-			console.log(text);
 			return `<span style="color: red;">${text}</span>`;
 			// return <span>aaa</span>;
 		},
@@ -147,6 +158,7 @@ const tableColumns = [
 		defaultValue: ['green'],
 		valueEnum() {
 			// 对应key的枚举值，减少render，但是render的优先级更高
+			// return getRemoteEnum();
 			return {
 				green: '绿色',
 				blue: '蓝色',
@@ -256,18 +268,22 @@ const config = reactive({
 	downloadable: true,
 	url: 'http://123.57.68.108:8080',
 	showTotal: true,
-	request: async (params) => {
-		const res = await ajax.request({
-			url: 'http://123.57.68.108:8080',
-			data: params,
-		});
-		console.log('res: ', res);
-		return {
-			list: res.data.list,
-			pageCount: res.data.total_count,
-			total: res.data.total,
-		};
+	ajaxSetting: {
+		totalKey: 'totals',
+		pageCountKey: 'total_count',
 	},
+	// request: async (params) => {
+	// 	const res = await ajax.request({
+	// 		url: 'http://123.57.68.108:8080',
+	// 		data: params,
+	// 	});
+	// 	console.log('res: ', res);
+	// 	return {
+	// 		list: res.data.list,
+	// 		pageCount: res.data.total_count,
+	// 		total: res.data.total,
+	// 	};
+	// },
 	toolbar: [
 		{
 			type: 'primary',
