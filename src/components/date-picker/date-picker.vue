@@ -11,6 +11,7 @@
 		:default-value="_defaultValue"
 		:locale="dateLocale"
 		v-model="modelValue"
+		v-bind="$attrs"
 		@change="change"
 	/>
 </template>
@@ -40,7 +41,6 @@ interface WdPickerProps {
 	size: string; // large/small
 	modelValue: Date | string;
 	placeholder: any;
-	showTime: boolean; // 是否显示时间
 	separator: string; // range 的分隔符
 }
 const pickerTypes = {
@@ -69,10 +69,6 @@ export default defineComponent({
 		placeholder: Object,
 		separator: String,
 		valueFormat: String,
-		showTime: {
-			type: Boolean,
-			default: false,
-		},
 	},
 	emits: ['update:modelValue', 'change'],
 	setup(props: WdPickerProps, { emit }) {

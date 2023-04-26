@@ -23,6 +23,7 @@
 				format="YYYY/MM/DD HH:mm:ss"
 				value-format="YYYY-MM-DD HH-mm-ss"
 				placeholder="请选择日期"
+				:show-time="true"
 				@change="datepickerChange"
 			></wd-date-picker>
 		</wd-form-item>
