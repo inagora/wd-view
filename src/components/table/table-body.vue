@@ -125,10 +125,7 @@ const renderColumn = (column, row) => {
 		}
 		// 判断是否是vnode
 		if (!isVNode(customEl)) {
-			return h({
-				name: 'CustomColumn',
-				template: customEl + '',
-			});
+			return h('div', { innerHTML: customEl });
 		}
 		return customEl;
 	}
