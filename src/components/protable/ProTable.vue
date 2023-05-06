@@ -188,9 +188,19 @@ const getSelectedRows = () => {
 	});
 	return selectedRows;
 };
+const getSearchParams = () => {
+	let searchParams = {};
+	itemRefs.forEach((item) => {
+		if (item.getSearchParams) {
+			searchParams = item.getSearchParams();
+		}
+	});
+	return searchParams;
+};
 defineExpose({
 	refresh,
 	getSelectedRows,
+	getSearchParams,
 });
 onUnmounted(() => {
 	emitter.all.clear();

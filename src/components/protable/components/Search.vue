@@ -94,6 +94,14 @@ onMounted(() => {
 const changeHandler = (val, fn) => {
 	fn && fn(val);
 };
+// 获取搜索参数
+const getSearchParams = () => {
+	return formData.value;
+};
+// 暴露事件
+defineExpose({
+	getSearchParams,
+});
 // formConf
 // 自定义搜索
 // 自定义其他按钮

@@ -382,6 +382,13 @@ const config = reactive({
 				console.log(myProTable.value.getSelectedRows());
 			},
 		},
+		{
+			type: 'primary',
+			text: '获取搜索项',
+			click() {
+				console.log(myProTable.value.getSearchParams());
+			},
+		},
 	],
 	listeners: {
 		dataLoad(res) {
