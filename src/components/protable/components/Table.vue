@@ -281,11 +281,16 @@ const load = (currentPage) => {
 			searchParams = Object.assign({}, searchParams, val);
 		});
 	}
-	loading.value = true;
 	if (config.records) {
 		records.value = config.records;
 		return;
 	}
+	// 处理为设置request或者url的异常
+	if (!config.request && !config.url) {
+		console.error('config request or url');
+		return;
+	}
+	loading.value = true;
 	setTimeout(async () => {
 		if (config.request) {
 			const res = await config.request(searchParams);
