@@ -6,6 +6,7 @@
 - 可以设置各种水平对齐方式。
 ## 用法
 基本用法
+
 <wd-space>
 <div v-for="o in 4" :key="o" class="text item">
     {{ 'List item ' + o }}
