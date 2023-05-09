@@ -114,7 +114,49 @@ module.exports = {
             link: '/table'
           }
         ]
-      }
+      },
+      {
+        text: 'pro组件',
+        children: [
+          {
+            text: 'Pro-Table',
+            link: '/protable/protable'
+          },
+          {
+            text: 'Pro-Form',
+          }
+        ]
+      },
+      {
+        text: 'columns',
+        link: '/columns#column',
+        children: [
+          {
+            text: 'title',
+            link: '/columns#title'
+          },
+          {
+            text: 'dataIndex',
+            link: '/columns#dataIndex'
+          },
+          {
+            text: 'valueType',
+            link: '/columns#valueType'
+          },
+          {
+            text: 'valueEnum',
+            link: '/columns#valueEnum'
+          },
+          {
+            text: 'defaultValue',
+            link: '/columns#defaultValue'
+          },
+        ]
+      },
+      {
+        text: '实例方法',
+        link: '/protable/methods'
+      },
     ]
   }
 }
