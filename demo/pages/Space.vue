@@ -1,7 +1,6 @@
 <template>
 	<div class="container">
 		<!-- <wd-space wrap size="small" align="center" style="width: 100%" :spacer="spacer"> -->
-		<!-- <wd-space wrap size="small" align="center" style="width: 100%" spacer="/"> -->
 		<wd-space wrap size="20" align="center" style="width: 100%" spacer="/">
 			<!-- <wd-space wrap :size="[12,20]" align="center" style="width: 100%" spacer="/"> -->
 			<div v-for="(item, index) in 20" :key="item">
