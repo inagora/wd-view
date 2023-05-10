@@ -66,6 +66,7 @@ import Radio from './Radio.vue';
 import Switch from './Switch.vue';
 import Select from './Select.vue';
 import Datepicker from './Datepicker.vue';
+import DatePickerOrigin from './DatepickerOrigin.vue';
 import Dropdown from './Dropdown.vue';
 import dayjs from 'dayjs';
 import Toast from './Toast.vue';
@@ -85,6 +86,7 @@ export default defineComponent({
 		Table,
 		Checkbox,
 		Datepicker,
+		DatePickerOrigin,
 		Dropdown,
 		Input,
 		InputNumber,
@@ -148,6 +150,10 @@ export default defineComponent({
 					{
 						text: 'DatePicker',
 						type: 'datepicker',
+					},
+					{
+						text: 'DatePickerOrigin',
+						type: 'datepickerorigin',
 					},
 					{
 						text: 'Dropdown',
