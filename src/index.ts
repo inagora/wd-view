@@ -13,6 +13,8 @@ import WdDropdown from '../src/components/dropdown';
 import WdDropdownMenu from '../src/components/dropdownmenu';
 import WdDropdownMenuItem from '../src/components/dropdownmenuitem';
 import WdDatePicker from '../src/components/date-picker';
+import WdDatePickerOrigin from '../src/components/date-picker-origin/date-picker-origin.vue';
+import WdDateRangePicker from '../src/components/date-range-picker/date-range-picker.vue';
 import WdLayout from '../src/components/layout';
 import WdSelect from '../src/components/select';
 import WdOption from '../src/components/option';
@@ -36,7 +38,7 @@ import WdModal from './components/modal';
 import WdUpload from './components/upload';
 import WdUploadDragger from './components/dragger';
 import WdTabs from './components/tabs';
-import ProTable from './components/protable'
+import ProTable from './components/protable';
 
 const components = [
 	WdButton,
@@ -52,6 +54,8 @@ const components = [
 	WdDropdownMenu,
 	WdDropdownMenuItem,
 	WdDatePicker,
+	WdDatePickerOrigin,
+	WdDateRangePicker,
 	WdLayout,
 	WdSelect,
 	WdOption,
@@ -75,7 +79,7 @@ const components = [
 	WdUpload,
 	WdUploadDragger,
 	WdTabs,
-  ProTable
+	ProTable,
 ];
 const install = async (app: App): void => {
 	// 是否需要加载icon css
@@ -88,7 +92,7 @@ const install = async (app: App): void => {
 	});
 	app.config.globalProperties.$toast = WdToast;
 	app.config.globalProperties.$message = WdMessage;
-  app.config.warnHandler = () => null;
+	app.config.warnHandler = () => null;
 };
 export {
 	WdLink,
@@ -105,6 +109,8 @@ export {
 	WdDropdownMenu,
 	WdDropdownMenuItem,
 	WdDatePicker,
+	WdDatePickerOrigin,
+	WdDateRangePicker,
 	WdLayout,
 	WdSelect,
 	WdOption,
@@ -128,7 +134,7 @@ export {
 	WdUpload,
 	WdUploadDragger,
 	WdTabs,
-  ProTable
+	ProTable,
 };
 export default {
 	install,

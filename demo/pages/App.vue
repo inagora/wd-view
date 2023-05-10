@@ -66,7 +66,7 @@ import Radio from './Radio.vue';
 import Switch from './Switch.vue';
 import Select from './Select.vue';
 import Datepicker from './Datepicker.vue';
-import DatePickerOrigin from './DatepickerOrigin.vue';
+import DatePickerOrigin from './DatePickerOrigin.vue';
 import Dropdown from './Dropdown.vue';
 import dayjs from 'dayjs';
 import Toast from './Toast.vue';
@@ -231,6 +231,10 @@ export default defineComponent({
 					{
 						text: 'ProTable',
 						type: 'pro-table',
+					},
+					{
+						text: 'DatePickerOrigin',
+						type: 'datepickerorigin',
 					},
 					{
 						text: '其他',
