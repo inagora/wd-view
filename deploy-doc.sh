@@ -12,7 +12,7 @@ cd docs/.vuepress/dist
 # 如果是发布到自定义域名
 # echo 'www.example.com' > CNAME
 
-# git init
+git init
 git add -A
 git commit -m 'deploy docs'
 
@@ -20,6 +20,6 @@ git commit -m 'deploy docs'
 # git push -f git@github.com:<USERNAME>/<USERNAME>.github.io.git master
 
 # 如果发布到 https://<USERNAME>.github.io/<REPO>
-git push -f git@github.com:inagora/wd-view.git gh-pages
+git push -f git@github.com:inagora/wd-view.git master:gh-pages
 
 cd -

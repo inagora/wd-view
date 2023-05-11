@@ -11,8 +11,6 @@
 
 ## 用法
 
-基本用法
-
 ```vue
 <wd-space wrap :size="[10, 20]" align="center" style="width: 100%" spacer="|">
 	<div v-for="(item, index) in 20">
