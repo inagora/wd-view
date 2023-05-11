@@ -161,7 +161,7 @@ export default defineComponent({
 									{
 										key: idx,
 									},
-									[isVNode(spacer) ? spacer : createTextVNode(spacer)]
+									[isVNode(spacer) ? spacer : createTextVNode(spacer as string)]
 								)
 							);
 						}
