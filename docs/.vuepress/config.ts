@@ -112,6 +112,10 @@ module.exports = {
           {
             text: 'Table 表格',
             link: '/table'
+          },
+          {
+            text: 'Space 间距',
+            link: '/space'
           }
         ]
       },
