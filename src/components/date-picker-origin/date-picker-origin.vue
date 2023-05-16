@@ -5,7 +5,7 @@
 <script>
 import { ref, defineComponent } from 'vue';
 export default defineComponent({
-	name: 'DatePicker',
+	name: 'wd-date-picker-origin',
 	props: {
 		type: {
 			type: String,

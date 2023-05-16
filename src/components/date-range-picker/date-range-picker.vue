@@ -16,7 +16,7 @@
 <script>
 import { defineComponent, ref, watchEffect } from 'vue';
 export default defineComponent({
-	name: 'DatePangePicker',
+	name: 'wd-date-range-picker',
 	props: {
 		type: 'date',
 		modelValue: Array,

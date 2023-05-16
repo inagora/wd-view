@@ -66,7 +66,8 @@ import Radio from './Radio.vue';
 import Switch from './Switch.vue';
 import Select from './Select.vue';
 import Datepicker from './Datepicker.vue';
-import DatePickerOrigin from './DatePickerOrigin.vue';
+import Datepickerorigin from './Datepickerorigin.vue';
+import Daterangepicker from './Daterangepicker.vue';
 import Dropdown from './Dropdown.vue';
 import dayjs from 'dayjs';
 import Toast from './Toast.vue';
@@ -86,7 +87,8 @@ export default defineComponent({
 		Table,
 		Checkbox,
 		Datepicker,
-		DatePickerOrigin,
+		Datepickerorigin,
+		Daterangepicker,
 		Dropdown,
 		Input,
 		InputNumber,
@@ -108,7 +110,8 @@ export default defineComponent({
 		let user = { name: 'niu', age: 18 };
 
 		let { name } = reactive(user);
-
+		console.log('Datepicker', Datepicker);
+		console.log('Datepickerorigin', Datepickerorigin);
 		let counter = ref(1);
 		let isShowToast = ref(false);
 		let toastMsg = ref('');
@@ -152,8 +155,12 @@ export default defineComponent({
 						type: 'datepicker',
 					},
 					{
-						text: 'DatePickerOrigin',
+						text: 'Datepickerorigin',
 						type: 'datepickerorigin',
+					},
+					{
+						text: 'Daterangepicker',
+						type: 'daterangepicker',
 					},
 					{
 						text: 'Dropdown',
@@ -233,8 +240,12 @@ export default defineComponent({
 						type: 'pro-table',
 					},
 					{
-						text: 'DatePickerOrigin',
+						text: 'Datepickerorigin',
 						type: 'datepickerorigin',
+					},
+					{
+						text: 'Daterangepicker',
+						type: 'daterangepicker',
 					},
 					{
 						text: '其他',
