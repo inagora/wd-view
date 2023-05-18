@@ -291,57 +291,65 @@ const load = (currentPage) => {
 		return;
 	}
 	loading.value = true;
-	setTimeout(async () => {
-		if (config.request) {
-			const res = await config.request(searchParams);
-			loading.value = false;
-			records.value = res.list;
-			pageCount.value = res.pageCount;
-			total.value = res.total;
-		} else {
-			return new Promise((resolve, reject) => {
-				ajax
-					.request({
-						url: config.url,
-						data: searchParams,
-					})
-					.then((res) => {
-						loading.value = false;
-						if (res && res.data.list) {
-							if (clickDirection === 'prev') {
-								if (!res.data.list || res.data.list.length === 0) {
-									document
-										.querySelector('.wd-pagination-prev')
-										.classList.remove('wd-pagination-disabled');
-								}
-							} else {
-								if (res.data.list.length < Math.abs(count)) {
-									document
-										.querySelector('.wd-pagination-next')
-										.classList.add('wd-pagination-disabled');
-								}
+	if (config.request) {
+		return new Promise(async (resolve, reject) => {
+			try {
+				const res = await config.request(searchParams);
+				loading.value = false;
+				records.value = res.list;
+				pageCount.value = res.pageCount;
+				total.value = res.total;
+				if (!currentPage) {
+					emitter.emit('dataLoad', res);
+				}
+				resolve(res.list);
+			} catch(err) {
+				reject(err);
+			}
+		})
+	} else {
+		return new Promise((resolve, reject) => {
+			ajax
+				.request({
+					url: config.url,
+					data: searchParams,
+				})
+				.then((res) => {
+					loading.value = false;
+					if (res && res.data.list) {
+						if (clickDirection === 'prev') {
+							if (!res.data.list || res.data.list.length === 0) {
+								document
+									.querySelector('.wd-pagination-prev')
+									.classList.remove('wd-pagination-disabled');
 							}
-							records.value = config.ajaxSetting.listKey
-								? res.data[config.ajaxSetting.listKey]
-								: res.data.list;
-							pageCount.value = config.ajaxSetting.pageCountKey
-								? res.data[config.ajaxSetting.pageCountKey]
-								: res.data.pageCount;
-							total.value = config.ajaxSetting.totalKey
-								? res.data[config.ajaxSetting.totalKey]
-								: res.data.total;
-							resolve(res.data.list);
 						} else {
-							reject(res);
+							if (res.data.list.length < Math.abs(count)) {
+								document
+									.querySelector('.wd-pagination-next')
+									.classList.add('wd-pagination-disabled');
+							}
 						}
-						// 非导出
-						if (!currentPage) {
-							emitter.emit('dataLoad', res);
-						}
-					});
-			});
-		}
-	}, 0);
+						records.value = config.ajaxSetting.listKey
+							? res.data[config.ajaxSetting.listKey]
+							: res.data.list;
+						pageCount.value = config.ajaxSetting.pageCountKey
+							? res.data[config.ajaxSetting.pageCountKey]
+							: res.data.pageCount;
+						total.value = config.ajaxSetting.totalKey
+							? res.data[config.ajaxSetting.totalKey]
+							: res.data.total;
+						resolve(res.data.list);
+					} else {
+						reject(res);
+					}
+					// 非导出
+					if (!currentPage) {
+						emitter.emit('dataLoad', res);
+					}
+				});
+		});
+	}
 };
 const pageChangeHandler = (currPage) => {
 	page = currPage;

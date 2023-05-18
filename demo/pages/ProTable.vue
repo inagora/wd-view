@@ -291,22 +291,22 @@ let config = ref({
 	downloadable: true,
 	url: 'http://123.57.68.108:8080',
 	showTotal: true,
-	ajaxSetting: {
-		totalKey: 'totals',
-		pageCountKey: 'total_count',
-	},
-	// request: async (params) => {
-	// 	const res = await ajax.request({
-	// 		url: 'http://123.57.68.108:8080',
-	// 		data: params,
-	// 	});
-	// 	console.log('res: ', res);
-	// 	return {
-	// 		list: res.data.list,
-	// 		pageCount: res.data.total_count,
-	// 		total: res.data.total,
-	// 	};
+	// ajaxSetting: {
+	// 	totalKey: 'totals',
+	// 	pageCountKey: 'total_count',
 	// },
+	request: async (params) => {
+		const res = await ajax.request({
+			url: 'http://123.57.68.108:8080',
+			data: params,
+		});
+		console.log(res);
+		return {
+			list: res.data.list,
+			pageCount: res.data.total_count,
+			total: res.data.totals,
+		};
+	},
 	toolbar: [
 		{
 			type: 'primary',
@@ -400,10 +400,11 @@ let config = ref({
 	],
 	listeners: {
 		dataLoad(res) {
-			// console.log('dataload: ', res);
-			// return [];
+			console.log('dataload: ', res);
+			return [];
 		},
 		beforeDataRequest(data) {
+			console.log(data);
 			if (sortKey) data.sortKey = sortKey;
 			return data;
 		},
