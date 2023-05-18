@@ -98,9 +98,13 @@ const changeHandler = (val, fn) => {
 const getSearchParams = () => {
 	return formData.value;
 };
+const setSearchParams = (data) => {
+	formData.value = Object.assign({}, formData.value, data);
+}
 // 暴露事件
 defineExpose({
 	getSearchParams,
+	setSearchParams
 });
 // formConf
 // 自定义搜索

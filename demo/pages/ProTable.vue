@@ -2,7 +2,7 @@
 	<pro-table ref="myProTable" :config="config" />
 </template>
 <script setup>
-import { onMounted, reactive, ref, h, createVNode } from 'vue';
+import { onMounted, reactive, ref, h, createVNode, getCurrentInstance } from 'vue';
 import Ajax from '../../src/components/protable/utils/Ajax';
 import WdButton from '../../src/components/button/index';
 import WdInput from '../../src/components/input/index';
@@ -15,6 +15,7 @@ const currentPage = ref(1);
 const rowData = [];
 const ajax = new Ajax();
 const myProTable = ref(null);
+const instance = getCurrentInstance();
 
 setTimeout(() => {
 	for (let i = 0; i < 15; i++) {
@@ -88,8 +89,8 @@ const tableColumns = [
 		sorter: (val) => {
 			getSortData(val);
 		},
-		visible: true, // 是否可见
-		exportable: false, // 是否可导出
+		visible: false, // 是否可见
+		exportable: true, // 是否可导出
 	},
 	{
 		title: '商品名商品名商品名商品名商品名商品名商品名商品名',
@@ -97,6 +98,7 @@ const tableColumns = [
 		key: 'goods_name',
 		ellipsis: true,
 		fixed: 'right',
+		defaultValue: 11
 	},
 	{
 		title: '价格',
@@ -284,7 +286,7 @@ const tableColumns = [
 	// 	],
 	// },
 ];
-const config = reactive({
+let config = ref({
 	columns: tableColumns,
 	downloadable: true,
 	url: 'http://123.57.68.108:8080',
@@ -379,7 +381,13 @@ const config = reactive({
 			text: '自定义按钮',
 			// loading: true,
 			click() {
-				console.log(myProTable.value.getSelectedRows());
+				console.log(myProTable.value);
+				myProTable.value.setSearchParams({
+					goods_name: '123',
+					color: ['blue']
+				})
+
+				// instance.appContext.components['pro-table'].props[0] = {}
 			},
 		},
 		{

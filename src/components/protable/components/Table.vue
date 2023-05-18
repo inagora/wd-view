@@ -37,7 +37,7 @@ config.columns.forEach(async (column) => {
 	if (column.visible || column.visible === undefined) {
 		_columns.push(column);
 	}
-	if (!column.exportable) {
+	if (column.exportable || column.exportable === undefined) {
 		exportableColumns.push(column);
 	}
 	// 设置了valueEnum需要格式化显示的值

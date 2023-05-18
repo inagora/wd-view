@@ -197,10 +197,18 @@ const getSearchParams = () => {
 	});
 	return searchParams;
 };
+const setSearchParams = (data) => {
+	itemRefs.forEach((item) => {
+		if(item.setSearchParams) {
+			item.setSearchParams(data)
+		}
+	});
+};
 defineExpose({
 	refresh,
 	getSelectedRows,
 	getSearchParams,
+	setSearchParams
 });
 onUnmounted(() => {
 	emitter.all.clear();
