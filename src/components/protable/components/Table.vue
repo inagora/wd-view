@@ -27,18 +27,21 @@ import download from '../utils/Download.js';
 import { isFuction, isObject } from '../utils/util.js';
 
 const config = inject('config');
+// 处理导出列
+const exportableColumns = [];
+config.columns.forEach(async (column) => {
+	if (column.exportable || column.exportable === undefined) {
+		exportableColumns.push(column);
+	}
+});
 // 处理列，排除hideInTable的配置
 config.columns = config.columns.filter((item) => !item.hideInTable);
 const wvTable = ref(null);
 // 处理后的列，比如隐藏
-const exportableColumns = [];
 const _columns = [];
 config.columns.forEach(async (column) => {
 	if (column.visible || column.visible === undefined) {
 		_columns.push(column);
-	}
-	if (column.exportable || column.exportable === undefined) {
-		exportableColumns.push(column);
 	}
 	// 设置了valueEnum需要格式化显示的值
 	if (!column.render && column.valueEnum) {

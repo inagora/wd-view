@@ -90,7 +90,8 @@ const tableColumns = [
 			getSortData(val);
 		},
 		visible: false, // 是否可见
-		exportable: true, // 是否可导出
+		exportable: false, // 是否可导出
+		hideInTable: true,
 	},
 	{
 		title: '商品名商品名商品名商品名商品名商品名商品名商品名',
