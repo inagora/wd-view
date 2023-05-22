@@ -132,7 +132,7 @@ export default defineComponent({
 			date: datepickerValue.value,
 		});
 		let userInfoForm = <any>ref();
-		let componentType = ref('pro-table');
+		let componentType = ref('checkbox');
 		let menuList = ref([]);
 		menuList.value = [
 			{
