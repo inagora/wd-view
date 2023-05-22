@@ -2,7 +2,14 @@
 	<pro-table ref="myProTable" :config="config" />
 </template>
 <script setup>
-import { onMounted, reactive, ref, h, createVNode, getCurrentInstance } from 'vue';
+import {
+	onMounted,
+	reactive,
+	ref,
+	h,
+	createVNode,
+	getCurrentInstance,
+} from 'vue';
 import Ajax from '../../src/components/protable/utils/Ajax';
 import WdButton from '../../src/components/button/index';
 import WdInput from '../../src/components/input/index';
@@ -99,7 +106,7 @@ const tableColumns = [
 		key: 'goods_name',
 		ellipsis: true,
 		fixed: 'right',
-		defaultValue: 11
+		defaultValue: 11,
 	},
 	{
 		title: '价格',
@@ -292,6 +299,7 @@ let config = ref({
 	downloadable: true,
 	url: 'http://123.57.68.108:8080',
 	showTotal: true,
+	showFormLabel: false,
 	// ajaxSetting: {
 	// 	totalKey: 'totals',
 	// 	pageCountKey: 'total_count',
@@ -385,8 +393,8 @@ let config = ref({
 				console.log(myProTable.value);
 				myProTable.value.setSearchParams({
 					goods_name: '123',
-					color: ['blue']
-				})
+					color: ['blue'],
+				});
 
 				// instance.appContext.components['pro-table'].props[0] = {}
 			},

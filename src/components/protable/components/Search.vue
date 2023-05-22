@@ -100,11 +100,11 @@ const getSearchParams = () => {
 };
 const setSearchParams = (data) => {
 	formData.value = Object.assign({}, formData.value, data);
-}
+};
 // 暴露事件
 defineExpose({
 	getSearchParams,
-	setSearchParams
+	setSearchParams,
 });
 // formConf
 // 自定义搜索
@@ -119,6 +119,7 @@ defineExpose({
 			size="small"
 			label-position="top"
 			inline
+			:show-label="config.showFormLabel"
 		>
 			<wd-form-item
 				v-for="filter in searchFilters"

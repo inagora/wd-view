@@ -8,6 +8,7 @@ export interface WdFormProps {
   disabled: boolean;
   model: object;
   formMitt: Emitter;
+  showLabel: boolean
 }
 
 export interface WdFormItemProps {
@@ -18,6 +19,7 @@ export interface WdFormItemProps {
   required: boolean;
   prop: string;
   formMitt: Emitter;
+  showLabel: boolean
 }
 
 export const wdFormKey: string = "wdForm";
@@ -50,6 +52,7 @@ export interface WdFormContext {
   disabled?: boolean;
   labelAlign: string;
   colon: boolean;
+  showLabel: boolean
 }
 
 export interface WdFormItemContext {
@@ -64,4 +67,5 @@ export interface WdFormItemContext {
   clearValidate(): void;
   size: string;
   disabled: boolean;
+  showLabel: boolean
 }

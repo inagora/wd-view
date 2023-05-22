@@ -58,6 +58,11 @@ export default defineComponent({
 			type: Boolean,
 			default: true,
 		},
+		showLabel: {
+			// 是否显示label
+			type: Boolean,
+			default: true,
+		},
 	},
 	emits: ['validate'],
 	setup(props, { emit }) {

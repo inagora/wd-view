@@ -143,6 +143,10 @@ const conf = Object.assign(
 		 * 空列表文案
 		 */
 		emptyText: '',
+		/**
+		 * 是否显示form的label
+		 */
+		showFormLabel: true,
 	},
 	config
 );
@@ -199,8 +203,8 @@ const getSearchParams = () => {
 };
 const setSearchParams = (data) => {
 	itemRefs.forEach((item) => {
-		if(item.setSearchParams) {
-			item.setSearchParams(data)
+		if (item.setSearchParams) {
+			item.setSearchParams(data);
 		}
 	});
 };
@@ -208,7 +212,7 @@ defineExpose({
 	refresh,
 	getSelectedRows,
 	getSearchParams,
-	setSearchParams
+	setSearchParams,
 });
 onUnmounted(() => {
 	emitter.all.clear();

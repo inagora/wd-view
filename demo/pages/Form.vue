@@ -10,8 +10,10 @@
 		:rules="formRules"
 		:show-message="true"
 		label-position="top"
+		:show-label="false"
+		inline
 	>
-		<wd-form-item label="姓名" prop="name">
+		<wd-form-item label="姓名" prop="name" :show-label="true">
 			<wd-input type="text" placeholder="请输入姓名"></wd-input>
 		</wd-form-item>
 		<wd-form-item label="毕业日期" prop="date">

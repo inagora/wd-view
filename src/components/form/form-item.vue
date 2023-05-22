@@ -7,6 +7,7 @@
 		]"
 	>
 		<div
+			v-if="isShowLabel"
 			:class="['wd-form-item-label', isRequired ? 'wd-form-item-required' : '']"
 			:style="labelStyle"
 		>
@@ -67,9 +68,17 @@ export default defineComponent({
 			type: Boolean,
 			default: true,
 		},
+		showLabel: {
+			type: Boolean,
+			default: true,
+		},
 	},
 	setup(props) {
 		let wdForm = inject(wdFormKey, {} as WdFormContext);
+		const isShowLabel = ref(wdForm.showLabel);
+		if (!props.showLabel) {
+			isShowLabel.value = props.showLabel;
+		}
 		const validateState = ref('');
 		const validateMessage = ref('');
 		const validateDisabled = ref(false);
@@ -313,6 +322,7 @@ export default defineComponent({
 			isRequired,
 			inline,
 			msgClasses,
+			isShowLabel,
 		};
 	},
 });
