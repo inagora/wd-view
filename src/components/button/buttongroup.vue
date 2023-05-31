@@ -12,11 +12,11 @@
 </template>
 
 <script lang="ts">
-import { defineComponent, reactive, PropType } from 'vue';
+import { defineComponent, reactive, PropType } from 'vue'
 type ButtonTypes = PropType<
 	'primary' | 'success' | 'warning' | 'danger' | 'info' | 'text' | 'dashed'
->;
-type ButtonSizes = PropType<'small' | 'large'>;
+>
+type ButtonSizes = PropType<'small' | 'large'>
 // import WdButton from './button.vue';
 // import * as IconList from '@ant-design/icons-vue';
 export default defineComponent({
@@ -24,12 +24,12 @@ export default defineComponent({
 	props: {
 		type: {
 			type: String as ButtonTypes,
-			default: 'default',
+			default: 'default'
 		},
 		size: {
 			type: String as ButtonSizes,
-			default: 'small',
-		},
+			default: 'small'
+		}
 	},
 	// components: {
 	// 	WdButton,
@@ -37,20 +37,20 @@ export default defineComponent({
 	emits: ['click'],
 	setup(props, context) {
 		const handleClick = (options) => {
-			context.emit('click', options);
-		};
-		const slots = reactive(context.slots.default());
+			context.emit('click', options)
+		}
+		const slots = reactive(context.slots.default())
 		const sizeMap = reactive({
 			small: 'sm',
-			large: 'lg',
-		});
+			large: 'lg'
+		})
 		return {
 			handleClick,
 			sizeMap,
-			slots,
-		};
-	},
-});
+			slots
+		}
+	}
+})
 </script>
 <style lang="less">
 @import url(./style/index);

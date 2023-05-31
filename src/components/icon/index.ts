@@ -1,8 +1,8 @@
-import {App} from 'vue';
-import WdIcon from './icon.vue';
+import { App } from "vue"
+import WdIcon from "./icon.vue"
 
 WdIcon.install = (app: App) => {
-  app.component(WdIcon.name, WdIcon);
+	app.component(WdIcon.name, WdIcon)
 }
 
-export default WdIcon;
+export default WdIcon

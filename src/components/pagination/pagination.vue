@@ -3,7 +3,7 @@
 		class="wd-pagination"
 		:class="[
 			disabled ? 'wd-pagination-disabled' : '',
-			'wd-pagination-' + position,
+			'wd-pagination-' + position
 		]"
 	>
 		<li class="wd-pagination-total-text" v-if="showTotal">{{ totalText }}</li>
@@ -48,7 +48,7 @@
 				class="wd-pagination-item"
 				:class="[
 					page === newCurrentPage ? 'wd-pagination-item-active' : '',
-					'wd-pagination-item-' + page,
+					'wd-pagination-item-' + page
 				]"
 				v-for="page in pagers"
 				:key="page"
@@ -77,7 +77,7 @@
 				v-if="pageCount > 1"
 				:class="[
 					newCurrentPage === pageCount ? 'wd-pagination-item-active' : '',
-					'wd-pagination-item-' + pageCount,
+					'wd-pagination-item-' + pageCount
 				]"
 				class="wd-pagination-item"
 				@click="pageClickHandler(pageCount)"
@@ -117,36 +117,36 @@ import {
 	computed,
 	watchEffect,
 	watch,
-	PropType,
-} from 'vue';
+	PropType
+} from "vue"
 interface PropsType {
-	pageSize: number;
-	total: number;
-	pageCount: number;
-	currentPage: number;
-	disabled: boolean;
-	prevText: string;
-	nextText: string;
-	pagerCount: number;
-	showTotal: any;
+	pageSize: number
+	total: number
+	pageCount: number
+	currentPage: number
+	disabled: boolean
+	prevText: string
+	nextText: string
+	pagerCount: number
+	showTotal: any
 }
-import WdIcon from '../icon/icon.vue';
+import WdIcon from "../icon/icon.vue"
 export default defineComponent({
-	name: 'wd-pagination',
+	name: "wd-pagination",
 	components: {
-		WdIcon,
+		WdIcon
 	},
 	props: {
 		pageSize: Number,
 		total: Number,
 		pageCount: {
 			type: Number,
-			default: 1,
+			default: 1
 		},
 		currentPage: Number,
 		disabled: {
 			type: Boolean,
-			default: false,
+			default: false
 		},
 		prevText: String,
 		nextText: String,
@@ -155,161 +155,161 @@ export default defineComponent({
 			validator: (value: number) => {
 				return (
 					(value | 0) === value && value > 4 && value < 22 && value % 2 === 1
-				);
+				)
 			},
-			default: 7,
+			default: 7
 		},
 		position: {
 			type: String,
-			default: 'right',
+			default: "right"
 		},
 		showTotal: [Boolean, Object],
 		isShowPage: {
 			type: Boolean,
-			default: true,
-		},
+			default: true
+		}
 	},
-	emits: ['current-change', 'prev-click', 'next-click'],
+	emits: ["current-change", "prev-click", "next-click"],
 	setup(props: PropsType, { emit }) {
-		const { currentPage, pageCount } = reactive(props);
-		let prevDisabled = ref(false);
-		let newCurrentPage = ref(currentPage);
-		const showPrevMore = ref(false);
-		const showNextMore = ref(false);
-		const quicknextIconClass = ref('icon-more');
-		const quickprevIconClass = ref('icon-more');
-		const pagers = ref([]);
+		const { currentPage, pageCount } = reactive(props)
+		let prevDisabled = ref(false)
+		let newCurrentPage = ref(currentPage)
+		const showPrevMore = ref(false)
+		const showNextMore = ref(false)
+		const quicknextIconClass = ref("icon-more")
+		const quickprevIconClass = ref("icon-more")
+		const pagers = ref([])
 		watchEffect(() => {
-			const pagerCount = props.pagerCount;
-			const halfPagerCount = (pagerCount - 1) / 2;
-			const currentPage = newCurrentPage.value;
-			const pageCount = Number(props.pageCount);
+			const pagerCount = props.pagerCount
+			const halfPagerCount = (pagerCount - 1) / 2
+			const currentPage = newCurrentPage.value
+			const pageCount = Number(props.pageCount)
 
-			let showPrevMore = false;
-			let showNextMore = false;
+			let showPrevMore = false
+			let showNextMore = false
 			if (pageCount > pagerCount) {
 				if (currentPage > pagerCount - halfPagerCount) {
-					showPrevMore = true;
+					showPrevMore = true
 				}
 				if (currentPage < pageCount - halfPagerCount) {
-					showNextMore = true;
+					showNextMore = true
 				}
 			}
-			const array = [];
+			const array = []
 			if (showPrevMore && !showNextMore) {
-				const startPage = pageCount - (pagerCount - 2);
+				const startPage = pageCount - (pagerCount - 2)
 				for (let i = startPage; i < pageCount; i++) {
-					array.push(i);
+					array.push(i)
 				}
 			} else if (!showPrevMore && showNextMore) {
 				for (let i = 2; i < pagerCount; i++) {
-					array.push(i);
+					array.push(i)
 				}
 			} else if (showPrevMore && showNextMore) {
-				const offset = Math.floor(pagerCount / 2) - 1;
+				const offset = Math.floor(pagerCount / 2) - 1
 				for (let i = currentPage - offset; i <= currentPage + offset; i++) {
-					array.push(i);
+					array.push(i)
 				}
 			} else {
 				for (let i = 2; i < pageCount; i++) {
-					array.push(i);
+					array.push(i)
 				}
 			}
-			pagers.value = array;
-		});
+			pagers.value = array
+		})
 		watchEffect(() => {
-			const halfPagerCount = (props.pagerCount - 1) / 2;
+			const halfPagerCount = (props.pagerCount - 1) / 2
 
-			showPrevMore.value = false;
-			showNextMore.value = false;
+			showPrevMore.value = false
+			showNextMore.value = false
 
 			if (props.pageCount > props.pagerCount) {
 				if (newCurrentPage.value > props.pagerCount - halfPagerCount) {
-					showPrevMore.value = true;
+					showPrevMore.value = true
 				}
 				if (newCurrentPage.value < props.pageCount - halfPagerCount) {
-					showNextMore.value = true;
+					showNextMore.value = true
 				}
 			}
-		});
+		})
 
 		watchEffect(() => {
-			if (props.disabled) return;
-			if (!showPrevMore.value) quickprevIconClass.value = 'icon-more';
-		});
+			if (props.disabled) return
+			if (!showPrevMore.value) quickprevIconClass.value = "icon-more"
+		})
 		watchEffect(() => {
-			if (props.disabled) return;
-			if (!showNextMore.value) quicknextIconClass.value = 'icon-more';
-		});
+			if (props.disabled) return
+			if (!showNextMore.value) quicknextIconClass.value = "icon-more"
+		})
 		watch(
 			() => newCurrentPage.value,
 			(val) => {
-				if (props.disabled) return;
-				emit('current-change', val);
+				if (props.disabled) return
+				emit("current-change", val)
 			}
-		);
+		)
 
-		function onMouseenter(direction: 'left' | 'right') {
-			if (props.disabled) return;
-			if (direction === 'left') {
-				quickprevIconClass.value = 'arrow-left';
+		function onMouseenter(direction: "left" | "right") {
+			if (props.disabled) return
+			if (direction === "left") {
+				quickprevIconClass.value = "arrow-left"
 			} else {
-				quicknextIconClass.value = 'arrow-right';
+				quicknextIconClass.value = "arrow-right"
 			}
 		}
 
 		const pageClickHandler = (page) => {
-			if (newCurrentPage.value === page || props.disabled) return; // 同一页码点击
-			newCurrentPage.value = page;
-		};
+			if (newCurrentPage.value === page || props.disabled) return // 同一页码点击
+			newCurrentPage.value = page
+		}
 		// 更多点击
 		const moreLeftClickHandler = () => {
-			if (props.disabled) return;
-			const pageCountOffset = props.pagerCount - 2;
-			newCurrentPage.value = newCurrentPage.value - pageCountOffset;
+			if (props.disabled) return
+			const pageCountOffset = props.pagerCount - 2
+			newCurrentPage.value = newCurrentPage.value - pageCountOffset
 			if (newCurrentPage.value < 1) {
-				newCurrentPage.value = 1;
+				newCurrentPage.value = 1
 			}
-		};
+		}
 		const moreRightClickHandler = () => {
-			if (props.disabled) return;
-			const pageCountOffset = props.pagerCount - 2;
-			newCurrentPage.value = newCurrentPage.value + pageCountOffset;
+			if (props.disabled) return
+			const pageCountOffset = props.pagerCount - 2
+			newCurrentPage.value = newCurrentPage.value + pageCountOffset
 			if (newCurrentPage.value > props.pageCount) {
-				newCurrentPage.value = props.pageCount;
+				newCurrentPage.value = props.pageCount
 			}
-		};
+		}
 		// 上一页
 		const prevPageClickHandler = () => {
-			if (props.disabled) return;
+			if (props.disabled) return
 			if (--newCurrentPage.value < 1) {
-				prevDisabled.value = true;
-				newCurrentPage.value = 1;
-				return;
+				prevDisabled.value = true
+				newCurrentPage.value = 1
+				return
 			}
-			emit('prev-click', newCurrentPage.value);
-		};
+			emit("prev-click", newCurrentPage.value)
+		}
 		// 下一页
 		const nextPageClickHandler = () => {
-			if (props.disabled) return;
+			if (props.disabled) return
 			if (++newCurrentPage.value > props.pageCount) {
-				prevDisabled.value = true;
-				newCurrentPage.value = props.pageCount;
-				return;
+				prevDisabled.value = true
+				newCurrentPage.value = props.pageCount
+				return
 			}
-			emit('next-click', newCurrentPage.value);
-		};
+			emit("next-click", newCurrentPage.value)
+		}
 		// 处理总数据
-		let totalText = ref('');
+		let totalText = ref("")
 		watchEffect(() => {
 			if (props.showTotal) {
-				if (typeof props.showTotal === 'function') {
-					totalText.value = props.showTotal();
+				if (typeof props.showTotal === "function") {
+					totalText.value = props.showTotal()
 				} else {
-					totalText.value = `共${props.total}条`;
+					totalText.value = `共${props.total}条`
 				}
 			}
-		});
+		})
 
 		return {
 			pageClickHandler,
@@ -324,10 +324,10 @@ export default defineComponent({
 			showNextMore,
 			quickprevIconClass,
 			quicknextIconClass,
-			totalText,
-		};
-	},
-});
+			totalText
+		}
+	}
+})
 </script>
 <style lang="less">
 @import url(./style/index);

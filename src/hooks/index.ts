@@ -1,1 +1,1 @@
-export { default as useAttrs } from './use-attrs'
+export { default as useAttrs } from "./use-attrs"

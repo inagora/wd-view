@@ -1,8 +1,8 @@
-// @ts-nocheck
-import { App } from "vue";
-import WdTable from "./table.vue";
+//
+import { App } from "vue"
+import WdTable from "./table.vue"
 WdTable.install = (app: App) => {
-  app.component(WdTable.name, WdTable);
-};
+	app.component(WdTable.name, WdTable)
+}
 
-export default WdTable;
+export default WdTable

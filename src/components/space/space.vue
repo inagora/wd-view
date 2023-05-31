@@ -4,8 +4,8 @@
 const SIZE_MAP: Readonly<{ small: 8; default: 12; large: 16 }> = {
 	small: 8,
 	default: 12,
-	large: 16,
-};
+	large: 16
+}
 import {
 	defineComponent,
 	h,
@@ -20,78 +20,78 @@ import {
 	CSSProperties,
 	StyleValue,
 	Ref,
-	VNode,
-} from 'vue';
+	VNode
+} from "vue"
 // import {  isArray, isString } from '../../utils/util.ts'; // ts 引入
-import { isFragment, isValidElementNode } from '../../utils/vnode';
-const isArray = (val: any) => Array.isArray(val);
-const isString = (val: any) => typeof val === 'string';
-const isNumber = (val: any) => typeof val === 'number';
+import { isFragment, isValidElementNode } from "../../utils/vnode"
+const isArray = (val: any) => Array.isArray(val)
+const isString = (val: any) => typeof val === "string"
+const isNumber = (val: any) => typeof val === "number"
 export default defineComponent({
-	name: 'wd-space',
+	name: "wd-space",
 	props: {
 		direction: {
 			type: String,
-			default: '', // 水平 竖直
+			default: "" // 水平 竖直
 		},
 
 		style: {
 			type: Object,
-			default: {},
+			default: {}
 		},
 
 		align: {
 			type: String,
-			default: 'center', // start, center ,end , baseline
+			default: "center" // start, center ,end , baseline
 		},
 
 		size: {
 			type: [String, Array, Number],
-			default: 'small',
+			default: "small",
 			validator: (val: unknown): val is [number, number] | number =>
-				isNumber(val) || isString(val) || isArray(val),
+				isNumber(val) || isString(val) || isArray(val)
 		},
 		wrap: Boolean,
 		spacer: {
 			type: [String, Number],
 			default: null,
 			validator: (val: unknown) =>
-				isVNode(val) || isNumber(val) || isString(val),
-		},
+				isVNode(val) || isNumber(val) || isString(val)
+		}
 	},
 	setup(props, content) {
-		const horizontalSize = ref(0);
-		const verticalSize = ref(0);
+		const horizontalSize = ref(0)
+		const verticalSize = ref(0)
 		const containerStyle = computed(() => {
-			const rowGap = `${verticalSize.value}px`;
-			const columnGap = `${horizontalSize.value}px`;
+			const rowGap = `${verticalSize.value}px`
+			const columnGap = `${horizontalSize.value}px`
 			return {
 				alignItems: props.align,
 				flexDirection: props.direction,
-				flexWrap: props.wrap ? 'wrap' : 'nowrap',
+				flexWrap: props.wrap ? "wrap" : "nowrap",
 				...(props.style || {}),
-				gap: `${rowGap} ${columnGap}`,
-			};
-		});
+				gap: `${rowGap} ${columnGap}`
+			}
+		})
 
 		watchEffect(() => {
-			const { size = '' } = props;
+			const { size = "" } = props
 
 			if (Array.isArray(size)) {
-				const [h = 0, v = 0] = <[number, number]>size;
-				horizontalSize.value = h;
-				verticalSize.value = v;
+				const [h = 0, v = 0] = <[number, number]>size
+				horizontalSize.value = h
+				verticalSize.value = v
 			} else {
-				let val: number;
+				let val: number
 				if (isNumber(size)) {
-					val = <number>size;
+					val = <number>size
 				} else {
-					val = SIZE_MAP[size || 'small'] || SIZE_MAP.small;
+					val = SIZE_MAP[size || "small"] || SIZE_MAP.small
 				}
-				horizontalSize.value = verticalSize.value = val;
+				horizontalSize.value = verticalSize.value = val
 			}
-		});
-		function updateChildSlots(children, parentKey = '', newNodes = []) {
+		})
+		function updateChildSlots(children, parentKey = "", newNodes = []) {
 			children.forEach((child, loopKey) => {
 				if (isFragment(child)) {
 					if (isArray(child.children)) {
@@ -101,83 +101,83 @@ export default defineComponent({
 									nested.children,
 									`${parentKey + key}-`,
 									newNodes
-								);
+								)
 							} else {
 								newNodes.push(
 									h(
-										'div',
+										"div",
 										{
-											class: 'wd-space_item',
-											key: `nested-${parentKey + key}`,
+											class: "wd-space_item",
+											key: `nested-${parentKey + key}`
 										},
 										nested
 									)
-								);
+								)
 							}
-						});
+						})
 					}
 				} else if (isValidElementNode(child)) {
 					newNodes.push(
 						h(
-							'div',
+							"div",
 							{
-								class: 'wd-space_item',
-								key: `LoopKey${parentKey + loopKey}`,
+								class: "wd-space_item",
+								key: `LoopKey${parentKey + loopKey}`
 							},
 							child
 						)
-					);
+					)
 				}
-			});
+			})
 
-			return newNodes;
+			return newNodes
 		}
 
 		// 将虚拟dom,挂载到真实dom.renderSlot函数会返回当前插槽对应的VNode数组，可以在render函数中使用。
 		return () => {
 			// debugger
-			const { spacer } = props;
+			const { spacer } = props
 
 			const children = renderSlot(
 				content.slots,
-				'default',
+				"default",
 				{ key: 0 },
 				() => []
-			);
+			)
 			// if  assembly is empty direct return
-			if ((children.children ?? []).length === 0) return null;
+			if ((children.children ?? []).length === 0) return null
 
 			if (isArray(children.children)) {
-				let newNodes = updateChildSlots(children.children);
+				let newNodes = updateChildSlots(children.children)
 				if (spacer) {
-					let len = newNodes.length - 1;
+					let len = newNodes.length - 1
 					// 给每一项 添加一个spacer
 					newNodes = newNodes.reduce<VNode[]>((acc, child, idx) => {
-						const children = [...acc, child];
+						const children = [...acc, child]
 						if (idx !== len) {
 							children.push(
 								h(
-									'span',
+									"span",
 									{
-										key: idx,
+										key: idx
 									},
 									[isVNode(spacer) ? spacer : createTextVNode(spacer as string)]
 								)
-							);
+							)
 						}
-						return children;
-					}, []);
+						return children
+					}, [])
 				}
 
 				return h(
-					'div',
-					{ class: 'wd-space', style: containerStyle.value },
+					"div",
+					{ class: "wd-space", style: containerStyle.value },
 					newNodes
-				);
+				)
 			}
-		};
-	},
-});
+		}
+	}
+})
 </script>
 <style>
 .wd-space {

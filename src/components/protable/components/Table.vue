@@ -1,10 +1,10 @@
 <script>
 export default {
-	name: 'wvTable',
-};
+	name: "wvTable"
+}
 </script>
 <script setup>
-import { inject, onMounted, onUnmounted, ref } from 'vue';
+import { inject, onMounted, onUnmounted, ref } from "vue"
 // import {
 //   WdTable,
 //   WdButtonGroup,
@@ -14,300 +14,300 @@ import { inject, onMounted, onUnmounted, ref } from 'vue';
 //   WdModal,
 //   WdLoading,
 // } from "@inagora/wd-view";
-import WdTable from '../../table';
-import WdButtonGroup from '../../buttongroup';
-import WdButton from '../../button';
-import WdDialog from '../../dialog';
-import WdMessage from '../../message';
-import WdModal from '../../modal';
-import WdLoading from '../../loading';
-import WvForm from './Form.vue';
-import Ajax from '../utils/Ajax.js';
-import download from '../utils/Download.js';
-import { isFuction, isObject } from '../utils/util.js';
+import WdTable from "../../table"
+import WdButtonGroup from "../../buttongroup"
+import WdButton from "../../button"
+import WdDialog from "../../dialog"
+import WdMessage from "../../message"
+import WdModal from "../../modal"
+import WdLoading from "../../loading"
+import WvForm from "./Form.vue"
+import Ajax from "../utils/Ajax.js"
+import download from "../utils/Download.js"
+import { isFuction, isObject } from "../utils/util.js"
 
-const config = inject('config');
+const config = inject("config")
 // 处理导出列
-const exportableColumns = [];
+const exportableColumns = []
 config.columns.forEach(async (column) => {
 	if (column.exportable || column.exportable === undefined) {
-		exportableColumns.push(column);
+		exportableColumns.push(column)
 	}
-});
+})
 // 处理列，排除hideInTable的配置
-config.columns = config.columns.filter((item) => !item.hideInTable);
-const wvTable = ref(null);
+config.columns = config.columns.filter((item) => !item.hideInTable)
+const wvTable = ref(null)
 // 处理后的列，比如隐藏
-const _columns = [];
+const _columns = []
 config.columns.forEach(async (column) => {
 	if (column.visible || column.visible === undefined) {
-		_columns.push(column);
+		_columns.push(column)
 	}
 	// 设置了valueEnum需要格式化显示的值
 	if (!column.render && column.valueEnum) {
-		let valueEnum = {};
+		let valueEnum = {}
 		if (isFuction(column.valueEnum)) {
-			valueEnum = await Promise.resolve(column.valueEnum());
+			valueEnum = await Promise.resolve(column.valueEnum())
 		} else {
-			valueEnum = column.valueEnum;
+			valueEnum = column.valueEnum
 		}
 		column.render = (_, row) => {
-			return valueEnum[row[column.dataIndex]] || row[column.dataIndex];
-		};
+			return valueEnum[row[column.dataIndex]] || row[column.dataIndex]
+		}
 	}
-});
+})
 // 如果设置了updateUrl,但是没有设置editConf,则使用addConf
 if (config.updateUrl && !config.editConf) {
-	config.editConf = config.addConf;
+	config.editConf = config.addConf
 }
 // 表头自适应宽度
 const flexColumnWidth = (str) => {
-	let flexWidth = 0;
+	let flexWidth = 0
 	for (const char of str) {
-		if ((char >= 'A' && char <= 'Z') || (char >= 'a' && char <= 'z')) {
+		if ((char >= "A" && char <= "Z") || (char >= "a" && char <= "z")) {
 			// 如果是英文字符，为字符分配8个单位宽度
-			flexWidth += 8;
-		} else if (char >= '\u4e00' && char <= '\u9fa5') {
+			flexWidth += 8
+		} else if (char >= "\u4e00" && char <= "\u9fa5") {
 			// 如果是中文字符，为字符分配18个单位宽度
-			flexWidth += 18;
+			flexWidth += 18
 		} else {
 			// 其他种类字符，为字符分配8个单位宽度
-			flexWidth += 8;
+			flexWidth += 8
 		}
 	}
 	if (flexWidth < 100) {
 		// 设置最小宽度
-		flexWidth = 100;
+		flexWidth = 100
 	}
-	return flexWidth;
-};
+	return flexWidth
+}
 if (config.autoWidth) {
 	_columns.forEach((column) => {
-		column.width = flexColumnWidth(column.title);
-	});
+		column.width = flexColumnWidth(column.title)
+	})
 }
 
-const emitter = inject('emitter');
-emitter.on('wv:download', () => {
-	download(exportableColumns, records.value);
-});
-const exportPage = ref(1);
-const exporting = ref(false);
-emitter.on('wv:downloadAll', async () => {
-	let allData = [];
-	exporting.value = true;
+const emitter = inject("emitter")
+emitter.on("wv:download", () => {
+	download(exportableColumns, records.value)
+})
+const exportPage = ref(1)
+const exporting = ref(false)
+emitter.on("wv:downloadAll", async () => {
+	let allData = []
+	exporting.value = true
 	for (let i = 0; i < pageCount.value; i++) {
-		exportPage.value = i + 1;
-		const pageData = await load(i + 1);
-		allData = allData.concat(pageData);
+		exportPage.value = i + 1
+		const pageData = await load(i + 1)
+		allData = allData.concat(pageData)
 	}
-	exporting.value = false;
-	download(exportableColumns, allData);
-});
+	exporting.value = false
+	download(exportableColumns, allData)
+})
 // 搜索事件
-let searchParams = {};
-emitter.on('wv:search', (params) => {
-	searchParams = params;
-	page = 1;
-	load();
-});
-const opType = ref('add');
+let searchParams = {}
+emitter.on("wv:search", (params) => {
+	searchParams = params
+	page = 1
+	load()
+})
+const opType = ref("add")
 // 新增一项
-const formData = ref({});
-const isShowAddDialog = ref(false);
-emitter.on('wv:add', () => {
-	opType.value = 'add';
+const formData = ref({})
+const isShowAddDialog = ref(false)
+emitter.on("wv:add", () => {
+	opType.value = "add"
 	config.addConf.forEach((item) => {
-		formData.value[item.prop] = item.value || '';
-	});
-	isShowAddDialog.value = true;
-});
+		formData.value[item.prop] = item.value || ""
+	})
+	isShowAddDialog.value = true
+})
 // 保存
 const saveHandler = () => {
-	saveRequest(config.addUrl);
-};
+	saveRequest(config.addUrl)
+}
 const saveRequest = (url) => {
 	ajax
 		.request({
 			url,
-			method: 'POST',
-			data: formData.value,
+			method: "POST",
+			data: formData.value
 		})
 		.then((res) => {
 			if (res && res.code) {
-				page = 1;
-				load();
+				page = 1
+				load()
 			} else {
 				WdMessage({
-					message: '保存失败',
-					type: 'error',
-				});
+					message: "保存失败",
+					type: "error"
+				})
 			}
-			emitter.emit(opType.value, res);
-		});
-};
+			emitter.emit(opType.value, res)
+		})
+}
 // 编辑
 const editHandler = () => {
-	opType.value = 'edit';
+	opType.value = "edit"
 	config.editConf.forEach((item) => {
-		formData.value[item.prop] = item.value || '';
-	});
-	isShowAddDialog.value = true;
-};
+		formData.value[item.prop] = item.value || ""
+	})
+	isShowAddDialog.value = true
+}
 // 删除
 const deleteHandler = (id) => {
 	WdModal.confirm({
-		title: '提示',
-		type: 'danger',
-		content: '确定要删除吗？',
+		title: "提示",
+		type: "danger",
+		content: "确定要删除吗？",
 		destroyOnClose: true,
 		onConfirm() {
 			ajax
 				.request({
 					url: config.deleteUrl,
-					method: 'POST',
+					method: "POST",
 					data: {
-						[config.idIndex]: id,
-					},
+						[config.idIndex]: id
+					}
 				})
 				.then((res) => {
 					if (res && res.code) {
-						page = 1;
-						load();
-						this.destroy();
+						page = 1
+						load()
+						this.destroy()
 					} else {
 						WdMessage({
-							message: '删除失败',
-							type: 'error',
-						});
+							message: "删除失败",
+							type: "error"
+						})
 					}
-					emitter.emit('wv:delete', res);
-				});
-		},
-	});
-};
+					emitter.emit("wv:delete", res)
+				})
+		}
+	})
+}
 // 批量删除
-emitter.on('wv:batchDelete', () => {
-	const selectedRows = wvTable.value.getSelectedRows();
+emitter.on("wv:batchDelete", () => {
+	const selectedRows = wvTable.value.getSelectedRows()
 	if (!selectedRows || selectedRows.length === 0) {
 		WdMessage({
-			message: '选择要删除的项',
-			type: 'warning',
-		});
-		return;
+			message: "选择要删除的项",
+			type: "warning"
+		})
+		return
 	}
-	deleteHandler(selectedRows.map((row) => row[config.idIndex]));
-});
-let allFixedRightEls;
-let allFixedLeftEls;
+	deleteHandler(selectedRows.map((row) => row[config.idIndex]))
+})
+let allFixedRightEls
+let allFixedLeftEls
 onMounted(async () => {
 	// if (config.autoRequest) {
 	//   await load();
 	// }
-	if (config.pageMode === 'waterfall') {
-		document.querySelectorAll('.wd-pagination-item').forEach((item) => {
-			item.style.display = 'none';
-		});
+	if (config.pageMode === "waterfall") {
+		document.querySelectorAll(".wd-pagination-item").forEach((item) => {
+			item.style.display = "none"
+		})
 	}
-	const wvTableEl = document.querySelector('.wv-table');
-	wvTableEl && wvTableEl.addEventListener('scroll', scrollListener);
-});
+	const wvTableEl = document.querySelector(".wv-table")
+	wvTableEl && wvTableEl.addEventListener("scroll", scrollListener)
+})
 onUnmounted(() => {
-	const wvTableEl = document.querySelector('.wv-table');
-	wvTableEl && wvTableEl.removeEventListener('scroll', scrollListener);
-});
+	const wvTableEl = document.querySelector(".wv-table")
+	wvTableEl && wvTableEl.removeEventListener("scroll", scrollListener)
+})
 const scrollListener = (e) => {
 	if (!allFixedRightEls) {
-		allFixedRightEls = document.querySelectorAll('.wd-table-fixed-right');
-		allFixedLeftEls = document.querySelectorAll('.wd-table-fixed-left');
+		allFixedRightEls = document.querySelectorAll(".wd-table-fixed-right")
+		allFixedLeftEls = document.querySelectorAll(".wd-table-fixed-left")
 	}
-	let scrollLeft = e.target.scrollLeft;
+	let scrollLeft = e.target.scrollLeft
 	if (scrollLeft === 0) {
 		// 滚动到最左边
-		setFixedStyle('left', 'remove');
+		setFixedStyle("left", "remove")
 	} else {
-		setFixedStyle('left', 'add');
+		setFixedStyle("left", "add")
 	}
 	if (scrollLeft + e.target.clientWidth === e.target.scrollWidth) {
-		setFixedStyle('right', 'remove');
+		setFixedStyle("right", "remove")
 	} else {
-		setFixedStyle('right', 'add');
+		setFixedStyle("right", "add")
 	}
-};
+}
 // 设置滚动时fixed样式
 const setFixedStyle = (direction, method) => {
-	if (direction === 'left') {
+	if (direction === "left") {
 		allFixedLeftEls.forEach((el) => {
-			if (method === 'remove') {
-				el.classList.remove('wd-table-fixed-left-first');
+			if (method === "remove") {
+				el.classList.remove("wd-table-fixed-left-first")
 			} else {
-				el.classList.add('wd-table-fixed-left-first');
+				el.classList.add("wd-table-fixed-left-first")
 			}
-		});
+		})
 	} else {
 		allFixedRightEls.forEach((el) => {
-			if (method === 'remove') {
-				el.classList.remove('wd-table-fixed-right-first');
+			if (method === "remove") {
+				el.classList.remove("wd-table-fixed-right-first")
 			} else {
-				el.classList.add('wd-table-fixed-right-first');
+				el.classList.add("wd-table-fixed-right-first")
 			}
-		});
+		})
 	}
-};
+}
 // 请求数据
-const records = ref([]);
-const loading = ref(false);
-const pageCount = ref(1);
-let page = 1;
-let count = 20;
-const total = ref(0);
-let clickDirection = 'prev';
-let lastIndex = ''; // 瀑布流模式的最后一项
+const records = ref([])
+const loading = ref(false)
+const pageCount = ref(1)
+let page = 1
+let count = 20
+const total = ref(0)
+let clickDirection = "prev"
+let lastIndex = "" // 瀑布流模式的最后一项
 // count 默认20条
 if (config.ajaxSetting.count) {
-	count = config.ajaxSetting.count;
+	count = config.ajaxSetting.count
 }
-const ajax = new Ajax(config.ajaxSetting);
+const ajax = new Ajax(config.ajaxSetting)
 const load = (currentPage) => {
 	// let searchParams = {
 	//   page: currentPage || page,
 	// };
-	if (config.pageMode === 'waterfall') {
-		searchParams[config.idIndex] = lastIndex;
+	if (config.pageMode === "waterfall") {
+		searchParams[config.idIndex] = lastIndex
 	} else {
-		searchParams.page = currentPage || page;
+		searchParams.page = currentPage || page
 	}
-	searchParams.count = count;
+	searchParams.count = count
 	if (!currentPage) {
-		emitter.emit('beforeDataRequest', searchParams);
-		emitter.on('wv:beforeDataRequest', (val) => {
-			searchParams = Object.assign({}, searchParams, val);
-		});
+		emitter.emit("beforeDataRequest", searchParams)
+		emitter.on("wv:beforeDataRequest", (val) => {
+			searchParams = Object.assign({}, searchParams, val)
+		})
 	}
 	if (config.records) {
-		records.value = config.records;
-		return;
+		records.value = config.records
+		return
 	}
 	// 处理为设置request或者url的异常
 	if (!config.request && !config.url) {
-		console.error('config request or url');
-		return;
+		console.error("config request or url")
+		return
 	}
-	loading.value = true;
+	loading.value = true
 	if (config.request) {
 		return new Promise(async (resolve, reject) => {
 			try {
-				const res = await config.request(searchParams);
-				loading.value = false;
-				records.value = res.list;
-				pageCount.value = res.pageCount;
-				total.value = res.total;
+				const res = await config.request(searchParams)
+				loading.value = false
+				records.value = res.list
+				pageCount.value = res.pageCount
+				total.value = res.total
 				if (!currentPage) {
-					emitter.emit('dataLoad', res);
+					emitter.emit("dataLoad", res)
 				}
-				resolve(res.list);
-			} catch(err) {
-				reject(err);
+				resolve(res.list)
+			} catch (err) {
+				reject(err)
 			}
 		})
 	} else {
@@ -315,76 +315,76 @@ const load = (currentPage) => {
 			ajax
 				.request({
 					url: config.url,
-					data: searchParams,
+					data: searchParams
 				})
 				.then((res) => {
-					loading.value = false;
+					loading.value = false
 					if (res && res.data.list) {
-						if (clickDirection === 'prev') {
+						if (clickDirection === "prev") {
 							if (!res.data.list || res.data.list.length === 0) {
 								document
-									.querySelector('.wd-pagination-prev')
-									.classList.remove('wd-pagination-disabled');
+									.querySelector(".wd-pagination-prev")
+									.classList.remove("wd-pagination-disabled")
 							}
 						} else {
 							if (res.data.list.length < Math.abs(count)) {
 								document
-									.querySelector('.wd-pagination-next')
-									.classList.add('wd-pagination-disabled');
+									.querySelector(".wd-pagination-next")
+									.classList.add("wd-pagination-disabled")
 							}
 						}
 						records.value = config.ajaxSetting.listKey
 							? res.data[config.ajaxSetting.listKey]
-							: res.data.list;
+							: res.data.list
 						pageCount.value = config.ajaxSetting.pageCountKey
 							? res.data[config.ajaxSetting.pageCountKey]
-							: res.data.pageCount;
+							: res.data.pageCount
 						total.value = config.ajaxSetting.totalKey
 							? res.data[config.ajaxSetting.totalKey]
-							: res.data.total;
-						resolve(res.data.list);
+							: res.data.total
+						resolve(res.data.list)
 					} else {
-						reject(res);
+						reject(res)
 					}
 					// 非导出
 					if (!currentPage) {
-						emitter.emit('dataLoad', res);
+						emitter.emit("dataLoad", res)
 					}
-				});
-		});
+				})
+		})
 	}
-};
+}
 const pageChangeHandler = (currPage) => {
-	page = currPage;
-	load();
-};
+	page = currPage
+	load()
+}
 const prevClick = () => {
-	lastIndex = records.value[0][config.idIndex] || '';
-	clickDirection = 'prev';
-	count = -Math.abs(count);
+	lastIndex = records.value[0][config.idIndex] || ""
+	clickDirection = "prev"
+	count = -Math.abs(count)
 	document
-		.querySelector('.wd-pagination-next')
-		.classList.remove('wd-pagination-disabled');
-};
+		.querySelector(".wd-pagination-next")
+		.classList.remove("wd-pagination-disabled")
+}
 const nextClick = () => {
-	lastIndex = records.value[records.value.length - 1][config.idIndex] || '';
-	clickDirection = 'next';
-	count = Math.abs(count);
+	lastIndex = records.value[records.value.length - 1][config.idIndex] || ""
+	clickDirection = "next"
+	count = Math.abs(count)
 	document
-		.querySelector('.wd-pagination-prev')
-		.classList.remove('wd-pagination-disabled');
-};
+		.querySelector(".wd-pagination-prev")
+		.classList.remove("wd-pagination-disabled")
+}
 /**
  * 获取选中行
  */
 const getSelectedRows = () => {
-	return wvTable.value.getSelectedRows();
-};
+	return wvTable.value.getSelectedRows()
+}
 // 暴露事件
 defineExpose({
 	load,
-	getSelectedRows,
-});
+	getSelectedRows
+})
 </script>
 
 <template>

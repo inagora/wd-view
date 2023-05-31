@@ -1,36 +1,36 @@
 <script>
-import { defineComponent } from 'vue';
+import { defineComponent } from "vue"
 
 export default defineComponent({
-	name: 'pro-table',
-	setup() {},
-});
+	name: "pro-table",
+	setup() {}
+})
 </script>
 
 <script setup>
-import './style.css';
-import { provide, onUnmounted, ref } from 'vue';
-import mitt from 'mitt';
-const emitter = mitt();
-import Table from './components/Table.vue';
-import Toolbar from './components/Toolbar.vue';
-import Search from './components/Search.vue';
-import Title from './components/Title.vue';
-import Tips from './components/Tips.vue';
+import "./style.css"
+import { provide, onUnmounted, ref } from "vue"
+import mitt from "mitt"
+const emitter = mitt()
+import Table from "./components/Table.vue"
+import Toolbar from "./components/Toolbar.vue"
+import Search from "./components/Search.vue"
+import Title from "./components/Title.vue"
+import Tips from "./components/Tips.vue"
 // 支持的组件
-const components = [Title, Tips, Toolbar, Search, Table];
-const props = defineProps(['config']);
-const config = props.config;
+const components = [Title, Tips, Toolbar, Search, Table]
+const props = defineProps(["config"])
+const config = props.config
 const conf = Object.assign(
 	{
 		/**
 		 * 页面顶部标题
 		 */
-		title: '',
+		title: "",
 		/**
 		 * 自定义的页面部分
 		 */
-		tips: '',
+		tips: "",
 		/**
 		 * 表格列配置
 		 */
@@ -38,7 +38,7 @@ const conf = Object.assign(
 		/**
 		 * @param {String} pageMode 分页模式。普通模式(normal)把所有数据分成等分的多少页，按页号取每页数据；瀑布流模式(waterfall)，根据当前页的第一项，向前取一页；或最后一项，向后取一页
 		 */
-		pageMode: 'normal', // normal | waterfall
+		pageMode: "normal", // normal | waterfall
 		/**
 		 * 静态列表数据，如果设置了则不发请求
 		 */
@@ -54,7 +54,7 @@ const conf = Object.assign(
 		/**
 		 * 列表选择模式：radio、checkbox
 		 */
-		selectMode: 'checkbox',
+		selectMode: "checkbox",
 		/**
 		 * 表单是否显示label
 		 */
@@ -62,19 +62,19 @@ const conf = Object.assign(
 		/**
 		 * 列表请求url
 		 */
-		url: '',
+		url: "",
 		/**
 		 * 添加url
 		 */
-		addUrl: '',
+		addUrl: "",
 		/**
 		 * 添加conf
 		 */
-		addConf: '',
+		addConf: "",
 		/**
 		 * 删除url
 		 */
-		deleteUrl: '',
+		deleteUrl: "",
 		/**
 		 * 批量删除
 		 */
@@ -82,11 +82,11 @@ const conf = Object.assign(
 		/**
 		 * 更新url
 		 */
-		updateUrl: '',
+		updateUrl: "",
 		/**
 		 * 编辑conf
 		 */
-		editConf: '',
+		editConf: "",
 		/**
 		 * 是否自动显示导出按钮
 		 */
@@ -102,7 +102,7 @@ const conf = Object.assign(
 		/**
 		 * ajax请求method
 		 */
-		method: 'GET',
+		method: "GET",
 		/**
 		 * ajax请求配置
 		 */
@@ -122,11 +122,11 @@ const conf = Object.assign(
 		/**
 		 * 操作需要的主键
 		 */
-		idIndex: 'id',
+		idIndex: "id",
 		/**
 		 * table部分高度
 		 */
-		tableHeight: '',
+		tableHeight: "",
 		/**
 		 * 是否显示pagination
 		 */
@@ -138,85 +138,85 @@ const conf = Object.assign(
 		/**
 		 * loading文案
 		 */
-		loadingText: '',
+		loadingText: "",
 		/**
 		 * 空列表文案
 		 */
-		emptyText: '',
+		emptyText: "",
 		/**
 		 * 是否显示form的label
 		 */
-		showFormLabel: true,
+		showFormLabel: true
 	},
 	config
-);
-provide('config', conf);
-provide('emitter', emitter);
-emitter.on('*', (type, e) => {
+)
+provide("config", conf)
+provide("emitter", emitter)
+emitter.on("*", (type, e) => {
 	if (conf.listeners && conf.listeners[type]) {
 		// emmiter.emit没办法接收返回值，暂时用此法解决
-		if (type === 'beforeDataRequest') {
+		if (type === "beforeDataRequest") {
 			setTimeout(() => {
 				Promise.resolve(conf.listeners[type](e)).then((val) => {
 					if (val !== false) {
-						emitter.emit('wv:beforeDataRequest', val);
+						emitter.emit("wv:beforeDataRequest", val)
 					}
-				});
-			}, 0);
+				})
+			}, 0)
 		} else {
-			conf.listeners[type](e);
+			conf.listeners[type](e)
 		}
 	}
-});
+})
 // table组件
-const itemRefs = [];
+const itemRefs = []
 const setItemRef = (el) => {
 	if (el) {
-		itemRefs.push(el);
+		itemRefs.push(el)
 	}
-};
-const wvTable = ref(null);
+}
+const wvTable = ref(null)
 const refresh = () => {
 	itemRefs.forEach((item) => {
 		if (item.load) {
-			item.load();
+			item.load()
 		}
-	});
-};
+	})
+}
 const getSelectedRows = () => {
-	let selectedRows = [];
+	let selectedRows = []
 	itemRefs.forEach((item) => {
 		if (item.getSelectedRows) {
-			selectedRows = item.getSelectedRows();
+			selectedRows = item.getSelectedRows()
 		}
-	});
-	return selectedRows;
-};
+	})
+	return selectedRows
+}
 const getSearchParams = () => {
-	let searchParams = {};
+	let searchParams = {}
 	itemRefs.forEach((item) => {
 		if (item.getSearchParams) {
-			searchParams = item.getSearchParams();
+			searchParams = item.getSearchParams()
 		}
-	});
-	return searchParams;
-};
+	})
+	return searchParams
+}
 const setSearchParams = (data) => {
 	itemRefs.forEach((item) => {
 		if (item.setSearchParams) {
-			item.setSearchParams(data);
+			item.setSearchParams(data)
 		}
-	});
-};
+	})
+}
 defineExpose({
 	refresh,
 	getSelectedRows,
 	getSearchParams,
-	setSearchParams,
-});
+	setSearchParams
+})
 onUnmounted(() => {
-	emitter.all.clear();
-});
+	emitter.all.clear()
+})
 </script>
 
 <template>

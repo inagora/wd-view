@@ -9,8 +9,8 @@
 					prefixIcon ||
 					clearable ||
 					$slots.suffix ||
-					suffixIcon,
-			},
+					suffixIcon
+			}
 		]"
 	>
 		<div class="wd-input-number-handler-wrap">
@@ -19,7 +19,7 @@
 				:class="[
 					'wd-input-number-handler',
 					'wd-input-number-handler-up',
-					{ 'wd-input-number-handler-up-disabled': maxDisabled },
+					{ 'wd-input-number-handler-up-disabled': maxDisabled }
 				]"
 				@click="increase"
 			>
@@ -33,7 +33,7 @@
 				:class="[
 					'wd-input-number-handler',
 					'wd-input-number-handler-down',
-					{ 'wd-input-number-handler-down-disabled': minDisabled },
+					{ 'wd-input-number-handler-down-disabled': minDisabled }
 				]"
 				@click="decrease"
 			>
@@ -71,210 +71,210 @@ import {
 	nextTick,
 	shallowRef,
 	onMounted,
-	inject,
-} from 'vue';
-import WdInput from '../input/input.vue';
-import WdIcon from '../icon/icon.vue';
-import type { PropType } from 'vue';
+	inject
+} from "vue"
+import WdInput from "../input/input.vue"
+import WdIcon from "../icon/icon.vue"
+import type { PropType } from "vue"
 import {
 	wdFormKey,
 	wdFormItemKey,
 	WdFormProps,
 	WdFormItemProps,
-	WdFormItemContext,
-} from '../form/props';
+	WdFormItemContext
+} from "../form/props"
 
 interface WdInputNumberProps {
-	type: string;
-	size: string;
-	disabled: boolean;
-	prefixIcon: string;
-	readonly: boolean;
-	modelValue: number;
-	max: number;
-	min: number;
-	step: string | number;
-	precision: number;
+	type: string
+	size: string
+	disabled: boolean
+	prefixIcon: string
+	readonly: boolean
+	modelValue: number
+	max: number
+	min: number
+	step: string | number
+	precision: number
 }
 
-type StepType = Number | String;
+type StepType = number | string
 
 export default defineComponent({
-	name: 'wd-input-number',
+	name: "wd-input-number",
 	inheritAttrs: false,
 	components: {
 		WdInput,
-		WdIcon,
+		WdIcon
 	},
 	props: {
 		modelValue: {
-			required: true,
+			required: true
 		},
 		type: {
 			type: String,
-			default: 'text',
+			default: "text"
 		},
 		size: {
 			type: String,
-			default: 'default',
+			default: "default"
 		},
 		prefixIcon: {
 			type: String,
-			default: '',
+			default: ""
 		},
 		disabled: Boolean,
 		readonly: Boolean,
 		max: {
 			type: Number,
-			default: Infinity,
+			default: Infinity
 		},
 		min: {
 			type: Number,
-			default: -Infinity,
+			default: -Infinity
 		},
 		step: {
 			type: [Number, String] as PropType<string | number>,
-			default: 1,
+			default: 1
 		},
 		precision: {
 			type: Number,
-			validator: (val: number) => val >= 0 && val === parseInt(val + '', 10),
-		},
+			validator: (val: number) => val >= 0 && val === parseInt(val + "", 10)
+		}
 	},
-	emits: ['update:modelValue', 'input', 'change', 'clear'],
+	emits: ["update:modelValue", "input", "change", "clear"],
 	setup(props, ctx) {
-		const input = ref(null);
-		const wdForm = inject(wdFormKey, {} as WdFormProps);
-		const wdFormItem = inject(wdFormItemKey, {} as WdFormItemContext);
-		let inputSize = props.size || wdFormItem.size || wdForm.size;
+		const input = ref(null)
+		const wdForm = inject(wdFormKey, {} as WdFormProps)
+		const wdFormItem = inject(wdFormItemKey, {} as WdFormItemContext)
+		let inputSize = props.size || wdFormItem.size || wdForm.size
 
 		const data = reactive({
-			currentValue: props.modelValue,
-		});
+			currentValue: props.modelValue
+		})
 
 		const maxDisabled = computed(() => {
-			return data.currentValue >= props.max;
-		});
+			return data.currentValue >= props.max
+		})
 
 		const minDisabled = computed(() => {
-			return data.currentValue <= props.min;
-		});
+			return data.currentValue <= props.min
+		})
 
 		const inputDisabled = computed(() => {
-			return props.disabled || wdFormItem.disabled || wdForm.disabled;
-		});
+			return props.disabled || wdFormItem.disabled || wdForm.disabled
+		})
 		const displayValue = computed(() => {
-			return data.currentValue;
-		});
+			return data.currentValue
+		})
 
 		const handleInput = (val) => {
-			ctx.emit('update:modelValue', val);
-			ctx.emit('input', val);
+			ctx.emit("update:modelValue", val)
+			ctx.emit("input", val)
 			// nextTick(setNativeInputValue);
-			wdFormItem.formItemMitt?.emit('wd.form.change', [val]);
-		};
+			wdFormItem.formItemMitt?.emit("wd.form.change", [val])
+		}
 		const handleChange = (val) => {
-			ctx.emit('change', val);
-			wdFormItem.formItemMitt?.emit('wd.form.change', [val]);
-		};
+			ctx.emit("change", val)
+			wdFormItem.formItemMitt?.emit("wd.form.change", [val])
+		}
 
 		const toPrecision = (num, pre?) => {
-			if (pre === undefined) pre = numPrecision.value;
+			if (pre === undefined) pre = numPrecision.value
 			return parseFloat(
-				Math.round(num * Math.pow(10, pre)) / Math.pow(10, pre) + ''
-			);
-		};
+				Math.round(num * Math.pow(10, pre)) / Math.pow(10, pre) + ""
+			)
+		}
 
 		const getPrecision = (value) => {
-			if (value === undefined) return 0;
-			const valueString = value.toString();
-			const dotPosition = valueString.indexOf('.');
-			let precision = 0;
+			if (value === undefined) return 0
+			const valueString = value.toString()
+			const dotPosition = valueString.indexOf(".")
+			let precision = 0
 			if (dotPosition !== -1) {
-				precision = valueString.length - dotPosition - 1;
+				precision = valueString.length - dotPosition - 1
 			}
-			return precision;
-		};
+			return precision
+		}
 
 		// 转换value
 		const transValue = (val) => {
 			if (isNaN(parseInt(val))) {
-				val = 0;
-				return val;
+				val = 0
+				return val
 			}
 			if (parseInt(val) === parseFloat(val)) {
-				val = parseInt(val);
+				val = parseInt(val)
 			} else {
-				val = parseFloat(val);
+				val = parseFloat(val)
 			}
-			return val;
-		};
+			return val
+		}
 
 		const increase = () => {
-			if (props.disabled || props.readonly) return;
-			let val = input.value.input.value;
-			if (val === '' || val === undefined) val = props.min;
+			if (props.disabled || props.readonly) return
+			let val = input.value.input.value
+			if (val === "" || val === undefined) val = props.min
 
-			val = transValue(val);
-			val += transValue(props.step);
-			setCurrentValue(toPrecision(val));
-		};
+			val = transValue(val)
+			val += transValue(props.step)
+			setCurrentValue(toPrecision(val))
+		}
 
 		const decrease = () => {
-			if (props.disabled || props.readonly) return;
-			let val = input.value.input.value;
-			if (val === '' || val === undefined) val = props.min;
-			val = transValue(val);
-			val = val - transValue(props.step);
-			setCurrentValue(toPrecision(val));
-		};
+			if (props.disabled || props.readonly) return
+			let val = input.value.input.value
+			if (val === "" || val === undefined) val = props.min
+			val = transValue(val)
+			val = val - transValue(props.step)
+			setCurrentValue(toPrecision(val))
+		}
 
 		const setCurrentValue = (val) => {
-			ctx.emit('update:modelValue', val);
-			ctx.emit('input', val);
-			ctx.emit('change', val);
-			data.currentValue = val;
-		};
+			ctx.emit("update:modelValue", val)
+			ctx.emit("input", val)
+			ctx.emit("change", val)
+			data.currentValue = val
+		}
 
 		const numPrecision = computed(() => {
-			const stepPrecision = getPrecision(props.step);
+			const stepPrecision = getPrecision(props.step)
 			if (props.precision !== undefined) {
 				if (stepPrecision > props.precision) {
 					console.warn(
-						'[Warn][InputNumber]precision should not be less than the decimal places of step'
-					);
+						"[Warn][InputNumber]precision should not be less than the decimal places of step"
+					)
 				}
-				return props.precision;
+				return props.precision
 			} else {
-				return Math.max(getPrecision(props.modelValue), stepPrecision);
+				return Math.max(getPrecision(props.modelValue), stepPrecision)
 			}
-		});
+		})
 
 		watch(
 			() => props.modelValue,
 			(value) => {
-				let newVal = value === undefined ? 0 : Number(value);
+				let newVal = value === undefined ? 0 : Number(value)
 				if (newVal !== undefined) {
-					if (isNaN(newVal)) return;
+					if (isNaN(newVal)) return
 					if (props.precision !== undefined) {
-						newVal = toPrecision(newVal, props.precision);
+						newVal = toPrecision(newVal, props.precision)
 					}
 				}
 				if (newVal !== undefined && newVal >= props.max) {
-					newVal = props.max;
-					ctx.emit('update:modelValue', newVal);
+					newVal = props.max
+					ctx.emit("update:modelValue", newVal)
 				}
 				if (newVal !== undefined && newVal <= props.min) {
-					newVal = props.min;
-					ctx.emit('update:modelValue', newVal);
+					newVal = props.min
+					ctx.emit("update:modelValue", newVal)
 				}
-				data.currentValue = newVal;
+				data.currentValue = newVal
 			},
 			{
-				immediate: true,
+				immediate: true
 			}
-		);
-		onMounted(() => {});
+		)
+		onMounted(() => {})
 		return {
 			handleInput,
 			handleChange,
@@ -285,10 +285,10 @@ export default defineComponent({
 			decrease,
 			maxDisabled,
 			minDisabled,
-			inputSize,
-		};
-	},
-});
+			inputSize
+		}
+	}
+})
 </script>
 
 <style lang="less">

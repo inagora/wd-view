@@ -5,8 +5,8 @@
 				'wd-checkbox',
 				{
 					'wd-checkbox-checked': isChecked,
-					'wd-checkbox-disabled': checkDisabled,
-				},
+					'wd-checkbox-disabled': checkDisabled
+				}
 			]"
 		>
 			<input
@@ -26,62 +26,61 @@
 </template>
 
 <script lang="ts">
-import { defineComponent, ref, watch, inject } from 'vue';
+import { defineComponent, ref, watch, inject } from "vue"
 import {
 	wdFormKey,
 	wdFormItemKey,
 	WdFormProps,
 	WdFormItemProps,
-	WdFormItemContext,
-} from '../form/props';
+	WdFormItemContext
+} from "../form/props"
 
 interface WdCheckboxProps {
-	disabled: boolean;
-	checked: boolean;
-	modelValue: boolean | string | number;
-	name: string;
+	disabled: boolean
+	checked: boolean
+	modelValue: boolean | string | number
+	name: string
 }
 export default defineComponent({
-	name: 'wd-checkbox',
+	name: "wd-checkbox",
 	inheritAttrs: false,
 	props: {
 		checked: {
 			required: true,
 			default: false,
-			type: Boolean,
+			type: Boolean
 		},
 		disabled: Boolean,
 		modelValue: {
-			type: [Boolean, String, Number],
+			type: [Boolean, String, Number]
 		},
-		name: String,
+		name: String
 	},
-	emits: ['update:modelValue', 'change'],
+	emits: ["update:modelValue", "change"],
 	setup(props, ctx) {
-		const isChecked = ref(props.modelValue || props.checked);
-		const wdForm = inject(wdFormKey, {} as WdFormProps);
-		const wdFormItem = inject(wdFormItemKey, {} as WdFormItemContext);
-		let checkDisabled =
-			props.disabled || wdFormItem.disabled || wdForm.disabled;
+		const isChecked = ref(props.modelValue || props.checked)
+		const wdForm = inject(wdFormKey, {} as WdFormProps)
+		const wdFormItem = inject(wdFormItemKey, {} as WdFormItemContext)
+		let checkDisabled = props.disabled || wdFormItem.disabled || wdForm.disabled
 		const handleInputChange = () => {
-			isChecked.value = !isChecked.value;
-			ctx.emit('change', isChecked.value);
-			ctx.emit('update:modelValue', isChecked.value);
-		};
+			isChecked.value = !isChecked.value
+			ctx.emit("change", isChecked.value)
+			ctx.emit("update:modelValue", isChecked.value)
+		}
 		watch(
 			() => props.checked,
 			(val) => {
-				isChecked.value = val;
-				wdFormItem.formItemMitt?.emit('wd.form.change', [val]);
+				isChecked.value = val
+				wdFormItem.formItemMitt?.emit("wd.form.change", [val])
 			}
-		);
+		)
 		return {
 			isChecked,
 			handleInputChange,
-			checkDisabled,
-		};
-	},
-});
+			checkDisabled
+		}
+	}
+})
 </script>
 
 <style lang="less">

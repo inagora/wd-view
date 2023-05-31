@@ -4,7 +4,7 @@
 		:class="[
 			type ? 'wd-link-' + type : '',
 			disabled && 'wd-link-disabled',
-			underline && !disabled && 'wd-link-underline',
+			underline && !disabled && 'wd-link-underline'
 		]"
 		:href="disabled ? null : href ? href : null"
 		@click="handleClick"
@@ -13,40 +13,40 @@
 </template>
 
 <script lang="ts">
-import { defineComponent, PropType } from 'vue';
+import { defineComponent, PropType } from "vue"
 type ButtonTypes = PropType<
-	'primary' | 'success' | 'warning' | 'danger' | 'info'
->;
+	"primary" | "success" | "warning" | "danger" | "info"
+>
 export default defineComponent({
-	name: 'wd-link',
+	name: "wd-link",
 	props: {
 		type: {
 			type: String as ButtonTypes,
-			default: 'default',
+			default: "default"
 		},
 		href: {
 			type: String,
-			default: '',
+			default: ""
 		},
 		icon: {
 			type: Boolean,
-			default: '',
+			default: false
 		},
 		underline: Boolean,
-		disabled: Boolean,
+		disabled: Boolean
 	},
-	emits: ['click'],
+	emits: ["click"],
 	setup(props, { emit }) {
 		const handleClick = (options) => {
 			if (!props.disabled) {
-				emit('click', options);
+				emit("click", options)
 			}
-		};
+		}
 		return {
-			handleClick,
-		};
-	},
-});
+			handleClick
+		}
+	}
+})
 </script>
 
 <style lang="less">

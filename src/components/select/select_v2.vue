@@ -6,7 +6,7 @@
 			selectDisabled ? 'wd-select-disabled' : 'wd-select-enabled',
 			'wd-select-' + inputSize,
 			multiple ? ' wd-select-multiple' : ' wd-select-single',
-			optionsShow ? 'wd-select-show-search' : '',
+			optionsShow ? 'wd-select-show-search' : ''
 		]"
 	>
 		<div class="select-trigger">
@@ -186,32 +186,32 @@ import {
 	provide,
 	watch,
 	inject,
-	onMounted,
-} from 'vue';
-import lodashDebounce from 'lodash/debounce';
+	onMounted
+} from "vue"
+import lodashDebounce from "lodash/debounce"
 import {
 	wdFormKey,
 	wdFormItemKey,
 	WdFormProps,
-	WdFormItemProps,
-} from '../form/props';
+	WdFormItemProps
+} from "../form/props"
 type optionType = {
-	value: any;
-	selected: boolean;
-};
+	value: any
+	selected: boolean
+}
 // import WdPopper from '../popper/index';
-import WdInput from '../input/index';
-import { createPopper } from '@popperjs/core';
+// import WdInput from '../input/index';
+import { createPopper } from "@popperjs/core"
 export default defineComponent({
-	name: 'wd-select',
+	name: "wd-select",
 	components: {
-		WdInput,
+		// WdInput,
 	},
 	props: {
 		modelValue: [Array, String, Number, Boolean, Object],
 		autocomplete: {
 			type: String,
-			default: 'off',
+			default: "off"
 		},
 		disabled: Boolean,
 		clearable: Boolean,
@@ -224,43 +224,43 @@ export default defineComponent({
 		remoteMethod: Function,
 		multiple: Boolean, // 是否多选
 		multipleLimit: {
-			type: Number,
+			type: Number
 		},
 		placeholder: {
-			type: String,
+			type: String
 		},
 		clearIcon: {
 			type: String,
-			default: 'a-icon-circle-close',
+			default: "a-icon-circle-close"
 		},
 		visibleValue: {
 			type: Boolean,
-			default: false,
+			default: false
 		},
 		valueType: {
 			// 选项是否是标签
 			type: Boolean,
-			default: false,
+			default: false
 		},
 		size: {
 			type: String,
-			default: 'small',
-		},
+			default: "small"
+		}
 	},
 	emits: [
-		'update:modelValue',
-		'change',
-		'remove-tag',
-		'clear',
-		'visibleChange',
-		'focus',
-		'blur',
+		"update:modelValue",
+		"change",
+		"remove-tag",
+		"clear",
+		"visibleChange",
+		"focus",
+		"blur"
 	],
 	setup(props, context) {
 		// init popperjs
-		let target: HTMLElement;
-		let options: HTMLElement;
-		let popperInstance;
+		let target: HTMLElement
+		let options: HTMLElement
+		let popperInstance
 		onMounted(() => {
 			// target = document.querySelector('.wd-select');
 			// options = document.querySelector('.wd-select-options');
@@ -278,155 +278,155 @@ export default defineComponent({
 			//   options.setAttribute('data-show', '');
 			//   popperInstance.update();
 			// });
-		});
+		})
 
 		const sizeMap = reactive({
-			small: 'sm',
-			large: 'lg',
-			default: '',
-		});
-		const wdForm = inject(wdFormKey, {} as WdFormProps);
-		const wdFormItem = inject(wdFormItemKey, {} as WdFormItemProps);
+			small: "sm",
+			large: "lg",
+			default: ""
+		})
+		const wdForm = inject(wdFormKey, {} as WdFormProps)
+		const wdFormItem = inject(wdFormItemKey, {} as WdFormItemProps)
 		let inputSize =
-			sizeMap[props.size] || sizeMap[wdFormItem.size] || sizeMap[wdForm.size];
+			sizeMap[props.size] || sizeMap[wdFormItem.size] || sizeMap[wdForm.size]
 		let selectDisabled =
-			props.disabled || wdFormItem.disabled || wdForm.disabled;
-		const { slots, emit } = context;
-		const selectSelector = ref(null);
-		const selectWrapper = ref<HTMLElement | null>(null);
-		const isMultiple = ref(props.multiple);
-		const placeholder = ref(props.placeholder);
-		const removeItem = ref(null); // 删除的元素
-		const searchKey = ref(''); // 搜索关键词
-		const searchInput = ref(null); // 搜索框
-		const popperVisible = ref(false); // 手动控制下拉显示与隐藏
+			props.disabled || wdFormItem.disabled || wdForm.disabled
+		const { slots, emit } = context
+		const selectSelector = ref(null)
+		const selectWrapper = ref<HTMLElement | null>(null)
+		const isMultiple = ref(props.multiple)
+		const placeholder = ref(props.placeholder)
+		const removeItem = ref(null) // 删除的元素
+		const searchKey = ref("") // 搜索关键词
+		const searchInput = ref(null) // 搜索框
+		const popperVisible = ref(false) // 手动控制下拉显示与隐藏
 
 		onMounted(() => {
 			// 失去焦点隐藏选项
-			document.querySelector('body').addEventListener(
-				'click',
+			document.querySelector("body").addEventListener(
+				"click",
 				() => {
-					if (popperInstance && options.hasAttribute('data-show')) {
-						options.removeAttribute('data-show');
-						popperInstance.update();
-						isFocused.value = false;
+					if (popperInstance && options.hasAttribute("data-show")) {
+						options.removeAttribute("data-show")
+						popperInstance.update()
+						isFocused.value = false
 					}
 				},
 				true
-			);
-		});
-		let selectedValue = ref(props.modelValue);
-		let selectedArray = ref([]);
-		let { visibleValue } = toRefs(props);
-		let optionsShow = ref(visibleValue.value);
-		let isFocused = ref(false);
+			)
+		})
+		let selectedValue = ref(props.modelValue)
+		let selectedArray = ref([])
+		let { visibleValue } = toRefs(props)
+		let optionsShow = ref(visibleValue.value)
+		let isFocused = ref(false)
 		// 初始化input的placeholder
-		let currentPlaceholder = ref(placeholder.value);
+		let currentPlaceholder = ref(placeholder.value)
 		const handleSearchInputFocus = () => {
-			isFocused.value = true;
-			setCurrentPlaceholder();
-		};
+			isFocused.value = true
+			setCurrentPlaceholder()
+		}
 		const handleSearchInputBlur = () => {
-			isFocused.value = false;
+			isFocused.value = false
 			// searchKey.value = ''; // 失去焦点之后清空输入的key
-			currentPlaceholder.value = '';
-		};
+			currentPlaceholder.value = ""
+		}
 		const setCurrentPlaceholder = () => {
-			const selectedLabel: any = selectedValue && selectedValue.value;
-			currentPlaceholder.value = selectedLabel && selectedLabel.label;
-		};
+			const selectedLabel: any = selectedValue && selectedValue.value
+			currentPlaceholder.value = selectedLabel && selectedLabel.label
+		}
 
 		const debouncedOnInputChange = lodashDebounce((e) => {
-			handleSearchInputChange(e.target.value);
-		}, 300);
+			handleSearchInputChange(e.target.value)
+		}, 300)
 
 		// 处理搜素
 		const handleSearchInputChange = (val) => {
-			searchKey.value = val;
-		};
+			searchKey.value = val
+		}
 
 		// 多选删除
 		const handleSearchInputKeydown = (e) => {
-			if (selectedArray.value.length === 0) return;
-			const keyCode = e.keyCode;
+			if (selectedArray.value.length === 0) return
+			const keyCode = e.keyCode
 			if (keyCode === 8 && !searchKey.value) {
-				removeSelectedItem(selectedArray.value.length - 1);
+				removeSelectedItem(selectedArray.value.length - 1)
 			}
-		};
+		}
 		// methods
 		// 点击显示与隐藏
 		const clickHandler = (e) => {
-			searchInput.value.focus();
-			optionsShow.value = !optionsShow.value;
-			popperVisible.value = true;
+			searchInput.value.focus()
+			optionsShow.value = !optionsShow.value
+			popperVisible.value = true
 
-			target = e.target;
-			options = document.querySelector('.wd-select-options');
+			target = e.target
+			options = document.querySelector(".wd-select-options")
 			if (!popperInstance) {
 				popperInstance = createPopper(target, options, {
 					modifiers: [
 						{
-							name: 'offset',
+							name: "offset",
 							options: {
-								offset: [0, 10],
-							},
-						},
-					],
-				});
+								offset: [0, 10]
+							}
+						}
+					]
+				})
 			}
 
-			options.setAttribute('data-show', '');
-			popperInstance.update();
-		};
+			options.setAttribute("data-show", "")
+			popperInstance.update()
+		}
 		// 选项显示与隐藏钩子
 		const visibleChange = () => {
-			context.emit('visibleChange', visibleValue.value);
-		};
+			context.emit("visibleChange", visibleValue.value)
+		}
 		// option item 点击
 		const optionClickHandler = (value) => {
-			setSelectedValue(value);
-		};
+			setSelectedValue(value)
+		}
 		// 设置选择的值
 		const setSelectedValue = (val: optionType) => {
-			let options = slots.default();
+			let options = slots.default()
 			if (isMultiple.value) {
 				// 多选
 				if (val.selected) {
 					let selectedOption = options.filter((item) => {
-						return item.props.value === val.value;
-					})[0];
-					selectedArray.value.push(selectedOption.props);
+						return item.props.value === val.value
+					})[0]
+					selectedArray.value.push(selectedOption.props)
 				} else {
-					let removeIndex = -1;
+					let removeIndex = -1
 					selectedArray.value.forEach((item, index) => {
-						if (item.value === val.value) removeIndex = index;
-					});
+						if (item.value === val.value) removeIndex = index
+					})
 					if (removeIndex > -1) {
-						selectedArray.value.splice(removeIndex, 1);
+						selectedArray.value.splice(removeIndex, 1)
 					}
 				}
 			} else {
 				let selectedOption = options.filter((item) => {
-					return item.props.value === val.value;
-				})[0];
-				selectedValue.value = selectedOption.props;
+					return item.props.value === val.value
+				})[0]
+				selectedValue.value = selectedOption.props
 			}
-			setCurrentPlaceholder();
-			emit('update:modelValue', val);
-			emit('change', val);
-			searchInput.value.focus();
-		};
+			setCurrentPlaceholder()
+			emit("update:modelValue", val)
+			emit("change", val)
+			searchInput.value.focus()
+		}
 		const removeSelectedItem = (index) => {
-			removeItem.value = selectedArray.value.splice(index, 1)[0];
-		};
-		provide('selectedItem', selectedValue);
-		provide('removeItem', removeItem);
-		provide('multiple', isMultiple.value);
+			removeItem.value = selectedArray.value.splice(index, 1)[0]
+		}
+		provide("selectedItem", selectedValue)
+		provide("removeItem", removeItem)
+		provide("multiple", isMultiple.value)
 		// vue3中没有$on，所以用provide方法将父组件的方法传给子组件，子组件直接调用
-		provide('optionClickHandler', optionClickHandler);
-		provide('selectedArray', selectedArray.value);
-		provide('limitCount', props.multipleLimit);
-		provide('searchKey', searchKey);
+		provide("optionClickHandler", optionClickHandler)
+		provide("selectedArray", selectedArray.value)
+		provide("limitCount", props.multipleLimit)
+		provide("searchKey", searchKey)
 
 		return {
 			sizeMap,
@@ -450,10 +450,10 @@ export default defineComponent({
 			popperVisible,
 			debouncedOnInputChange,
 			inputSize,
-			selectDisabled,
-		};
-	},
-});
+			selectDisabled
+		}
+	}
+})
 </script>
 <style lang="less">
 @import url(./style/index);

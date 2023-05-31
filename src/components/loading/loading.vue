@@ -4,7 +4,7 @@
 		:class="[
 			'wd-spin',
 			loading ? 'wd-spin-spinning' : '',
-			text ? 'wd-spin-show-text' : '',
+			text ? 'wd-spin-show-text' : ''
 		]"
 	>
 		<span class="wd-spin-dot wd-spin-dot-spin">
@@ -22,7 +22,7 @@
 				:class="[
 					'wd-spin',
 					loading ? 'wd-spin-spinning' : '',
-					text ? 'wd-spin-show-text' : '',
+					text ? 'wd-spin-show-text' : ''
 				]"
 			>
 				<span class="wd-spin-dot wd-spin-dot-spin">
@@ -41,33 +41,33 @@
 </template>
 
 <script lang="ts">
-import { defineComponent, useSlots } from 'vue';
+import { defineComponent, useSlots } from "vue"
 
 interface WdLoadingProps {
-	loading: boolean;
-	text: string;
+	loading: boolean
+	text: string
 }
 
 export default defineComponent({
-	name: 'wd-loading',
+	name: "wd-loading",
 	props: {
 		loading: {
 			type: Boolean,
-			default: false,
+			default: false
 		},
 		text: {
 			type: String,
-			default: '',
-		},
+			default: ""
+		}
 	},
 	emits: [],
 	setup(props: WdLoadingProps, ctx) {
-		const slotDefault = !!useSlots().default;
+		const slotDefault = !!useSlots().default
 		return {
-			slotDefault,
-		};
-	},
-});
+			slotDefault
+		}
+	}
+})
 </script>
 
 <style lang="less">

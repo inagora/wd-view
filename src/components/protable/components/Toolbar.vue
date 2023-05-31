@@ -83,8 +83,9 @@ const changeHandler = (e, button) => {
 	reader.readAsBinaryString(e.target.files[0]);
 };
 const readExcel = (file) => {
-	return new Promise(async (resolve, reject) => {
+	return new Promise((resolve, reject) => {
 		try {
+			/* global ExcelJS */
 			const workbook = new ExcelJS.Workbook();
 			const result = await workbook.xlsx.load(file);
 			const worksheet = result.getWorksheet();

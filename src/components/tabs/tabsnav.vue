@@ -71,62 +71,62 @@ import {
 	onMounted,
 	reactive,
 	ref,
-	watchEffect,
-} from 'vue';
+	watchEffect
+} from "vue"
 export default defineComponent({
-	name: 'wd-tabsnav',
+	name: "wd-tabsnav",
 	props: {
 		tabs: Array,
-		activeKey: String,
+		activeKey: String
 	},
-	emits: ['change'],
+	emits: ["change"],
 	setup(props, { emit }) {
 		// variable
-		const navList = reactive(props.tabs);
-		const navTabRefs = [];
+		const navList = reactive(props.tabs)
+		const navTabRefs = []
 		// nav item下划线
 		const inkBarStyle = reactive({
-			left: '0px',
-			width: '36px',
-		});
+			left: "0px",
+			width: "36px"
+		})
 
 		// 设置下划线
 		const setInkBarStyle = (index) => {
-			inkBarStyle.left = navTabRefs[index].offsetLeft + 'px';
-			inkBarStyle.width = navTabRefs[index].offsetWidth + 'px';
-		};
+			inkBarStyle.left = navTabRefs[index].offsetLeft + "px"
+			inkBarStyle.width = navTabRefs[index].offsetWidth + "px"
+		}
 
 		// 处理点击
 		const tabClickHandler = (index) => {
-			const nav: any = navList[index];
-			setInkBarStyle(index);
+			const nav: any = navList[index]
+			setInkBarStyle(index)
 			// nav.active = true;
-			emit('change', { nav, index });
-		};
+			emit("change", { nav, index })
+		}
 
 		// * 设置多个引用
 		const setNavTabs = (el) => {
-			navTabRefs.push(el);
-		};
+			navTabRefs.push(el)
+		}
 
 		watchEffect(() => {
 			navList.forEach((nav, index) => {
 				if ((nav as any).key === props.activeKey) {
 					nextTick(() => {
-						setInkBarStyle(index);
-					});
+						setInkBarStyle(index)
+					})
 				}
-			});
-		});
+			})
+		})
 		return {
 			tabClickHandler,
 			setNavTabs,
 			navList,
 			inkBarStyle,
-			navTabRefs,
-		};
-	},
-});
+			navTabRefs
+		}
+	}
+})
 </script>
 <style lang="less">
 @import url(./style/index);

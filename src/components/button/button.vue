@@ -9,8 +9,8 @@
 			{
 				'wd-btn-loading': loading,
 				'wd-btn-disabled': disabled,
-				'wd-btn-two-chinese-chars': hasTwoCNChar,
-			},
+				'wd-btn-two-chinese-chars': hasTwoCNChar
+			}
 		]"
 		:type="nativeType"
 		:disabled="disabled"
@@ -58,29 +58,29 @@ export default defineComponent({
 	props: {
 		type: {
 			type: String as ButtonTypes,
-			default: 'default',
+			default: 'default'
 		},
 		nativeType: {
 			type: String as ButtonNativeType,
-			default: 'button',
+			default: 'button'
 		},
 		size: {
 			type: String as ButtonSizes,
-			default: 'middle',
+			default: 'middle'
 		},
 		roundShape: {
 			type: String as ButtonRoundShape,
-			default: 'small',
+			default: 'small'
 		},
 		icon: {
 			type: String,
-			default: '',
+			default: ''
 		},
 		disabled: Boolean,
-		loading: Boolean,
+		loading: Boolean
 	},
 	components: {
-		WdIcon,
+		WdIcon
 	},
 	emits: ['click'],
 	setup(props, context) {
@@ -127,15 +127,15 @@ export default defineComponent({
 		const sizeMap = reactive({
 			small: 'sm',
 			middle: '',
-			large: 'lg',
+			large: 'lg'
 		});
 		return {
 			handleClick,
 			sizeMap,
 			hasTwoCNChar,
-			buttonNode,
+			buttonNode
 		};
-	},
+	}
 });
 </script>
 <style lang="less">

@@ -152,224 +152,226 @@ import {
 	watch,
 	computed,
 	CSSProperties,
-	onMounted,
-} from 'vue';
-declare type TimeoutHandle = ReturnType<typeof global.setTimeout>;
+	onMounted
+} from "vue"
+declare type TimeoutHandle = ReturnType<typeof global.setTimeout>
 
 export default defineComponent({
-	name: 'WdDialog',
+	name: "WdDialog",
 	inheritAttrs: false,
 	props: {
 		appendToBody: {
 			type: Boolean,
-			default: false,
+			default: false
 		},
 		beforeClose: {
-			type: Function,
+			type: Function
 		},
 		beforeOpen: {
-			type: Function,
+			type: Function
 		},
 		customClass: {
 			type: String,
-			default: '',
+			default: ""
 		},
 		closeOnClickModal: {
 			type: Boolean,
-			default: true,
+			default: true
 		},
 		destroyOnClose: {
 			type: Boolean,
-			default: false,
+			default: false
 		},
 		showClose: {
 			type: Boolean,
-			default: true,
+			default: true
 		},
 		title: {
 			type: String,
-			default: '',
+			default: ""
 		},
 		openDelay: {
 			type: Number,
-			default: 0,
+			default: 0
 		},
 		closeDelay: {
 			type: Number,
-			default: 0,
+			default: 0
 		},
 		top: {
 			type: String,
-			default: '15vh',
+			default: "15vh"
 		},
 		modelValue: {
 			type: Boolean,
-			required: true,
+			required: true
 		},
 		modalClass: String,
 		width: {
 			type: [String, Number],
-			default: '50%',
+			default: "50%"
 		},
 		zIndex: {
-			type: Number,
+			type: Number
 		},
 		type: {
 			type: String,
-			default: '',
+			default: ""
 		},
 		open: {
 			// 使用open控制时，必须要调用close
 			type: Boolean,
-			default: false,
+			default: false
 		},
 		centered: {
 			type: Boolean,
-			default: false,
+			default: false
 		},
 		bodyStyle: {
 			type: Object,
-			default: {},
-		},
+			default: {}
+		}
 	},
-	emits: ['close', 'open', 'before-close', 'before-open', 'update:modelValue'],
+	emits: ["close", "open", "before-close", "before-open", "update:modelValue"],
 	setup(props, ctx) {
-		const dialogRef = ref<HTMLElement>(null);
-		const visible = ref(false);
-		const closed = ref(false);
-		const rendered = ref(false); // when desctroyOnClose is true, we initialize it as false vise versa
-		const zIndex = ref(props.zIndex);
-		const openTimer = ref<TimeoutHandle>(null);
-		const closeTimer = ref<TimeoutHandle>(null);
+		const dialogRef = ref<HTMLElement>(null)
+		const visible = ref(false)
+		const closed = ref(false)
+		const rendered = ref(false) // when desctroyOnClose is true, we initialize it as false vise versa
+		const zIndex = ref(props.zIndex)
+		const openTimer = ref<TimeoutHandle>(null)
+		const closeTimer = ref<TimeoutHandle>(null)
 		const normalizeWidth = () => {
-			return props.width;
-		};
+			return props.width
+		}
 
 		// 关闭弹窗
 		const closeDialog = () => {
-			doClose();
-		};
+			doClose()
+		}
 
 		// mask点击
 		const maskClickHandler = () => {
 			if (props.closeOnClickModal) {
-				doClose();
+				doClose()
 			}
-		};
+		}
 
 		const style = computed(() => {
-			const style = {} as CSSProperties;
-			style.marginTop = !props.centered && props.top;
+			const style = {} as CSSProperties
+			style.marginTop = !props.centered && props.top
 			if (props.width) {
-				style.width = normalizeWidth();
+				style.width = normalizeWidth()
 			}
-			return style;
-		});
+			return style
+		})
 		const open = () => {
 			if (props.openDelay && props.openDelay > 0) {
 				window.setTimeout(() => {
-					openTimer.value = null;
-					doOpen();
-				}, props.openDelay);
+					openTimer.value = null
+					doOpen()
+				}, props.openDelay)
 			} else {
-				doOpen();
+				doOpen()
 			}
-		};
+		}
 		const close = () => {
 			if (props.closeDelay && props.closeDelay > 0) {
 				window.setTimeout(() => {
-					closeTimer.value = null;
-					doClose();
-				}, props.closeDelay);
+					closeTimer.value = null
+					doClose()
+				}, props.closeDelay)
 			} else {
-				doClose();
+				doClose()
 			}
-		};
+		}
 		const doOpen = () => {
 			if (props.beforeOpen) {
 				Promise.resolve(props.beforeOpen())
 					.then((val) => {
 						if (val) {
-							visible.value = true;
+							visible.value = true
 						}
 					})
 					.catch((err) => {
-						console.log(err);
-					});
+						console.log(err)
+					})
 			} else {
-				visible.value = true;
+				visible.value = true
 			}
-		};
+		}
 		const doClose = () => {
 			if (props.beforeClose) {
 				Promise.resolve(props.beforeClose())
 					.then((val) => {
 						if (val) {
-							ctx.emit('update:modelValue', false);
-							visible.value = false;
+							ctx.emit("update:modelValue", false)
+							visible.value = false
 						}
 					})
 					.catch((err) => {
-						console.log(err);
-					});
+						console.log(err)
+					})
 			} else {
-				ctx.emit('update:modelValue', false);
-				visible.value = false;
+				ctx.emit("update:modelValue", false)
+				visible.value = false
 			}
-		};
+		}
 		const animaAfterEnter = () => {
-			ctx.emit('open');
-		};
+			ctx.emit("open")
+		}
 		const animaAfterLeave = () => {
-			ctx.emit('close');
+			ctx.emit("close")
 			if (props.destroyOnClose) {
-				rendered.value = false;
+				rendered.value = false
 			}
-		};
+		}
 		const animaBeforeLeave = () => {
-			ctx.emit('before-close');
-		};
+			ctx.emit("before-close")
+		}
 		const animaBeforeEnter = () => {
-			ctx.emit('before-open');
-		};
+			ctx.emit("before-open")
+		}
 		watch(
 			() => props.modelValue,
 			(val) => {
-				openChange(val);
+				openChange(val)
 			}
-		);
+		)
 		watch(
 			() => props.open,
 			(val) => {
-				openChange(val);
+				openChange(val)
 			}
-		);
+		)
 		// open或者modelValue变化
 		const openChange = (val) => {
 			if (val) {
-				closed.value = false;
-				open();
-				rendered.value = true; // enables lazy rendering
+				closed.value = false
+				open()
+				rendered.value = true // enables lazy rendering
 			} else {
 				// this.$el.removeEventListener('scroll', this.updatePopper
 				if (visible.value) {
-					close();
+					close()
 				}
 			}
-		};
+		}
 		onMounted(() => {
 			if (props.modelValue || props.open) {
-				closed.value = false;
-				rendered.value = true;
-				doOpen();
+				closed.value = false
+				rendered.value = true
+				doOpen()
 			}
-		});
+		})
 		return {
 			closed,
 			rendered,
+			// eslint-disable-next-line vue/no-dupe-keys
 			zIndex,
 			visible,
 			dialogRef,
+			// eslint-disable-next-line vue/no-dupe-keys
 			open,
 			close,
 			style,
@@ -378,10 +380,10 @@ export default defineComponent({
 			animaBeforeLeave,
 			animaBeforeEnter,
 			animaAfterEnter,
-			animaAfterLeave,
-		};
-	},
-});
+			animaAfterLeave
+		}
+	}
+})
 </script>
 
 <style lang="less">

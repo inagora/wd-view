@@ -15,7 +15,7 @@
 					'wd-drawer',
 					'wd-drawer-' + placement,
 					visible ? 'wd-drawer-open' : '',
-					customClass,
+					customClass
 				]"
 				@click.stop=""
 				:style="{ zIndex }"
@@ -81,66 +81,66 @@ import {
 	watch,
 	computed,
 	CSSProperties,
-	onMounted,
+	onMounted
 } from 'vue';
 export default defineComponent({
 	name: 'WdDrawer',
 	props: {
 		appendToBody: {
 			type: Boolean,
-			default: false,
+			default: false
 		},
 		beforeClose: {
-			type: Function,
+			type: Function
 		},
 		beforeOpen: {
-			type: Function,
+			type: Function
 		},
 		customClass: {
 			type: String,
-			default: '',
+			default: ''
 		},
 		closeOnClickModal: {
 			type: Boolean,
-			default: true,
+			default: true
 		},
 		destroyOnClose: {
 			type: Boolean,
-			default: false,
+			default: false
 		},
 		showClose: {
 			type: Boolean,
-			default: true,
+			default: true
 		},
 		title: {
 			type: String,
-			default: '',
+			default: ''
 		},
 		modelValue: {
 			type: Boolean,
-			required: true,
+			required: true
 		},
 		modalClass: String,
 		width: {
 			type: [String, Number],
-			default: '50%',
+			default: '50%'
 		},
 		zIndex: {
-			type: Number,
+			type: Number
 		},
 		placement: {
 			type: String,
-			default: 'right',
+			default: 'right'
 		},
 		appear: {
 			type: Boolean,
-			default: false,
+			default: false
 		},
 		open: {
 			// 使用open控制时，必须要调用close
 			type: Boolean,
-			default: false,
-		},
+			default: false
+		}
 	},
 	emits: ['close', 'open', 'before-close', 'before-open', 'update:modelValue'],
 	setup(props, ctx) {
@@ -260,9 +260,11 @@ export default defineComponent({
 		return {
 			closed,
 			rendered,
+			// eslint-disable-next-line vue/no-dupe-keys
 			zIndex,
 			visible,
 			drawerRef,
+			// eslint-disable-next-line vue/no-dupe-keys
 			open,
 			close,
 			style,
@@ -271,9 +273,9 @@ export default defineComponent({
 			animaBeforeLeave,
 			animaBeforeEnter,
 			animaAfterEnter,
-			animaAfterLeave,
+			animaAfterLeave
 		};
-	},
+	}
 });
 </script>
 

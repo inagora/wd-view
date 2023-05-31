@@ -5,7 +5,7 @@
 		class="wd-select-item wd-select-item-option"
 		:class="{
 			'wd-select-item-option-selected': isItemSelected,
-			'wd-select-item-option-active': isItemActived,
+			'wd-select-item-option-active': isItemActived
 		}"
 		:label="label"
 		:value="value"
@@ -41,103 +41,103 @@
 </template>
 
 <script lang="ts">
-import { defineComponent, toRefs, ref, inject, watch } from 'vue';
+import { defineComponent, toRefs, ref, inject, watch } from "vue"
 export default defineComponent({
-	name: 'WdOption',
+	name: "WdOption",
 	props: {
 		label: String,
 		value: String,
 		selected: {
 			type: Boolean,
-			default: false,
+			default: false
 		},
 		active: {
 			type: Boolean,
-			default: false,
+			default: false
 		},
-		tabindex: Number,
+		tabindex: Number
 	},
-	emits: ['optionSelected'],
+	emits: ["optionSelected"],
 	setup(props, context) {
-		let { active, selected, value } = toRefs(props);
-		let isItemActived = ref(active.value);
-		let isItemSelected = ref(selected.value);
-		const optionClickHandler: any = inject('optionClickHandler');
-		const removeItem: any = inject('removeItem'); // 删除的元素
-		const selectedItem: any = inject('selectedItem'); // 选择的元素
-		let selectedArray: any = inject('selectedArray');
-		const optionsArray: any = inject('options');
+		let { active, selected, value } = toRefs(props)
+		let isItemActived = ref(active.value)
+		let isItemSelected = ref(selected.value)
+		const optionClickHandler: any = inject("optionClickHandler")
+		const removeItem: any = inject("removeItem") // 删除的元素
+		const selectedItem: any = inject("selectedItem") // 选择的元素
+		let selectedArray: any = inject("selectedArray")
+		const optionsArray: any = inject("options")
 
-		let multiple = inject('multiple');
-		let currentCount = selectedArray.length;
-		let limitCount: number = inject('limitCount');
-		let isItemVisible = ref(true);
-		let searchKey: any = inject('searchKey');
+		let multiple = inject("multiple")
+		let currentCount = selectedArray.length
+		let limitCount: number = inject("limitCount")
+		let isItemVisible = ref(true)
+		let searchKey: any = inject("searchKey")
 		if (multiple) {
 			selectedArray.forEach((item) => {
 				if (item.value === value.value) {
-					isItemSelected.value = true;
+					isItemSelected.value = true
 				}
-			});
+			})
 		} else {
 			if (value.value === selectedItem.value) {
-				isItemSelected.value = true;
+				isItemSelected.value = true
 			}
 		}
 		// methods
 		const mouseoverHandler = () => {
-			isItemActived.value = true;
-		};
+			isItemActived.value = true
+		}
 		const mouseleaveHandler = () => {
-			isItemActived.value = false;
-		};
+			isItemActived.value = false
+		}
 		// 选项点击
 		const clickHandler = () => {
 			if (multiple) {
-				if (!isItemSelected.value && currentCount >= limitCount) return; // 选中时才判断限制，取消选中不用判断
-				isItemSelected.value = !isItemSelected.value;
+				if (!isItemSelected.value && currentCount >= limitCount) return // 选中时才判断限制，取消选中不用判断
+				isItemSelected.value = !isItemSelected.value
 			} else {
-				isItemSelected.value = true;
+				isItemSelected.value = true
 			}
 			optionClickHandler({
 				value: value.value,
-				selected: isItemSelected.value,
-			});
-		};
+				selected: isItemSelected.value
+			})
+		}
 
 		//
 		const updateOptions = () => {
 			if (props.label.indexOf(searchKey.value) > -1) {
-				isItemVisible.value = true;
+				isItemVisible.value = true
 			} else {
-				isItemVisible.value = false;
+				isItemVisible.value = false
 			}
-		};
+		}
 
 		// watch
 		watch(removeItem, () => {
 			if (removeItem.value.value === value.value) {
-				isItemSelected.value = false;
+				isItemSelected.value = false
 			}
-		});
+		})
 		watch(selectedItem, () => {
 			if (selectedItem.value.value === value.value) {
-				isItemSelected.value = true;
+				isItemSelected.value = true
 			} else {
-				isItemSelected.value = false;
+				isItemSelected.value = false
 			}
-		});
+		})
 		watch(selectedArray, () => {
 			selectedArray.forEach((item) => {
 				if (item.value === value.value) {
-					isItemSelected.value = true;
+					isItemSelected.value = true
 				}
-			});
-			currentCount = selectedArray.length;
-		});
+			})
+			currentCount = selectedArray.length
+		})
 		watch(searchKey, () => {
-			updateOptions();
-		});
+			updateOptions()
+		})
 		return {
 			mouseoverHandler,
 			mouseleaveHandler,
@@ -145,8 +145,8 @@ export default defineComponent({
 			isItemActived,
 			optionClickHandler,
 			isItemSelected,
-			isItemVisible,
-		};
-	},
-});
+			isItemVisible
+		}
+	}
+})
 </script>

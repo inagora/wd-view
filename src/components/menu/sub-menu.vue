@@ -3,13 +3,13 @@
 		<li
 			class="wd-menu-submenu-inline"
 			:class="[
-				submenu.selected ? 'wd-menu-submenu-selected wd-menu-submenu-open' : '',
+				submenu.selected ? 'wd-menu-submenu-selected wd-menu-submenu-open' : ''
 			]"
 			v-for="(submenu, subIndex) in menuList"
 			:key="subIndex"
 			:style="{
 				paddingLeft: 24 + 'px',
-				display: showSubMenu ? 'block' : 'none',
+				display: showSubMenu ? 'block' : 'none'
 			}"
 		>
 			<div class="wd-menu-submenu-title" @click="submenuClickHandler(subIndex)">
@@ -33,40 +33,40 @@
 </template>
 
 <script lang="ts">
-// @ts-nocheck
-import { defineComponent } from 'vue';
-import './style/index';
+//
+import { defineComponent } from "vue"
+import "./style/index"
 export default defineComponent({
-	name: 'wd-sub-menu',
+	name: "wd-sub-menu",
 	props: {
 		subMenuList: {
-			type: Object,
+			type: Object
 		},
 		showSubMenu: {
 			type: Boolean,
-			default: false,
-		},
+			default: false
+		}
 	},
-	emits: ['click'], // onchange
+	emits: ["click"], // onchange
 	setup(props, context) {
-		const menuList = props.subMenuList;
+		const menuList = props.subMenuList
 		const submenuClickHandler = (currentIndex) => {
 			menuList.forEach((menu, index) => {
 				if (index !== currentIndex) {
-					menu.selected = false;
+					menu.selected = false
 				}
-			});
-			menuList[currentIndex].selected = !menuList[currentIndex].selected;
-			context.emit('click', { ...menuList[currentIndex] });
-		};
+			})
+			menuList[currentIndex].selected = !menuList[currentIndex].selected
+			context.emit("click", { ...menuList[currentIndex] })
+		}
 		const emitClick = (params) => {
-			context.emit('click', { ...params });
-		};
+			context.emit("click", { ...params })
+		}
 		return {
 			submenuClickHandler,
 			menuList,
-			emitClick,
-		};
-	},
-});
+			emitClick
+		}
+	}
+})
 </script>

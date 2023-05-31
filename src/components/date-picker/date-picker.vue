@@ -1,3 +1,4 @@
+<!-- eslint-disable vue/no-mutating-props -->
 <template>
 	<component
 		:is="pickerType"
@@ -23,7 +24,7 @@ import {
 	wdFormItemKey,
 	WdFormProps,
 	WdFormItemProps,
-	WdFormItemContext,
+	WdFormItemContext
 } from '../form/props';
 import ADatePicker from 'ant-design-vue/lib/date-picker';
 import { RangePicker } from 'ant-design-vue/lib/date-picker/dayjs';
@@ -45,21 +46,21 @@ interface WdPickerProps {
 }
 const pickerTypes = {
 	date: 'ADatePicker',
-	range: 'RangePicker',
+	range: 'RangePicker'
 };
 export default defineComponent({
 	name: 'wd-date-picker',
 	components: {
 		ADatePicker,
-		RangePicker,
+		RangePicker
 	},
 	props: {
 		modelValue: {
-			type: [Date, String] as PropType<Date | string>,
+			type: [Date, String] as PropType<Date | string>
 		},
 		type: {
 			default: 'date',
-			required: true,
+			required: true
 		},
 		clearable: Boolean,
 		disabled: Boolean,
@@ -68,7 +69,7 @@ export default defineComponent({
 		size: String,
 		placeholder: Object,
 		separator: String,
-		valueFormat: String,
+		valueFormat: String
 	},
 	emits: ['update:modelValue', 'change'],
 	setup(props: WdPickerProps, { emit }) {
@@ -76,7 +77,7 @@ export default defineComponent({
 		const wdForm = inject(wdFormKey, {} as WdFormProps);
 		const wdFormItem = inject(wdFormItemKey, {} as WdFormItemContext);
 		let pickerType = ref('date');
-		pickerType = pickerTypes[props.type];
+		pickerType.value = pickerTypes[props.type];
 		const change = (val) => {
 			emit('update:modelValue', val);
 			emit('change', val);
@@ -107,8 +108,8 @@ export default defineComponent({
 			inputSize,
 			pickDisabled,
 			dateLocale,
-			onMounted,
+			onMounted
 		};
-	},
+	}
 });
 </script>
