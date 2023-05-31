@@ -23,6 +23,7 @@ export default defineComponent({
 	},
 
 	setup(props, { emit }) {
+		console.log('11');
 		const [startValue, endValue] = props.modelValue.map((date) => ref(date));
 
 		const onStartDateInput = (event) => {
