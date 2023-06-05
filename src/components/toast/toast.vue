@@ -14,9 +14,9 @@ enum POSITION {
 	center,
 	bottom
 }
-import { ref, watch, toRefs, onMounted } from "vue"
+import { ref, watch, toRefs, onMounted } from 'vue';
 export default {
-	name: "wd-toast",
+	name: 'wd-toast',
 	props: {
 		message: String,
 		duration: {
@@ -29,18 +29,18 @@ export default {
 		}
 	},
 	setup(props) {
-		let { message, duration } = toRefs(props)
-		let showToast = ref(true)
+		let { message, duration } = toRefs(props);
+		let showToast = ref(true);
 		onMounted(() => {
 			setTimeout(() => {
-				showToast.value = false
-			}, duration.value)
-		})
+				showToast.value = false;
+			}, duration.value);
+		});
 		return {
 			showToast
-		}
+		};
 	}
-}
+};
 </script>
 
 <style>

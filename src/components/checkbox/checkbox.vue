@@ -26,23 +26,23 @@
 </template>
 
 <script lang="ts">
-import { defineComponent, ref, watch, inject } from "vue"
+import { defineComponent, ref, watch, inject } from 'vue';
 import {
 	wdFormKey,
 	wdFormItemKey,
 	WdFormProps,
 	WdFormItemProps,
 	WdFormItemContext
-} from "../form/props"
+} from '../form/props';
 
 interface WdCheckboxProps {
-	disabled: boolean
-	checked: boolean
-	modelValue: boolean | string | number
-	name: string
+	disabled: boolean;
+	checked: boolean;
+	modelValue: boolean | string | number;
+	name: string;
 }
 export default defineComponent({
-	name: "wd-checkbox",
+	name: 'wd-checkbox',
 	inheritAttrs: false,
 	props: {
 		checked: {
@@ -56,31 +56,32 @@ export default defineComponent({
 		},
 		name: String
 	},
-	emits: ["update:modelValue", "change"],
+	emits: ['update:modelValue', 'change'],
 	setup(props, ctx) {
-		const isChecked = ref(props.modelValue || props.checked)
-		const wdForm = inject(wdFormKey, {} as WdFormProps)
-		const wdFormItem = inject(wdFormItemKey, {} as WdFormItemContext)
-		let checkDisabled = props.disabled || wdFormItem.disabled || wdForm.disabled
+		const isChecked = ref(props.modelValue || props.checked);
+		const wdForm = inject(wdFormKey, {} as WdFormProps);
+		const wdFormItem = inject(wdFormItemKey, {} as WdFormItemContext);
+		let checkDisabled =
+			props.disabled || wdFormItem.disabled || wdForm.disabled;
 		const handleInputChange = () => {
-			isChecked.value = !isChecked.value
-			ctx.emit("change", isChecked.value)
-			ctx.emit("update:modelValue", isChecked.value)
-		}
+			isChecked.value = !isChecked.value;
+			ctx.emit('change', isChecked.value);
+			ctx.emit('update:modelValue', isChecked.value);
+		};
 		watch(
 			() => props.checked,
 			(val) => {
-				isChecked.value = val
-				wdFormItem.formItemMitt?.emit("wd.form.change", [val])
+				isChecked.value = val;
+				wdFormItem.formItemMitt?.emit('wd.form.change', [val]);
 			}
-		)
+		);
 		return {
 			isChecked,
 			handleInputChange,
 			checkDisabled
-		}
+		};
 	}
-})
+});
 </script>
 
 <style lang="less">

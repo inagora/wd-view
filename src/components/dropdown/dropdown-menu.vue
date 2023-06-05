@@ -5,14 +5,14 @@
 </template>
 
 <script lang="ts">
-import { defineComponent } from "vue"
+import { defineComponent } from 'vue';
 export default defineComponent({
-	name: "WdDropdownMenu",
+	name: 'WdDropdownMenu',
 	setup() {
-		const menuItem = "menuItem"
+		const menuItem = 'menuItem';
 		return {
 			menuItem
-		}
+		};
 	}
-})
+});
 </script>

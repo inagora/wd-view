@@ -1,9 +1,9 @@
 //
-import { App } from "vue"
-import WdDrawer from "./drawer.vue"
+import { App } from 'vue';
+import WdDrawer from './drawer.vue';
 
 WdDrawer.install = (app: App) => {
-	app.component(WdDrawer.name, WdDrawer)
-}
+	app.component(WdDrawer.name, WdDrawer);
+};
 
-export default WdDrawer
+export default WdDrawer;

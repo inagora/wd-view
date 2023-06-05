@@ -104,35 +104,35 @@ import {
 	onMounted,
 	inject,
 	watchEffect
-} from "vue"
-import calcTextareaHeight from "./calcTextareaHeight"
-import { isObject } from "vue"
+} from 'vue';
+import calcTextareaHeight from './calcTextareaHeight';
+import { isObject } from 'vue';
 // import { isObject } from '@vue/shared';
-import { useAttrs } from "../../hooks"
+import { useAttrs } from '../../hooks';
 import {
 	wdFormKey,
 	wdFormItemKey,
 	WdFormProps,
 	WdFormItemProps,
 	WdFormItemContext
-} from "../form/props"
+} from '../form/props';
 interface WdInputProps {
-	type: string
-	size: string
-	showWordLimit: boolean
-	clearable: boolean
-	showPassword: boolean
-	disabled: boolean
-	suffixIcon: string
-	prefixIcon: string
-	resize: boolean
-	readonly: boolean
-	modelValue: string
-	autosize: any
+	type: string;
+	size: string;
+	showWordLimit: boolean;
+	clearable: boolean;
+	showPassword: boolean;
+	disabled: boolean;
+	suffixIcon: string;
+	prefixIcon: string;
+	resize: boolean;
+	readonly: boolean;
+	modelValue: string;
+	autosize: any;
 }
-type AutosizeProp = { minRows?: number; maxRows?: number } | boolean
+type AutosizeProp = { minRows?: number; maxRows?: number } | boolean;
 export default defineComponent({
-	name: "wd-input",
+	name: 'wd-input',
 	inheritAttrs: false,
 	// components: {
 	//   ...IconList,
@@ -140,15 +140,15 @@ export default defineComponent({
 	props: {
 		modelValue: {
 			type: String,
-			default: ""
+			default: ''
 		},
 		type: {
 			type: String,
-			default: "text"
+			default: 'text'
 		},
 		size: {
 			type: String,
-			default: "default"
+			default: 'default'
 		},
 		showWordLimit: {
 			type: Boolean,
@@ -164,11 +164,11 @@ export default defineComponent({
 		},
 		suffixIcon: {
 			type: String,
-			default: ""
+			default: ''
 		},
 		prefixIcon: {
 			type: String,
-			default: ""
+			default: ''
 		},
 		disabled: Boolean,
 		readonly: Boolean,
@@ -178,112 +178,112 @@ export default defineComponent({
 			default: false
 		}
 	},
-	emits: ["update:modelValue", "input", "change", "clear", "blur"],
+	emits: ['update:modelValue', 'input', 'change', 'clear', 'blur'],
 	setup(props: WdInputProps, ctx) {
-		const attrs = useAttrs()
+		const attrs = useAttrs();
 		const sizeMap = reactive({
-			small: "sm",
-			large: "lg",
-			default: ""
-		})
-		const wdForm = inject(wdFormKey, {} as WdFormProps)
-		const wdFormItem = inject(wdFormItemKey, {} as WdFormItemContext)
+			small: 'sm',
+			large: 'lg',
+			default: ''
+		});
+		const wdForm = inject(wdFormKey, {} as WdFormProps);
+		const wdFormItem = inject(wdFormItemKey, {} as WdFormItemContext);
 		let inputSize =
-			sizeMap[props.size] || sizeMap[wdFormItem.size] || sizeMap[wdForm.size]
-		let inputDisabled = ref(false)
-		const input = ref(null)
-		const textarea = ref(null)
-		const inputOrTextarea = computed(() => input.value || textarea.value)
-		const _textareaCalcStyle = shallowRef({})
+			sizeMap[props.size] || sizeMap[wdFormItem.size] || sizeMap[wdForm.size];
+		let inputDisabled = ref(false);
+		const input = ref(null);
+		const textarea = ref(null);
+		const inputOrTextarea = computed(() => input.value || textarea.value);
+		const _textareaCalcStyle = shallowRef({});
 		const textareaStyle = computed(() => ({
 			..._textareaCalcStyle.value,
 			resize: props.resize
-		}))
+		}));
 		const resizeTextarea = () => {
-			const { type, autosize } = props
-			if (type !== "textarea") return
+			const { type, autosize } = props;
+			if (type !== 'textarea') return;
 			if (autosize) {
-				const minRows = isObject(autosize) ? autosize.minRows : void 0
-				const maxRows = isObject(autosize) ? autosize.maxRows : void 0
+				const minRows = isObject(autosize) ? autosize.minRows : void 0;
+				const maxRows = isObject(autosize) ? autosize.maxRows : void 0;
 				_textareaCalcStyle.value = calcTextareaHeight(
 					textarea.value,
 					minRows,
 					maxRows
-				)
+				);
 			} else {
 				_textareaCalcStyle.value = {
 					minHeight: calcTextareaHeight(textarea.value).minHeight
-				}
+				};
 			}
-		}
+		};
 		// 是否显示字符限制
 		const isWordLimitVisible = computed(() => {
 			return (
 				props.showWordLimit &&
 				ctx.attrs.maxlength &&
-				(props.type === "text" || props.type === "textarea") &&
+				(props.type === 'text' || props.type === 'textarea') &&
 				!props.disabled &&
 				!props.readonly &&
 				!props.showPassword
-			)
-		})
+			);
+		});
 		// 输⼊的⽂本⻓度
 		const textLength = computed(() => {
-			return props.modelValue.length
-		})
+			return props.modelValue.length;
+		});
 		const upperLimit = computed(() => {
-			return ctx.attrs.maxlength
-		})
+			return ctx.attrs.maxlength;
+		});
 		const setNativeInputValue = () => {
-			const input = inputOrTextarea.value
-			if (!input || input.value === nativeInputValue.value) return
-			input.value = nativeInputValue.value
-		}
+			const input = inputOrTextarea.value;
+			if (!input || input.value === nativeInputValue.value) return;
+			input.value = nativeInputValue.value;
+		};
 		const nativeInputValue = computed(() =>
 			props.modelValue === null || props.modelValue === undefined
-				? ""
+				? ''
 				: String(props.modelValue)
-		)
+		);
 		watch(
 			() => props.modelValue,
 			(val) => {
 				nextTick(() => {
-					setNativeInputValue()
-				})
+					setNativeInputValue();
+				});
 			}
-		)
+		);
 		watch(nativeInputValue, (val) => {
-			setNativeInputValue()
-		})
+			setNativeInputValue();
+		});
 		const handleInput = (event) => {
-			const { value } = event.target
-			ctx.emit("update:modelValue", value)
-			ctx.emit("input", value)
+			const { value } = event.target;
+			ctx.emit('update:modelValue', value);
+			ctx.emit('input', value);
 			// nextTick(setNativeInputValue);
-			wdFormItem.formItemMitt?.emit("wd.form.change", [event.target.value])
-		}
+			wdFormItem.formItemMitt?.emit('wd.form.change', [event.target.value]);
+		};
 		const handleChange = (event) => {
-			ctx.emit("change", event.target.value)
-			nextTick(setNativeInputValue)
-			wdFormItem.formItemMitt?.emit("wd.form.change", [event.target.value])
-		}
+			ctx.emit('change', event.target.value);
+			nextTick(setNativeInputValue);
+			wdFormItem.formItemMitt?.emit('wd.form.change', [event.target.value]);
+		};
 		const handleBlur = (event) => {
-			ctx.emit("blur", event.target.value)
+			ctx.emit('blur', event.target.value);
 			//   wdFormItem.formItemMitt?.emit("wd.form.blur", [event.target.value]);
-		}
+		};
 		const clear = () => {
-			ctx.emit("update:modelValue", "")
-			ctx.emit("change", "")
-			ctx.emit("clear")
-		}
+			ctx.emit('update:modelValue', '');
+			ctx.emit('change', '');
+			ctx.emit('clear');
+		};
 		watchEffect(() => {
 			inputDisabled.value =
-				props.disabled || wdFormItem.disabled || wdForm.disabled
-		})
+				props.disabled || wdFormItem.disabled || wdForm.disabled;
+		});
 		onMounted(() => {
-			setNativeInputValue()
-			nextTick(resizeTextarea)
-		})
+			setNativeInputValue();
+			nextTick(resizeTextarea);
+		});
 		return {
 			inputSize,
 			sizeMap,
@@ -301,9 +301,9 @@ export default defineComponent({
 			inputDisabled,
 			handleBlur,
 			attrs
-		}
+		};
 	}
-})
+});
 </script>
 <style lang="less">
 @import url(./style/index);

@@ -10,20 +10,20 @@
 </template>
 
 <script lang="ts">
-import drawLine from "./draw"
-import { onMounted } from "vue"
+import drawLine from './draw';
+import { onMounted } from 'vue';
 export default {
-	name: "wd_progress_line",
-	props: ["progress"],
+	name: 'wd_progress_line',
+	props: ['progress'],
 	setup(props) {
 		onMounted(() => {
 			const canvas = document.getElementById(
-				"wd-progress-line-canvas"
-			) as HTMLCanvasElement
-			drawLine(canvas, props.progress)
-		})
+				'wd-progress-line-canvas'
+			) as HTMLCanvasElement;
+			drawLine(canvas, props.progress);
+		});
 	}
-}
+};
 </script>
 
 <style lang="less"></style>

@@ -1,27 +1,27 @@
-import { withDirectives, Transition, vShow, withCtx, createVNode } from "vue"
-import { NOOP } from "vue"
-import { PatchFlags } from "../../../../utils/vnode"
-import { stop } from "../../../../utils/dom"
+import { withDirectives, Transition, vShow, withCtx, createVNode } from 'vue';
+import { NOOP } from 'vue';
+import { PatchFlags } from '../../../../utils/vnode';
+import { stop } from '../../../../utils/dom';
 
-import type { VNode, Ref } from "vue"
-import type { Effect } from "../use-popper/defaults"
+import type { VNode, Ref } from 'vue';
+import type { Effect } from '../use-popper/defaults';
 
 interface IRenderPopperProps {
-	effect: Effect
-	name: string
-	stopPopperMouseEvent: boolean
-	popperClass: string
-	popperStyle?: Partial<CSSStyleDeclaration>
-	popperId: string
-	popperRef?: Ref<HTMLElement>
-	pure?: boolean
-	visibility: boolean
-	onMouseenter: () => void
-	onMouseleave: () => void
-	onAfterEnter?: () => void
-	onAfterLeave?: () => void
-	onBeforeEnter?: () => void
-	onBeforeLeave?: () => void
+	effect: Effect;
+	name: string;
+	stopPopperMouseEvent: boolean;
+	popperClass: string;
+	popperStyle?: Partial<CSSStyleDeclaration>;
+	popperId: string;
+	popperRef?: Ref<HTMLElement>;
+	pure?: boolean;
+	visibility: boolean;
+	onMouseenter: () => void;
+	onMouseleave: () => void;
+	onAfterEnter?: () => void;
+	onAfterLeave?: () => void;
+	onBeforeEnter?: () => void;
+	onBeforeLeave?: () => void;
 }
 
 export default function renderPopper(
@@ -44,9 +44,9 @@ export default function renderPopper(
 		onAfterLeave,
 		onBeforeEnter,
 		onBeforeLeave
-	} = props
+	} = props;
 
-	const kls = [popperClass, "wd-popper", "is-" + effect, pure ? "is-pure" : ""]
+	const kls = [popperClass, 'wd-popper', 'is-' + effect, pure ? 'is-pure' : ''];
 	/**
 	 * Equivalent to
 	 * <transition :name="name">
@@ -56,7 +56,7 @@ export default function renderPopper(
 	 * </transition>
 	 */
 
-	const mouseUpAndDown = stopPopperMouseEvent ? stop : NOOP
+	const mouseUpAndDown = stopPopperMouseEvent ? stop : NOOP;
 	return createVNode(
 		Transition,
 		{
@@ -70,14 +70,14 @@ export default function renderPopper(
 			default: withCtx(() => [
 				withDirectives(
 					createVNode(
-						"div",
+						'div',
 						{
-							"aria-hidden": String(!visibility),
+							'aria-hidden': String(!visibility),
 							class: kls,
 							style: popperStyle ?? {},
 							id: popperId,
-							ref: popperRef ?? "popperRef",
-							role: "tooltip",
+							ref: popperRef ?? 'popperRef',
+							role: 'tooltip',
 							onMouseenter,
 							onMouseleave,
 							onClick: stop,
@@ -90,13 +90,13 @@ export default function renderPopper(
 							PatchFlags.PROPS |
 							PatchFlags.HYDRATE_EVENTS,
 						[
-							"aria-hidden",
-							"onMouseenter",
-							"onMouseleave",
-							"onMousedown",
-							"onMouseup",
-							"onClick",
-							"id"
+							'aria-hidden',
+							'onMouseenter',
+							'onMouseleave',
+							'onMousedown',
+							'onMouseup',
+							'onClick',
+							'id'
 						]
 					),
 					[[vShow, visibility]]
@@ -104,6 +104,6 @@ export default function renderPopper(
 			])
 		},
 		PatchFlags.PROPS,
-		["name", "onAfterEnter", "onAfterLeave", "onBeforeEnter", "onBeforeLeave"]
-	)
+		['name', 'onAfterEnter', 'onAfterLeave', 'onBeforeEnter', 'onBeforeLeave']
+	);
 }

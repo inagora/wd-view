@@ -3,6 +3,4 @@
 
 npx --no-install commitlint --edit $1
 
-# git ci -m "q"
-# git ci -m "feat: xxx"
-
+# git ci -m  "aaa" // $1npx --no-install commitlint -e 

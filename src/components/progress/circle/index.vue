@@ -10,20 +10,20 @@
 </template>
 
 <script lang="ts">
-import { onMounted } from "vue"
-import drawCircle from "./draw"
+import { onMounted } from 'vue';
+import drawCircle from './draw';
 export default {
-	name: "wd_progress_circle",
-	props: ["progress"],
+	name: 'wd_progress_circle',
+	props: ['progress'],
 	setup(props) {
 		onMounted(() => {
 			const canvas = document.getElementById(
-				"wd-progress-circle-canvas"
-			) as HTMLCanvasElement
-			drawCircle(canvas, props.progress)
-		})
+				'wd-progress-circle-canvas'
+			) as HTMLCanvasElement;
+			drawCircle(canvas, props.progress);
+		});
 	}
-}
+};
 </script>
 
 <style lang="less"></style>

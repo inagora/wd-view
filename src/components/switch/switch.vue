@@ -15,20 +15,20 @@
 </template>
 
 <script lang="ts">
-import { defineComponent, reactive, PropType, computed, onMounted } from "vue"
-type SwitchSizes = PropType<"small" | "large">
+import { defineComponent, reactive, PropType, computed, onMounted } from 'vue';
+type SwitchSizes = PropType<'small' | 'large'>;
 
-type ModelValueType = boolean | string | number
+type ModelValueType = boolean | string | number;
 
 interface WdSwitchProps {
-	modelValue: ModelValueType
-	size: string
-	disabled: boolean
-	loading: boolean
+	modelValue: ModelValueType;
+	size: string;
+	disabled: boolean;
+	loading: boolean;
 }
 
 export default defineComponent({
-	name: "wd-switch",
+	name: 'wd-switch',
 	props: {
 		modelValue: {
 			type: [Boolean, String, Number] as PropType<ModelValueType>,
@@ -37,33 +37,33 @@ export default defineComponent({
 		},
 		size: {
 			type: String as SwitchSizes,
-			default: ""
+			default: ''
 		},
 		disabled: Boolean,
 		loading: Boolean
 	},
-	emits: ["update:modelValue", "change"],
+	emits: ['update:modelValue', 'change'],
 	setup(props: WdSwitchProps, { emit }) {
 		const sizeMap = reactive({
-			small: "sm"
-		})
+			small: 'sm'
+		});
 		const checked = computed((): ModelValueType => {
-			return props.modelValue
-		})
+			return props.modelValue;
+		});
 		const handleChange = () => {
-			if (props.disabled) return
-			const val = !props.modelValue
-			emit("update:modelValue", val)
-			emit("change", val)
-		}
-		onMounted(() => {})
+			if (props.disabled) return;
+			const val = !props.modelValue;
+			emit('update:modelValue', val);
+			emit('change', val);
+		};
+		onMounted(() => {});
 		return {
 			sizeMap,
 			checked,
 			handleChange
-		}
+		};
 	}
-})
+});
 </script>
 
 <style lang="less">

@@ -1,9 +1,9 @@
 <script setup>
-import { inject, onMounted, ref } from "vue"
-import ADatePicker from "ant-design-vue/lib/date-picker"
-import { RangePicker } from "ant-design-vue/lib/date-picker/dayjs"
-import locale from "ant-design-vue/es/date-picker/locale/zh_CN"
-import "ant-design-vue/lib/date-picker/style/index.css"
+import { inject, onMounted, ref } from 'vue';
+import ADatePicker from 'ant-design-vue/lib/date-picker';
+import { RangePicker } from 'ant-design-vue/lib/date-picker/dayjs';
+import locale from 'ant-design-vue/es/date-picker/locale/zh_CN';
+import 'ant-design-vue/lib/date-picker/style/index.css';
 import {
 	WdForm,
 	WdFormItem,
@@ -16,10 +16,10 @@ import {
 	WdSwitch,
 	WdButton,
 	WdInputNumber
-} from "../../../index.ts"
-import { isObject, isFuction } from "../utils/util"
-const config = inject("config")
-const emitter = inject("emitter")
+} from '../../../index.ts';
+import { isObject, isFuction } from '../utils/util';
+const config = inject('config');
+const emitter = inject('emitter');
 const filterMap = {
 	text: WdInput,
 	datetime: WdDatePicker,
@@ -31,26 +31,26 @@ const filterMap = {
 	checkbox: WdCheckbox,
 	switch: WdSwitch,
 	radio: WdRadio
-}
-const formData = ref({})
-const searchFilters = ref([])
+};
+const formData = ref({});
+const searchFilters = ref([]);
 // format filter
 const formatFilter = (valueEnum) => {
 	return Object.keys(valueEnum).map((key) => {
 		return {
 			label: valueEnum[key],
 			value: key
-		}
-	})
-}
+		};
+	});
+};
 config.columns.forEach((column) => {
 	if (
 		!column.hideInSearch &&
 		column.dataIndex &&
-		column.dataIndex !== "action"
+		column.dataIndex !== 'action'
 	) {
 		const filter = {
-			type: column.valueType || "text",
+			type: column.valueType || 'text',
 			placeholder: column.placeholder,
 			label: column.title,
 			prop: column.dataIndex,
@@ -58,54 +58,55 @@ config.columns.forEach((column) => {
 			list: [],
 			value: column.defaultValue,
 			change: column.change || null
-		}
-		if (column.valueType === "select" || column.valueType === "multiple") {
+		};
+		if (column.valueType === 'select' || column.valueType === 'multiple') {
 			if (column.valueEnum) {
 				if (isFuction(column.valueEnum)) {
-					const valueEnum = column.valueEnum()
+					const valueEnum = column.valueEnum();
 					if (isObject(valueEnum)) {
-						filter.list = formatFilter(valueEnum)
+						filter.list = formatFilter(valueEnum);
 					}
 				} else {
 					if (isObject(column.valueEnum)) {
-						filter.list = formatFilter(column.valueEnum)
+						filter.list = formatFilter(column.valueEnum);
 					}
 				}
 			}
 		}
-		searchFilters.value.push(filter)
+		searchFilters.value.push(filter);
 	}
-})
+});
 searchFilters.value.forEach((filter) => {
-	if (filter.type === "checkbox") {
-		formData.value[filter.prop] = filter.value || false
+	if (filter.type === 'checkbox') {
+		formData.value[filter.prop] = filter.value || false;
 	} else {
-		formData.value[filter.prop] = filter.value || ""
+		formData.value[filter.prop] = filter.value || '';
 	}
-})
+});
 const searchHandler = () => {
-	emitter.emit("wv:search", formData.value)
-}
+	emitter.emit('wv:search', formData.value);
+};
 onMounted(() => {
 	if (config.autoRequest) {
-		searchHandler()
+		searchHandler();
 	}
-})
+});
 const changeHandler = (val, fn) => {
-	fn && fn(val)
-}
+	fn && fn(val);
+};
 // 获取搜索参数
 const getSearchParams = () => {
-	return formData.value
-}
+	return formData.value;
+};
 const setSearchParams = (data) => {
-	formData.value = Object.assign({}, formData.value, data)
-}
+	formData.value = Object.assign({}, formData.value, data);
+};
 // 暴露事件
+/* eslint-disable-next-line no-undef */
 defineExpose({
 	getSearchParams,
 	setSearchParams
-})
+});
 // formConf
 // 自定义搜索
 // 自定义其他按钮

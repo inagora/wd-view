@@ -34,10 +34,10 @@
 
 <script lang="ts">
 //
-import { defineComponent } from "vue"
-import "./style/index"
+import { defineComponent } from 'vue';
+import './style/index';
 export default defineComponent({
-	name: "wd-sub-menu",
+	name: 'wd-sub-menu',
 	props: {
 		subMenuList: {
 			type: Object
@@ -47,26 +47,26 @@ export default defineComponent({
 			default: false
 		}
 	},
-	emits: ["click"], // onchange
+	emits: ['click'], // onchange
 	setup(props, context) {
-		const menuList = props.subMenuList
+		const menuList = props.subMenuList;
 		const submenuClickHandler = (currentIndex) => {
 			menuList.forEach((menu, index) => {
 				if (index !== currentIndex) {
-					menu.selected = false
+					menu.selected = false;
 				}
-			})
-			menuList[currentIndex].selected = !menuList[currentIndex].selected
-			context.emit("click", { ...menuList[currentIndex] })
-		}
+			});
+			menuList[currentIndex].selected = !menuList[currentIndex].selected;
+			context.emit('click', { ...menuList[currentIndex] });
+		};
 		const emitClick = (params) => {
-			context.emit("click", { ...params })
-		}
+			context.emit('click', { ...params });
+		};
 		return {
 			submenuClickHandler,
 			menuList,
 			emitClick
-		}
+		};
 	}
-})
+});
 </script>

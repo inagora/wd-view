@@ -7,31 +7,38 @@
 </template>
 
 <script lang="ts">
-import { computed, defineComponent, ref, watchEffect, renderSlot, h } from "vue"
+import {
+	computed,
+	defineComponent,
+	ref,
+	watchEffect,
+	renderSlot,
+	h
+} from 'vue';
 
-import { isArray, isNumber } from "../../utils/util"
-import { isFragment } from "../../utils/vnode"
+import { isArray, isNumber } from '../../utils/util';
+import { isFragment } from '../../utils/vnode';
 export default defineComponent({
-	name: "wd-space",
+	name: 'wd-space',
 	props: {
 		direction: {
 			type: String,
-			default: "row" // 水平 竖直
+			default: 'row' // 水平 竖直
 		},
 
 		style: {
 			type: [String, Array, Object],
-			default: ""
+			default: ''
 		},
 
 		alignment: {
 			type: String,
-			default: "center"
+			default: 'center'
 		},
 
 		size: {
 			type: [String, Array, Number],
-			default: "small"
+			default: 'small'
 		},
 		wrap: Boolean
 	},
@@ -41,59 +48,59 @@ export default defineComponent({
 	 * 2. 保不保留空节点可以根据 keepEmpty 的 option 来控制。
 	 */
 	setup(props, { slots }) {
-		console.log("slots", slots)
-		console.log("props", props)
-		const horizontalSize = ref(0)
-		const verticalSize = ref(0)
+		console.log('slots', slots);
+		console.log('props', props);
+		const horizontalSize = ref(0);
+		const verticalSize = ref(0);
 		const SIZE_MAP = {
 			small: 8,
 			default: 12,
 			large: 16
-		}
+		};
 
-		console.log("SIZE_MAP", SIZE_MAP)
+		console.log('SIZE_MAP', SIZE_MAP);
 		// 获取所有的子元素，
 
-		let defaults = slots.default()
-		console.log("defaults", defaults)
+		let defaults = slots.default();
+		console.log('defaults', defaults);
 		const itemStyle = computed(() => {
 			const itemBaseStyle = {
 				paddingBottom: `${verticalSize.value}px`,
 				marginRight: `${horizontalSize.value}px`
-			}
-			return [itemBaseStyle]
-		})
+			};
+			return [itemBaseStyle];
+		});
 		const containerStyle = computed(() => {
 			const alignment = {
 				alignItems: props.alignment
-			}
+			};
 
 			const direction = {
 				flexDirection: props.direction
-			}
-			const wrapKls = props.wrap ? { flexWrap: "wrap" } : {}
+			};
+			const wrapKls = props.wrap ? { flexWrap: 'wrap' } : {};
 
-			return [alignment, props.style, direction, wrapKls]
-		})
+			return [alignment, props.style, direction, wrapKls];
+		});
 
 		watchEffect(() => {
-			const { size = "small" } = props
-			console.log("size", size)
+			const { size = 'small' } = props;
+			console.log('size', size);
 			if (isArray(size)) {
-				const [h = 0, v = 0] = size
-				horizontalSize.value = h
-				verticalSize.value = v
+				const [h = 0, v = 0] = size;
+				horizontalSize.value = h;
+				verticalSize.value = v;
 			} else {
 				// let val: number | String;
-				let val
+				let val;
 				if (isNumber(size)) {
-					val = size
+					val = size;
 				} else {
-					val = SIZE_MAP[size || "small"] || SIZE_MAP.small
+					val = SIZE_MAP[size || 'small'] || SIZE_MAP.small;
 				}
-				horizontalSize.value = verticalSize.value = val
+				horizontalSize.value = verticalSize.value = val;
 			}
-		})
+		});
 
 		// 递归，不然注释 只能去掉一层，div层级也不确定
 		// 	const extractChildren = (childSlots) => {
@@ -163,9 +170,9 @@ export default defineComponent({
 			itemStyle,
 			containerStyle
 			//   extractChildren,
-		}
+		};
 	}
-})
+});
 </script>
 
 <style lang="less">

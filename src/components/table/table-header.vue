@@ -131,11 +131,11 @@
 </template>
 <script lang="ts">
 //
-import { defineComponent, PropType, reactive, ref, watch } from "vue"
-import WdCheckbox from "../checkbox/checkbox.vue"
-import { StoreProps } from "./table-type"
+import { defineComponent, PropType, reactive, ref, watch } from 'vue';
+import WdCheckbox from '../checkbox/checkbox.vue';
+import { StoreProps } from './table-type';
 export default defineComponent({
-	name: "table-header",
+	name: 'table-header',
 	components: { WdCheckbox },
 	props: {
 		store: Object as PropType<StoreProps>,
@@ -146,105 +146,105 @@ export default defineComponent({
 		isShowLeftShadow: Boolean,
 		isShowRightShadow: Boolean
 	},
-	emits: ["select-change"],
+	emits: ['select-change'],
 	setup(props, { emit }) {
-		let isSelectedAll = ref(false)
-		let { store } = props
+		let isSelectedAll = ref(false);
+		let { store } = props;
 		const selectAllChangeHandler = (val) => {
-			let dataSource: any = store.dataSource
+			let dataSource: any = store.dataSource;
 			dataSource.forEach((data) => {
-				data.isSelected = val
-			})
-			emit("select-change")
-		}
+				data.isSelected = val;
+			});
+			emit('select-change');
+		};
 
 		const filterColumnStyle = (column, index) => {
-			if (column.fixed === "left") {
-				const leftOffset = getOffset(column, "left")
+			if (column.fixed === 'left') {
+				const leftOffset = getOffset(column, 'left');
 				return {
-					position: column.fixed ? "sticky" : "",
-					left: leftOffset + "px",
+					position: column.fixed ? 'sticky' : '',
+					left: leftOffset + 'px',
 					zIndex: 500 - index,
-					backgroundColor: "#ffffff"
-				}
-			} else if (column.fixed === "right") {
-				const rightOffset = getOffset(column, "right")
+					backgroundColor: '#ffffff'
+				};
+			} else if (column.fixed === 'right') {
+				const rightOffset = getOffset(column, 'right');
 				return {
-					position: column.fixed ? "sticky" : "",
-					right: rightOffset + "px",
+					position: column.fixed ? 'sticky' : '',
+					right: rightOffset + 'px',
 					zIndex: 500 - index,
-					backgroundColor: "#ffffff"
-				}
+					backgroundColor: '#ffffff'
+				};
 			} else {
-				return {}
+				return {};
 			}
-		}
+		};
 		const getOffset = (column, type) => {
-			let columns = []
-			if (type === "left") {
-				columns = store.leftFixedColumns
+			let columns = [];
+			if (type === 'left') {
+				columns = store.leftFixedColumns;
 			} else {
-				columns = store.rightFixedColumns
+				columns = store.rightFixedColumns;
 			}
-			if (column.type === "checkbox") {
-				return 0
+			if (column.type === 'checkbox') {
+				return 0;
 			}
-			let offset = 0
+			let offset = 0;
 			if (
 				store.columns &&
 				store.columns.length > 0 &&
-				store.columns[0].type === "checkbox" &&
-				type === "left"
+				store.columns[0].type === 'checkbox' &&
+				type === 'left'
 			) {
-				offset += store.columns[0].width
+				offset += store.columns[0].width;
 			}
-			if (type === "right") {
+			if (type === 'right') {
 				for (let i = columns.length - 1; i >= 0; i--) {
-					const item = columns[i]
+					const item = columns[i];
 					if (item.dataIndex === column.dataIndex) {
-						break
+						break;
 					}
-					offset += item.width
+					offset += item.width;
 				}
 			} else {
 				for (let i = 0; i < columns.length; i++) {
-					const item = columns[i]
+					const item = columns[i];
 					if (item.dataIndex === column.dataIndex) {
-						break
+						break;
 					}
-					offset += item.width
+					offset += item.width;
 				}
 			}
-			return offset
-		}
+			return offset;
+		};
 
 		// 点击了排序
 		const doSort = (column) => {
 			if (!column.orderType) {
-				column.orderType = "desc"
+				column.orderType = 'desc';
 			} else {
-				column.orderType = column.orderType === "asc" ? "desc" : "asc"
+				column.orderType = column.orderType === 'asc' ? 'desc' : 'asc';
 			}
 			// 排序回调
 			if (column.sorter) {
-				if (typeof column.sorter === "function") {
-					column.sorter(column.orderType)
+				if (typeof column.sorter === 'function') {
+					column.sorter(column.orderType);
 				}
 			}
-		}
+		};
 
 		watch(store.dataSource, (val) => {
-			isSelectedAll.value = checkSelectedAll(val)
-		})
+			isSelectedAll.value = checkSelectedAll(val);
+		});
 		const checkSelectedAll = (data) => {
-			return !data.some((item) => !item.isSelected) // 全选
-		}
+			return !data.some((item) => !item.isSelected); // 全选
+		};
 		return {
 			isSelectedAll,
 			selectAllChangeHandler,
 			filterColumnStyle,
 			doSort
-		}
+		};
 	}
-})
+});
 </script>

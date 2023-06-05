@@ -97,9 +97,9 @@ enum POSITION {
 	center,
 	bottom
 }
-import { ref, computed, toRefs, onMounted, getCurrentInstance } from "vue"
+import { ref, computed, toRefs, onMounted, getCurrentInstance } from 'vue';
 export default {
-	name: "wd-message",
+	name: 'wd-message',
 	props: {
 		message: String,
 		duration: {
@@ -112,45 +112,45 @@ export default {
 		},
 		type: {
 			type: String,
-			default: "info"
+			default: 'info'
 		},
 		offset: {
 			type: Number
 		},
 		zIndex: Number
 	},
-	emits: ["destroy"],
+	emits: ['destroy'],
 	setup(props, ctx) {
-		let { duration } = toRefs(props)
-		const visible = ref(false)
-		const messageNotice = ref(null)
+		let { duration } = toRefs(props);
+		const visible = ref(false);
+		const messageNotice = ref(null);
 		const customStyle = computed(() => {
 			return {
 				top: `${props.offset}px`,
 				zIndex: props.zIndex
-			}
-		})
+			};
+		});
 
-		const animaEnter = () => {}
+		const animaEnter = () => {};
 		const animaLeave = () => {
-			ctx.emit("destroy")
-		}
+			ctx.emit('destroy');
+		};
 		onMounted(() => {
-			visible.value = true
-			messageNotice.value.classList.add("wd-message-notice")
+			visible.value = true;
+			messageNotice.value.classList.add('wd-message-notice');
 			setTimeout(() => {
-				visible.value = false
-			}, duration.value)
-		})
+				visible.value = false;
+			}, duration.value);
+		});
 		return {
 			messageNotice,
 			customStyle,
 			animaEnter,
 			animaLeave,
 			visible
-		}
+		};
 	}
-}
+};
 </script>
 
 <style lang="less">

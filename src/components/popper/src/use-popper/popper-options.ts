@@ -1,19 +1,19 @@
-import { computed } from "vue"
-import buildModifiers from "./build-modifiers"
+import { computed } from 'vue';
+import buildModifiers from './build-modifiers';
 
-import type { Ref } from "vue"
-import type { Options, Placement } from "@popperjs/core"
+import type { Ref } from 'vue';
+import type { Options, Placement } from '@popperjs/core';
 
 interface IUsePopperProps {
-	popperOptions: Options
-	arrowOffset: number
-	offset: number
-	placement: Placement
-	gpuAcceleration: boolean
+	popperOptions: Options;
+	arrowOffset: number;
+	offset: number;
+	placement: Placement;
+	gpuAcceleration: boolean;
 }
 
 interface IUsePopperState {
-	arrow: Ref<HTMLElement>
+	arrow: Ref<HTMLElement>;
 }
 
 export default function usePopperOptions(
@@ -34,6 +34,6 @@ export default function usePopperOptions(
 				},
 				props.popperOptions?.modifiers
 			)
-		}
-	})
+		};
+	});
 }

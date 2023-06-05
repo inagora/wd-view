@@ -1,18 +1,18 @@
-import { openBlock, createBlock, Comment } from "vue"
-import { PatchFlags } from "../../../../utils/vnode"
+import { openBlock, createBlock, Comment } from 'vue';
+import { PatchFlags } from '../../../../utils/vnode';
 
 export default function renderArrow(showArrow: boolean) {
 	return showArrow
 		? (openBlock(),
 		  createBlock(
-				"div",
+				'div',
 				{
-					ref: "arrowRef",
-					class: "wd-popper__arrow",
-					"data-popper-arrow": ""
+					ref: 'arrowRef',
+					class: 'wd-popper__arrow',
+					'data-popper-arrow': ''
 				},
 				null,
 				PatchFlags.NEED_PATCH
 		  ))
-		: (openBlock(), createBlock(Comment, null, ""))
+		: (openBlock(), createBlock(Comment, null, ''));
 }

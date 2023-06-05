@@ -11,47 +11,47 @@ import {
 	renderSlot,
 	toDisplayString,
 	withDirectives
-} from "vue"
+} from 'vue';
 
-import throwError from "../../../utils/error"
-import { PatchFlags, renderBlock } from "../../../utils/vnode"
+import throwError from '../../../utils/error';
+import { PatchFlags, renderBlock } from '../../../utils/vnode';
 
-import usePopper from "./use-popper/index"
-import defaultProps from "./use-popper/defaults"
+import usePopper from './use-popper/index';
+import defaultProps from './use-popper/defaults';
 
-import { renderPopper, renderTrigger, renderArrow } from "./renderers"
-import { ClickOutside } from "../../directives"
+import { renderPopper, renderTrigger, renderArrow } from './renderers';
+import { ClickOutside } from '../../directives';
 
-const compName = "wd-popper"
-const UPDATE_VISIBLE_EVENT = "update:visible"
+const compName = 'wd-popper';
+const UPDATE_VISIBLE_EVENT = 'update:visible';
 
 export default defineComponent({
 	name: compName,
 	props: defaultProps,
 	emits: [
 		UPDATE_VISIBLE_EVENT,
-		"after-enter",
-		"after-leave",
-		"before-enter",
-		"before-leave"
+		'after-enter',
+		'after-leave',
+		'before-enter',
+		'before-leave'
 	],
 	setup(props, ctx) {
 		if (!ctx.slots.trigger) {
-			throwError(compName, "Trigger must be provided")
+			throwError(compName, 'Trigger must be provided');
 		}
 		// this is a reference that we need to pass down to child component
 		// to obtain the child instance
 
 		// return usePopper(props as IPopperOptions, ctx as SetupContext)
-		const popperStates = usePopper(props, ctx)
+		const popperStates = usePopper(props, ctx);
 
-		const forceDestroy = () => popperStates.doDestroy(true)
-		onMounted(popperStates.initializePopper)
-		onBeforeUnmount(forceDestroy)
-		onActivated(popperStates.initializePopper)
-		onDeactivated(forceDestroy)
+		const forceDestroy = () => popperStates.doDestroy(true);
+		onMounted(popperStates.initializePopper);
+		onBeforeUnmount(forceDestroy);
+		onActivated(popperStates.initializePopper);
+		onDeactivated(forceDestroy);
 
-		return popperStates
+		return popperStates;
 	},
 
 	render() {
@@ -76,10 +76,10 @@ export default defineComponent({
 			transition,
 			visibility,
 			stopPopperMouseEvent
-		} = this
+		} = this;
 
-		const isManual = this.isManualMode()
-		const arrow = renderArrow(showArrow)
+		const isManual = this.isManualMode();
+		const arrow = renderArrow(showArrow);
 		const popper = renderPopper(
 			{
 				effect,
@@ -98,40 +98,40 @@ export default defineComponent({
 				visibility
 			},
 			[
-				renderSlot($slots, "default", {}, () => {
-					return [toDisplayString(this.content)]
+				renderSlot($slots, 'default', {}, () => {
+					return [toDisplayString(this.content)];
 				}),
 				arrow
 			]
-		)
+		);
 
-		const _t = $slots.trigger?.()
+		const _t = $slots.trigger?.();
 
 		const triggerProps = {
 			ariaDescribedby: popperId,
 			class: kls,
 			style,
-			ref: "triggerRef",
+			ref: 'triggerRef',
 			...this.events
-		}
+		};
 
 		const trigger = isManual
 			? renderTrigger(_t, triggerProps)
-			: withDirectives(renderTrigger(_t, triggerProps), [[ClickOutside, hide]])
+			: withDirectives(renderTrigger(_t, triggerProps), [[ClickOutside, hide]]);
 
 		return renderBlock(Fragment, null, [
 			trigger,
 			createVNode(
 				Teleport as any, // Vue did not support createVNode for Teleport
 				{
-					to: "body",
+					to: 'body',
 					disabled: !appendToBody
 				},
 				[popper],
 				PatchFlags.PROPS,
-				["disabled"]
+				['disabled']
 			)
-		])
+		]);
 	}
-})
+});
 </script>

@@ -6,16 +6,16 @@
 
 <script lang="ts">
 //
-import { defineComponent } from "vue"
+import { defineComponent } from 'vue';
 
 export default defineComponent({
-	name: "wd-layout-content",
+	name: 'wd-layout-content',
 	props: {},
-	emits: ["update:modelValue", "input", "change", "clear"],
+	emits: ['update:modelValue', 'input', 'change', 'clear'],
 	setup(props, ctx) {
-		return {}
+		return {};
 	}
-})
+});
 </script>
 
 <style lang="less"></style>

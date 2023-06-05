@@ -1,3 +1,3 @@
-import WdModal from "./modal"
+import WdModal from './modal';
 
-export default WdModal
+export default WdModal;

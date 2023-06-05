@@ -26,28 +26,28 @@
 </template>
 
 <script lang="ts">
-import { defineComponent, ref, watch, inject } from "vue"
+import { defineComponent, ref, watch, inject } from 'vue';
 import {
 	wdFormKey,
 	wdFormItemKey,
 	WdFormProps,
 	WdFormItemProps,
 	WdFormItemContext
-} from "../form/props"
+} from '../form/props';
 
 interface WdRadioProps {
-	disabled: boolean
-	checked: boolean
-	modelValue: boolean
-	name: string
+	disabled: boolean;
+	checked: boolean;
+	modelValue: boolean;
+	name: string;
 }
 export default defineComponent({
-	name: "wd-radio",
+	name: 'wd-radio',
 	inheritAttrs: false,
 	props: {
 		modelValue: {
 			type: Boolean,
-			default: ""
+			default: ''
 		},
 		checked: {
 			required: true,
@@ -57,37 +57,38 @@ export default defineComponent({
 		disabled: Boolean,
 		name: String
 	},
-	emits: ["update:modelValue", "change"],
+	emits: ['update:modelValue', 'change'],
 	setup(props: WdRadioProps, ctx) {
-		const isChecked = ref(props.modelValue)
-		const wdForm = inject(wdFormKey, {} as WdFormProps)
-		const wdFormItem = inject(wdFormItemKey, {} as WdFormItemContext)
+		const isChecked = ref(props.modelValue);
+		const wdForm = inject(wdFormKey, {} as WdFormProps);
+		const wdFormItem = inject(wdFormItemKey, {} as WdFormItemContext);
 		const handleInputChange = () => {
-			isChecked.value = !isChecked.value
-			ctx.emit("change", isChecked.value)
-			ctx.emit("update:modelValue", isChecked.value)
-			wdFormItem.formItemMitt?.emit("wd.form.change", [isChecked.value])
-		}
-		let radioDisabled = props.disabled || wdFormItem.disabled || wdForm.disabled
+			isChecked.value = !isChecked.value;
+			ctx.emit('change', isChecked.value);
+			ctx.emit('update:modelValue', isChecked.value);
+			wdFormItem.formItemMitt?.emit('wd.form.change', [isChecked.value]);
+		};
+		let radioDisabled =
+			props.disabled || wdFormItem.disabled || wdForm.disabled;
 		watch(
 			() => props.checked,
 			(val) => {
-				isChecked.value = val
+				isChecked.value = val;
 			}
-		)
+		);
 		watch(
 			() => props.modelValue,
 			(val) => {
-				isChecked.value = val
+				isChecked.value = val;
 			}
-		)
+		);
 		return {
 			isChecked,
 			handleInputChange,
 			radioDisabled
-		}
+		};
 	}
-})
+});
 </script>
 
 <style lang="less">

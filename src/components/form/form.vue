@@ -17,22 +17,22 @@ import {
 	reactive,
 	toRefs,
 	watch
-} from "vue"
+} from 'vue';
 import {
 	wdFormKey,
 	wdFormEvents,
 	WdFormItemContext as FormItemCtx,
 	ValidateFieldCallback
-} from "./props"
-import FieldErrorList from "async-validator"
-import mitt from "mitt"
-import { useAttrs } from "../../hooks"
+} from './props';
+import FieldErrorList from 'async-validator';
+import mitt from 'mitt';
+import { useAttrs } from '../../hooks';
 
 interface Callback {
-	(isValid?: boolean, invalidFields?: FieldErrorList): void
+	(isValid?: boolean, invalidFields?: FieldErrorList): void;
 }
 export default defineComponent({
-	name: "wd-form",
+	name: 'wd-form',
 	inheritAttrs: false,
 	props: {
 		modelValue: {
@@ -42,7 +42,7 @@ export default defineComponent({
 		labelWidth: String,
 		labelPosition: {
 			type: String,
-			default: "left"
+			default: 'left'
 		}, // top、left
 		inline: Boolean,
 		inlineMessage: String,
@@ -64,80 +64,80 @@ export default defineComponent({
 			default: true
 		}
 	},
-	emits: ["validate"],
+	emits: ['validate'],
 	setup(props, { emit }) {
-		const formMitt = mitt()
-		const fields: FormItemCtx[] = []
+		const formMitt = mitt();
+		const fields: FormItemCtx[] = [];
 
-		const attrs = useAttrs()
+		const attrs = useAttrs();
 
 		// 监测rules的变化
 		watch(
 			() => props.rules,
 			() => {
 				fields.forEach((field) => {
-					field.removeValidateEvents()
-					field.addValidateEvents()
-				})
+					field.removeValidateEvents();
+					field.addValidateEvents();
+				});
 
 				if (props.validateOnRuleChange) {
-					validate(() => ({}))
+					validate(() => ({}));
 				}
 			}
-		)
+		);
 
 		formMitt.on<FormItemCtx>(wdFormEvents.addField, (field) => {
 			if (field) {
-				fields.push(field)
+				fields.push(field);
 			}
-		})
+		});
 
 		formMitt.on<FormItemCtx>(wdFormEvents.removeField, (field) => {
 			if (field.prop) {
-				fields.splice(fields.indexOf(field), 1)
+				fields.splice(fields.indexOf(field), 1);
 			}
-		})
+		});
 
 		// form的验证，比如点击提交按钮时验证
 		const validate = (callback: Callback) => {
-			console.log("form validate")
+			console.log('form validate');
 			if (!props.model) {
-				console.warn("[Warn][Form]model is required for validate to work!")
-				return
+				console.warn('[Warn][Form]model is required for validate to work!');
+				return;
 			}
 
-			let promise: Promise<boolean> | undefined
-			if (typeof callback !== "function") {
+			let promise: Promise<boolean> | undefined;
+			if (typeof callback !== 'function') {
 				promise = new Promise((resolve, reject) => {
 					callback = function (valid, invalidFields) {
 						if (valid) {
-							resolve(true)
+							resolve(true);
 						} else {
-							reject(invalidFields)
+							reject(invalidFields);
 						}
-					}
-				})
+					};
+				});
 			}
 
 			if (fields.length === 0) {
-				callback(true)
+				callback(true);
 			}
-			let valid = true
-			let count = 0
-			let invalidFields: any = {}
+			let valid = true;
+			let count = 0;
+			let invalidFields: any = {};
 			for (const field of fields) {
-				field.validate("", (message, field) => {
+				field.validate('', (message, field) => {
 					if (message) {
-						valid = false
+						valid = false;
 					}
-					invalidFields = { ...invalidFields, ...field }
+					invalidFields = { ...invalidFields, ...field };
 					if (++count === fields.length) {
-						callback(valid, invalidFields)
+						callback(valid, invalidFields);
 					}
-				})
+				});
 			}
-			return promise
-		}
+			return promise;
+		};
 
 		// const validateField = (props: string|string[], cb: ValidateFieldCallback) => {
 		//     props = [].concat(props)
@@ -152,14 +152,14 @@ export default defineComponent({
 		//     })
 		// }
 
-		provide(wdFormKey, reactive({ ...toRefs(props), formMitt, emit }))
+		provide(wdFormKey, reactive({ ...toRefs(props), formMitt, emit }));
 
 		return {
 			validate,
 			attrs
-		}
+		};
 	}
-})
+});
 </script>
 <style lang="less">
 @import url(./style/index);

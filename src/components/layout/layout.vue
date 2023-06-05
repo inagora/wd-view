@@ -5,10 +5,10 @@
 </template>
 
 <script lang="ts">
-import { defineComponent, ref } from "vue"
-import "./style/index"
+import { defineComponent, ref } from 'vue';
+import './style/index';
 export default defineComponent({
-	name: "wd-layout",
+	name: 'wd-layout',
 	props: {
 		hasSider: {
 			type: [Boolean, String]
@@ -22,7 +22,7 @@ export default defineComponent({
 		//     hasSider
 		// };
 	}
-})
+});
 </script>
 
 <style lang="less"></style>

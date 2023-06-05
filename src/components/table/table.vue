@@ -77,12 +77,12 @@
 </template>
 
 <script lang="ts">
-import { defineComponent, onMounted, reactive, ref, watchEffect } from 'vue'
-import TableHeader from './table-header.vue'
-import TableBody from './table-body.vue'
-import WdPagination from '../pagination/pagination.vue'
-import WdLoading from '../loading/loading.vue'
-import { StoreProps } from './table-type'
+import { defineComponent, onMounted, reactive, ref, watchEffect } from 'vue';
+import TableHeader from './table-header.vue';
+import TableBody from './table-body.vue';
+import WdPagination from '../pagination/pagination.vue';
+import WdLoading from '../loading/loading.vue';
+import { StoreProps } from './table-type';
 
 /**
  * 1、table基本功能：数据展示
@@ -107,7 +107,7 @@ export default defineComponent({
 		dataSource: {
 			type: Object,
 			default: () => {
-				return {}
+				return {};
 			}
 		},
 		columns: Array,
@@ -190,71 +190,71 @@ export default defineComponent({
 		'prev-click'
 	],
 	setup(props, { emit }) {
-		const store = {} as StoreProps
-		store.originColumns = reactive(props.columns)
-		store.dataSource = reactive(props.dataSource)
-		store.bordered = props.bordered
-		let dataSource: any = store.dataSource
-		let tableLayoutFixed = ref(true)
+		const store = {} as StoreProps;
+		store.originColumns = reactive(props.columns);
+		store.dataSource = reactive(props.dataSource);
+		store.bordered = props.bordered;
+		let dataSource: any = store.dataSource;
+		let tableLayoutFixed = ref(true);
 
-		let leftFixedColumns = ref([])
-		let rightFixedColumns = ref([])
-		let normalColumns = ref([])
-		let checkColumn = ref(null)
-		const wdTable = ref(null)
-		let isShowLeftShadow = ref(false)
-		let isShowRightShadow = ref(true)
+		let leftFixedColumns = ref([]);
+		let rightFixedColumns = ref([]);
+		let normalColumns = ref([]);
+		let checkColumn = ref(null);
+		const wdTable = ref(null);
+		let isShowLeftShadow = ref(false);
+		let isShowRightShadow = ref(true);
 
 		store.originColumns.forEach((column) => {
 			if (!column.width) {
-				column.width = 150
+				column.width = 150;
 			} else {
 				if (isNaN(Number(column.width))) {
 					if (column.width.indexOf('px') > -1) {
-						column.width = column.width.substr(0, column.width.indexOf('px'))
+						column.width = column.width.substr(0, column.width.indexOf('px'));
 					}
 				}
 			}
 			if (column.type === 'checkbox') {
-				checkColumn.value = column
-				column.fixed = 'left'
+				checkColumn.value = column;
+				column.fixed = 'left';
 			} else {
 				if (column.fixed === 'left') {
-					leftFixedColumns.value.push(column)
+					leftFixedColumns.value.push(column);
 				} else if (column.fixed === 'right') {
-					rightFixedColumns.value.push(column)
+					rightFixedColumns.value.push(column);
 				} else {
-					normalColumns.value.push(column)
+					normalColumns.value.push(column);
 				}
 			}
-		})
+		});
 		// 处理最后左边固定的最后一个和右边固定的最后一个
 		if (leftFixedColumns.value.length > 0) {
-			leftFixedColumns.value[leftFixedColumns.value.length - 1].leftLast = true
+			leftFixedColumns.value[leftFixedColumns.value.length - 1].leftLast = true;
 		}
 		if (rightFixedColumns.value.length > 0) {
-			rightFixedColumns.value[0].rightFirst = true
+			rightFixedColumns.value[0].rightFirst = true;
 		}
-		store.rightFixedColumns = rightFixedColumns.value
-		store.leftFixedColumns = leftFixedColumns.value
+		store.rightFixedColumns = rightFixedColumns.value;
+		store.leftFixedColumns = leftFixedColumns.value;
 		store.columns = []
 			.concat(leftFixedColumns.value)
 			.concat(normalColumns.value)
-			.concat(rightFixedColumns.value)
+			.concat(rightFixedColumns.value);
 		// 选择列放在第一列
 		if (checkColumn.value) {
-			store.columns.unshift(checkColumn.value)
+			store.columns.unshift(checkColumn.value);
 		}
 		// 页码变化
 		const pageChangeHandler = (page) => {
-			emit('current-change', page)
-		}
+			emit('current-change', page);
+		};
 		const nextClickChangeHandler = (page) => {
-			emit('next-click', page)
-		}
+			emit('next-click', page);
+		};
 		const prevClickChangeHandler = (page) => {
-			emit('prev-click', page)
-		}
+			emit('prev-click', page);
+		};
 		// select-change
 		const selectChangeHandler = () => {
 			emit(
@@ -262,52 +262,52 @@ export default defineComponent({
 				(store.dataSource as any)
 					.filter((item) => item.isSelected)
 					.map((item) => {
-						const selectedRow = { ...item }
-						delete selectedRow.isSelected
-						return selectedRow
+						const selectedRow = { ...item };
+						delete selectedRow.isSelected;
+						return selectedRow;
 					})
-			)
-		}
+			);
+		};
 		// 获取选中的项
 		const getSelectedRows = () => {
 			return (store.dataSource as any)
 				.filter((item) => item.isSelected)
 				.map((item) => {
-					const selectedRow = { ...item }
-					delete selectedRow.isSelected
-					return selectedRow
-				})
-		}
+					const selectedRow = { ...item };
+					delete selectedRow.isSelected;
+					return selectedRow;
+				});
+		};
 		// 行点击
 		const cellClickHandler = ({ row, rowIndex, dataIndex, value }) => {
-			emit('cell-click', { row, rowIndex, dataIndex, value })
-		}
+			emit('cell-click', { row, rowIndex, dataIndex, value });
+		};
 		const rowClickHandler = (row) => {
-			emit('row-click', row)
-		}
+			emit('row-click', row);
+		};
 		watchEffect(() => {
-			store.dataSource = reactive(props.dataSource)
-		})
+			store.dataSource = reactive(props.dataSource);
+		});
 		onMounted(() => {
 			const wdTableContent: any = props.fixedHeight
 				? document.querySelector('.wd-table-content')
-				: document.querySelector('.wd-table')
+				: document.querySelector('.wd-table');
 
 			wdTableContent.addEventListener('scroll', (e) => {
-				let scrollLeft = e.target.scrollLeft
+				let scrollLeft = e.target.scrollLeft;
 				if (scrollLeft === 0) {
 					// 滚动到最左边
-					isShowLeftShadow.value = false
+					isShowLeftShadow.value = false;
 				} else {
-					isShowLeftShadow.value = true
+					isShowLeftShadow.value = true;
 				}
 				if (scrollLeft + e.target.clientWidth === e.target.scrollWidth) {
-					isShowRightShadow.value = false
+					isShowRightShadow.value = false;
 				} else {
-					isShowRightShadow.value = true
+					isShowRightShadow.value = true;
 				}
-			})
-		})
+			});
+		});
 		return {
 			store,
 			tableLayoutFixed,
@@ -322,9 +322,9 @@ export default defineComponent({
 			wdTable,
 			isShowLeftShadow,
 			isShowRightShadow
-		}
+		};
 	}
-})
+});
 </script>
 <style lang="less">
 @import url(./style/index);

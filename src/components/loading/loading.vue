@@ -41,15 +41,15 @@
 </template>
 
 <script lang="ts">
-import { defineComponent, useSlots } from "vue"
+import { defineComponent, useSlots } from 'vue';
 
 interface WdLoadingProps {
-	loading: boolean
-	text: string
+	loading: boolean;
+	text: string;
 }
 
 export default defineComponent({
-	name: "wd-loading",
+	name: 'wd-loading',
 	props: {
 		loading: {
 			type: Boolean,
@@ -57,17 +57,17 @@ export default defineComponent({
 		},
 		text: {
 			type: String,
-			default: ""
+			default: ''
 		}
 	},
 	emits: [],
 	setup(props: WdLoadingProps, ctx) {
-		const slotDefault = !!useSlots().default
+		const slotDefault = !!useSlots().default;
 		return {
 			slotDefault
-		}
+		};
 	}
-})
+});
 </script>
 
 <style lang="less">

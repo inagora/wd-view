@@ -1,22 +1,22 @@
-import { getCurrentInstance, reactive, shallowRef, watchEffect } from "vue"
-import { entries } from "../../utils/util"
+import { getCurrentInstance, reactive, shallowRef, watchEffect } from 'vue';
+import { entries } from '../../utils/util';
 
 interface Params {
-	excludeListeners?: boolean
-	excludeKeys?: string[]
+	excludeListeners?: boolean;
+	excludeKeys?: string[];
 }
 
-const DEFAULT_EXCLUDE_KEYS = ["class", "style"]
-const LISTENER_PREFIX = /^on[A-Z]/
+const DEFAULT_EXCLUDE_KEYS = ['class', 'style'];
+const LISTENER_PREFIX = /^on[A-Z]/;
 
 export default (params: Params = {}) => {
-	const { excludeListeners = false, excludeKeys = [] } = params
-	const instance = getCurrentInstance()
-	const attrs = shallowRef({})
-	const allExcludeKeys = excludeKeys.concat(DEFAULT_EXCLUDE_KEYS)
+	const { excludeListeners = false, excludeKeys = [] } = params;
+	const instance = getCurrentInstance();
+	const attrs = shallowRef({});
+	const allExcludeKeys = excludeKeys.concat(DEFAULT_EXCLUDE_KEYS);
 
 	// Since attrs are not reactive, make it reactive instead of doing in `onUpdated` hook for better performance
-	instance.attrs = reactive(instance.attrs)
+	instance.attrs = reactive(instance.attrs);
 
 	watchEffect(() => {
 		const res = entries(instance.attrs).reduce((acm, [key, val]) => {
@@ -24,14 +24,14 @@ export default (params: Params = {}) => {
 				!allExcludeKeys.includes(key) &&
 				!(excludeListeners && LISTENER_PREFIX.test(key))
 			) {
-				acm[key] = val
+				acm[key] = val;
 			}
 
-			return acm
-		}, {})
+			return acm;
+		}, {});
 
-		attrs.value = res
-	})
+		attrs.value = res;
+	});
 
-	return attrs
-}
+	return attrs;
+};

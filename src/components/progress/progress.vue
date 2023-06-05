@@ -6,15 +6,15 @@
 </template>
 
 <script lang="ts">
-import WdLine from "./line/index.vue"
-import WdCircle from "./circle/index.vue"
+import WdLine from './line/index.vue';
+import WdCircle from './circle/index.vue';
 /**
  * type: line 直线；circle 圆形
  * progress: 当前进度
  * progressColor: 进度条颜色
  */
 export default {
-	name: "wd-progress",
+	name: 'wd-progress',
 	components: {
 		WdLine,
 		WdCircle
@@ -22,7 +22,7 @@ export default {
 	props: {
 		type: {
 			type: String,
-			default: "line"
+			default: 'line'
 		},
 		progress: {
 			type: Number,
@@ -30,11 +30,11 @@ export default {
 		},
 		progressColor: {
 			type: String,
-			default: "green"
+			default: 'green'
 		}
 	},
 	setup() {}
-}
+};
 </script>
 
 <style lang="less"></style>

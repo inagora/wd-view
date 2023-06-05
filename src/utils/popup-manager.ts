@@ -1,69 +1,69 @@
-import isServer from "./isServer"
-import { getConfig } from "./config"
-import { addClass, removeClass, on } from "./dom"
-import { EVENT_CODE } from "./aria"
+import isServer from './isServer';
+import { getConfig } from './config';
+import { addClass, removeClass, on } from './dom';
+import { EVENT_CODE } from './aria';
 
-import type { Ref } from "vue"
+import type { Ref } from 'vue';
 interface Instance {
-	closeOnClickModal: Ref<boolean>
-	closeOnPressEscape: Ref<boolean>
-	close: () => void
-	handleClose?: () => void
-	handleAction?: (action: string) => void
+	closeOnClickModal: Ref<boolean>;
+	closeOnPressEscape: Ref<boolean>;
+	close: () => void;
+	handleClose?: () => void;
+	handleAction?: (action: string) => void;
 }
 
-type StackFrame = { id: string; zIndex: number; modalClass: string }
+type StackFrame = { id: string; zIndex: number; modalClass: string };
 
 interface IPopupManager {
-	getInstance: (id: string) => Instance
-	zIndex: number
-	modalDom?: HTMLElement
-	modalFade: boolean
-	modalStack: StackFrame[]
-	nextZIndex: () => number
-	register: (id: string, instance: Instance) => void
-	deregister: (id: string) => void
-	doOnModalClick: () => void
+	getInstance: (id: string) => Instance;
+	zIndex: number;
+	modalDom?: HTMLElement;
+	modalFade: boolean;
+	modalStack: StackFrame[];
+	nextZIndex: () => number;
+	register: (id: string, instance: Instance) => void;
+	deregister: (id: string) => void;
+	doOnModalClick: () => void;
 	openModal: (
 		id: string,
 		zIndex: number,
 		dom: HTMLElement,
 		modalClass: string,
 		modalFade: boolean
-	) => void
-	closeModal: (id: string) => void
+	) => void;
+	closeModal: (id: string) => void;
 }
 
 const onTouchMove = (e: Event) => {
-	e.preventDefault()
-	e.stopPropagation()
-}
+	e.preventDefault();
+	e.stopPropagation();
+};
 
 const onModalClick = () => {
-	PopupManager?.doOnModalClick()
-}
+	PopupManager?.doOnModalClick();
+};
 
-let hasModal = false
-let zIndex: number
+let hasModal = false;
+let zIndex: number;
 
 const getModal = function (): HTMLElement {
-	if (isServer) return
-	let modalDom = PopupManager.modalDom
+	if (isServer) return;
+	let modalDom = PopupManager.modalDom;
 	if (modalDom) {
-		hasModal = true
+		hasModal = true;
 	} else {
-		hasModal = false
-		modalDom = document.createElement("div")
-		PopupManager.modalDom = modalDom
+		hasModal = false;
+		modalDom = document.createElement('div');
+		PopupManager.modalDom = modalDom;
 
-		on(modalDom, "touchmove", onTouchMove)
-		on(modalDom, "click", onModalClick)
+		on(modalDom, 'touchmove', onTouchMove);
+		on(modalDom, 'click', onModalClick);
 	}
 
-	return modalDom
-}
+	return modalDom;
+};
 
-const instances = {}
+const instances = {};
 
 const PopupManager: IPopupManager = {
 	modalFade: true,
@@ -71,102 +71,102 @@ const PopupManager: IPopupManager = {
 	zIndex,
 
 	getInstance: function (id) {
-		return instances[id]
+		return instances[id];
 	},
 
 	register: function (id, instance) {
 		if (id && instance) {
-			instances[id] = instance
+			instances[id] = instance;
 		}
 	},
 
 	deregister: function (id) {
 		if (id) {
-			instances[id] = null
-			delete instances[id]
+			instances[id] = null;
+			delete instances[id];
 		}
 	},
 
 	nextZIndex: function () {
-		return ++PopupManager.zIndex
+		return ++PopupManager.zIndex;
 	},
 
 	modalStack: [],
 
 	doOnModalClick: function () {
-		const topItem = PopupManager.modalStack[PopupManager.modalStack.length - 1]
-		if (!topItem) return
+		const topItem = PopupManager.modalStack[PopupManager.modalStack.length - 1];
+		if (!topItem) return;
 
-		const instance = PopupManager.getInstance(topItem.id)
+		const instance = PopupManager.getInstance(topItem.id);
 		if (instance && instance.closeOnClickModal.value) {
-			instance.close()
+			instance.close();
 		}
 	},
 
 	openModal: function (id, zIndex, dom, modalClass, modalFade) {
-		if (isServer) return
-		if (!id || zIndex === undefined) return
-		this.modalFade = modalFade
+		if (isServer) return;
+		if (!id || zIndex === undefined) return;
+		this.modalFade = modalFade;
 
-		const modalStack = this.modalStack
+		const modalStack = this.modalStack;
 
 		for (let i = 0, j = modalStack.length; i < j; i++) {
-			const item = modalStack[i]
+			const item = modalStack[i];
 			if (item.id === id) {
-				return
+				return;
 			}
 		}
 
-		const modalDom = getModal()
+		const modalDom = getModal();
 
-		addClass(modalDom, "v-modal")
+		addClass(modalDom, 'v-modal');
 		if (this.modalFade && !hasModal) {
-			addClass(modalDom, "v-modal-enter")
+			addClass(modalDom, 'v-modal-enter');
 		}
 		if (modalClass) {
-			const classArr = modalClass.trim().split(/\s+/)
-			classArr.forEach((item) => addClass(modalDom, item))
+			const classArr = modalClass.trim().split(/\s+/);
+			classArr.forEach((item) => addClass(modalDom, item));
 		}
 		setTimeout(() => {
-			removeClass(modalDom, "v-modal-enter")
-		}, 200)
+			removeClass(modalDom, 'v-modal-enter');
+		}, 200);
 
 		if (dom && dom.parentNode && dom.parentNode.nodeType !== 11) {
-			dom.parentNode.appendChild(modalDom)
+			dom.parentNode.appendChild(modalDom);
 		} else {
-			document.body.appendChild(modalDom)
+			document.body.appendChild(modalDom);
 		}
 
 		if (zIndex) {
-			modalDom.style.zIndex = String(zIndex)
+			modalDom.style.zIndex = String(zIndex);
 		}
-		modalDom.tabIndex = 0
-		modalDom.style.display = ""
+		modalDom.tabIndex = 0;
+		modalDom.style.display = '';
 
-		this.modalStack.push({ id: id, zIndex: zIndex, modalClass: modalClass })
+		this.modalStack.push({ id: id, zIndex: zIndex, modalClass: modalClass });
 	},
 
 	closeModal: function (id) {
-		const modalStack = this.modalStack
-		const modalDom = getModal()
+		const modalStack = this.modalStack;
+		const modalDom = getModal();
 
 		if (modalStack.length > 0) {
-			const topItem = modalStack[modalStack.length - 1]
+			const topItem = modalStack[modalStack.length - 1];
 			if (topItem.id === id) {
 				if (topItem.modalClass) {
-					const classArr = topItem.modalClass.trim().split(/\s+/)
-					classArr.forEach((item) => removeClass(modalDom, item))
+					const classArr = topItem.modalClass.trim().split(/\s+/);
+					classArr.forEach((item) => removeClass(modalDom, item));
 				}
 
-				modalStack.pop()
+				modalStack.pop();
 				if (modalStack.length > 0) {
-					modalDom.style.zIndex = modalStack[modalStack.length - 1].zIndex
+					modalDom.style.zIndex = modalStack[modalStack.length - 1].zIndex;
 				}
 			} else {
 				for (let i = modalStack.length - 1; i >= 0; i--) {
 					if (modalStack[i].id === id) {
-						modalStack.splice(i, 1)
-						break
+						modalStack.splice(i, 1);
+						break;
 					}
 				}
 			}
@@ -174,61 +174,62 @@ const PopupManager: IPopupManager = {
 
 		if (modalStack.length === 0) {
 			if (this.modalFade) {
-				addClass(modalDom, "v-modal-leave")
+				addClass(modalDom, 'v-modal-leave');
 			}
 			setTimeout(() => {
 				if (modalStack.length === 0) {
-					if (modalDom.parentNode) modalDom.parentNode.removeChild(modalDom)
-					modalDom.style.display = "none"
+					if (modalDom.parentNode) modalDom.parentNode.removeChild(modalDom);
+					modalDom.style.display = 'none';
 					// off(modalDom, 'touchmove', onTouchMove)
 					// off(modalDom, 'click', onModalClick)
-					PopupManager.modalDom = undefined
+					PopupManager.modalDom = undefined;
 				}
-				removeClass(modalDom, "v-modal-leave")
-			}, 200)
+				removeClass(modalDom, 'v-modal-leave');
+			}, 200);
 		}
 	}
-}
+};
 
-Object.defineProperty(PopupManager, "zIndex", {
+Object.defineProperty(PopupManager, 'zIndex', {
 	configurable: true,
 	get() {
 		if (zIndex === undefined) {
-			zIndex = (getConfig("zIndex") as number) || 2000
+			zIndex = (getConfig('zIndex') as number) || 2000;
 		}
-		return zIndex
+		return zIndex;
 	},
 	set(value) {
-		zIndex = value
+		zIndex = value;
 	}
-})
+});
 
 const getTopPopup = function () {
-	if (isServer) return
+	if (isServer) return;
 	if (PopupManager.modalStack.length > 0) {
-		const topPopup = PopupManager.modalStack[PopupManager.modalStack.length - 1]
-		if (!topPopup) return
-		const instance = PopupManager.getInstance(topPopup.id)
+		const topPopup =
+			PopupManager.modalStack[PopupManager.modalStack.length - 1];
+		if (!topPopup) return;
+		const instance = PopupManager.getInstance(topPopup.id);
 
-		return instance
+		return instance;
 	}
-}
+};
 
 if (!isServer) {
 	// handle `esc` key when the popup is shown
-	on(window, "keydown", function (event: KeyboardEvent) {
+	on(window, 'keydown', function (event: KeyboardEvent) {
 		if (event.code === EVENT_CODE.esc) {
-			const topPopup = getTopPopup()
+			const topPopup = getTopPopup();
 
 			if (topPopup && topPopup.closeOnPressEscape.value) {
 				topPopup.handleClose
 					? topPopup.handleClose()
 					: topPopup.handleAction
-					? topPopup.handleAction("cancel")
-					: topPopup.close()
+					? topPopup.handleAction('cancel')
+					: topPopup.close();
 			}
 		}
-	})
+	});
 }
 
-export default PopupManager
+export default PopupManager;

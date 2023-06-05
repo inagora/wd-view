@@ -5,11 +5,11 @@
 </template>
 
 <script lang="ts">
-import { defineComponent } from "vue"
+import { defineComponent } from 'vue';
 export default defineComponent({
-	name: "wd-popper",
+	name: 'wd-popper',
 	setup(props, context) {
-		return {}
+		return {};
 	}
-})
+});
 </script>

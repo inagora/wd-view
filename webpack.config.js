@@ -18,12 +18,12 @@ const babelConfig = {
 						'> 1%',
 						'ie >= 11',
 						'iOS >= 8',
-						'Android >= 4',
-					],
-				},
-			},
+						'Android >= 4'
+					]
+				}
+			}
 		],
-		'@babel/preset-typescript',
+		'@babel/preset-typescript'
 	],
 	plugins: [
 		// [
@@ -40,51 +40,51 @@ const babelConfig = {
 		'@babel/plugin-proposal-object-rest-spread',
 		'@babel/plugin-proposal-export-default-from',
 		'@babel/plugin-proposal-export-namespace-from',
-		'@babel/plugin-proposal-class-properties',
-	],
+		'@babel/plugin-proposal-class-properties'
+	]
 };
 
 module.exports = {
 	mode: 'development',
 	entry: {
-		app: './demo/main.ts',
+		app: './demo/main.ts'
 	},
 	module: {
 		rules: [
 			{
 				test: /\.(vue|md)$/,
 				loader: 'vue-loader',
-				exclude: /\.(en-US.md|zh-CN.md)$/,
+				exclude: /\.(en-US.md|zh-CN.md)$/
 			},
 			{
 				test: /\.(en-US.md|zh-CN.md)$/,
-				use: [{ loader: 'vue-loader' }, { loader: './loader.js' }],
+				use: [{ loader: 'vue-loader' }, { loader: './loader.js' }]
 			},
 			{
 				test: /\.tsx?$/,
 				use: [
 					{
 						loader: 'babel-loader',
-						options: babelConfig,
+						options: babelConfig
 					},
 					{
-						loader: 'ts-loader',
-					},
+						loader: 'ts-loader'
+					}
 				],
-				exclude: /node_modules/,
+				exclude: /node_modules/
 			},
 			{
 				test: /\.(js|jsx)$/,
 				loader: 'babel-loader',
 				exclude: /pickr.*js/,
-				options: babelConfig,
+				options: babelConfig
 			},
 			{
 				test: /\.(png|jpg|gif|svg)$/,
 				loader: 'file-loader',
 				options: {
-					name: '[name].[ext]?[hash]',
-				},
+					name: '[name].[ext]?[hash]'
+				}
 			},
 			{
 				test: /\.less$/,
@@ -105,8 +105,8 @@ module.exports = {
 					// },
 					MiniCssExtractPlugin.loader,
 					'css-loader',
-					'less-loader',
-				],
+					'less-loader'
+				]
 			},
 			{
 				test: /\.css$/,
@@ -114,13 +114,13 @@ module.exports = {
 					{
 						loader: MiniCssExtractPlugin.loader,
 						options: {
-							hmr: true,
-						},
+							hmr: true
+						}
 					},
-					'css-loader',
-				],
-			},
-		],
+					'css-loader'
+				]
+			}
+		]
 	},
 	// resolve: {
 	//   alias: {
@@ -132,27 +132,27 @@ module.exports = {
 	// },
 	optimization: {
 		minimizer: [new CssMinimizerPlugin()],
-		minimize: true,
+		minimize: true
 	},
 	devServer: {
 		historyApiFallback: {
-			rewrites: [{ from: /./, to: '/index.html' }],
+			rewrites: [{ from: /./, to: '/index.html' }]
 		},
 		disableHostCheck: true,
 		hot: true,
-		open: true,
+		open: true
 	},
 	devtool: 'cheap-module-eval-source-map',
 	plugins: [
 		new MiniCssExtractPlugin({
-			filename: '[name].css',
+			filename: '[name].css'
 		}),
 		new HtmlWebpackPlugin({
 			template: 'examples/index.html',
 			filename: 'index.html',
-			inject: true,
+			inject: true
 		}),
 		new VueLoaderPlugin(),
-		new WebpackBar(),
-	],
+		new WebpackBar()
+	]
 };

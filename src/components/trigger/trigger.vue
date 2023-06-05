@@ -5,16 +5,16 @@
 </template>
 
 <script lang="ts">
-import { defineComponent } from "vue"
+import { defineComponent } from 'vue';
 export default defineComponent({
-	name: "wd-trigger",
+	name: 'wd-trigger',
 	props: {},
 	components: {},
-	emits: ["click"],
+	emits: ['click'],
 	setup(props, context) {
-		return {}
+		return {};
 	}
-})
+});
 </script>
 
 <style lang="less">

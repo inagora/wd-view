@@ -1,8 +1,8 @@
 <script setup>
-import { ref } from "vue"
-import ADatePicker from "ant-design-vue/lib/date-picker"
-import { RangePicker } from "ant-design-vue/lib/date-picker/dayjs"
-import "ant-design-vue/lib/date-picker/style/index.css"
+import { ref } from 'vue';
+import ADatePicker from 'ant-design-vue/lib/date-picker';
+import { RangePicker } from 'ant-design-vue/lib/date-picker/dayjs';
+import 'ant-design-vue/lib/date-picker/style/index.css';
 import {
 	WdForm,
 	WdFormItem,
@@ -15,13 +15,14 @@ import {
 	WdSwitch,
 	WdButton,
 	WdInputNumber
-} from "../../../index"
+} from '../../../index';
+/* eslint-disable-next-line no-undef */
 const props = defineProps({
 	filters: Array,
 	modelValue: Object
-})
-const filters = ref(props.filters)
-const formData = ref(props.modelValue)
+});
+const filters = ref(props.filters);
+const formData = ref(props.modelValue);
 const filterMap = {
 	text: WdInput,
 	datetime: WdDatePicker,
@@ -33,10 +34,10 @@ const filterMap = {
 	checkbox: WdCheckbox,
 	switch: WdSwitch,
 	radio: WdRadio
-}
+};
 const changeHandler = (val, fn) => {
-	fn && fn(val)
-}
+	fn && fn(val);
+};
 </script>
 
 <template>

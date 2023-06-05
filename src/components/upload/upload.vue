@@ -85,8 +85,8 @@
 </template>
 
 <script lang="ts">
-import { defineComponent, ref, watch } from 'vue'
-import upload from './request.js'
+import { defineComponent, ref, watch } from 'vue';
+import upload from './request.js';
 export default defineComponent({
 	name: 'wd-upload',
 	props: {
@@ -147,23 +147,23 @@ export default defineComponent({
 	emits: ['change'],
 	// 清除之后需要抛出事件
 	setup(props, { emit }) {
-		const uploadInput = ref(null)
-		const fileList = ref([])
-		let currentFiles = []
-		let uploadTasks = []
+		const uploadInput = ref(null);
+		const fileList = ref([]);
+		let currentFiles = [];
+		let uploadTasks = [];
 		// 请求参数
 		// 上传回调
 		const onSuccess = (response, file, xhr) => {
-			props.onSuccess && props.onSuccess(response, file, xhr)
-		}
+			props.onSuccess && props.onSuccess(response, file, xhr);
+		};
 		const onError = (response, file, xhr) => {
-			props.onError && props.onError(response)
-		}
+			props.onError && props.onError(response);
+		};
 		const doSelectFileHandler = () => {
 			// disabled不可选择文件
-			if (props.disabled) return
-			uploadInput.value.click()
-		}
+			if (props.disabled) return;
+			uploadInput.value.click();
+		};
 		const changeHandler = (e) => {
 			currentFiles = Array.from(e.target.files).map((rawFile: File) => {
 				return {
@@ -173,40 +173,40 @@ export default defineComponent({
 					size: rawFile.size,
 					raw: rawFile,
 					fid: genFid()
-				}
-			})
-			fileList.value = fileList.value.concat(currentFiles)
+				};
+			});
+			fileList.value = fileList.value.concat(currentFiles);
 			if (!props.autoUpload) {
-				emitChange()
-				return
+				emitChange();
+				return;
 			}
 			if (!props.beforeUpload) {
 				// do upload
-				doUpload()
+				doUpload();
 			} else {
-				let result = props.beforeUpload()
+				let result = props.beforeUpload();
 				if (result === false) {
-					emitChange()
-					return
+					emitChange();
+					return;
 				} else if (result && result.then) {
 					result.then((res) => {
 						if (res === true) {
-							doUpload()
+							doUpload();
 						} else {
-							emitChange()
+							emitChange();
 						}
-					})
+					});
 				} else {
 					// do upload
-					doUpload()
+					doUpload();
 				}
 			}
-			e.target.value = ''
-		}
+			e.target.value = '';
+		};
 
 		const doUpload = () => {
 			for (let i = 0; i < currentFiles.length; i++) {
-				const file = currentFiles[i]
+				const file = currentFiles[i];
 				const options = {
 					data: props.data,
 					headers: props.headers,
@@ -217,45 +217,45 @@ export default defineComponent({
 					filename: props.name,
 					file: file.raw,
 					onSuccess: (res, xhr) => {
-						getFile(file.fid).status = 'done'
-						onSuccess(res, file, xhr)
+						getFile(file.fid).status = 'done';
+						onSuccess(res, file, xhr);
 					},
 					onError: (err, xhr) => {
-						getFile(file.fid).status = 'error'
-						onError(err, file, xhr)
+						getFile(file.fid).status = 'error';
+						onError(err, file, xhr);
 					}
-				}
+				};
 				Promise.resolve(upload(options)).then((res) => {
-					console.log(res)
-				})
+					console.log(res);
+				});
 			}
-		}
+		};
 
 		const emitChange = () => {
-			emit('change', { file: currentFiles, fileList: fileList.value })
-		}
+			emit('change', { file: currentFiles, fileList: fileList.value });
+		};
 		const delFileItem = (index) => {
-			fileList.value.splice(index, 1)
-		}
+			fileList.value.splice(index, 1);
+		};
 		// 生成fid
 		const genFid = () => {
-			return new Date().getTime()
-		}
+			return new Date().getTime();
+		};
 		// 根据fid获取文件
 		const getFile = (fid) => {
-			return fileList.value.find((file) => (file.fid = fid))
-		}
+			return fileList.value.find((file) => (file.fid = fid));
+		};
 		watch(
 			() => props.fileList,
 			() => {
-				console.log(props.fileList)
+				console.log(props.fileList);
 				changeHandler({
 					target: {
 						files: props.fileList
 					}
-				})
+				});
 			}
-		)
+		);
 		return {
 			uploadInput,
 			// eslint-disable-next-line vue/no-dupe-keys
@@ -263,9 +263,9 @@ export default defineComponent({
 			doSelectFileHandler,
 			changeHandler,
 			delFileItem
-		}
+		};
 	}
-})
+});
 </script>
 <style lang="less">
 @import url(./style/index);
