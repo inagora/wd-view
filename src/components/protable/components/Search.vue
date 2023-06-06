@@ -100,6 +100,7 @@ const getSearchParams = () => {
 };
 const setSearchParams = (data) => {
 	formData.value = Object.assign({}, formData.value, data);
+	emitter.emit('wv:setsearch', formData.value);
 };
 // 暴露事件
 defineExpose({

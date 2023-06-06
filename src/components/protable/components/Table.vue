@@ -111,6 +111,11 @@ emitter.on('wv:search', (params) => {
 	page = 1;
 	load();
 });
+// 通过setSearchParams设置参数
+emitter.on('wv:setsearch', (params) => {
+	searchParams = params;
+	page = 1;
+});
 const opType = ref('add');
 // 新增一项
 const formData = ref({});
@@ -306,10 +311,10 @@ const load = (currentPage) => {
 					emitter.emit('dataLoad', res);
 				}
 				resolve(res.list);
-			} catch(err) {
+			} catch (err) {
 				reject(err);
 			}
-		})
+		});
 	} else {
 		return new Promise((resolve, reject) => {
 			ajax
