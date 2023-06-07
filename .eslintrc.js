@@ -1,10 +1,11 @@
 module.exports = {
 	env: {
-		// 环境
+		// 环境: 全局对象
 		browser: true,
 		es2021: true,
 		node: true
 	},
+	// extends = plugins + rules
 	extends: [
 		//继承了哪些规则，别人写好的，直接用
 		'eslint:recommended',
@@ -14,22 +15,27 @@ module.exports = {
 		'plugin:prettier/recommended'
 	],
 	overrides: [],
-	// 可以解析.vue文件
+	// 可以解析.vue文件 解析器
 	parser: 'vue-eslint-parser', // esprima babel-eslint
 	// "parser": "@typescript-eslint/parser", ts
+	// 描述语法
 	parserOptions: {
 		parser: '@typescript-eslint/parser', // 解析ts文件
-		ecmaVersion: 'latest',
-		sourceType: 'module'
+		ecmaVersion: 'latest', // es6
+		sourceType: 'module' // import
+		// ecmaFeatures: {
+		// 	jsx: true
+		// }
 	},
 	plugins: ['vue', '@typescript-eslint'],
 	// 自定义规则
 	rules: {
-		//Prettier 和 ESLint 同时作用 ,防止冲突
+		// 0 off 2 warn error
+		//Prettier 和 ESLint 同时作用 ,防止冲突 ,覆盖
 		'prettier/prettier': [
 			'error',
 			{
-				singleQuote: true, //使用单号
+				// singleQuote: true, //使用单号
 				semi: true, //末尾添加分号
 				tabwidth: 2,
 				trailingComma: 'none',
@@ -46,4 +52,8 @@ module.exports = {
 		'no-prototype-builtins': 'off',
 		'vue/no-setup-props-destructure': 'off' // 解构props
 	}
+	// globals: {
+	// 	custom: 'readonly'
+	// 	custom: 'writeable'
+	// }
 };
