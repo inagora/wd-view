@@ -2,7 +2,7 @@
 
 ### 更新日志
 
-当前最新正式版本：[v1.2.19](https://github.com/inagora/wd-view/releases/tag/v1.2.19)
+当前最新正式版本：[v1.2.25](https://github.com/inagora/wd-view/releases/tag/v1.2.25)
 
 ### 浏览器
 
