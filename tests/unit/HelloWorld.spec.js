@@ -1,6 +1,5 @@
-import { shallowMount, describe, it, expect } from '@vue/test-utils';
+import { shallowMount } from '@vue/test-utils';
 import HelloWorld from '@/components/HelloWorld.vue';
-// import HelloWorld from './src/components/HelloWorld.vue';
 
 describe('Hello World View', () => {
 	it('renders message', () => {
