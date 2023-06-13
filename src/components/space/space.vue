@@ -23,7 +23,10 @@ import {
 	VNode,
 } from 'vue';
 // import {  isArray, isString } from '../../utils/util.ts'; // ts 引入
-import { isFragment, isValidElementNode } from '../../utils/vnode';
+// import { isFragment, isValidElementNode } from '../../utils/vnode.ts'; // ts
+const isFragment = (node) => (node as VNode).type === Fragment;
+const isComment = (node) => (node as VNode).type === Comment;
+const isValidElementNode = (node) => !(isFragment(node) || isComment(node));
 const isArray = (val: any) => Array.isArray(val);
 const isString = (val: any) => typeof val === 'string';
 const isNumber = (val: any) => typeof val === 'number';
