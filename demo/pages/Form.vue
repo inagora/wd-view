@@ -3,8 +3,10 @@
 		ref="userInfoForm"
 		label-width="100px"
 		label-align="right"
-		action="/login"
-		method="post"
+		size="small"
+		action=""
+		method="get"
+		@submit.prevent="doSubmit"
 		:model="userInfo"
 		:validate-on-rule-change="true"
 		:rules="formRules"
@@ -13,8 +15,13 @@
 		:show-label="false"
 		inline
 	>
-		<wd-form-item label="姓名" prop="name" :show-label="true">
+		<wd-form-item label="姓名" prop="name" name="itemname" :show-label="true">
 			<wd-input type="text" placeholder="请输入姓名"></wd-input>
+			<wd-input
+				v-model="userInfo.name"
+				type="text"
+				placeholder="请输入姓名"
+			></wd-input>
 		</wd-form-item>
 		<wd-form-item label="毕业日期" prop="date">
 			<wd-date-picker
@@ -30,12 +37,10 @@
 			></wd-date-picker>
 		</wd-form-item>
 		<wd-form-item label="性别" prop="gender">
-			<wd-radio :checked="isMale" name="color" @change="handleRadioChange">
-				男
-			</wd-radio>
-			<wd-radio :checked="isFemale" name="color" @change="handleRadioChange">
-				女
-			</wd-radio>
+			<wd-radio-group v-model="userInfo.gender">
+				<wd-radio name="gender" value="male"> 男 </wd-radio>
+				<wd-radio name="gender" value="female"> 女 </wd-radio>
+			</wd-radio-group>
 		</wd-form-item>
 		<wd-form-item label="婚姻状况" prop="isMerried">
 			<wd-checkbox :checked="userInfo.isMerried" @change="handleCheckboxChange">
@@ -49,13 +54,12 @@
 				v-model="userInfo.age"
 				@input="handleInputNumber"
 				@change="handleChangeNumber"
-				type="text"
 			></wd-input-number>
 		</wd-form-item>
 		<wd-form-item label="学历" prop="degree">
 			<wd-select
-				@change="selectedChangeHandler"
-				:disabled="disabled"
+				v-model="userInfo.degree"
+				:options="options"
 				placeholder="请选择学历"
 			>
 				<wd-option label="研究生" value="baidu"></wd-option>
@@ -91,6 +95,7 @@ export default defineComponent({
 			isMerried: '',
 			date: datepickerValue.value,
 			degree: 'bing',
+			gender: 'male',
 		});
 		const disabled = ref(false);
 		setTimeout(() => {
@@ -98,11 +103,11 @@ export default defineComponent({
 		}, 1000);
 		let userInfoForm = <any>ref();
 		const checkAge = (rule, value) => {
-			if (value < 18) {
-				return Promise.reject('未成年');
-			} else {
-				return Promise.resolve('成年');
-			}
+			// if (value < 18) {
+			// 	return Promise.reject('未成年');
+			// } else {
+			// 	return Promise.resolve('成年');
+			// }
 		};
 		const checkDate = (rule, value) => {
 			if (value > dayjs(new Date()).format('YYYY-MM-DD HH-mm-ss')) {
@@ -135,11 +140,25 @@ export default defineComponent({
 		};
 
 		const regHandler = () => {
+			console.log(userInfo);
 			userInfoForm.value.validate((isValid) => {
 				if (isValid) alert('提交成功');
 			});
 		};
+		const doSubmit = (e) => {
+			console.log(e);
+		};
 
+		const options = [
+			{
+				label: '选项1',
+				value: 'option1',
+			},
+			{
+				label: '选项2',
+				value: 'option2',
+			},
+		];
 		onMounted(() => {});
 		return {
 			datepickerValue,
@@ -148,6 +167,8 @@ export default defineComponent({
 			userInfoForm,
 			regHandler,
 			disabled,
+			doSubmit,
+			options,
 		};
 	},
 });

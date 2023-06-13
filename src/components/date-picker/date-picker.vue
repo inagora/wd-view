@@ -7,6 +7,7 @@
 		:format="format"
 		:value-format="valueFormat"
 		:size="inputSize"
+		:name="formItemName"
 		:separator="separator"
 		:default-value="_defaultValue"
 		:locale="dateLocale"
@@ -33,6 +34,7 @@ import locale from 'ant-design-vue/lib/date-picker/locale/zh_CN';
 import { loadJs, loadCss } from '../../utils/util';
 interface WdPickerProps {
 	type: string;
+	name: string;
 	clearable: boolean;
 	disabled: boolean;
 	defaultValue: any; // 日期类型或者string类型
@@ -69,12 +71,18 @@ export default defineComponent({
 		placeholder: Object,
 		separator: String,
 		valueFormat: String,
+		showTime: {
+			type: Boolean,
+			default: false,
+		},
+		name: String,
 	},
 	emits: ['update:modelValue', 'change'],
 	setup(props: WdPickerProps, { emit }) {
 		const dateLocale = ref(locale);
 		const wdForm = inject(wdFormKey, {} as WdFormProps);
 		const wdFormItem = inject(wdFormItemKey, {} as WdFormItemContext);
+		const formItemName = props.name || wdFormItem.name;
 		let pickerType = ref('date');
 		pickerType = pickerTypes[props.type];
 		const change = (val) => {
@@ -108,6 +116,7 @@ export default defineComponent({
 			pickDisabled,
 			dateLocale,
 			onMounted,
+			formItemName,
 		};
 	},
 });

@@ -4,7 +4,7 @@
 			:class="['wd-form', inline ? 'wd-form-inline' : 'wd-form-horizontal']"
 			v-bind="attrs"
 		>
-			<slot></slot>
+			<slot v-bind="model"></slot>
 		</form>
 	</div>
 </template>

@@ -33,7 +33,7 @@ const filterMap = {
 	radio: WdRadio,
 };
 const formData = ref({});
-const searchFilters = ref([]);
+const searchFilters = ref(config.filters);
 // format filter
 const formatFilter = (valueEnum) => {
 	return Object.keys(valueEnum).map((key) => {
@@ -43,52 +43,25 @@ const formatFilter = (valueEnum) => {
 		};
 	});
 };
-config.columns.forEach((column) => {
-	if (
-		!column.hideInSearch &&
-		column.dataIndex &&
-		column.dataIndex !== 'action'
-	) {
-		const filter = {
-			type: column.valueType || 'text',
-			placeholder: column.placeholder,
-			label: column.title,
-			prop: column.dataIndex,
-			dateOptions: column.dateOptions || {},
-			list: [],
-			value: column.defaultValue,
-			change: column.change || null,
-		};
-		if (column.valueType === 'select' || column.valueType === 'multiple') {
-			if (column.valueEnum) {
-				if (isFuction(column.valueEnum)) {
-					const valueEnum = column.valueEnum();
-					if (isObject(valueEnum)) {
-						filter.list = formatFilter(valueEnum);
-					}
-				} else {
-					if (isObject(column.valueEnum)) {
-						filter.list = formatFilter(column.valueEnum);
-					}
-				}
-			}
-		}
-		searchFilters.value.push(filter);
-	}
-});
 searchFilters.value.forEach((filter) => {
 	if (filter.type === 'checkbox') {
 		formData.value[filter.prop] = filter.value || false;
 	} else {
 		formData.value[filter.prop] = filter.value || '';
 	}
-});
-const searchHandler = () => {
-	emitter.emit('wv:search', formData.value);
-};
-onMounted(() => {
-	if (config.autoRequest) {
-		searchHandler();
+	if (filter.type === 'select' || filter.type === 'multiple') {
+		if (filter.valueEnum) {
+			if (isFuction(filter.valueEnum)) {
+				const valueEnum = filter.valueEnum();
+				if (isObject(valueEnum)) {
+					filter.list = formatFilter(valueEnum);
+				}
+			} else {
+				if (isObject(filter.valueEnum)) {
+					filter.list = formatFilter(filter.valueEnum);
+				}
+			}
+		}
 	}
 });
 const changeHandler = (val, fn) => {
@@ -100,20 +73,16 @@ const getSearchParams = () => {
 };
 const setSearchParams = (data) => {
 	formData.value = Object.assign({}, formData.value, data);
-	emitter.emit('wv:setsearch', formData.value);
 };
 // 暴露事件
 defineExpose({
 	getSearchParams,
 	setSearchParams,
 });
-// formConf
-// 自定义搜索
-// 自定义其他按钮
 </script>
 
 <template>
-	<div class="wv-search" v-if="searchFilters.length > 0">
+	<div class="pro-form" v-if="searchFilters.length > 0">
 		<wd-form
 			ref="searchForm"
 			label-align="right"
@@ -170,37 +139,11 @@ defineExpose({
 				>
 				</component>
 			</wd-form-item>
-			<wd-form-item label="">
-				<div class="wv-search-btns">
-					<wd-button type="primary" size="small" @click="searchHandler"
-						>搜索</wd-button
-					>
-					<wd-button v-if="config.resetable" size="small">重置</wd-button>
-					<div
-						v-if="config.searchAreaBtns && config.searchAreaBtns.length > 0"
-						class="wv-toolbar-separator"
-					>
-						&nbsp;
-					</div>
-					<template v-if="config.searchAreaBtns">
-						<wd-button
-							v-for="(button, index) in config.searchAreaBtns"
-							:key="index"
-							@click="button.click"
-							:type="button.type"
-							:icon="button.icon"
-							:loading="button.loading"
-							:size="button.size"
-							>{{ button.text }}</wd-button
-						>
-					</template>
-				</div>
-			</wd-form-item>
 		</wd-form>
 	</div>
 </template>
 <style>
-.wv-search {
+.pro-form {
 	border-bottom: 1px solid #d0d0d0;
 	padding: 10px 0 10px 10px;
 }

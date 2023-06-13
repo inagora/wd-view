@@ -23,9 +23,10 @@ export default {
 			// 	title: 'model',
 			// 	content: '这里是内容',
 			// });
+			const contentEl = '<div>自定义内容</div>';
 			const wm = WdModal.success({
 				title: 'model',
-				content: '这里是内容',
+				content: contentEl,
 				confirmButtonText: 'OK',
 				cancelButtonText: 'Cancel',
 				isShowCancelButton: true,

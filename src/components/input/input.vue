@@ -32,6 +32,7 @@
 				:class="['wd-input', 'wd-input-' + inputSize]"
 				v-bind="attrs"
 				:type="type"
+				:name="formItemName"
 				ref="input"
 				:disabled="inputDisabled"
 				:readonly="readonly"
@@ -118,6 +119,7 @@ import {
 interface WdInputProps {
 	type: string;
 	size: string;
+	name: string;
 	showWordLimit: boolean;
 	clearable: boolean;
 	showPassword: boolean;
@@ -143,6 +145,10 @@ export default defineComponent({
 	// },
 	props: {
 		modelValue: {
+			type: String,
+			default: '',
+		},
+		name: {
 			type: String,
 			default: '',
 		},
@@ -192,6 +198,7 @@ export default defineComponent({
 		});
 		const wdForm = inject(wdFormKey, {} as WdFormProps);
 		const wdFormItem = inject(wdFormItemKey, {} as WdFormItemContext);
+		const formItemName = props.name || wdFormItem.name;
 		let inputSize =
 			sizeMap[props.size] || sizeMap[wdFormItem.size] || sizeMap[wdForm.size];
 		let inputDisabled = ref(false);
@@ -305,6 +312,7 @@ export default defineComponent({
 			inputDisabled,
 			handleBlur,
 			attrs,
+			formItemName,
 		};
 	},
 });

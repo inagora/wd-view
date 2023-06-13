@@ -1,4 +1,4 @@
-import { createVNode, render } from "vue";
+import { createVNode, render, h} from "vue";
 import WdDialog from "../dialog";
 import WdButton from '../button/index';
 const Modal = (options) => {
@@ -63,7 +63,7 @@ const Modal = (options) => {
   const container = document.createElement('div');
   const vm = createVNode(WdDialog, options, {
     footer: footerSlots,
-    default: options.content
+    default: typeof options.content === 'string' ? h('div', {innerHTML: options.content}) : options.content
   });
   render(vm, container);
   document.body.appendChild(container.firstElementChild);
