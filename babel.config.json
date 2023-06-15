@@ -1,3 +1,4 @@
 {
-	"plugins": ["@vue/babel-plugin-jsx"]
+	"plugins": ["@vue/babel-plugin-jsx"],
+	"presets": ["@vue/cli-plugin-babel/preset"]
 }
