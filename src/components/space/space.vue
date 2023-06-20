@@ -27,6 +27,7 @@ import { isFragment, isValidElementNode } from '../../utils/vnode';
 const isArray = (val: any) => Array.isArray(val);
 const isString = (val: any) => typeof val === 'string';
 const isNumber = (val: any) => typeof val === 'number';
+
 export default defineComponent({
 	name: 'wd-space',
 	props: {
@@ -78,9 +79,9 @@ export default defineComponent({
 			const { size = '' } = props;
 
 			if (Array.isArray(size)) {
-				const [h = 0, v = 0] = <[number, number]>size;
-				horizontalSize.value = h;
-				verticalSize.value = v;
+				// const [h = 0, v = 0] = <[number, number]>size;
+				horizontalSize.value = 12;
+				verticalSize.value = 2;
 			} else {
 				let val: number;
 				if (isNumber(size)) {
