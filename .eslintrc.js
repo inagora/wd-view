@@ -16,12 +16,6 @@ module.exports = {
 		sourceType: 'module',
 	},
 	plugins: ['@typescript-eslint'],
-	rules: {
-		'vue/html-self-closing': 'off',
-		'vue/max-attributes-per-line': 'off',
-		'vue/singleline-html-element-content-newline': 'off',
-		'vue/multi-word-component-names': 'off',
-		'@typescript-eslint/no-angle-bracket-type-assertion': 'off',
-	},
+	rules: {},
 	globals: { defineProps: 'readonly' },
 };
