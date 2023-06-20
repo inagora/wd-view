@@ -27,7 +27,9 @@ import { isFragment, isValidElementNode } from '../../utils/vnode';
 const isArray = (val: any) => Array.isArray(val);
 const isString = (val: any) => typeof val === 'string';
 const isNumber = (val: any) => typeof val === 'number';
-
+if (true) {
+	console.log('1');
+}
 export default defineComponent({
 	name: 'wd-space',
 	props: {

@@ -184,8 +184,7 @@
 	},
 	"lint-staged": {
 		"src/**/*.{ts,vue}": [
-			"prettier --write",
-			"eslint --fix"
+			"prettier --write"
 		]
 	},
 	"prettier": {
