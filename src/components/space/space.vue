@@ -10,16 +10,11 @@ import {
 	defineComponent,
 	h,
 	isVNode,
-	Comment,
 	renderSlot,
-	Fragment,
 	ref,
 	computed,
 	watchEffect,
 	createTextVNode,
-	CSSProperties,
-	StyleValue,
-	Ref,
 	VNode,
 } from 'vue';
 // import {  isArray, isString } from '../../utils/util.ts'; // ts 引入
@@ -27,20 +22,22 @@ import { isFragment, isValidElementNode } from '../../utils/vnode';
 const isArray = (val: any) => Array.isArray(val);
 const isString = (val: any) => typeof val === 'string';
 const isNumber = (val: any) => typeof val === 'number';
-if (true) {
-	console.log('1');
-}
+// if (true) {
+// 	console.log('112');
+// }
 export default defineComponent({
-	name: 'wd-space',
+	name: 'WdSpace',
 	props: {
+		style: {
+			type: Object,
+			// default: {},
+			default: function () {
+				return {};
+			},
+		},
 		direction: {
 			type: String,
 			default: '', // 水平 竖直
-		},
-
-		style: {
-			type: Object,
-			default: {},
 		},
 
 		align: {
@@ -81,13 +78,13 @@ export default defineComponent({
 			const { size = '' } = props;
 
 			if (Array.isArray(size)) {
-				// const [h = 0, v = 0] = <[number, number]>size;
-				horizontalSize.value = 12;
-				verticalSize.value = 2;
+				const [h = 0, v = 0] = size as [number, number];
+				horizontalSize.value = h;
+				verticalSize.value = v;
 			} else {
 				let val: number;
 				if (isNumber(size)) {
-					val = <number>size;
+					val = size as number;
 				} else {
 					val = SIZE_MAP[size || 'small'] || SIZE_MAP.small;
 				}
@@ -153,7 +150,7 @@ export default defineComponent({
 			if (isArray(children.children)) {
 				let newNodes = updateChildSlots(children.children);
 				if (spacer) {
-					let len = newNodes.length - 1;
+					const len = newNodes.length - 1;
 					// 给每一项 添加一个spacer
 					newNodes = newNodes.reduce<VNode[]>((acc, child, idx) => {
 						const children = [...acc, child];
