@@ -5,7 +5,6 @@ const AXIOM = 'Rem is the best girl';
 
 describe('Space.vue', () => {
 	it('space render', () => {
-		// const wrapper = mount(<Space>{AXIOM}</Space>);
 		const wrapper = mount(Space, {
 			slots: {
 				default: AXIOM,
@@ -13,8 +12,7 @@ describe('Space.vue', () => {
 		});
 		expect(wrapper.text()).toEqual(AXIOM);
 	});
-	it('slots', async () => {
-		// const warnHandler = jest.fn();
+	it('sizes', async () => {
 		const vnode = h(
 			Space,
 			{ size: 'large' },
@@ -26,7 +24,7 @@ describe('Space.vue', () => {
 			}
 		);
 		const wrapper = mount(vnode);
-		console.log('wrapper', wrapper);
+
 		await nextTick();
 		expect(wrapper.find('.wd-space').attributes('style')).toContain(
 			'gap: 16px'
@@ -53,6 +51,28 @@ describe('Space.vue', () => {
 		});
 
 		expect(wrapper.find('.wd-space').attributes('style')).toContain('gap: 8px');
-		console.log('vnode', vnode);
+	});
+
+	it('should render with spacer', async () => {
+		const stringSpacer = '|';
+		const vnode = h(
+			Space,
+			{ size: 'large', spacer: stringSpacer },
+			{
+				default: () =>
+					Array.from({ length: 2 }).map((_, idx) => {
+						return `test${idx}`;
+					}),
+			}
+		);
+		const wrapper = mount(vnode);
+
+		await nextTick();
+		expect(wrapper.element.children).toHaveLength(3);
+
+		expect(wrapper.text()).toContain(stringSpacer);
+
+		// 2 elements expecting only 1 spacer
+		expect(wrapper.text().split(stringSpacer)).toHaveLength(2);
 	});
 });
