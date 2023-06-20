@@ -10,7 +10,7 @@
 		"test:co": "vue-cli-service test:unit --coverage",
 		"docs:dev": "vuepress dev docs",
 		"docs:build": "vuepress build docs",
-		"lint": "eslint --fix --ext .ts,.tsx,.vue src --quiet",
+		"lint": "lint-staged --allow-empty",
 		"prepare": "husky install"
 	},
 	"keywords": [
@@ -32,12 +32,14 @@
 		"@commitlint/cli": "^17.6.5",
 		"@commitlint/config-conventional": "^17.6.5",
 		"@types/jest": "^27.0.1",
+		"@typescript-eslint/eslint-plugin": "^5.60.0",
 		"@vue/babel-plugin-jsx": "^1.1.1",
 		"@vue/cli-plugin-babel": "~5.0.0",
 		"@vue/cli-plugin-typescript": "~5.0.0",
 		"@vue/cli-plugin-unit-jest": "~5.0.0",
 		"@vue/cli-service": "~5.0.0",
 		"@vue/compiler-sfc": "^3.0.5",
+		"@vue/eslint-config-typescript": "^11.0.3",
 		"@vue/test-utils": "^2.0.0-0",
 		"@vue/vue3-jest": "^27.0.0-alpha.1",
 		"babel-jest": "^27.0.6",
@@ -181,9 +183,9 @@
 		"preset": "@vue/cli-plugin-unit-jest/presets/typescript-and-babel"
 	},
 	"lint-staged": {
-		"**/*.{vue,js,jsx,tsx,ts}": [
-			"npm run lint",
-			"git add ."
+		"src/**/*.{ts,vue}": [
+			"prettier --write",
+			"eslint --fix"
 		]
 	},
 	"prettier": {
