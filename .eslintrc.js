@@ -12,7 +12,7 @@ module.exports = {
 	],
 	parserOptions: {
 		ecmaversion: 'latest',
-		// parser: '@typescript-eslint/parser',
+		parser: '@typescript-eslint/parser',
 		sourceType: 'module',
 	},
 	plugins: ['@typescript-eslint'],
