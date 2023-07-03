@@ -144,7 +144,7 @@ export default defineComponent({
 			default: false,
 		},
 	},
-	emits: ['change'],
+	emits: ['change', 'remove'],
 	// 清除之后需要抛出事件
 	setup(props, { emit }) {
 		const uploadInput = ref(null);
@@ -235,7 +235,8 @@ export default defineComponent({
 			emit('change', { file: currentFiles, fileList: fileList.value });
 		};
 		const delFileItem = (index) => {
-			fileList.value.splice(index, 1);
+			const removeItems = fileList.value.splice(index, 1);
+			emit('remove', { files: removeItems });
 		};
 		// 生成fid
 		const genFid = () => {

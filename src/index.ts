@@ -38,6 +38,7 @@ import WdUploadDragger from './components/dragger';
 import WdTabs from './components/tabs';
 import ProTable from './components/protable'
 import WdSpace from './components/space'
+import WdImage from './components/image';
 
 const components = [
 	WdButton,
@@ -77,7 +78,8 @@ const components = [
 	WdUploadDragger,
 	WdTabs,
 	WdSpace,
-  ProTable
+  ProTable,
+  WdImage
 ];
 const install = async (app: App): void => {
 	// 是否需要加载icon css
@@ -131,7 +133,8 @@ export {
 	WdUploadDragger,
 	WdTabs,
 	WdSpace,
-  ProTable
+  ProTable,
+  WdImage
 };
 export default {
 	install,
