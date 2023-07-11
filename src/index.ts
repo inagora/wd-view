@@ -1,4 +1,3 @@
-// @ts-nocheck
 import type { App } from 'vue';
 import WdLink from '../src/components/link';
 import WdButton from '../src/components/button';
@@ -36,8 +35,9 @@ import WdModal from './components/modal';
 import WdUpload from './components/upload';
 import WdUploadDragger from './components/dragger';
 import WdTabs from './components/tabs';
-import ProTable from './components/protable'
-import WdSpace from './components/space'
+import ProTable from './components/protable';
+import WdSpace from './components/space';
+import WdImage from './components/image';
 
 const components = [
 	WdButton,
@@ -77,7 +77,8 @@ const components = [
 	WdUploadDragger,
 	WdTabs,
 	WdSpace,
-  ProTable
+	ProTable,
+	WdImage,
 ];
 const install = async (app: App): void => {
 	// 是否需要加载icon css
@@ -90,7 +91,7 @@ const install = async (app: App): void => {
 	});
 	app.config.globalProperties.$toast = WdToast;
 	app.config.globalProperties.$message = WdMessage;
-  app.config.warnHandler = () => null;
+	app.config.warnHandler = () => null;
 };
 export {
 	WdLink,
@@ -131,7 +132,8 @@ export {
 	WdUploadDragger,
 	WdTabs,
 	WdSpace,
-  ProTable
+	ProTable,
+	WdImage,
 };
 export default {
 	install,

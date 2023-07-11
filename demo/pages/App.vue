@@ -78,6 +78,7 @@ import Modal from './Modal.vue';
 import Upload from './Upload.vue';
 import Tabs from './Tabs.vue';
 import ProTable from './ProTable.vue';
+import Image from './Image.vue';
 export default defineComponent({
 	name: 'App',
 	components: {
@@ -103,6 +104,7 @@ export default defineComponent({
 		Upload,
 		Tabs,
 		ProTable,
+		Image,
 	},
 	setup() {
 		let user = { name: 'niu', age: 18 };
@@ -132,7 +134,7 @@ export default defineComponent({
 			date: datepickerValue.value,
 		});
 		let userInfoForm = <any>ref();
-		let componentType = ref('form');
+		let componentType = ref('image');
 		let menuList = ref([]);
 		menuList.value = [
 			{

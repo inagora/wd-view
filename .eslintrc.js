@@ -17,7 +17,7 @@ module.exports = {
 	},
 	plugins: ['@typescript-eslint'],
 	rules: {
-		'vue/html-indent': ['error', 'tab'],
+		// 'vue/html-indent': ['error', 'tab'],
 		'vue/no-setup-props-destructure': 'off',
 		// 'vue/max-attributes-per-line': [
 		// 	'error',
@@ -26,6 +26,10 @@ module.exports = {
 		// 		allowFirstLine: false,
 		// 	},
 		// ],
+		'vue/html-indent': 'off',
+		'vue/max-attributes-per-line': ['off'],
+		'vue/html-self-closing': 'off',
+		'vue/no-dupe-keys': 'off',
 	},
 	globals: { defineProps: 'readonly' },
 };
