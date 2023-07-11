@@ -18,16 +18,14 @@ module.exports = {
 	plugins: ['@typescript-eslint'],
 	rules: {
 		'vue/html-indent': ['error', 'tab'],
-		'vue/max-attributes-per-line': [
-			'error',
-			{
-				singleline: 5, // 允许最多5个属性放在同一行上
-				multiline: {
-					max: 1, // 多行时，每个属性占据一行
-					allowFirstLine: false, // 禁止第一个属性与元素名或其他属性放在同一行上
-				},
-			},
-		],
+		'vue/no-setup-props-destructure': 'off',
+		// 'vue/max-attributes-per-line': [
+		// 	'error',
+		// 	{
+		// 		max: 1,
+		// 		allowFirstLine: false,
+		// 	},
+		// ],
 	},
 	globals: { defineProps: 'readonly' },
 };

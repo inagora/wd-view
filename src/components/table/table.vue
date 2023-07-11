@@ -1,14 +1,17 @@
 <template>
-	<wd-loading :loading="loading" :text="loadingText">
+	<wd-loading
+		:loading="loading"
+		:text="loadingText"
+	>
 		<div class="wd-table-container">
 			<div
+				ref="wdTable"
 				class="wd-table"
 				:class="[
 					'wd-table-' + size,
 					store.bordered ? 'wd-table-bordered' : '',
 					tableLayoutFixed ? 'wd-table-layout-fixed' : '',
 				]"
-				ref="wdTable"
 			>
 				<div
 					class="wd-table-content"
@@ -25,7 +28,10 @@
 						@select-change="selectChangeHandler"
 					>
 						<template #headercell="slotScope">
-							<slot name="headercell" :column="slotScope.column"></slot>
+							<slot
+								name="headercell"
+								:column="slotScope.column"
+							/>
 						</template>
 					</table-header>
 					<!-- table body -->
@@ -37,24 +43,24 @@
 						:is-show-left-shadow="isShowLeftShadow"
 						:is-show-right-shadow="isShowRightShadow"
 						:height="height"
-						:fixedHeight="fixedHeight"
+						:fixed-height="fixedHeight"
 						@select-change="selectChangeHandler"
 						@cell-click="cellClickHandler"
 						@row-click="rowClickHandler"
 					>
-						<template v-slot:custom="slotScope">
+						<template #custom="slotScope">
 							<slot
 								name="custom"
 								:row="slotScope.row"
 								:column="slotScope.column"
 								:row-index="slotScope.rowIndex"
-							></slot>
+							/>
 						</template>
 					</table-body>
 				</div>
 			</div>
 			<div class="wd-table-footer">
-				<slot name="footer"></slot>
+				<slot name="footer" />
 			</div>
 			<!-- <div v-if="loading">loading...</div> -->
 		</div>
@@ -72,7 +78,7 @@
 			@current-change="pageChangeHandler"
 			@prev-click="prevClickChangeHandler"
 			@next-click="nextClickChangeHandler"
-		></wd-pagination>
+		/>
 	</wd-loading>
 </template>
 
@@ -98,11 +104,11 @@ import { StoreProps } from './table-type';
  *
  * tr自定义class
  * 自定义单元格
- * 行号 done
+ * 行号 done1
  */
 export default defineComponent({
+	name: 'WdTable',
 	components: { TableHeader, TableBody, WdPagination, WdLoading },
-	name: 'wd-table',
 	props: {
 		dataSource: {
 			type: Object,
@@ -194,16 +200,16 @@ export default defineComponent({
 		store.originColumns = reactive(props.columns);
 		store.dataSource = reactive(props.dataSource);
 		store.bordered = props.bordered;
-		let dataSource: any = store.dataSource;
-		let tableLayoutFixed = ref(true);
+		const dataSource: any = store.dataSource;
+		const tableLayoutFixed = ref(true);
 
-		let leftFixedColumns = ref([]);
-		let rightFixedColumns = ref([]);
-		let normalColumns = ref([]);
-		let checkColumn = ref(null);
+		const leftFixedColumns = ref([]);
+		const rightFixedColumns = ref([]);
+		const normalColumns = ref([]);
+		const checkColumn = ref(null);
 		const wdTable = ref(null);
-		let isShowLeftShadow = ref(false);
-		let isShowRightShadow = ref(true);
+		const isShowLeftShadow = ref(false);
+		const isShowRightShadow = ref(true);
 
 		store.originColumns.forEach((column) => {
 			if (!column.width) {
@@ -294,7 +300,7 @@ export default defineComponent({
 				: document.querySelector('.wd-table');
 
 			wdTableContent.addEventListener('scroll', (e) => {
-				let scrollLeft = e.target.scrollLeft;
+				const scrollLeft = e.target.scrollLeft;
 				if (scrollLeft === 0) {
 					// 滚动到最左边
 					isShowLeftShadow.value = false;
