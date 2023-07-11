@@ -111,7 +111,6 @@ export default defineComponent({
 		};
 		const loadHandler = () => {
 			isLoading.value = false;
-			console.log(123);
 		};
 		return {
 			wrapperStyle,

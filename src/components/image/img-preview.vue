@@ -3,11 +3,6 @@
 		<div class="wd-image-preview-mask" />
 		<div tabindex="-1" class="wd-image-preview-wrap" role="dialog">
 			<div class="wd-image-preview" role="document">
-				<div
-					tabindex="0"
-					aria-hidden="true"
-					style="width: 0px; height: 0px; overflow: hidden; outline: none"
-				/>
 				<div class="wd-image-preview-content">
 					<!----><!---->
 					<div class="wd-image-preview-body">
@@ -22,7 +17,12 @@
 								<svg-icons icon="zoom-in" @click="handleScale('in')" />
 							</li>
 							<li
-								class="wd-image-preview-operations-operation wd-image-preview-operations-operation-disabled"
+								:class="[
+									'wd-image-preview-operations-operation',
+									transformStyle.scale === 1
+										? 'wd-image-preview-operations-operation-disabled'
+										: '',
+								]"
 							>
 								<svg-icons icon="zoom-out" @click="handleScale('out')" />
 							</li>
@@ -38,44 +38,47 @@
 							style="transform: translate3d(0px, 0px, 0px)"
 						>
 							<img
-								v-for="(src, index) in imgList"
-								:key="index"
 								class="wd-image-preview-img"
-								:src="src"
+								:src="imgList[currentIndex]"
 								:style="{
 									transform:
-										'scale3d(1, 1, 1) rotate(' + transformStyle.rotate + 'deg)',
+										'scale3d(' +
+										transformStyle.scale +
+										', ' +
+										transformStyle.scale +
+										', 1) rotate(' +
+										transformStyle.rotate +
+										'deg)',
 								}"
 							/>
 						</div>
-						<div
-							:class="[
-								'wd-image-preview-switch-left',
-								currentIndex === 0
-									? 'wd-image-preview-switch-left-disabled'
-									: '',
-							]"
-						>
-							<svg-icons icon="switch-left" />
-						</div>
-						<div
-							:class="[
-								'wd-image-preview-switch-right',
-								currentIndex === imgList.length - 1
-									? 'wd-image-preview-switch-right-disabled'
-									: '',
-							]"
-						>
-							<svg-icons icon="switch-right" />
-						</div>
+						<template v-if="imgList.length > 1">
+							<div
+								:class="[
+									'wd-image-preview-switch-left',
+									currentIndex === 0
+										? 'wd-image-preview-switch-left-disabled'
+										: '',
+								]"
+								@click="handleSwitch('left')"
+							>
+								<svg-icons icon="switch-left" />
+							</div>
+							<div
+								:class="[
+									'wd-image-preview-switch-right',
+									currentIndex === imgList.length - 1
+										? 'wd-image-preview-switch-right-disabled'
+										: '',
+								]"
+								@click="handleSwitch('right')"
+							>
+								<svg-icons icon="switch-right" />
+							</div>
+						</template>
 					</div>
 					<!---->
 				</div>
-				<div
-					tabindex="0"
-					aria-hidden="true"
-					style="width: 0px; height: 0px; overflow: hidden; outline: none"
-				/>
 			</div>
 		</div>
 	</div>
@@ -98,13 +101,13 @@ export default defineComponent({
 			default: () => [],
 		},
 	},
-	setup() {
+	setup(props) {
 		const transformStyle = ref({
 			scale: 1,
 			rotate: 0,
 		}); // 图片缩放和旋转
 		const currentIndex = ref(0); // 当前图片索引
-		const scale = 0.1; // 缩放比例
+		const scale = 1; // 缩放比例
 		const rotate = 90; // 旋转角度
 		const handleScale = (type: string) => {
 			if (type === 'in') {
@@ -120,7 +123,28 @@ export default defineComponent({
 				transformStyle.value.rotate -= rotate;
 			}
 		};
-		return { transformStyle, currentIndex, handleScale, handleRotate };
+		const handleSwitch = (type: string) => {
+			if (currentIndex.value === 0 && type === 'left') {
+				return;
+			} else if (
+				currentIndex.value === props.imgList.length - 1 &&
+				type === 'right'
+			) {
+				return;
+			}
+			if (type === 'left') {
+				currentIndex.value -= 1;
+			} else {
+				currentIndex.value += 1;
+			}
+		};
+		return {
+			transformStyle,
+			currentIndex,
+			handleScale,
+			handleRotate,
+			handleSwitch,
+		};
 	},
 });
 </script>
