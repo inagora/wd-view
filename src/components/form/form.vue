@@ -4,7 +4,7 @@
 			:class="['wd-form', inline ? 'wd-form-inline' : 'wd-form-horizontal']"
 			v-bind="attrs"
 		>
-			<slot v-bind="model"></slot>
+			<slot v-bind="model || {}"></slot>
 		</form>
 	</div>
 </template>
@@ -32,7 +32,7 @@ interface Callback {
 	(isValid?: boolean, invalidFields?: FieldErrorList): void;
 }
 export default defineComponent({
-	name: 'wd-form',
+	name: 'WdForm',
 	inheritAttrs: false,
 	props: {
 		modelValue: {

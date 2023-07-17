@@ -38,7 +38,11 @@
 			:img-list="previewSrcList"
 			:visible="showPreview"
 			@close="showPreview = false"
-		/>
+		>
+			<template #toolbar>
+				<slot name="toolbar" />
+			</template>
+		</preview>
 	</div>
 </template>
 
@@ -103,6 +107,7 @@ export default defineComponent({
 			wrapperStyle.value.height = `${props.height}px`;
 		}
 		const errorHandler = (e) => {
+			// fallback加载失败之后的处理
 			isLoading.value = false;
 			if (props.fallback) {
 				imgEl.value.src = props.fallback;

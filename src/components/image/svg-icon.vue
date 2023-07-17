@@ -1,4 +1,5 @@
 <script>
+// 组件命名
 export default {
 	props: {
 		icon: {

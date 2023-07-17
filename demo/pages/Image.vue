@@ -10,6 +10,9 @@
 		@error="errorHandler"
 	>
 		<template #placeholder> hhh </template>
+		<template #toolbar>
+			<wd-button>自定义按钮</wd-button>
+		</template>
 	</wd-image>
 </template>
 <script setup>

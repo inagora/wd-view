@@ -134,7 +134,7 @@ export default defineComponent({
 			date: datepickerValue.value,
 		});
 		let userInfoForm = <any>ref();
-		let componentType = ref('image');
+		let componentType = ref('pro-table');
 		let menuList = ref([]);
 		menuList.value = [
 			{
