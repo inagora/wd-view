@@ -30,6 +30,7 @@ module.exports = {
 		'vue/max-attributes-per-line': ['off'],
 		'vue/html-self-closing': 'off',
 		'vue/no-dupe-keys': 'off',
+		'vue/prefer-import-from-vue': 'off',
 	},
 	globals: { defineProps: 'readonly' },
 };
