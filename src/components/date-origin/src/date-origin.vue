@@ -17,6 +17,9 @@
 		@focus="handleFocus"
 		@blur="handleBlur"
 	/>
+
+	<!-- <div :class="[bem.e('inner')]">abv</div> -->
+
 	<div v-else>
 		<input
 			ref="startDateInput"
@@ -47,6 +50,15 @@
 			@blur="handleFocus"
 		/>
 	</div>
+	<div :class="[bem.e('element')]">
+abv
+</div>
+	<div :class="[bem.m('modify')]">
+abv
+</div>
+	<div :class="[bem.m('modify'), bem.is('checked', true)]">
+abv
+</div>
 </template>
 
 <script lang="ts">
@@ -219,18 +231,6 @@ onMounted(() => {
 	setInputValue();
 });
 </script>
-
-<style scoped>
-.input-left {
-	margin-right: 10px;
-}
-input:focus {
-	outline: 0;
-}
-/**
-<!-- outline: 2px solid red; -->
-input:focus {
-	outline: 2px solid red;
-}
-**/
+<style lang="less" scoped>
+@import url(../style/index);
 </style>

@@ -57,7 +57,7 @@
 			value-format="YYYY-MM-DD" -->
 	<!-- <input type="time" /> -->
 	<!-- type="daterange" -->
-	<wd-date
+	<!-- <wd-date
 		v-model="rangeValue"
 		type="datetimerange"
 		format="YYYY-MM-DD HH:mm:ss"
@@ -67,7 +67,7 @@
 		@change="handleChange"
 		@focus="handleFocus"
 		@blur="handleBlur"
-	></wd-date>
+	></wd-date> -->
 </template>
 
 <script setup lang="ts">
@@ -75,7 +75,7 @@ import { ref, reactive } from 'vue';
 // import dayjs from 'dayjs';
 // const value1 = ref();
 // const value1 = ref('');
-const value1 = ref(new Date(2010, 9, 1));
+const value1 = ref(new Date(2023, 9, 1));
 // const value1 = ref('2022-02-01');
 const rangeValue = reactive([new Date(2023, 8, 4), new Date(2023, 8, 5)]);
 const defaultValue = new Date(2025, 2, 1);

@@ -15,7 +15,7 @@ function _bem(
 	modifier: string
 ) {
 	if (blockSuffix) {
-		prefixName += `-${blockSuffix}`;
+		prefixName += `--${blockSuffix}`;
 	}
 	if (element) {
 		prefixName += `__${element}`;
@@ -34,7 +34,7 @@ function createBEM(prefixName: string) {
 		modifier ? _bem(prefixName, '', '', modifier) : '';
 	const be = (blockSuffix = '', element = ''): string =>
 		blockSuffix && element ? _bem(prefixName, blockSuffix, element, '') : '';
-	const bem = (blockSuffix = '', element = '', modifier: ''): string =>
+	const bem = (blockSuffix = '', element = '', modifier = ''): string =>
 		blockSuffix && element && modifier
 			? _bem(prefixName, blockSuffix, element, modifier)
 			: '';
@@ -49,13 +49,13 @@ function createBEM(prefixName: string) {
 	};
 }
 export function createNameSpace(name: string) {
-	const prefixName = `z-${name}`;
+	const prefixName = `wd-${name}`;
 	return createBEM(prefixName);
 }
-// const bem = creaNameSpace('icon');
-// console.log('bem.b()', bem.b('box'));
-// console.log('bem.e()', bem.e('element'));
-// console.log('bem.m()', bem.m('modifier'));
-// console.log('bem.be()', bem.be('box', 'element'));
-// console.log('bem.bem()', bem.bem('box', 'element', 'modifier'));
-// console.log('is', bem.is('checked', true));
+const bem = createNameSpace('icon');
+console.log('bem.b()', bem.b('box'));
+console.log('bem.e()', bem.e('element'));
+console.log('bem.m()', bem.m('modifier'));
+console.log('bem.be()', bem.be('box', 'element'));
+console.log('bem.bem()', bem.bem('box', 'element', 'modifier'));
+console.log('is', bem.is('checked', true));

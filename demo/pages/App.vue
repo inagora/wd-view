@@ -67,6 +67,7 @@ import Radio from './Radio.vue';
 import Switch from './Switch.vue';
 import Select from './Select.vue';
 import Datepicker from './Datepicker.vue';
+import DateOrigin from './Dateorigin.vue';
 import Dropdown from './Dropdown.vue';
 import dayjs from 'dayjs';
 import Toast from './Toast.vue';
@@ -87,6 +88,7 @@ export default defineComponent({
 		Table,
 		Checkbox,
 		Datepicker,
+		DateOrigin,
 		Dropdown,
 		Input,
 		InputNumber,
@@ -218,6 +220,10 @@ export default defineComponent({
 				text: '其他组件',
 				icon: '',
 				submenu: [
+					{
+						text: 'DateOrigin',
+						type: 'DateOrigin',
+					},
 					{
 						text: 'Space',
 						type: 'Space',
