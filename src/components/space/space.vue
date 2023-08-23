@@ -31,7 +31,7 @@ export default defineComponent({
 		style: {
 			type: Object,
 			// default: {},
-			default: function () {
+			default: () => {
 				return {};
 			},
 		},

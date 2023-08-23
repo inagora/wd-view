@@ -12,7 +12,7 @@ import WdDropdown from '../src/components/dropdown';
 import WdDropdownMenu from '../src/components/dropdownmenu';
 import WdDropdownMenuItem from '../src/components/dropdownmenuitem';
 import WdDatePicker from '../src/components/date-picker';
-import WdDate from '../src/components/date-origin';
+// import WdDate from '../src/components/date-origin';
 import WdLayout from '../src/components/layout';
 import WdSelect from '../src/components/select';
 import WdOption from '../src/components/option';
@@ -54,7 +54,7 @@ const components = [
 	WdDropdownMenu,
 	WdDropdownMenuItem,
 	WdDatePicker,
-	WdDate,
+	// WdDate,
 	WdLayout,
 	WdSelect,
 	WdOption,
@@ -110,7 +110,7 @@ export {
 	WdDropdownMenu,
 	WdDropdownMenuItem,
 	WdDatePicker,
-	WdDate,
+	// WdDate,
 	WdLayout,
 	WdSelect,
 	WdOption,
