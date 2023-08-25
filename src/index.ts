@@ -82,6 +82,7 @@ const components = [
 	ProTable,
 	WdImage,
 ];
+// @ts-ignore
 const install = async (app: App): void => {
 	// 是否需要加载icon css
 	const iconLinks = document.querySelector('link[data-extra="wd-icon"]');

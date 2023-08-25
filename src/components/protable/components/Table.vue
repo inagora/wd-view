@@ -303,9 +303,9 @@ const load = (currentPage) => {
 	loading.value = true;
 	if (config.request) {
 		return new Promise(async (resolve, reject) => {
-			loading.value = false;
 			try {
 				const res = await config.request(searchParams);
+				loading.value = false;
 				if (!currentPage) {
 					records.value = res.list;
 					pageCount.value = res.pageCount;
@@ -314,6 +314,7 @@ const load = (currentPage) => {
 				}
 				resolve(res.list);
 			} catch (err) {
+				loading.value = false;
 				reject(err);
 			}
 		});
