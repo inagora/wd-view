@@ -40,6 +40,33 @@ setTimeout(() => {
 	dataList.value = rowData;
 	currentPage.value = 2;
 }, 2000);
+let _id = 0;
+const getRemoteList = () => {
+	rowData.length = 0;
+	_id++;
+	return new Promise((resolve) => {
+		setTimeout(() => {
+			for (let i = 0; i < 60; i++) {
+				rowData.push({
+					id: '' + (_id + i),
+					goods_name: 'sk4',
+					price: '1180',
+					ctime: '2021-09-26 2021-09-26 2021-09-26 2021-09-26 2021-09-26',
+					update_time: '2021-09-26',
+					location: '中国',
+					color: i % 2 === 0 ? 'red' : 'blue',
+				});
+			}
+			resolve({
+				data: {
+					list: rowData,
+					total_count: Math.ceil(rowData.length / 10),
+					totals: rowData.length,
+				},
+			});
+		}, 500);
+	});
+};
 // 获取远程valueEnum
 const getRemoteEnum = () => {
 	return new Promise((resolve) => {
@@ -96,9 +123,9 @@ const tableColumns = [
 		sorter: (val) => {
 			getSortData(val);
 		},
-		visible: false, // 是否可见
+		visible: true, // 是否可见
 		exportable: false, // 是否可导出
-		hideInTable: true,
+		hideInTable: false,
 	},
 	{
 		title: '商品名商品名商品名商品名商品名商品名商品名商品名',
@@ -300,16 +327,13 @@ let config = ref({
 	url: 'http://123.57.68.108:8080',
 	showTotal: true,
 	showFormLabel: false,
+	// records: dataList.value,
 	// ajaxSetting: {
 	// 	totalKey: 'totals',
 	// 	pageCountKey: 'total_count',
 	// },
 	request: async (params) => {
-		const res = await ajax.request({
-			url: 'http://123.57.68.108:8080',
-			data: params,
-		});
-		console.log(res);
+		const res = await getRemoteList();
 		return {
 			list: res.data.list,
 			pageCount: res.data.total_count,

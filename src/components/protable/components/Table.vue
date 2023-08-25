@@ -109,6 +109,7 @@ let searchParams = {};
 emitter.on('wv:search', (params) => {
 	searchParams = params;
 	page = 1;
+	_currentPage.value = 1;
 	load();
 });
 // 通过setSearchParams设置参数
@@ -263,6 +264,7 @@ const setFixedStyle = (direction, method) => {
 const records = ref([]);
 const loading = ref(false);
 const pageCount = ref(1);
+const _currentPage = ref(1);
 let page = 1;
 let count = 20;
 const total = ref(0);
@@ -301,13 +303,13 @@ const load = (currentPage) => {
 	loading.value = true;
 	if (config.request) {
 		return new Promise(async (resolve, reject) => {
+			loading.value = false;
 			try {
 				const res = await config.request(searchParams);
-				loading.value = false;
-				records.value = res.list;
-				pageCount.value = res.pageCount;
-				total.value = res.total;
 				if (!currentPage) {
+					records.value = res.list;
+					pageCount.value = res.pageCount;
+					total.value = res.total;
 					emitter.emit('dataLoad', res);
 				}
 				resolve(res.list);
@@ -338,15 +340,18 @@ const load = (currentPage) => {
 									.classList.add('wd-pagination-disabled');
 							}
 						}
-						records.value = config.ajaxSetting.listKey
-							? res.data[config.ajaxSetting.listKey]
-							: res.data.list;
-						pageCount.value = config.ajaxSetting.pageCountKey
-							? res.data[config.ajaxSetting.pageCountKey]
-							: res.data.pageCount;
-						total.value = config.ajaxSetting.totalKey
-							? res.data[config.ajaxSetting.totalKey]
-							: res.data.total;
+						// 非导出
+						if (!currentPage) {
+							records.value = config.ajaxSetting.listKey
+								? res.data[config.ajaxSetting.listKey]
+								: res.data.list;
+							pageCount.value = config.ajaxSetting.pageCountKey
+								? res.data[config.ajaxSetting.pageCountKey]
+								: res.data.pageCount;
+							total.value = config.ajaxSetting.totalKey
+								? res.data[config.ajaxSetting.totalKey]
+								: res.data.total;
+						}
 						resolve(res.data.list);
 					} else {
 						reject(res);
@@ -361,6 +366,7 @@ const load = (currentPage) => {
 };
 const pageChangeHandler = (currPage) => {
 	page = currPage;
+	_currentPage.value = currPage;
 	load();
 };
 const prevClick = () => {
@@ -412,6 +418,7 @@ defineExpose({
 				:show-total="config.showTotal"
 				:total="total"
 				:pagination="config.showPagination"
+				:current-page="_currentPage"
 				@current-change="pageChangeHandler"
 				@prev-click="prevClick"
 				@next-click="nextClick"
