@@ -21,7 +21,7 @@
 					v-model="searchParams.warehouseing_time"
 				></wd-date-picker> -->
 	<!-- :default-value="new Date(2010, 9, 1)" -->
-	@@{{ value1 }}
+	{{ value1 }}
 
 	<!-- value-format="YYYY-MM-DD HH:mm:ss" -->
 	<!-- value-format="YYYY-MM-DD" -->
@@ -41,6 +41,18 @@
 	<!-- type="date" type="datetime-local" type="month" type="week" type ="time"
 		type ="week" -->
 	<!-- type="datetime-local" -->
+	<!-- <wd-date-picker
+						type="date"
+						show-time
+						format="YYYY/MM/DD HH:mm:ss"
+						value-format="YYYY-MM-DD HH:mm:ss"
+						size="small"
+						placeholder="请选择日期"
+						:default-value="params.start_time"
+						v-model="params.start_time"
+					/> -->
+	<!-- :default-value="defaultValue" -->
+
 	<wd-date
 		v-model="value1"
 		type="datetime-local"
@@ -57,17 +69,19 @@
 			value-format="YYYY-MM-DD" -->
 	<!-- <input type="time" /> -->
 	<!-- type="daterange" -->
-	<!-- <wd-date
+
+	<wd-date
 		v-model="rangeValue"
 		type="datetimerange"
-		format="YYYY-MM-DD HH:mm:ss"
-		value-format="YYYY-MM-DD HH:mm:ss"
+		format="YYYY-MM-DD HH:mm"
+		value-format="YYYY-MM-DD HH:mm"
 		size="small"
 		@input="handleInput"
 		@change="handleChange"
 		@focus="handleFocus"
 		@blur="handleBlur"
-	></wd-date> -->
+	></wd-date>
+	{{ rangeValue }}
 </template>
 
 <script setup lang="ts">
@@ -76,9 +90,10 @@ import { ref, reactive } from 'vue';
 // const value1 = ref();
 // const value1 = ref('');
 const value1 = ref(new Date(2023, 9, 1));
+// const value1 = ref(new Date(2023, 9, 1));
 // const value1 = ref('2022-02-01');
 const rangeValue = reactive([new Date(2023, 8, 4), new Date(2023, 8, 5)]);
-const defaultValue = new Date(2025, 2, 1);
+const defaultValue = ref(new Date(2025, 2, 1));
 const handleChange = (event: Event) => {
 	console.log('父组件change', event);
 	console.log('父组件11', value1.value);

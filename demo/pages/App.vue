@@ -225,6 +225,10 @@ export default defineComponent({
 						type: 'DateOrigin',
 					},
 					{
+						text: 'Form',
+						type: 'Form',
+					},
+					{
 						text: 'Space',
 						type: 'Space',
 					},
