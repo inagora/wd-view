@@ -1,4 +1,5 @@
-import Space from '../space.vue';
+import Space from '../../src/components/space/space.vue';
+// import Space from '../space.vue';
 import { shallowMount, mount } from '@vue/test-utils';
 import { h, nextTick } from 'vue';
 const AXIOM = 'Rem is the best girl';

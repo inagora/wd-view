@@ -95,7 +95,8 @@ const props = defineProps(dateProps);
 const emits = defineEmits(dateEmits);
 
 const isRangeInput = computed(() => {
-	return props.type.includes('range');
+	console.log('props.type', props.type);
+	return props.type && props.type.includes('range');
 });
 const inputType = computed(() => {
 	return RANGEMAP[props.type];
@@ -166,8 +167,8 @@ const formattedDate = (value: string | number) => {
 			'dayjs(value).format(props.format)',
 			dayjs(value).format(props.format)
 		);
-		day = dayjs(value).format(props.format); // 格式替换
-		// day = dayjs(value).format(props.format).replace(/T/g, ' '); // 格式替换
+		// day = dayjs(value).format(props.format); // 格式替换
+		day = dayjs(value).format(props.format).replace(/T/g, ' '); // 格式替换
 	}
 	return day;
 };
