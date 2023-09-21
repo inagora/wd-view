@@ -215,6 +215,52 @@ const tableColumns = [
 		},
 	},
 	{
+		title: '状态',
+		dataIndex: 'status',
+		valueType: 'select',
+		defaultValue: 0,
+		list: [
+			{
+				label: '关闭',
+				value: '1',
+			},
+			{
+				label: '运行中',
+				value: '0',
+			},
+			{
+				label: '已上线',
+				value: '2',
+			},
+			{
+				label: '异常',
+				value: '3',
+			},
+		],
+		// valueEnum() {
+		// 	// 当使用int类型做为key时，请使用返回数组的形式
+		// 	const data = [
+		// 		{
+		// 			label: '关闭',
+		// 			value: '1',
+		// 		},
+		// 		{
+		// 			label: '运行中',
+		// 			value: '0',
+		// 		},
+		// 		{
+		// 			label: '已上线',
+		// 			value: '2',
+		// 		},
+		// 		{
+		// 			label: '异常',
+		// 			value: '3',
+		// 		},
+		// 	];
+		// 	return data;
+		// },
+	},
+	{
 		title: '生产日期',
 		dataIndex: 'ctime',
 		key: 'ctime',

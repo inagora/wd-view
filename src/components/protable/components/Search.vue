@@ -18,6 +18,7 @@ import {
 	WdInputNumber,
 } from '../../../index.ts';
 import { isObject, isFuction } from '../utils/util';
+import { isArray } from '../../../utils/util';
 const config = inject('config');
 const emitter = inject('emitter');
 const filterMap = {
@@ -65,12 +66,24 @@ config.columns.forEach((column) => {
 					const valueEnum = column.valueEnum();
 					if (isObject(valueEnum)) {
 						filter.list = formatFilter(valueEnum);
+					} else if (isArray(valueEnum)) {
+						filter.list = valueEnum;
+					} else {
+						filter.list = [];
 					}
 				} else {
 					if (isObject(column.valueEnum)) {
 						filter.list = formatFilter(column.valueEnum);
+					} else if (isArray(column.valueEnum)) {
+						filter.list = column.valueEnum;
+					} else {
+						filter.list = [];
 					}
 				}
+			} else if (column.list) {
+				filter.list = column.list;
+			} else {
+				filter.list = [];
 			}
 		}
 		searchFilters.value.push(filter);

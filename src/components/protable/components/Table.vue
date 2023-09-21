@@ -25,6 +25,7 @@ import WvForm from './Form.vue';
 import Ajax from '../utils/Ajax.js';
 import download from '../utils/Download.js';
 import { isFuction, isObject } from '../utils/util.js';
+import { isArray } from '../../../utils/util';
 
 const config = inject('config');
 // 处理导出列
@@ -50,6 +51,12 @@ config.columns.forEach(async (column) => {
 			valueEnum = await Promise.resolve(column.valueEnum());
 		} else {
 			valueEnum = column.valueEnum;
+		}
+		if (isArray(valueEnum)) {
+			valueEnum = valueEnum.reduce((prev, curr) => {
+				prev[curr.value] = curr.label;
+				return prev;
+			}, {});
 		}
 		column.render = (_, row) => {
 			return valueEnum[row[column.dataIndex]] || row[column.dataIndex];
