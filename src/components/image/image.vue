@@ -9,7 +9,10 @@
 				@error="errorHandler"
 				@load="loadHandler"
 			/>
-			<div class="wd-image-mask">
+			<div
+				v-if="previewSrcList && previewSrcList.length > 0"
+				class="wd-image-mask"
+			>
 				<div class="wd-image-mask-info" @click="showPreview = true">
 					<span role="img" aria-label="eye" class="anticon anticon-eye">
 						<svg

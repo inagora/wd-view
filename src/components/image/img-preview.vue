@@ -1,84 +1,89 @@
 <template>
-	<div v-if="visible" class="wd-image-preview-root">
-		<div class="wd-image-preview-mask" />
-		<div tabindex="-1" class="wd-image-preview-wrap" role="dialog">
-			<div class="wd-image-preview" role="document">
-				<div class="wd-image-preview-content">
-					<div class="wd-image-preview-body">
-						<ul class="wd-image-preview-operations">
-							<li
-								class="wd-image-preview-operations-operation"
-								@click="$emit('close')"
-							>
-								<svg-icon icon="close" />
-							</li>
-							<li><slot name="toolbar"></slot></li>
-							<li class="wd-image-preview-operations-operation">
-								<svg-icon icon="zoom-in" @click="handleScale('in')" />
-							</li>
-							<li
-								:class="[
-									'wd-image-preview-operations-operation',
-									transformStyle.scale === 1
-										? 'wd-image-preview-operations-operation-disabled'
-										: '',
-								]"
-							>
-								<svg-icon icon="zoom-out" @click="handleScale('out')" />
-							</li>
-							<li class="wd-image-preview-operations-operation">
-								<svg-icon icon="rotate-right" @click="handleRotate('right')" />
-							</li>
-							<li class="wd-image-preview-operations-operation">
-								<svg-icon icon="rotate-left" @click="handleRotate('left')" />
-							</li>
-						</ul>
-						<div class="wd-image-preview-img-wrapper" @mousewheel="rollImg">
-							<img
-								class="wd-image-preview-img"
-								:src="imgList[currentIndex]"
-								:style="{
-									transform:
-										'scale3d(' +
-										transformStyle.scale +
-										', ' +
-										transformStyle.scale +
-										', 1) rotate(' +
-										transformStyle.rotate +
-										'deg)',
-								}"
-								@mousedown="moveImg($event)"
-							/>
+	<teleport v-if="visible" to="body">
+		<div class="wd-image-preview-root">
+			<div class="wd-image-preview-mask" />
+			<div tabindex="-1" class="wd-image-preview-wrap" role="dialog">
+				<div class="wd-image-preview" role="document">
+					<div class="wd-image-preview-content">
+						<div class="wd-image-preview-body">
+							<ul class="wd-image-preview-operations">
+								<li
+									class="wd-image-preview-operations-operation"
+									@click="$emit('close')"
+								>
+									<svg-icon icon="close" />
+								</li>
+								<li><slot name="toolbar"></slot></li>
+								<li class="wd-image-preview-operations-operation">
+									<svg-icon icon="zoom-in" @click="handleScale('in')" />
+								</li>
+								<li
+									:class="[
+										'wd-image-preview-operations-operation',
+										transformStyle.scale === 1
+											? 'wd-image-preview-operations-operation-disabled'
+											: '',
+									]"
+								>
+									<svg-icon icon="zoom-out" @click="handleScale('out')" />
+								</li>
+								<li class="wd-image-preview-operations-operation">
+									<svg-icon
+										icon="rotate-right"
+										@click="handleRotate('right')"
+									/>
+								</li>
+								<li class="wd-image-preview-operations-operation">
+									<svg-icon icon="rotate-left" @click="handleRotate('left')" />
+								</li>
+							</ul>
+							<div class="wd-image-preview-img-wrapper" @mousewheel="rollImg">
+								<img
+									class="wd-image-preview-img"
+									:src="imgList[currentIndex]"
+									:style="{
+										transform:
+											'scale3d(' +
+											transformStyle.scale +
+											', ' +
+											transformStyle.scale +
+											', 1) rotate(' +
+											transformStyle.rotate +
+											'deg)',
+									}"
+									@mousedown="moveImg($event)"
+								/>
+							</div>
+							<template v-if="imgList.length > 1">
+								<div
+									:class="[
+										'wd-image-preview-switch-left',
+										currentIndex === 0
+											? 'wd-image-preview-switch-left-disabled'
+											: '',
+									]"
+									@click="handleSwitch('left')"
+								>
+									<svg-icon icon="switch-left" />
+								</div>
+								<div
+									:class="[
+										'wd-image-preview-switch-right',
+										currentIndex === imgList.length - 1
+											? 'wd-image-preview-switch-right-disabled'
+											: '',
+									]"
+									@click="handleSwitch('right')"
+								>
+									<svg-icon icon="switch-right" />
+								</div>
+							</template>
 						</div>
-						<template v-if="imgList.length > 1">
-							<div
-								:class="[
-									'wd-image-preview-switch-left',
-									currentIndex === 0
-										? 'wd-image-preview-switch-left-disabled'
-										: '',
-								]"
-								@click="handleSwitch('left')"
-							>
-								<svg-icon icon="switch-left" />
-							</div>
-							<div
-								:class="[
-									'wd-image-preview-switch-right',
-									currentIndex === imgList.length - 1
-										? 'wd-image-preview-switch-right-disabled'
-										: '',
-								]"
-								@click="handleSwitch('right')"
-							>
-								<svg-icon icon="switch-right" />
-							</div>
-						</template>
 					</div>
 				</div>
 			</div>
 		</div>
-	</div>
+	</teleport>
 </template>
 <script>
 // zoom in \ out 的最大最小值

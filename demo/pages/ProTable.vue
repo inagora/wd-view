@@ -55,6 +55,7 @@ const getRemoteList = () => {
 					update_time: '2021-09-26',
 					location: '中国',
 					color: i % 2 === 0 ? 'red' : 'blue',
+					img: 'https://oss1.52ritao.cn/f7188ca531b2ec1bfc5236f966dc7bea.png',
 				});
 			}
 			resolve({
@@ -259,6 +260,13 @@ const tableColumns = [
 		// 	];
 		// 	return data;
 		// },
+	},
+	{
+		title: '图片',
+		dataIndex: 'img',
+		render(text) {
+			return <wd-image src={text} previewSrcList={[text]} />;
+		},
 	},
 	{
 		title: '生产日期',
