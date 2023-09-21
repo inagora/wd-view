@@ -24,7 +24,7 @@ import WdLoading from '../../loading';
 import WvForm from './Form.vue';
 import Ajax from '../utils/Ajax.js';
 import download from '../utils/Download.js';
-import { isFuction, isObject } from '../utils/util.js';
+import { isFuction } from '../utils/util.js';
 import { isArray } from '../../../utils/util';
 
 const config = inject('config');
