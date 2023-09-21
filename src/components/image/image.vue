@@ -1,6 +1,6 @@
 <template>
 	<div class="wd-image" :style="wrapperStyle">
-		<div v-show="!isLoading">
+		<div style="width: 100%; height: 100%" v-show="!isLoading">
 			<img
 				v-bind="$attrs"
 				ref="imgEl"
