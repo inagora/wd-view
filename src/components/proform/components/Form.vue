@@ -17,8 +17,9 @@ import {
 	WdButton,
 	WdInputNumber,
 } from '../../../index.ts';
-import { isObject, isFuction } from '../utils/util';
+import { isObject, isFuction } from '../../protable/utils/util';
 const config = inject('config');
+const model = inject('model');
 const emitter = inject('emitter');
 const filterMap = {
 	text: WdInput,
@@ -63,33 +64,34 @@ searchFilters.value.forEach((filter) => {
 			}
 		}
 	}
+	if (filter.prop) {
+		model[filter.prop] = formData.value[filter.prop];
+	} else {
+		console.error('filter.prop is required');
+	}
 });
 const changeHandler = (val, fn) => {
 	fn && fn(val);
 };
-// 获取搜索参数
-const getSearchParams = () => {
-	return formData.value;
-};
-const setSearchParams = (data) => {
-	formData.value = Object.assign({}, formData.value, data);
-};
-// 暴露事件
-defineExpose({
-	getSearchParams,
-	setSearchParams,
-});
 </script>
 
 <template>
 	<div class="pro-form" v-if="searchFilters.length > 0">
 		<wd-form
 			ref="searchForm"
-			label-align="right"
-			size="small"
-			label-position="top"
-			inline
-			:show-label="config.showFormLabel"
+			:show-label="config.showLabel"
+			:label-align="config.labelAlign || 'right'"
+			:label-width="config.labelWidth"
+			:label-position="config.labelPosition || 'top'"
+			:inline="config.inline"
+			:inline-message="config.inlineMessage || false"
+			:show-message="config.showMessage || false"
+			:size="config.size || 'small'"
+			:disabled="config.disabled || false"
+			:readonly="config.readonly || false"
+			:rules="config.rules || {}"
+			:validate-on-rule-change="config.validateOnRuleChange || true"
+			:colon="config.colon || true"
 		>
 			<wd-form-item
 				v-for="filter in searchFilters"
@@ -102,9 +104,9 @@ defineExpose({
 					width="150px"
 					:is="filterMap[filter.type]"
 					:placeholder="filter.placeholder || filter.label"
-					:value="formData[filter.prop]"
+					:value="model[filter.prop]"
 					:multiple="filter.type === 'multiple'"
-					v-model="formData[filter.prop]"
+					v-model="model[filter.prop]"
 					@change="changeHandler($event, filter.change)"
 				>
 					<wd-option
@@ -116,28 +118,33 @@ defineExpose({
 				</wd-select>
 				<a-date-picker
 					v-else-if="filter.type === 'date'"
-					:value="formData[filter.prop]"
-					v-model:value="formData[filter.prop]"
+					:value="model[filter.prop]"
+					v-model:value="model[filter.prop]"
 					v-bind="filter.dateOptions"
 					:size="filter.dateOptions?.size || 'small'"
 					:locale="locale"
+					:show-time="filter.dateOptions?.showTime || false"
 				></a-date-picker>
 				<range-picker
 					v-else-if="filter.type === 'range'"
-					:value="formData[filter.prop]"
-					v-model:value="formData[filter.prop]"
+					:value="model[filter.prop]"
+					v-model:value="model[filter.prop]"
 					v-bind="filter.dateOptions"
 					:size="filter.dateOptions?.size || 'small'"
 					:locale="locale"
+					:show-time="filter.dateOptions?.showTime || false"
 				></range-picker>
 				<component
 					v-else
 					:is="filterMap[filter.type]"
 					:placeholder="filter.placeholder || filter.label"
-					:value="formData[filter.prop]"
-					v-model="formData[filter.prop]"
+					:value="model[filter.prop]"
+					v-model="model[filter.prop]"
 				>
 				</component>
+			</wd-form-item>
+			<wd-form-item>
+				<slot />
 			</wd-form-item>
 		</wd-form>
 	</div>

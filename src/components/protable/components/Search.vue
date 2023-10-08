@@ -165,6 +165,7 @@ defineExpose({
 					v-bind="filter.dateOptions"
 					:size="filter.dateOptions?.size || 'small'"
 					:locale="locale"
+					:show-time="filter.dateOptions?.showTime || false"
 				></a-date-picker>
 				<range-picker
 					v-else-if="filter.type === 'range'"
@@ -173,6 +174,7 @@ defineExpose({
 					v-bind="filter.dateOptions"
 					:size="filter.dateOptions?.size || 'small'"
 					:locale="locale"
+					:show-time="filter.dateOptions?.showTime || false"
 				></range-picker>
 				<component
 					v-else

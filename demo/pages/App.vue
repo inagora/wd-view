@@ -80,6 +80,7 @@ import Upload from './Upload.vue';
 import Tabs from './Tabs.vue';
 import ProTable from './ProTable.vue';
 import Image from './Image.vue';
+import ProForm from './ProForm.vue';
 export default defineComponent({
 	name: 'App',
 	components: {
@@ -107,6 +108,7 @@ export default defineComponent({
 		Tabs,
 		ProTable,
 		Image,
+		ProForm,
 	},
 	setup() {
 		let user = { name: 'niu', age: 18 };
@@ -136,7 +138,7 @@ export default defineComponent({
 			date: datepickerValue.value,
 		});
 		let userInfoForm = <any>ref();
-		let componentType = ref('datepicker');
+		let componentType = ref('pro-form');
 		let menuList = ref([]);
 		menuList.value = [
 			{
@@ -239,6 +241,10 @@ export default defineComponent({
 					{
 						text: 'ProTable',
 						type: 'pro-table',
+					},
+					{
+						text: 'ProForm',
+						type: 'pro-form',
 					},
 					{
 						text: '其他',

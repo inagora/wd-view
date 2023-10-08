@@ -39,6 +39,7 @@ import WdTabs from './components/tabs';
 import ProTable from './components/protable';
 import WdSpace from './components/space';
 import WdImage from './components/image';
+import ProForm from './components/proform';
 
 const components = [
 	WdButton,
@@ -81,6 +82,7 @@ const components = [
 	WdSpace,
 	ProTable,
 	WdImage,
+	ProForm
 ];
 // @ts-ignore
 const install = async (app: App): void => {
@@ -138,6 +140,7 @@ export {
 	WdSpace,
 	ProTable,
 	WdImage,
+	ProForm
 };
 export default {
 	install,
