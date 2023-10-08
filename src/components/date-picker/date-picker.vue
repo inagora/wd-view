@@ -13,6 +13,7 @@
 		:locale="dateLocale"
 		v-model="modelValue"
 		v-bind="$attrs"
+		:show-time="showTime"
 		@change="change"
 	/>
 </template>
