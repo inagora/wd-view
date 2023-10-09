@@ -23,6 +23,13 @@ let config = ref({
 			value: 'niu',
 		},
 		{
+			type: 'textarea',
+			placeholder: '请输入评论内容',
+			label: '评论',
+			prop: 'comment',
+			rows: 8,
+		},
+		{
 			type: 'date',
 			placeholder: '请选择时间',
 			label: '开始时间',

@@ -32,6 +32,7 @@ const filterMap = {
 	checkbox: WdCheckbox,
 	switch: WdSwitch,
 	radio: WdRadio,
+	textarea: WdInput,
 };
 const formData = ref({});
 const searchFilters = ref(config.filters);
@@ -95,12 +96,14 @@ const changeHandler = (val, fn) => {
 		>
 			<wd-form-item
 				v-for="filter in searchFilters"
+				v-bind="filter"
 				:key="filter.prop"
 				:label="filter.label"
 				:prop="filter.prop"
 			>
 				<wd-select
 					v-if="filter.type === 'select' || filter.type === 'multiple'"
+					v-bind="filter"
 					width="150px"
 					:is="filterMap[filter.type]"
 					:placeholder="filter.placeholder || filter.label"
@@ -134,8 +137,16 @@ const changeHandler = (val, fn) => {
 					:locale="locale"
 					:show-time="filter.dateOptions?.showTime || false"
 				></range-picker>
+				<wd-input
+					v-else-if="filter.type === 'textarea'"
+					v-bind="filter"
+					type="textarea"
+					:value="model[filter.prop]"
+					v-model="model[filter.prop]"
+				/>
 				<component
 					v-else
+					v-bind="filter"
 					:is="filterMap[filter.type]"
 					:placeholder="filter.placeholder || filter.label"
 					:value="model[filter.prop]"
