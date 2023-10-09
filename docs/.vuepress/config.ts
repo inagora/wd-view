@@ -116,7 +116,11 @@ module.exports = {
           {
             text: 'Space 间距',
             link: '/space'
-          }
+          },
+					{
+						text: 'Image 图片',
+						link: '/image'
+					}
         ]
       },
       {
@@ -128,6 +132,7 @@ module.exports = {
           },
           {
             text: 'Pro-Form',
+						link: '/proform'
           }
         ]
       },
