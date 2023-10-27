@@ -322,14 +322,18 @@ const tableColumns = [
 		fixed: 'right',
 		width: '300px',
 		render(_, record) {
+			console.log(record);
 			return (
 				<wd-button-group>
-					<wd-button type="primary" onClick={() => doEdit(record)}>
-						编辑
-					</wd-button>
-					<wd-button type="danger" onClick={() => deleteItem(record)}>
-						删除
-					</wd-button>
+					{record.color === 'blue' ? (
+						<wd-button type="primary" onClick={() => doEdit(record)}>
+							编辑吧
+						</wd-button>
+					) : (
+						<wd-button type="danger" onClick={() => deleteItem(record)}>
+							删除
+						</wd-button>
+					)}
 				</wd-button-group>
 			);
 			// return h('div', [

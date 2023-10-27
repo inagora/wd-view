@@ -436,7 +436,7 @@ defineExpose({
 						<wd-button-group>
 							<wd-button
 								v-for="(button, index) in slotScope.column.buttons"
-								:key="index"
+								:key="Symbol(index)"
 								:size="button.size || 'small'"
 								:type="button.type"
 								@click="button.click(slotScope)"

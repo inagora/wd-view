@@ -1,5 +1,5 @@
 <template>
-	<!-- <wd-button @click="centerDialogVisible = true">show drawer</wd-button> -->
+	<wd-button @click="centerDialogVisible = true">show drawer</wd-button>
 	<wd-drawer
 		title="Notice"
 		width="70%"
@@ -34,9 +34,13 @@
 			empty-text="现在还没有数据噢~"
 		>
 		</wd-table>
-		<div style="height: 200px">zheli</div>
+		<div style="height: 200px">
+			<wd-button type="primary" @click="doConfirm"> 确定 </wd-button>
+			<wd-button type="danger" @click="doConfirm">删除</wd-button>
+		</div>
 		<template #footer>
 			<wd-button type="primary" @click="doConfirm">确定</wd-button>
+			<wd-button type="danger" @click="doConfirm">删除</wd-button>
 		</template>
 	</wd-drawer>
 </template>

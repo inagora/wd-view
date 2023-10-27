@@ -100,7 +100,7 @@ export default defineComponent({
 			if (!node) {
 				return;
 			}
-			const buttonText = node.textContent;
+			const buttonText = node.textContent.trim();
 			if (isTwoCNChar(buttonText)) {
 				if (!hasTwoCNChar.value) {
 					hasTwoCNChar.value = true;
