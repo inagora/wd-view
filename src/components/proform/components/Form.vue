@@ -35,7 +35,7 @@ const filterMap = {
 	textarea: WdInput,
 };
 const formData = ref({});
-const searchFilters = ref(config.filters);
+const searchFilters = ref(config.fields || config.filters);
 // format filter
 const formatFilter = (valueEnum) => {
 	return Object.keys(valueEnum).map((key) => {
@@ -46,6 +46,7 @@ const formatFilter = (valueEnum) => {
 	});
 };
 searchFilters.value.forEach((filter) => {
+	filter.prop = filter.name || filter.prop;
 	if (filter.type === 'checkbox') {
 		formData.value[filter.prop] = filter.value || false;
 	} else {

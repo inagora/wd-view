@@ -14,12 +14,12 @@ let config = ref({
 	// disabled: true,
 	inline: false,
 	// labelWidth: '500px',
-	filters: [
+	fields: [
 		{
 			type: 'text',
 			placeholder: '请输入姓名',
 			label: '姓名',
-			prop: 'name',
+			name: 'name',
 			value: 'niu',
 		},
 		{

@@ -96,6 +96,10 @@ const deleteItem = (record) => {
 };
 const msg = ref('niu');
 const btnType = ref('primary');
+const nextPage = ref(false);
+setTimeout(() => {
+	nextPage.value = true;
+}, 3000);
 const tableColumns = [
 	{
 		title: '',
@@ -322,10 +326,9 @@ const tableColumns = [
 		fixed: 'right',
 		width: '300px',
 		render(_, record) {
-			console.log(record);
 			return (
 				<wd-button-group>
-					{record.color === 'blue' ? (
+					{nextPage.value ? (
 						<wd-button type="primary" onClick={() => doEdit(record)}>
 							编辑吧
 						</wd-button>

@@ -43,7 +43,14 @@
 </template>
 
 <script lang="ts">
-import { defineComponent, reactive, PropType, onMounted, ref } from 'vue';
+import {
+	defineComponent,
+	reactive,
+	PropType,
+	onMounted,
+	ref,
+	onUpdated,
+} from 'vue';
 type ButtonTypes = PropType<
 	'primary' | 'success' | 'warning' | 'danger' | 'info' | 'text' | 'dashed'
 >;
@@ -92,6 +99,9 @@ export default defineComponent({
 		// 两个中文字符自动插入空格
 		const rxTwoCNChar = /^[\u4e00-\u9fa5]{2}$/;
 		const isTwoCNChar = rxTwoCNChar.test.bind(rxTwoCNChar);
+		onUpdated(() => {
+			fixTwoCNChar();
+		});
 		onMounted(() => {
 			fixTwoCNChar();
 		});
