@@ -1,7 +1,9 @@
 <template>
 	<wd-image
-		src="https://o4.wandougongzhu.cn/5db8429cb0e8b6a8a22b18a707093d64.png"
+		src="https://oss1.52ritao.cn/ad3dec1e3d86a60be30573e19b92886e.png"
 		width="200"
+		height="200"
+		object-fit="fill"
 		fallback="https://oss.wandougongzhu.cn/5db8429cb0e8b6a8a22b18a707093d64.png"
 		:preview-src-list="[
 			'https://oss.wandougongzhu.cn/5db8429cb0e8b6a8a22b18a707093d64.png',

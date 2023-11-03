@@ -6,6 +6,7 @@
 				ref="imgEl"
 				class="wd-image-img"
 				:src="src"
+				:style="{ objectFit }"
 				@error="errorHandler"
 				@load="loadHandler"
 			/>
@@ -98,7 +99,6 @@ export default defineComponent({
 		const wrapperStyle = ref({
 			width: props.width,
 			height: props.height,
-			objectFit: props.objectFit,
 		});
 		const isNumber = (val) => {
 			return (typeof val === 'number' && !isNaN(val)) || /^\d+$/.test(val);

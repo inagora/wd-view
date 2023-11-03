@@ -145,6 +145,7 @@ export default defineComponent({
 			} else {
 				currentIndex.value += 1;
 			}
+			initImgPosition();
 		};
 		// 滚轮放大缩小
 		const rollImg = (e) => {
@@ -153,6 +154,16 @@ export default defineComponent({
 			} else if (e.wheelDelta < 0) {
 				handleScale('in');
 			}
+		};
+		// 初始化图片位置
+		const initImgPosition = () => {
+			const img = document.querySelector('.wd-image-preview-img');
+			img.style.left = 'unset';
+			img.style.top = 'unset';
+			transformStyle.value = {
+				scale: 1,
+				rotate: 0,
+			};
 		};
 		// 鼠标拖动图片
 		const moveImg = (e) => {
