@@ -24,22 +24,22 @@ const ajax = new Ajax();
 const myProTable = ref(null);
 const instance = getCurrentInstance();
 
-setTimeout(() => {
-	for (let i = 0; i < 15; i++) {
-		rowData.push({
-			id: '' + (4 + i),
-			goods_name: 'sk4',
-			price: '1180',
-			ctime: '2021-09-26 2021-09-26 2021-09-26 2021-09-26 2021-09-26',
-			update_time: '2021-09-26',
-			location: '中国',
-			color: i % 2 === 0 ? 'red' : 'blue',
-		});
-	}
-	total.value = 200;
-	dataList.value = rowData;
-	currentPage.value = 2;
-}, 2000);
+// setTimeout(() => {
+// 	for (let i = 0; i < 15; i++) {
+// 		rowData.push({
+// 			id: '' + (4 + i),
+// 			goods_name: 'sk4',
+// 			price: '1180',
+// 			ctime: '2021-09-26 2021-09-26 2021-09-26 2021-09-26 2021-09-26',
+// 			update_time: '2021-09-26',
+// 			location: '中国',
+// 			color: i % 2 === 0 ? 'red' : 'blue',
+// 		});
+// 	}
+// 	total.value = 200;
+// 	dataList.value = rowData;
+// 	currentPage.value = 2;
+// }, 2000);
 let _id = 0;
 const getRemoteList = () => {
 	rowData.length = 0;
@@ -56,6 +56,7 @@ const getRemoteList = () => {
 					location: '中国',
 					color: i % 2 === 0 ? 'red' : 'blue',
 					img: 'https://oss1.52ritao.cn/f7188ca531b2ec1bfc5236f966dc7bea.png',
+					status: 0,
 				});
 			}
 			resolve({
@@ -224,46 +225,30 @@ const tableColumns = [
 		dataIndex: 'status',
 		valueType: 'select',
 		defaultValue: 0,
-		list: [
-			{
-				label: '关闭',
-				value: '1',
-			},
-			{
-				label: '运行中',
-				value: '0',
-			},
-			{
-				label: '已上线',
-				value: '2',
-			},
-			{
-				label: '异常',
-				value: '3',
-			},
-		],
-		// valueEnum() {
-		// 	// 当使用int类型做为key时，请使用返回数组的形式
-		// 	const data = [
-		// 		{
-		// 			label: '关闭',
-		// 			value: '1',
-		// 		},
-		// 		{
-		// 			label: '运行中',
-		// 			value: '0',
-		// 		},
-		// 		{
-		// 			label: '已上线',
-		// 			value: '2',
-		// 		},
-		// 		{
-		// 			label: '异常',
-		// 			value: '3',
-		// 		},
-		// 	];
-		// 	return data;
-		// },
+		// list: [
+		// 	{
+		// 		label: '关闭',
+		// 		value: '1',
+		// 	},
+		// 	{
+		// 		label: '运行中',
+		// 		value: '0',
+		// 	},
+		// 	{
+		// 		label: '已上线',
+		// 		value: '2',
+		// 	},
+		// 	{
+		// 		label: '异常',
+		// 		value: '3',
+		// 	},
+		// ],
+		valueEnum: {
+			0: '关闭',
+			1: '运行中',
+			2: '已上线',
+			3: '异常',
+		},
 	},
 	{
 		title: '图片',
