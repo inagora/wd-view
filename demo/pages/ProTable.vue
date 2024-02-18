@@ -254,7 +254,14 @@ const tableColumns = [
 		title: '图片',
 		dataIndex: 'img',
 		render(text) {
-			return <wd-image src={text} previewSrcList={[text]} height={100} />;
+			return (
+				<wd-image
+					src={text}
+					previewSrcList={[text]}
+					close-on-press-escape="true"
+					height={100}
+				/>
+			);
 		},
 	},
 	{

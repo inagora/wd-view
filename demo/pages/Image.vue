@@ -4,6 +4,7 @@
 		width="200"
 		height="200"
 		object-fit="fill"
+		close-on-press-escape="true"
 		fallback="https://oss.wandougongzhu.cn/5db8429cb0e8b6a8a22b18a707093d64.png"
 		:preview-src-list="[
 			'https://oss.wandougongzhu.cn/5db8429cb0e8b6a8a22b18a707093d64.png',

@@ -2,7 +2,12 @@
 	<teleport v-if="visible" to="body">
 		<div class="wd-image-preview-root">
 			<div class="wd-image-preview-mask" />
-			<div tabindex="-1" class="wd-image-preview-wrap" role="dialog">
+			<div
+				tabindex="-1"
+				class="wd-image-preview-wrap"
+				@click="maskClickHandler"
+				role="dialog"
+			>
 				<div class="wd-image-preview" role="document">
 					<div class="wd-image-preview-content">
 						<div class="wd-image-preview-body">
@@ -106,7 +111,8 @@ export default defineComponent({
 			default: () => [],
 		},
 	},
-	setup(props) {
+	emits: ['close'],
+	setup(props, { emit }) {
 		const transformStyle = ref({
 			scale: 1,
 			rotate: 0,
@@ -184,6 +190,13 @@ export default defineComponent({
 				wrapper.removeEventListener('mousemove', move);
 			});
 		};
+		// 点击遮罩关闭预览
+		const maskClickHandler = (e) => {
+			if (e.target.className !== 'wd-image-preview-wrap') {
+				return;
+			}
+			emit('close');
+		};
 		return {
 			transformStyle,
 			currentIndex,
@@ -192,6 +205,7 @@ export default defineComponent({
 			handleSwitch,
 			rollImg,
 			moveImg,
+			maskClickHandler,
 		};
 	},
 });

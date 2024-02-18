@@ -51,7 +51,7 @@
 </template>
 
 <script lang="ts">
-import { defineComponent, ref } from 'vue';
+import { defineComponent, onMounted, onUnmounted, ref } from 'vue';
 import Preview from './img-preview.vue';
 export default defineComponent({
 	name: 'WdImage',
@@ -89,6 +89,10 @@ export default defineComponent({
 			type: Array,
 			default: () => [],
 		},
+		closeOnPressEscape: {
+			type: Boolean,
+			default: false,
+		},
 	},
 	emits: ['error'],
 	// 清除之后需要抛出事件
@@ -120,6 +124,18 @@ export default defineComponent({
 		const loadHandler = () => {
 			isLoading.value = false;
 		};
+		onMounted(() => {
+			if (props.closeOnPressEscape) {
+				document.addEventListener('keydown', (e) => {
+					if (e.key === 'Escape') {
+						showPreview.value = false;
+					}
+				});
+			}
+		});
+		onUnmounted(() => {
+			document.removeEventListener('keydown', () => {});
+		});
 		return {
 			wrapperStyle,
 			imgEl,
