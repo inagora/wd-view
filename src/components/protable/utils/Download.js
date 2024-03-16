@@ -4,6 +4,22 @@ const isFuction = (obj) => {
 const isArray = (obj) => {
 	return Array.isArray(obj);
 };
+// 拉平嵌套对象的函数
+const flattenObject = (obj, parentKey = '') => {
+	return Object.keys(obj).reduce((acc, key) => {
+		const prefixedKey = parentKey ? `${parentKey}.${key}` : key;
+		if (
+			typeof obj[key] === 'object' &&
+			!Array.isArray(obj[key]) &&
+			obj[key] !== null
+		) {
+			Object.assign(acc, flattenObject(obj[key], prefixedKey));
+		} else {
+			acc[prefixedKey] = obj[key];
+		}
+		return acc;
+	}, {});
+};
 const download = async (columns, records = []) => {
 	// 使用exceljs导出
 	const workbook = new ExcelJS.Workbook();
@@ -49,10 +65,13 @@ const download = async (columns, records = []) => {
 					item[key] = record[key];
 				}
 			});
+			item = flattenObject(item);
 			return item;
 		});
 	} else {
-		_records = records;
+		_records = records.map((r) => {
+			return flattenObject(r);
+		});
 	}
 	sheet.columns = _columns;
 	let data = _records;

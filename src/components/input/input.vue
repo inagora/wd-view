@@ -36,7 +36,7 @@
 				ref="input"
 				:disabled="inputDisabled"
 				:readonly="readonly"
-				autocomplete="off"
+				:autocomplete="autocomplete"
 				@input="handleInput"
 				@change="handleChange"
 				@blur="handleBlur"
@@ -77,7 +77,7 @@
 			:disabled="inputDisabled"
 			:readonly="readonly"
 			:style="textareaStyle"
-			autocomplete="off"
+			:autocomplete="autocomplete"
 			@input="handleInput"
 			@change="handleChange"
 			@blur="handleBlur"
@@ -130,6 +130,7 @@ interface WdInputProps {
 	readonly: boolean;
 	modelValue: string;
 	autosize: any;
+	autocomplete: string;
 }
 type AutosizeProp =
 	| {
@@ -186,6 +187,10 @@ export default defineComponent({
 		autosize: {
 			type: [Boolean, Object] as PropType<AutosizeProp>,
 			default: false,
+		},
+		autocomplete: {
+			type: String,
+			default: 'off',
 		},
 	},
 	emits: ['update:modelValue', 'input', 'change', 'clear', 'blur'],

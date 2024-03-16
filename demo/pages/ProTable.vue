@@ -57,6 +57,9 @@ const getRemoteList = () => {
 					color: i % 2 === 0 ? 'red' : 'blue',
 					img: 'https://oss1.52ritao.cn/f7188ca531b2ec1bfc5236f966dc7bea.png',
 					status: 0,
+					obj: {
+						name: 'obj',
+					},
 				});
 			}
 			resolve({
@@ -201,6 +204,14 @@ const tableColumns = [
 		},
 	},
 	{
+		title: 'obj',
+		dataIndex: 'obj.name',
+		// render(text, record, col) {
+		// 	// return `<span style="color: red;">${text}</span>`;
+		// 	return <span>aaa</span>;
+		// },
+	},
+	{
 		title: '颜色',
 		dataIndex: 'color',
 		key: 'color',
@@ -216,7 +227,7 @@ const tableColumns = [
 			return {
 				green: '绿色',
 				blue: '蓝色',
-				green2: '绿色',
+				red: '红色',
 			};
 		},
 	},
