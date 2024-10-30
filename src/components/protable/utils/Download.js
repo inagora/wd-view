@@ -20,6 +20,7 @@ const flattenObject = (obj, parentKey = '') => {
 		return acc;
 	}, {});
 };
+let hasExportRender = false;
 const download = async (columns, records = []) => {
 	// 使用exceljs导出
 	const workbook = new ExcelJS.Workbook();
@@ -29,6 +30,11 @@ const download = async (columns, records = []) => {
 	sheet.properties.defaultRowHeight = 25;
 	let _columns = [];
 	let enumColumns = null;
+	columns.forEach((column) => {
+		if (column.exportRender) {
+			hasExportRender = true;
+		}
+	});
 	for (let i = 0; i < columns.length; i++) {
 		const column = columns[i];
 		if ((column.dataIndex || column.title) && column.dataIndex !== 'action') {
@@ -36,6 +42,9 @@ const download = async (columns, records = []) => {
 				header: column.title || column.dataIndex,
 				key: column.dataIndex,
 			});
+			if (column.exportRender) {
+				_columns[_columns.length - 1].exportRender = column.exportRender;
+			}
 			if (column.valueEnum) {
 				if (enumColumns === null) enumColumns = {};
 				let valueEnum = {};
@@ -71,6 +80,20 @@ const download = async (columns, records = []) => {
 	} else {
 		_records = records.map((r) => {
 			return flattenObject(r);
+		});
+	}
+	if (hasExportRender) {
+		_records = _records.map((record) => {
+			let item = {};
+			Object.keys(record).forEach((key) => {
+				let column = _columns.find((column) => column.key === key);
+				if (column && column.exportRender) {
+					item[key] = column.exportRender(record[key], record);
+				} else {
+					item[key] = record[key];
+				}
+			});
+			return item;
 		});
 	}
 	sheet.columns = _columns;

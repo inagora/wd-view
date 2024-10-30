@@ -60,6 +60,7 @@ const getRemoteList = () => {
 					obj: {
 						name: 'obj',
 					},
+					custom: 'custom',
 				});
 			}
 			resolve({
@@ -197,10 +198,13 @@ const tableColumns = [
 	},
 	{
 		title: '自定义列',
-		dataIndex: 'color',
+		dataIndex: 'custom',
 		render(text, record, col) {
 			// return `<span style="color: red;">${text}</span>`;
-			return <span>aaa</span>;
+			return <span style="color: red;">aaaa</span>;
+		},
+		exportRender(text, record, col) {
+			return '自定义导出';
 		},
 	},
 	{
